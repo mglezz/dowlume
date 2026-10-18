@@ -30,7 +30,7 @@ public partial class App : Application
                 Directory.CreateDirectory(dataDirectory);
                 _instanceLock = new FileStream(Path.Combine(dataDirectory, "instance.lock"), FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
                 var store = new SqliteStateStore(Path.Combine(dataDirectory, "dowlume.db"));
-                var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness(), new WindowsRecycleBin());
+                var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness());
                 var window = new MainWindow();
                 window.DataContext = new MainViewModel(store, organizer, new DesktopDialogs(window), log,
                     new WindowsStartupRegistration());

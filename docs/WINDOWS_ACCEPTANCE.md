@@ -6,7 +6,7 @@ Use this procedure for the exact installer and ZIP proposed for `v0.1.0`. Record
 
 Use a fresh Windows 11 x64 VM or spare machine, a standard user account, and no separately installed .NET runtime. Record how the image was created. A development PC or a GitHub runner with the SDK installed does not satisfy this check.
 
-For Hyper-V, run `Get-VM` in PowerShell on the Windows host using an account/session authorized to manage Hyper-V. A running `vmms` service alone does not establish that permission or provide an installed guest. If listing VMs fails, resolve host access before attempting guest tests. Use a checkpoint of a disposable guest before changing its Recycle Bin policy, and never substitute host settings for guest settings.
+Use a separate clean environment for this candidate. Do not modify, resume for testing, restore, or delete the existing evidence VM, exports, or checkpoints. No Recycle Bin policy changes or native capacity probes are part of v0.1.0 acceptance.
 
 Use the [Hyper-V preparation guide](HYPER_V_ACCEPTANCE.md) and `scripts/New-WindowsAcceptanceVm.ps1` to create the guest, verify official Windows media, transfer the candidate, and establish a clean checkpoint. Windows setup and the interactive acceptance checks still require the guest desktop.
 
@@ -38,15 +38,14 @@ After the smoke test, install normally with the wizard and a standard account. A
 7. In the disposable Windows account, enable Start Dowlume when I sign in to Windows. Sign out and back in; verify the app opens with monitoring paused. Disable the option and repeat sign-in. Enable it again before upgrading; confirm the upgrade retains it and uninstall removes only the entry for the installed copy. Do not test sign-in by signing out of the host's working account.
 8. Find the sample in Activity, inspect its paths, and undo an eligible operation. Check that content is preserved and an occupied original path is never overwritten.
 9. Close the app, upgrade/reinstall through the wizard, and reopen it. Confirm the saved configuration and history remain. Close and uninstall; confirm the sample files and profile remain.
+10. With a fictional file in Review, verify the recycling explanation is readable and Recycle remains disabled with mouse and keyboard. Verify Keep, Snooze, Move, Show in Explorer, and eligible Undo still work and preserve content. Check the minimum window size and Windows display scaling.
 
 Record unclear wording, errors, unexpected windows, display scaling, and keyboard navigation problems. Attach only redacted screenshots; the journal and profile contain private paths.
 
 ## Native file-safety acceptance
 
 - **Cross-volume move and interruption:** on two separate local volumes, use the harness below. Record the physical disk/volume arrangement. Verify a completed move and undo, then terminate only the isolated worker during a copy. Recovery must preserve the intact source and partial destination, mark NeedsAttention, and block another move until resolved. A source-only or fully completed copy is an inconclusive interruption test.
-- **Disabled Recycle Bin:** in the disposable VM/account only, disable recycling for the test volume, then attempt to recycle a disposable review file through the app. The action must fail and the source content must remain. Restore the test setting afterward.
-- **Insufficient Recycle Bin capacity:** in that same isolated environment, set a small bin capacity and test a disposable file exceeding it, then a bin near capacity. The application must not silently permanently delete the source or discard unrelated bin contents. Record the shell behavior and source hash. Never fill a personal disk or empty an existing personal bin for this test.
-- **Ordinary recycling and restore:** recycle a uniquely named sample, locate it in Windows Recycle Bin, restore it through Windows, and compare its content.
+- **Disabled recycling:** run the automated regression suite on the candidate source. It checks direct adapter/organizer calls, forced desktop command execution, repeated requests, and old journals without invoking the Windows bin. The old capacity harness is retired and must not be run; its failed results remain in the [investigation](RECYCLE_CAPACITY_INVESTIGATION.md).
 
 Developer cross-volume harness (requires the repository SDK; it is not part of clean-machine testing):
 
@@ -58,4 +57,4 @@ Choose a writable folder on a second fixed local volume. The harness writes only
 
 ## Publication handoff
 
-Update the release checklist with evidence tied to the artifact hashes. Resolve failures, obtain independent acceptance review, and repeat affected checks after changes. Only then publish the prepared GitHub draft as stable `v0.1.0`. Share the release with a small group of testers who can access the repository and collect reproducible bug reports before starting Linux/macOS work or new features.
+Update the release checklist with evidence tied to the artifact hashes. Resolve failures, obtain independent acceptance review, and repeat affected checks after changes. Obtain the owner's explicit publication authorization before creating the final tag or publishing stable `v0.1.0`. New features and Linux/macOS work remain deferred.

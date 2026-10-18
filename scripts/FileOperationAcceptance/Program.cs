@@ -185,7 +185,7 @@ internal static class Program
     }
 
     private static DownloadOrganizer CreateOrganizer(SqliteStateStore store) =>
-        new(store, new SafeFileMover(), new FileReadiness(TimeSpan.Zero, TimeSpan.Zero), new RefuseRecycle());
+        new(store, new SafeFileMover(), new FileReadiness(TimeSpan.Zero, TimeSpan.Zero));
 
     private static void Require(bool condition, string message)
     {
@@ -195,8 +195,4 @@ internal static class Program
         }
     }
 
-    private sealed class RefuseRecycle : IRecycleBin
-    {
-        public Task RecycleAsync(string path, string expectedHash) => throw new InvalidOperationException("This harness does not recycle files.");
-    }
 }

@@ -12,7 +12,7 @@ Pending --> Completed : execution confirms\naction and resulting facts
 Pending --> Failed : execution fails\n[source remains; no destination]
 Pending --> NeedsAttention : execution fails\n[outcome uncertain]
 Pending --> Completed : recovery\n[only expected destination]
-Pending --> Failed : recovery\n[only expected source]
+Pending --> Failed : recovery\n[only expected\nsource]
 Pending --> NeedsAttention : recovery\n[ambiguous, changed, unreadable]
 NeedsAttention --> Completed : recovery\n[only expected destination]
 NeedsAttention --> Failed : recovery\n[only expected source]
@@ -27,8 +27,9 @@ note bottom of Failed
 end note
 legend bottom
   Expected = content matches the recorded fingerprint. Recovery does not move or delete copies.
-  Recycle has no destination location: an intact expected source permits Failed;
-  absence of the source remains NeedsAttention, not proof of recycling.
+  Historical Recycle is never replayed: an intact expected source permits Failed;
+  absent or changed content remains NeedsAttention, regardless of any destination.
+  Native Recycle is disabled in v0.1.0; refused calls create no Operation.
   Cancellation before recording creates no Operation. Unresolved attempts block the affected file/path.
 endlegend
 @enduml

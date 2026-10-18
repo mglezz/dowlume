@@ -20,7 +20,7 @@ state "Managed file" as Managed {
   Snoozed --> InReview : undo Snooze [E]
 }
 state Moved
-state Recycled
+state "Recycled (historical only)" as Recycled
 state Missing
 [*] --> Identified : discover a top-level candidate
 Identified --> Identified : excluded or not ready\n/ leave untouched
@@ -28,13 +28,13 @@ Identified --> Ready : eligible readiness observation
 Ready --> Identified : recheck no longer ready\nor preview content changed
 Ready --> Organized : Organize completes\n[consent covers folder]
 InReview --> Moved : confirmed Move\ncompletes
-InReview --> Recycled : confirmed Recycle\ncompletes
 Moved --> InReview : undo Move [E]
 Managed --> Missing : reconciliation\n[unblocked; file absent]
 legend bottom
   Candidate states are analytical and transient. Readiness can become stale.
   Arrows describe completed outcomes, including recovery; failures do not assert a new file state.
   E = eligible undo: latest matching, unchanged, unblocked action; destination free; not already undone.
-  Missing has no automatic restoration; completed Recycle has no in-app undo.
+  Missing has no automatic restoration. Native Recycle is disabled in v0.1.0.
+  Historical Recycled records remain readable, with no in-app undo or guaranteed recoverable copy.
 endlegend
 @enduml

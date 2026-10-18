@@ -6,6 +6,8 @@ Dowlume helps a person organize completed downloads and decide what to do with a
 
 This model describes the **implemented Windows MVP**, examined at application revision `a4b1c9a` on 2026-10-15. It is an analysis model reconstructed from the application's observable behavior, documentation, domain rules, and tests. It is not a proposed redesign, a database schema, or a diagram of C# classes. No domain-expert interviews or independent acceptance validation are claimed.
 
+The 2026-10-17/18 containment update disables native recycling for v0.1.0. The three affected activity/state diagrams and rules below reflect that restriction; historical Recycle/Recycled values remain readable. The other conceptual views are preserved. [Recoverable quarantine](../RECYCLE_CAPACITY_INVESTIGATION.md#proposed-recoverable-quarantine) remains future work.
+
 The method follows the progression from candidate concepts to associations and information-bearing attributes described in [mmasias/idsw1: Domain Model](https://github.com/mmasias/idsw1/blob/main/temario/contenidos/00004-MdD.md). The presentation follows the complementary class, object, and state views in [mmasias/hdC: Domain Model](https://github.com/mmasias/hdC/blob/main/docs/UMLdocs/mdd.md), adding activities and sequences where they clarify Dowlume's behavior. The concepts and scenarios below were analyzed specifically for Dowlume.
 
 The boundary includes one configured local Downloads Folder at a time, extension-based classification, preview and consent, aging into a Review Area, explicit decisions, operation history, undo, and reconciliation. Historical files and operations can survive a change of selected folder. Network/cloud storage, automatic permanent deletion, content-based classification, duplicate-content detection, and simultaneous monitoring of multiple folders are outside the current MVP.
@@ -165,7 +167,7 @@ Arrows represent **confirmed outcomes**, including outcomes confirmed during rec
 | Keep completes | InReview becomes Kept in the folder currently configured for its Category; ordinary age checks no longer expire it. |
 | Snooze completes | InReview becomes Snoozed in its current category folder, with a deadline seven days after the decision. |
 | Move completes | InReview becomes Moved and leaves application management. The chosen destination need not be outside the Downloads Folder. |
-| Recycle completes | InReview becomes Recycled. Restoration uses Windows; no in-app Undo is available. |
+| Historical Recycle | Recycled remains readable, but v0.1.0 cannot create this transition. No in-app Undo or guaranteed Windows restoration exists. |
 | Reconciliation finds a managed file absent | Record Missing, unless an unresolved Operation blocks the file/path. Merely restoring a Missing file does not automatically restore its prior lifecycle. |
 | Eligible Undo of Organize | Return to the original location as Kept, preventing immediate organization again. |
 | Eligible Undo of Review | Restore the preceding location as Snoozed for seven days, preventing an immediate review loop. |
@@ -188,8 +190,8 @@ During execution, an error with the source still present and no destination is r
 | Only source exists and matches expected content | Failed; the original action can be retried. |
 | Only destination exists and matches expected content | Completed; confirm IntendedAfter facts without moving again. |
 | Both exist, neither exists, content differs, or inspection fails | NeedsAttention; preserve existing copies and block automatic actions for the affected file/path. |
-| Recycle: original source still exists and matches | Failed; recycling can be retried. |
-| Recycle: source has disappeared | NeedsAttention; absence alone does not prove recycling. Restore through Windows to the recorded source before retrying recovery. |
+| Historical Recycle: original source still exists and matches | Failed; native recycling stays disabled. Safe review decisions remain available. |
+| Historical Recycle: source is missing or changed | NeedsAttention; never replay or infer success from a destination. Preserve any actual copies for manual inspection; recovery does not restore missing content. |
 
 Cancellation before an Operation is recorded creates no Operation. A completed Undo is a new history item; the target remains Completed. No extra state machine is added for policy, categories, or Preview because their changes do not warrant independent lifecycle models in this scope.
 
@@ -220,7 +222,7 @@ This view joins automatic aging with the later explicit decision. They need not 
 | Keep | Folder currently configured for the recorded Category | Kept | Selecting Keep executes the decision; no additional confirmation dialog. |
 | Snooze | Folder currently configured for the recorded Category | Snoozed, with a seven-day deadline | Selecting Snooze executes the decision; no additional confirmation dialog. |
 | Move | A permitted explicitly chosen folder | Moved | Choose a destination and confirm. Canceling either step leaves InReview. |
-| Recycle | Windows Recycle Bin, without a stored destination path | Recycled | Confirm; Windows must permit recycling. No permanent-delete fallback. |
+| Recycle (disabled) | No filesystem or journal change | Unchanged | Refused in the UI and internal execution. Historical Recycled records retain their meaning; quarantine is future work. |
 | No decision | Existing review location | InReview | Wait without any automatic deletion deadline. |
 
 Readiness, unchanged content, location validity, and unresolved-operation checks still apply to decisions. A precondition rejection need not create an Operation; a recorded attempt can fail or require attention. A failure concerning one file does not imply that every file's review processing fails.
@@ -261,9 +263,9 @@ These identifiers index the rules of this model for cross-reference; they are no
 | **DM-06 — Preview and consent** | Preview precedes starting organization and monitoring. Its policy values must still match at start; each proposed file's content is checked again before organization. Confirmation covers the folder's current, future, and unfinished arrivals. Declining leaves monitoring paused. Restart does not restore consent or automatically resume monitoring. |
 | **DM-07 — Preservation** | No action overwrites an existing destination or permanently deletes a managed file. Name collisions use an available numeric suffix; inability to find a permissible destination fails the action. Preview does not reserve names. Edited tracked content is not automatically accepted as the expected version. |
 | **DM-08 — Aging** | An Organized file is due when `now >= firstOrganizedAt + current category reviewAfterDays`. A Snoozed file is due when `now >= snoozedUntil`. Other lifecycle values are not age-due. Review occurs on a later eligible reconciliation, not necessarily at the exact deadline. |
-| **DM-09 — Review** | Review moves the file to an available name in the Review Area and preserves its Category and age origin. InReview has no automatic deletion deadline. Keep, Snooze, Move, and Recycle require a currently selected InReview file; they are not actions on arbitrary organized files. |
+| **DM-09 — Review** | Review moves the file to an available name in the Review Area and preserves its Category and age origin. InReview has no automatic deletion deadline. Keep, Snooze, and Move require a currently selected InReview file; they are not actions on arbitrary organized files. Recycle is disabled. |
 | **DM-10 — Decisions** | Keep excludes future age reviews; Snooze defers review for seven days. Both return to the category folder specified by the current rule, possibly with a collision suffix. Move stops management even if the chosen destination is another permitted subfolder under Downloads; the Downloads root and the current review directory themselves are not permitted Move destinations. |
-| **DM-11 — Recycling** | Recycle requires explicit confirmation and a recyclable Windows destination. Failure must not become permanent deletion. A completed Recycle is restored through Windows, not through an in-app Undo. |
+| **DM-11 — Recycling** | Native Recycle is disabled in v0.1.0 before filesystem access or journal creation. Historical kinds and states remain readable, but absence is not proof of recovery or successful recycling. No native retry or in-app Undo is allowed. Recoverable quarantine is deferred. |
 | **DM-12 — Accountability** | Intent is recorded before an action. File facts and Operation completion are confirmed together after the action. Cancellation before recording produces no attempt; after recording, the attempt must finish or retain an outcome that can be reconciled. Initial batches may partially complete. |
 | **DM-13 — Recovery** | Only unambiguous expected-content evidence permits recovery to conclude Completed or Failed. NeedsAttention preserves copies, blocks actions on the tracked subject, and blocks discovery at its recorded source/destination paths; it is an Operation status, not a file lifecycle. These checks are not a general reservation of future destinations. Recovery does not delete one of two copies or invent proof of recycling. |
 | **DM-14 — Undo** | Only the latest completed, eligible action on the file can be undone: current recorded facts must still match, content must be unchanged and ready, the return location must be free and inside the currently selected root, and no unresolved action or completed Undo may block it. Recycle and Undo Operations cannot themselves be undone. Undo creates another Operation and preserves history. |
@@ -299,6 +301,6 @@ The following links identify the implementation and tests used to check the anal
 | Preview matching, consent, empty previews, initial-batch behavior | [MainViewModel](../../Dowlume/Dowlume.App/ViewModels/MainViewModel.cs), [DesktopWorkflowTests](../../Dowlume/Dowlume.Tests/DesktopWorkflowTests.cs) |
 | Lifecycle and age predicates | [TrackedFile](../../Dowlume/Dowlume.Core/TrackedFile.cs), [LifecyclePolicy](../../Dowlume/Dowlume.Core/LifecyclePolicy.cs) |
 | Decisions, recovery, conditions, undo, missing-file handling | [DownloadOrganizer](../../Dowlume/Dowlume.Infrastructure/DownloadOrganizer.cs), [OperationRecord](../../Dowlume/Dowlume.Core/OperationRecord.cs), [OrganizerTests](../../Dowlume/Dowlume.Tests/OrganizerTests.cs) |
-| Permitted paths, collision preservation, recycling limits | [PathSafety](../../Dowlume/Dowlume.Infrastructure/PathSafety.cs), [SafeFileMover](../../Dowlume/Dowlume.Infrastructure/SafeFileMover.cs), [SafetyTests](../../Dowlume/Dowlume.Tests/SafetyTests.cs) |
+| Permitted paths, collision preservation, recycling limits | [PathSafety](../../Dowlume/Dowlume.Infrastructure/PathSafety.cs), [SafeFileMover](../../Dowlume/Dowlume.Infrastructure/SafeFileMover.cs), [SafetyTests](../../Dowlume/Dowlume.Tests/SafetyTests.cs), [DisabledRecyclingTests](../../Dowlume/Dowlume.Tests/DisabledRecyclingTests.cs) |
 
 Review checkpoints are the consistency of association multiplicities, optional facts before tracking, conditions for every lifecycle transition, recovery outcomes, and the object scenario's dates and links. PlantUML syntax, generated SVGs, visual inspection, and documentation links are recorded separately in [Validation](../VALIDATION.md). Application acceptance gates remain unchanged.

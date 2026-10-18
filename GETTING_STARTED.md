@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- Windows x64 for the supported desktop application and native Recycle Bin integration.
+- Windows x64 for the supported desktop application. Native recycling is disabled in v0.1.0.
 - .NET SDK from the **10.0.4xx family**: [`global.json`](global.json) sets `10.0.400` with `rollForward: latestPatch`. CI uses `10.0.401`, a compatible patch in the same feature band.
 - Inno Setup 6 only when building the installer.
 
@@ -13,15 +13,11 @@ The repository uses C#, Avalonia MVVM, SQLite, System.Threading.Channels, and xU
 ```powershell
 dotnet restore Dowlume/Dowlume.slnx
 dotnet build Dowlume/Dowlume.slnx -c Release --no-restore
-dotnet test Dowlume/Dowlume.slnx -c Release --no-build --filter "Category!=WindowsShell"
+dotnet test Dowlume/Dowlume.slnx -c Release --no-build
 dotnet run --project Dowlume/Dowlume.App -c Release
 ```
 
-The native shell test is separate because it places one uniquely named disposable file into Windows Recycle Bin:
-
-```powershell
-dotnet test Dowlume/Dowlume.slnx -c Release --filter "Category=WindowsShell"
-```
+All tests run without invoking native recycling. The previous native tests and capacity probes are retired; preserve their evidence and do not repeat them. Regression tests verify refusal and file preservation through all disabled paths.
 
 Use a disposable folder for initial UI testing. The real Downloads directory is never used by automated tests. To isolate application state as well, pass `-- --data-directory C:\path\to\test-profile` to `dotnet run`.
 

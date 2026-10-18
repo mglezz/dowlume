@@ -6,7 +6,6 @@ public sealed class DownloadOrganizer(
     IStateStore store,
     SafeFileMover mover,
     IFileReadiness readiness,
-    IRecycleBin recycleBin,
     TimeProvider? timeProvider = null)
 {
     private readonly SemaphoreSlim _gate = new(1, 1);
@@ -120,10 +119,14 @@ public sealed class DownloadOrganizer(
         DecideAsync(fileId, settings, OperationKind.Move, destinationFolder, cancellationToken);
 
     public Task RecycleAsync(Guid fileId, AppSettings settings, CancellationToken cancellationToken = default) =>
-        DecideAsync(fileId, settings, OperationKind.Recycle, null, cancellationToken);
+        Task.FromException(new NotSupportedException(WindowsRecycleBin.DisabledMessage));
 
     private async Task DecideAsync(Guid fileId, AppSettings settings, OperationKind kind, string? destinationFolder, CancellationToken cancellationToken)
     {
+        if (kind == OperationKind.Recycle)
+        {
+            throw new NotSupportedException(WindowsRecycleBin.DisabledMessage);
+        }
         await _gate.WaitAsync(cancellationToken);
         try
         {
@@ -141,27 +144,22 @@ public sealed class DownloadOrganizer(
                 OperationKind.Keep => LifecycleStatus.Kept,
                 OperationKind.Snooze => LifecycleStatus.Snoozed,
                 OperationKind.Move => LifecycleStatus.Moved,
-                OperationKind.Recycle => LifecycleStatus.Recycled,
                 _ => throw new ArgumentOutOfRangeException(nameof(kind))
             };
-            string? destination = null;
-            if (kind != OperationKind.Recycle)
+            string folder = destinationFolder ?? Path.Combine(settings.DownloadsPath, settings.Categories.Single(rule => rule.Category == before.Category).FolderName);
+            if (destinationFolder is not null)
             {
-                string folder = destinationFolder ?? Path.Combine(settings.DownloadsPath, settings.Categories.Single(rule => rule.Category == before.Category).FolderName);
-                if (destinationFolder is not null)
+                PathSafety.ValidateRoot(folder);
+                if (string.Equals(Path.GetFullPath(folder), Path.GetDirectoryName(before.CurrentPath), PathSafety.Comparison) ||
+                    string.Equals(Path.TrimEndingDirectorySeparator(Path.GetFullPath(folder)), Path.TrimEndingDirectorySeparator(settings.DownloadsPath), PathSafety.Comparison))
                 {
-                    PathSafety.ValidateRoot(folder);
-                    if (string.Equals(Path.GetFullPath(folder), Path.GetDirectoryName(before.CurrentPath), PathSafety.Comparison) ||
-                        string.Equals(Path.TrimEndingDirectorySeparator(Path.GetFullPath(folder)), Path.TrimEndingDirectorySeparator(settings.DownloadsPath), PathSafety.Comparison))
-                    {
-                        throw new ArgumentException("Choose a destination outside the review folder and Downloads root.");
-                    }
+                    throw new ArgumentException("Choose a destination outside the review folder and Downloads root.");
                 }
-                destination = PathSafety.AvailableDestination(folder, before.Name);
             }
+            string destination = PathSafety.AvailableDestination(folder, before.Name);
             TrackedFile after = before with
             {
-                CurrentPath = destination ?? before.CurrentPath,
+                CurrentPath = destination,
                 Status = status,
                 SnoozedUntilUtc = kind == OperationKind.Snooze ? _clock.GetUtcNow().AddDays(7) : null
             };
@@ -179,7 +177,7 @@ public sealed class DownloadOrganizer(
             OperationRecord operation = history.Single(record => record.Id == operationId);
             if (!operation.CanUndo || history.Any(record => record.UndoesOperationId == operationId && record.Status == OperationStatus.Completed))
             {
-                throw new InvalidOperationException("This action cannot be undone. Recycled files can be restored through Windows Recycle Bin.");
+                throw new InvalidOperationException("This action cannot be undone in Dowlume. Historical recycling does not guarantee that Windows retained a recoverable copy.");
             }
             TrackedFile current = store.GetFiles().Single(file => file.Id == operation.After.Id);
             if (current != operation.After || history.Last(record => record.After.Id == current.Id && record.Status == OperationStatus.Completed).Id != operation.Id || IsBlocked(current.Id, current.CurrentPath))
@@ -247,23 +245,22 @@ public sealed class DownloadOrganizer(
         operation.Status is OperationStatus.Pending or OperationStatus.NeedsAttention &&
         (operation.After.Id == fileId || string.Equals(operation.SourcePath, path, PathSafety.Comparison) || string.Equals(operation.DestinationPath, path, PathSafety.Comparison)));
 
-    private async Task ExecuteAsync(OperationKind kind, TrackedFile? before, TrackedFile after, string source, string? destination, CancellationToken cancellationToken, Guid? undoes = null)
+    private Task ExecuteAsync(OperationKind kind, TrackedFile? before, TrackedFile after, string source, string? destination, CancellationToken cancellationToken, Guid? undoes = null)
     {
+        // Defense in depth: reject before journaling or touching the filesystem.
+        if (kind == OperationKind.Recycle)
+        {
+            throw new NotSupportedException(WindowsRecycleBin.DisabledMessage);
+        }
         cancellationToken.ThrowIfCancellationRequested();
         var operation = new OperationRecord(Guid.NewGuid(), kind, OperationStatus.Pending, _clock.GetUtcNow(), before, after, source, destination, UndoesOperationId: undoes);
         store.SaveOperation(operation);
         try
         {
             // Once journaled, finish this operation even if shutdown was requested.
-            if (kind == OperationKind.Recycle)
-            {
-                await recycleBin.RecycleAsync(source, after.ContentHash);
-            }
-            else
-            {
-                mover.Move(source, destination!, after.ContentHash);
-            }
+            mover.Move(source, destination!, after.ContentHash);
             store.CompleteOperation(operation);
+            return Task.CompletedTask;
         }
         catch (Exception error)
         {
@@ -288,6 +285,19 @@ public sealed class DownloadOrganizer(
             {
                 PathSafety.RejectLinks(operation.SourcePath);
                 bool sourceExists = File.Exists(operation.SourcePath);
+                if (operation.Kind == OperationKind.Recycle)
+                {
+                    // Historical native operations are inspected only, never replayed or inferred complete.
+                    bool intact = sourceExists && mover.Hash(operation.SourcePath) == operation.After.ContentHash;
+                    store.SaveOperation(operation with
+                    {
+                        Status = intact ? OperationStatus.Failed : OperationStatus.NeedsAttention,
+                        Error = intact
+                            ? "Historical recycling was not completed. The source is intact. Recycling is disabled; use Keep, Snooze, or Move to."
+                            : "Historical recycling could not be verified. Preserve any remaining copies and inspect the file manually. Recycling is disabled; retrying recovery does not restore missing content."
+                    });
+                    continue;
+                }
                 if (operation.DestinationPath is { } destination)
                 {
                     PathSafety.RejectLinks(destination);
@@ -306,15 +316,6 @@ public sealed class DownloadOrganizer(
                         });
                         continue;
                     }
-                }
-                else if (sourceExists && mover.Hash(operation.SourcePath) == operation.After.ContentHash)
-                {
-                    store.SaveOperation(operation with
-                    {
-                        Status = OperationStatus.Failed,
-                        Error = "Recycling did not finish. The source is intact; retry the action."
-                    });
-                    continue;
                 }
                 store.SaveOperation(operation with
                 {
@@ -338,7 +339,7 @@ public sealed class DownloadOrganizer(
         UnauthorizedAccessException => "Access denied. Check folder permissions and retry.",
         IOException => "The file is busy, changed, missing, or its destination is unavailable. Inspect it in Explorer and retry.",
         OperationCanceledException => "The operation was canceled; unfinished work can be retried.",
-        ArgumentException or InvalidOperationException => error.Message,
+        ArgumentException or InvalidOperationException or NotSupportedException => error.Message,
         _ => "The operation failed. Local diagnostics contain a technical error code. Restart and retry recovery."
     };
 }

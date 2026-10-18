@@ -1,6 +1,14 @@
 # Recycle Bin capacity investigation
 
-Status: **release blocker; preserve the failed guest and do not repeat the failing probes while investigating**. This document records observed evidence and a proposed replacement design. It does not claim that recoverable quarantine has been implemented.
+Status: **historical preservation failures retained; native recycling disabled for v0.1.0**. Preserve the failed guest, checkpoints, exports, and reports without modification. Do not repeat the failing probes. This document records observed evidence and a proposed future replacement; recoverable quarantine is not implemented.
+
+## 2026-10-17: v0.1.0 containment decision
+
+The owner authorized release hardening with native recycling disabled, while preserving all existing evidence. The UI shows a disabled Recycle command and explanation; forced command execution, the organizer API, internal operation executor, and compatibility adapter all refuse. The organizer no longer receives an `IRecycleBin` dependency, and the native COM adapter/sink are excluded from compilation. Exact pre-containment sources and probe scripts are retained in the [historical source archive](archive/native-recycle/README.md). The current capacity launcher and worker refuse execution before any fixture, policy, or report change.
+
+Keep, Snooze, Move, and eligible Undo remain available. Existing native journal kinds and lifecycle values retain their serialized identities. Pending/NeedsAttention Recycle records are inspected only: an unchanged source becomes Failed with safe-action guidance; absent or changed content remains NeedsAttention, regardless of a recorded destination. Completed historical records remain unchanged. No missing contents are claimed restored.
+
+The original native acceptance results remain failed. They are removed from the v0.1.0 execution scope, not waived as successful. Final-artifact acceptance and independent review must verify containment before publication; the owner's explicit authorization is also required. Future quarantine and its acceptance plan below remain deferred. This decision supersedes earlier holds on application changes without permitting any change to the evidence VM or destructive rerun.
 
 ## Candidate and evidence
 
@@ -28,7 +36,7 @@ The tester supplied collector excerpts for two existing runs, not a newly reques
 
 Each final source inventory contains only the disabled, ordinary, and near-capacity fixtures. Neither oversized nor sentinel fixture remains. The global collector reports `RecycleBinItemCount=0` and `RemainingProbeBinItems=[]`. These are tester-supplied excerpts; the original complete reports remain in the guest. The second run's full summary and the reason it was launched have not been independently established. Preserve both runs without assuming there was only one execution.
 
-Inspection of [the harness](../scripts/Test-WindowsRecycleAcceptance.ps1) and [worker](../scripts/FileOperationAcceptance/RecycleProbe.cs) establishes the following sequence:
+Inspection of the archived [harness](archive/native-recycle/Test-WindowsRecycleAcceptance.ps1.txt) and [worker](archive/native-recycle/RecycleProbe.cs.txt) establishes the following historical sequence:
 
 1. The worker records source existence immediately after the adapter finishes or throws. That snapshot precedes the harness's restore attempts.
 2. `Restore-RecycledProbe` searches the shell bin by expected content hash, refuses an occupied original path, invokes only the shell `undelete` verb, and checks that exact original path and hash. It has no alternate destination or manual copy/move/delete branch.
@@ -65,7 +73,7 @@ The failure checkpoint was exported to separate private host storage for inspect
 
 That initial reader limitation did not establish that a recovery password was necessary. The subsequent clear-key inspection below supersedes the assessment that encryption blocked checkpoint access. Keep the earlier reports as historical evidence. Do not boot the exported saved state, since resuming a checkpoint taken around a probe could resume an unwanted test operation.
 
-Microsoft recommends minimizing writes when [attempting deleted-file recovery](https://support.microsoft.com/en-gb/windows/experience/backup-recovery/windows-file-recovery). Do not install recovery tools in the evidence guest or write recovered output onto its system volume. Forensic recovery remains unverified; all application/native implementation changes are on hold while correlating these records and assessing recoverability.
+Microsoft recommends minimizing writes when [attempting deleted-file recovery](https://support.microsoft.com/en-gb/windows/experience/backup-recovery/windows-file-recovery). Do not install recovery tools in the evidence guest or write recovered output onto its system volume. Forensic recovery remains unverified. Application changes were held during that assessment; the containment decision above supersedes that hold while leaving evidence untouched.
 
 ### Checkpoint access with its existing clear key
 
@@ -82,6 +90,8 @@ The follow-up reader enumerated valid NTFS master-file-table records, including 
 Adding a recovery-password protector to the current guest would write a new protector record wrapping the volume master key into **current** volume metadata. It would not add that record to this older checkpoint. Consequently, the new password alone would not unlock the unmodified old image, even if the underlying volume keys were unchanged: a recovery password is not the volume master key and needs its corresponding stored protector metadata. This follows from the protector structure described in the [BitLocker format research](https://github.com/libyal/libbde/blob/main/documentation/BitLocker%20Drive%20Encryption%20(BDE)%20format.asciidoc). No new protector was created or tested; the existing clear key already provides the required access.
 
 ### Native adapter contract
+
+This subsection describes the archived pre-containment implementation and tests, not code shipped in the current candidate.
 
 `WindowsRecycleBin` requests `FOFX_RECYCLEONDELETE` with `FOFX_EARLYFAILURE`, `FOF_NOERRORUI`, `FOF_SILENT`, and `FOF_NOCONFIRMATION`. The latter automatically accepts shell confirmations; `FOF_WANTNUKEWARNING`, which requests a warning for permanent destruction, is absent. These documented flag semantics identify a possible silent fallback path, but do not prove the exact callback sequence in these runs. See [Microsoft's operation flags](https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ifileoperation-setoperationflags).
 
@@ -108,7 +118,7 @@ Use a distinct operation kind and file state for quarantine. Keep historical nat
 
 This design protects against ordinary application failures and Windows bin policy; it is not a backup against disk failure or another process deliberately modifying files with the same user's privileges. The source/destination and journal invariants still require validation.
 
-Before implementing the replacement, retain the complete failing evidence and finish the oversized-case diagnosis. Until a safe replacement is implemented and verified, do not use the candidate's Recycle action for valuable files or publish it as stable. The short-term containment option is to disable native recycling and leave files in Review; no containment change or quarantine implementation is claimed in this investigation.
+Before implementing the replacement, retain the complete failing evidence and review the oversized-case diagnosis and recovery limits. v0.1.0 applies the short-term containment: native recycling is disabled and files can stay in Review. This is not a quarantine implementation or a claim that the missing fixtures were recovered. Publication still requires the final acceptance and approval gates.
 
 ## Required regression coverage for the replacement
 

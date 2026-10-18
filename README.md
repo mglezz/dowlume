@@ -1,6 +1,6 @@
 # Dowlume
 
-[![Build and test](https://github.com/marcosgonzalezhidalgo/dowlume/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/marcosgonzalezhidalgo/dowlume/actions/workflows/build.yml?query=branch%3Amain)
+[![Build and test](https://github.com/mglezz/dowlume/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/mglezz/dowlume/actions/workflows/build.yml?query=branch%3Amain)
 
 **Your downloads, under control.**
 
@@ -8,7 +8,7 @@ Dowlume is a local-first Windows desktop application that organizes completed do
 
 **Status:** Windows MVP implemented; **0.1.0 is a release candidate, not a published stable release**. Run from source while public packages are pending. See [validation](docs/VALIDATION.md) and the [release checklist](docs/RELEASE_CHECKLIST.md).
 
-The current focus is Windows release reliability. Clean-guest package acceptance has passed, but **Recycle Bin capacity tests failed**: recycling a new file can lose an older recycled item. Do not use the candidate's Recycle action for valuable files. See the [investigation and proposed recovery design](docs/RECYCLE_CAPACITY_INVESTIGATION.md); stable publication remains blocked.
+The current focus is Windows release reliability. **Native recycling is disabled in v0.1.0**, including internal execution, after Recycle Bin capacity tests failed to preserve files. Keep, Snooze, Move, and eligible Undo remain available. The [investigation and future quarantine design](docs/RECYCLE_CAPACITY_INVESTIGATION.md) retain the failed evidence. Final candidate acceptance, independent review, and explicit publication approval remain pending.
 
 [User guide](docs/USER_GUIDE.md) · [Developer setup](GETTING_STARTED.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
 
@@ -24,7 +24,7 @@ Downloads folders accumulate useful documents, one-off installers, and files tha
 
 | Preview | Organize | Review | Recover |
 | --- | --- | --- | --- |
-| Inspect proposed destinations before consenting. | Classify completed downloads into six configurable categories. | Keep, Snooze, Move, or Recycle aging files in **Expiring Files**. | Inspect the activity journal, undo eligible moves, and resolve interrupted actions. |
+| Inspect proposed destinations before consenting. | Classify completed downloads into six configurable categories. | Keep, Snooze, or Move aging files in **Expiring Files**. | Inspect the activity journal, undo eligible moves, and resolve interrupted actions. |
 
 ![Dowlume Preview mapping sample PDFs, photos, videos, archives, and installers to category folders](docs/images/classification.png)
 
@@ -63,7 +63,7 @@ Choose a disposable sample folder in Settings first, then use Preview. See [deve
 
 ## Packages
 
-When a release package is available, download the installer or portable ZIP from [GitHub Releases](https://github.com/marcosgonzalezhidalgo/dowlume/releases). Until then, build and run from source. The release script can generate a self-contained Windows x64 ZIP and a per-user installer locally; see [packaging instructions](docs/RELEASE_CHECKLIST.md). Local packages in `artifacts/` are not published releases.
+When a release package is available, download the installer or portable ZIP from [GitHub Releases](https://github.com/mglezz/dowlume/releases). Until then, build and run from source. The release script can generate a self-contained Windows x64 ZIP and a per-user installer locally; see [packaging instructions](docs/RELEASE_CHECKLIST.md). Local packages in `artifacts/` are not published releases.
 
 ## Explore the project
 

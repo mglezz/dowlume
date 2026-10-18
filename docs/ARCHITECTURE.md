@@ -8,9 +8,9 @@ The [domain model](requirements/DOMAIN_MODEL.md) explains the conceptual vocabul
 | --- | --- |
 | Dowlume.Core | Immutable records, category validation, classification, lifecycle rules, service contracts. No UI or SQLite dependency. |
 | Dowlume.Monitoring | FileSystemWatcher, bounded channel, deduplication, readiness observations, periodic discovery. Depends only on Core. |
-| Dowlume.Infrastructure | SQLite persistence, path checks, verified moves, operation orchestration, Windows shell adapters, diagnostics. |
+| Dowlume.Infrastructure | SQLite persistence, path checks, verified moves, operation orchestration, Windows integration, diagnostics. Native recycling is disabled. |
 | Dowlume.App | Avalonia views, view models, dialogs, tray behavior, constructor-based composition and shutdown. |
-| Dowlume.Tests | Unit, disposable-filesystem integration, native shell, and headless desktop workflow tests. |
+| Dowlume.Tests | Unit, disposable-filesystem integration, disabled-recycle safety, and headless desktop workflow tests. |
 
 ## Component diagram
 
@@ -25,7 +25,6 @@ flowchart LR
     Infrastructure --> Core
     Infrastructure -.-> Database[("SQLite<br/>Settings, files, journal")]
     Infrastructure -.-> Disk["Local filesystem<br/>Category and review folders"]
-    Infrastructure -.-> Shell["Windows shell<br/>Recycle Bin"]
     Monitoring -.-> Disk
 ```
 
@@ -77,17 +76,18 @@ Untracked -> Organized -> InReview
                              |-> Kept (no further aging)
                              |-> Snoozed -> InReview after 7 days
                              |-> Moved (outside application management)
-                             |-> Recycled (restore through Windows)
 Managed file disappears -> Missing
 ```
 
 First-seen time is preserved throughout decisions and undo. Keep and Snooze are persisted, not inferred from filesystem timestamps. Existing untracked category contents are left alone.
 
+`Recycled` and `OperationKind.Recycle` remain readable for historical journals, but v0.1.0 cannot create that transition. No database migration or enum renumbering is needed. Recoverable quarantine is [future design work](RECYCLE_CAPACITY_INVESTIGATION.md#proposed-recoverable-quarantine).
+
 ## Operation journal and recovery
 
 Each entry contains an ID, kind, status, UTC timestamp, source/destination, before/after file snapshots, optional undo link, and a user-safe error. State and completion are committed in one SQLite transaction after the filesystem action. This is not a transaction across SQLite and NTFS: Pending entries bridge that gap.
 
-Recovery verifies SHA-256 before completing a move that reached its destination. Conflicting or missing copies remain NeedsAttention and block further automatic operations for that file/path. Recycle disappearance cannot be proved from the original path alone; its ambiguous recovery requires restoring the item through Windows. Failure handling continues reconciliation for unrelated files.
+Recovery verifies SHA-256 before completing a move that reached its destination. Conflicting or missing copies remain NeedsAttention and block further automatic operations for that file/path. Historical Recycle is inspected before move recovery: a matching source marks the attempt Failed, while absent or changed content stays NeedsAttention, even if a destination is recorded. It is never replayed, inferred complete, or promised recoverable. Completed historical records remain unchanged. Failure handling continues reconciliation for unrelated files.
 
 Undo verifies that the selected operation is the latest completed action on the file, that no completed undo references it, and that the current tracked record still matches. Restoring to an occupied path fails instead of overwriting. Undoing an initial organization creates a Kept record at the original path to prevent a watcher loop. Undoing a review move snoozes the restored file for seven days to prevent an immediate lifecycle loop.
 
@@ -99,8 +99,8 @@ Undo verifies that the selected operation is the latest completed action on the 
 - Recheck paths before moving; never pass `overwrite: true` for user-file moves.
 - On Windows, hold a source handle with read/delete access that denies other writers and deleters. Rename that handle without replacement; for another volume, copy through Windows, verify the destination's main-stream hash under a read lock, then mark only the verified source handle for deletion. Windows copying preserves alternate streams.
 - Hold ancestor directory handles without delete sharing while mutating paths to prevent concurrent folder renames. Recheck reparse points after acquiring each handle.
-- Use Windows `IFileOperation` with recycle-only flags and a progress sink that aborts if the item is not marked recyclable or reviewed content changed. Keep a read handle that denies writes throughout recycling; shell deletion requires delete sharing, so the shell handoff is not atomic against a hostile same-user process.
-- Never empty the user's Recycle Bin or permanently delete managed files.
+- Disable recycling at the UI command, public organizer method, internal executor, and compatibility adapter before filesystem access or journal creation. The organizer has no recycle-adapter dependency. The original COM adapter and progress sink are [archived as text](archive/native-recycle/README.md), excluded from compilation and packaging.
+- Never empty or add items to the user's Recycle Bin. Source removal is limited to verified cross-volume moves; there is no standalone delete operation.
 
 Path checks reduce ordinary link and rename hazards but are not a security boundary against a hostile same-user process. Cross-volume moves are non-atomic and may require manual reconciliation. Hashing is streamed, so memory use does not grow with file size; processing time does grow with it. Organizer and recovery queries still read record collections into memory and are intended for personal download folders, not millions of files.
 
@@ -120,5 +120,5 @@ Primary API references used by the implementation:
 
 - [FileSystemWatcher and buffer overflow behavior](https://learn.microsoft.com/en-us/dotnet/api/system.io.filesystemwatcher?view=net-10.0).
 - [Handle-based rename and disposition](https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-setfileinformationbyhandle) and [Windows file copying](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-copyfilew).
-- [Windows file-operation flags](https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ifileoperation-setoperationflags), [pre-delete cancellation](https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ifileoperationprogresssink-predeleteitem), and [transfer flags](https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/ne-shobjidl_core-_transfer_source_flags).
+- Historical native investigation: [Windows file-operation flags](https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ifileoperation-setoperationflags), [pre-delete cancellation](https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ifileoperationprogresssink-predeleteitem), and [transfer flags](https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/ne-shobjidl_core-_transfer_source_flags). These APIs are no longer used for recycling by Dowlume.
 - [Avalonia storage dialogs](https://docs.avaloniaui.net/docs/services/storage/storage-provider) and [headless rendering](https://docs.avaloniaui.net/docs/testing/setting-up-the-headless-platform).

@@ -13,7 +13,7 @@ dotnet format Dowlume/Dowlume.slnx --verify-no-changes --no-restore
 dotnet list Dowlume/Dowlume.slnx package --vulnerable --include-transitive
 ```
 
-Run the separate [Windows shell test](GETTING_STARTED.md#build-and-test) when changing native recycle behavior. It leaves one disposable text file in Recycle Bin and never empties it. All filesystem tests use temporary directories; never point tests at personal Downloads.
+Native recycling is disabled for v0.1.0. Run the full regression suite; do not run historical recycle/capacity probes or modify the preserved evidence VM. All filesystem tests use temporary directories; never point tests at personal Downloads. A future quarantine implementation requires separate design and acceptance review.
 
 For documentation changes, check local links, image rendering, and `git diff --check`. Use the [screenshot renderer](docs/images/README.md) for publishable images with fictional data. `DOWLUME_TEST_SCREENSHOTS` captures all five screens during the desktop workflow test, but those captures can contain personal temporary paths and must be inspected before sharing.
 

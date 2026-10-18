@@ -65,7 +65,7 @@ internal static class Program
                     store.SaveOperation(review);
                 }
 
-                var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness(), new NoRecycle());
+                var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness());
                 var model = new MainViewModel(store, organizer, new NoDialogs(), new DiagnosticLog(Path.Combine(profile, "diagnostics.jsonl")));
                 var window = new MainWindow { DataContext = model };
                 window.Show();
@@ -96,6 +96,7 @@ internal static class Program
                     window.Width = window.MinWidth;
                     window.Height = window.MinHeight;
                     Capture(3, "activity-compact.png");
+                    Capture(2, "review-compact.png");
 
                     void Capture(int index, string name)
                     {
@@ -131,8 +132,4 @@ internal static class Program
         public void RevealFile(string path) => throw new InvalidOperationException("Documentation rendering cannot open files.");
     }
 
-    private sealed class NoRecycle : IRecycleBin
-    {
-        public Task RecycleAsync(string path, string expectedHash) => throw new InvalidOperationException("Documentation rendering cannot recycle files.");
-    }
 }

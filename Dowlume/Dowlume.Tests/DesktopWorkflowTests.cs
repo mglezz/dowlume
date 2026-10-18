@@ -25,7 +25,7 @@ public sealed class DesktopWorkflowTests
             string source = workspace.CreateFile("consent.pdf");
             var store = new SqliteStateStore(workspace.Database);
             store.SaveSettings(new AppSettings { DownloadsPath = workspace.Downloads });
-            var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness(TimeSpan.Zero, TimeSpan.Zero), new NoRecycle());
+            var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness(TimeSpan.Zero, TimeSpan.Zero));
             var window = new MainWindow();
             var closed = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
             window.Closed += (_, _) => closed.TrySetResult();
@@ -87,7 +87,7 @@ public sealed class DesktopWorkflowTests
         {
             using var workspace = new TemporaryWorkspace();
             var store = new SqliteStateStore(workspace.Database);
-            var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness(), new NoRecycle());
+            var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness());
             var startup = new TestStartup();
             var model = new MainViewModel(store, organizer, new TestDialogs(),
                 new DiagnosticLog(Path.Combine(workspace.Root, "diagnostics.jsonl")), startup);
@@ -115,7 +115,7 @@ public sealed class DesktopWorkflowTests
         var settings = new AppSettings { DownloadsPath = workspace.Downloads };
         var store = new SqliteStateStore(workspace.Database);
         store.SaveSettings(settings);
-        var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness(TimeSpan.Zero, TimeSpan.Zero), new NoRecycle());
+        var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness(TimeSpan.Zero, TimeSpan.Zero));
         string source = workspace.CreateFile("Older report.pdf");
         await organizer.OrganizeAsync(source, settings);
         OperationRecord original = Assert.Single(store.GetOperations());
@@ -207,7 +207,7 @@ public sealed class DesktopWorkflowTests
             var store = new SqliteStateStore(workspace.Database);
             store.SaveSettings(settings);
             var clock = new TestClock();
-            var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness(TimeSpan.FromMilliseconds(5), TimeSpan.Zero), new NoRecycle(), clock);
+            var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness(TimeSpan.FromMilliseconds(5), TimeSpan.Zero), clock);
             var dialogs = new TestDialogs();
             var model = new MainViewModel(store, organizer, dialogs, new DiagnosticLog(Path.Combine(workspace.Root, "diagnostics.jsonl")));
             var window = new MainWindow { DataContext = model };
@@ -232,6 +232,24 @@ public sealed class DesktopWorkflowTests
             await organizer.ReconcileAsync(settings);
             await model.RefreshAsync();
             model.SelectedReview = Assert.Single(model.ReviewFiles);
+            TrackedFile reviewed = model.SelectedReview;
+            OperationRecord[] beforeRecycle = store.GetOperations().ToArray();
+            TabControl reviewTabs = window.GetVisualDescendants().OfType<TabControl>().Single();
+            reviewTabs.SelectedIndex = 2;
+            window.UpdateLayout();
+            Button recycle = window.GetVisualDescendants().OfType<Button>().Single(button => button.Command == model.RecycleCommand);
+            Assert.True(recycle.IsEffectivelyVisible);
+            Assert.False(recycle.IsEffectivelyEnabled);
+            Assert.False(model.RecycleCommand.CanExecute(null));
+            Assert.Contains(window.GetVisualDescendants().OfType<TextBlock>(), text => text.IsEffectivelyVisible && text.Text == model.RecyclingNotice);
+            int confirmations = dialogs.ConfirmationCount;
+            // Direct command execution must also refuse, even if a caller ignores CanExecute.
+            await model.RecycleCommand.ExecuteAsync(null);
+            Assert.Equal(model.RecyclingNotice, model.ErrorMessage);
+            Assert.Equal(confirmations, dialogs.ConfirmationCount);
+            Assert.Equal(beforeRecycle, store.GetOperations());
+            Assert.Equal(reviewed.ContentHash, new SafeFileMover().Hash(reviewed.CurrentPath));
+            Assert.Equal(reviewed, Assert.Single(model.ReviewFiles));
             await model.KeepCommand.ExecuteAsync(null);
             Assert.Empty(model.ReviewFiles);
             Assert.Equal(LifecycleStatus.Kept, Assert.Single(model.ManagedFiles).Status);
@@ -279,16 +297,20 @@ public sealed class DesktopWorkflowTests
             get; set;
         }
         public Task<string?> ChooseFolderAsync(string title) => Task.FromResult<string?>(null);
-        public Task<bool> ConfirmAsync(string title, string message, string action) => Task.FromResult(Confirm);
+        public int ConfirmationCount
+        {
+            get; private set;
+        }
+        public Task<bool> ConfirmAsync(string title, string message, string action)
+        {
+            ConfirmationCount++;
+            return Task.FromResult(Confirm);
+        }
         public void RevealFile(string path)
         {
         }
     }
 
-    private sealed class NoRecycle : IRecycleBin
-    {
-        public Task RecycleAsync(string path, string expectedHash) => throw new InvalidOperationException("This test does not recycle files.");
-    }
 
     private sealed class TestStartup : IStartupRegistration
     {

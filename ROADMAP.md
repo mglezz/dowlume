@@ -10,15 +10,16 @@
 
 ## Remaining for public 0.1.0
 
-- [ ] Clean-machine installation, first-use, upgrade, and uninstall acceptance testing.
+- [x] Earlier candidate clean-machine automated package acceptance (Windows 11 build 26300); retained as historical evidence.
+- [ ] Repeat affected package checks on the final containment build in a separate clean machine; complete manual first use, sign-in startup, and wizard checks.
 - [x] Physical cross-volume move, undo, and interrupted-copy recovery testing on separate NVMe/SATA disks.
-- [ ] Disabled/full Recycle Bin testing in an isolated Windows environment.
+- [x] Disable native recycling in v0.1.0 at the UI, organizer, and adapter boundaries after failed capacity probes; preserve evidence without rerunning them.
 - [ ] Independent release approval after integration and acceptance checks.
 - [ ] Decide on signing, sign when a certificate is available, and publish release notes, binaries, and checksums with tag `v0.1.0`.
 
 The [release checklist](docs/RELEASE_CHECKLIST.md) is the detailed acceptance record. Local package generation and automated tests do not complete these gates.
 
-Current work is limited to Windows release hardening. Clean-machine testing is unavailable, so the stable release remains unpublished. The [acceptance kit and procedure](docs/WINDOWS_ACCEPTANCE.md) prepare the remaining tests; new features and Linux/macOS work stay deferred.
+Current work is limited to Windows release hardening. Earlier clean-guest results do not approve changed binaries. The evidence VM and checkpoints must remain untouched; use a separate environment for final acceptance. The [acceptance kit and procedure](docs/WINDOWS_ACCEPTANCE.md) prepare the remaining tests; new features and Linux/macOS work stay deferred.
 
 ## Completed Windows MVP
 
@@ -52,7 +53,7 @@ Current work is limited to Windows release hardening. Clean-machine testing is u
 - [x] Persist first-seen time, category, paths, status, and content hash.
 - [x] Configurable category age thresholds.
 - [x] Expiring Files holding area.
-- [x] Persistent Keep, seven-day Snooze, explicit Move, and Windows Recycle actions.
+- [x] Persistent Keep, seven-day Snooze, and explicit Move. Native Recycle is disabled for v0.1.0; historical records remain readable.
 - [x] Idempotent processing and protected undo semantics.
 
 ### Milestone 4: Desktop experience
@@ -66,7 +67,7 @@ Current work is limited to Windows release hardening. Clean-machine testing is u
 ### Milestone 5: Hardening and release preparation
 
 - [x] Interrupted journal recovery and ambiguous-copy protection.
-- [x] Content-change, collision, locked-source, and native recycle safety tests.
+- [x] Content-change, collision, locked-source, and disabled-recycle regression tests. Earlier native capacity failures remain recorded, not waived.
 - [x] Structured path-free diagnostic log with bounded rotation.
 - [x] Self-contained Windows ZIP and per-user installer build scripts.
 - [x] Usage, architecture, contribution, branch, and release documentation.
@@ -83,11 +84,11 @@ Current work is limited to Windows release hardening. Clean-machine testing is u
 These are possible directions after the MVP release, without scheduled versions or dates.
 
 - Duplicate detection and storage insights.
+- Recoverable same-volume quarantine with explicit restore and no eviction, as [proposed in the investigation](docs/RECYCLE_CAPACITY_INVESTIGATION.md#proposed-recoverable-quarantine); not implemented in v0.1.0.
 - Richer classification rules and virtual organization.
 - Multi-folder simultaneous monitoring.
 - Following external renames and explicitly accepting edited tracked content.
 - Incremental organizer/recovery queries and indexed history searches for very large folders.
-- Optional Windows startup integration.
 - [Linux/macOS platform implementations](docs/PLATFORM_SUPPORT.md), localization, and broader accessibility review.
 
 No AI classification, cloud synchronization, arbitrary scripts, or permanent automatic deletion is included in this MVP.

@@ -199,17 +199,12 @@ public partial class MainViewModel : ObservableObject
         await RefreshAsync();
     });
 
-    [RelayCommand]
-    private Task RecycleAsync() => RunAsync(async () =>
-    {
-        TrackedFile file = RequireReviewSelection();
-        if (!await _dialogs.ConfirmAsync("Send to Recycle Bin?", $"Recycle {file.Name}?\n\nRestore it through Windows Recycle Bin if needed. This action cannot be undone inside Dowlume.", "Send to Recycle Bin"))
-        {
-            return;
-        }
-        await Task.Run(() => _organizer.RecycleAsync(file.Id, SavedSettings(), _shutdown.Token));
-        await RefreshAsync();
-    });
+    public string RecyclingNotice => WindowsRecycleBin.DisabledMessage;
+
+    private static bool CanRecycle() => false;
+
+    [RelayCommand(CanExecute = nameof(CanRecycle))]
+    private Task RecycleAsync() => RunAsync(() => Task.FromException(new NotSupportedException(RecyclingNotice)));
 
     [RelayCommand]
     private Task UndoAsync() => RunAsync(async () =>

@@ -74,5 +74,5 @@ finally {
 }
 Get-Content -LiteralPath $summaryPath
 Write-Host "Reports and logs: $runDirectory"
-Write-Host 'Keep the reports and disposable fixtures. Manual first-use and Recycle Bin policy acceptance remain separate.'
+Write-Host 'Keep the reports and disposable fixtures. Manual first-use and disabled-recycling checks remain separate. Do not run native recycle policy probes.'
 if (-not $summary.Passed) { throw "Acceptance failed. Inspect $summaryPath before rerunning." }
