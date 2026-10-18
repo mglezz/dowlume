@@ -8,7 +8,7 @@ Dowlume is a local-first Windows desktop application that organizes completed do
 
 **Status:** Windows MVP implemented; **0.1.0 is a release candidate, not a published stable release**. Run from source while public packages are pending. See [validation](docs/VALIDATION.md) and the [release checklist](docs/RELEASE_CHECKLIST.md).
 
-The current focus is Windows release reliability. **Native recycling is disabled in v0.1.0**, including internal execution, after Recycle Bin capacity tests failed to preserve files. Keep, Snooze, Move, and eligible Undo remain available. The [investigation and future quarantine design](docs/RECYCLE_CAPACITY_INVESTIGATION.md) retain the failed evidence. Final candidate acceptance, independent review, and explicit publication approval remain pending.
+The current focus is Windows release reliability. **Native recycling is disabled in v0.1.0**, including internal execution, after Recycle Bin capacity tests failed to preserve files. Keep, Snooze, Move, and eligible Undo remain available. The [investigation and future quarantine design](docs/RECYCLE_CAPACITY_INVESTIGATION.md) retain the failed evidence. Automated acceptance passed; the owner confirmed human acceptance and independent review passed on 2026-10-18. Explicit publication authorization remains pending; see the [accepted candidate](docs/RELEASE_CANDIDATE_0.1.0.md).
 
 [User guide](docs/USER_GUIDE.md) · [Developer setup](GETTING_STARTED.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
 

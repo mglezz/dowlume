@@ -1,6 +1,8 @@
 # Dowlume 0.1.0 — Windows
 
-**Release draft: not approved or published as stable.** Native recycling is disabled in v0.1.0 after capacity tests failed to preserve files. Final-artifact clean-machine/manual acceptance, independent review, and explicit owner authorization remain pending. The [capacity investigation](https://github.com/mglezz/dowlume/blob/main/docs/RECYCLE_CAPACITY_INVESTIGATION.md) preserves the failures and future quarantine proposal; it does not claim recovery of lost fixtures.
+Native recycling is disabled in v0.1.0 after capacity tests failed to preserve files. Keep, Snooze, Move, and eligible Undo remain available. The [capacity investigation](https://github.com/mglezz/dowlume/blob/main/docs/RECYCLE_CAPACITY_INVESTIGATION.md) preserves the failures and future quarantine proposal; it does not claim recovery of lost fixtures.
+
+The Windows artifacts come from clean source commit `94ba177ea0da5e4809f87a59edfe5c7893b65537`. All 69 automated tests, security checks, and exact-artifact package/first-use automation passed, including a separate clean Windows 11 guest without shared .NET. On 2026-10-18, the owner confirmed that all human acceptance tests and independent review passed with no apparent issues. See the [acceptance record](https://github.com/mglezz/dowlume/blob/main/docs/RELEASE_CANDIDATE_0.1.0.md) for provenance and checksums.
 
 Dowlume organizes completed downloads into configurable categories and moves aging files into Expiring Files for your decision. Preview and confirmation precede organization; monitoring starts paused after every launch.
 

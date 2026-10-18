@@ -1,12 +1,12 @@
 # Windows v0.1.0 candidate: 94ba177
 
-This is an unpublished, unsigned candidate. Native recycling is disabled. No final tag or stable release has been created by this work. Human acceptance and explicit publication authorization remain mandatory.
+This is an accepted, unpublished, unsigned candidate. Native recycling is disabled. Automated acceptance passed; on 2026-10-18 the owner reported all human tests and independent review passed. No final tag or stable release has been created by this work. Explicit publication authorization is the remaining gate.
 
 ## Exact artifacts
 
 Source: `94ba177ea0da5e4809f87a59edfe5c7893b65537`, clean merged `main` after [PR #20](https://github.com/mglezz/dowlume/pull/20). The later acceptance-documentation commit records these artifacts; it does not change their source identity. `BUILD-INFO.json` records `DirtyWorkingTree: false`, self-contained `win-x64`, and unsigned packaging.
 
-Local release directory: `artifacts/releases/v0.1.0-94ba177-20261018/`. Preserve these exact files for remaining acceptance; any rebuilt binaries need new hashes and affected checks repeated.
+Original tested candidate: `artifacts/releases/v0.1.0-94ba177-20261018/`. Final publication staging: `artifacts/releases/v0.1.0-final-94ba177-20261018/`. The installer, portable, acceptance ZIP and build information are byte-identical to the tested files. Only the standalone release notes and their checksum were finalized after human acceptance. Both directories are retained; any rebuilt binaries need new hashes and affected checks repeated.
 
 | File | SHA-256 |
 | --- | --- |
@@ -14,9 +14,9 @@ Local release directory: `artifacts/releases/v0.1.0-94ba177-20261018/`. Preserve
 | `Dowlume-0.1.0-win-x64.zip` | `8806F9181E348AE1429921FE69476BFE6693072A419F9DA6CD22F3632B5148C3` |
 | `Dowlume-0.1.0-windows-acceptance.zip` | `3E24F5E9EAD0F7BC0A7A01F5E4813B955A242A7C70A19BF0332AB0F2792A6E02` |
 | `BUILD-INFO.json` | `2C3C714D4261759253D1E0AA248780AB88BA474D617F8F73BD706AC2C4795A8F` |
-| `RELEASE_NOTES_0.1.0.md` | `DA0760C60B8E793A3D773146F18DE986C09E795F189358BA559A750DD54172CA` |
+| `RELEASE_NOTES_0.1.0.md` | `4A7336D76C5803C2625FECD26B47FE815CFF1370C205EDF447C505035C1D6BF2` |
 
-`SHA256SUMS.txt` contains those five entries; all were verified after packaging. The earlier upgrade fixture is the retained `cf42326` installer with SHA-256 `73C465CBFC4A47562D4859B9EF9AE0338EF66C9D836C5B07599E4CD37C93F507`.
+The final `SHA256SUMS.txt` contains those five entries. The original candidate's draft notes remain retained with hash `DA0760C60B8E793A3D773146F18DE986C09E795F189358BA559A750DD54172CA`; they are not the final notes. The earlier upgrade fixture is the retained `cf42326` installer with SHA-256 `73C465CBFC4A47562D4859B9EF9AE0338EF66C9D836C5B07599E4CD37C93F507`.
 
 ## Completed checks
 
@@ -41,11 +41,16 @@ The host kit is `E:\Dowlume.ContainmentAcceptance\clean-20261018-7c1adee0\Kit-94
 
 The cloned guest clock was approximately one hour ahead of the host when these reports were generated. Raw timestamps are preserved unchanged; provenance and artifact hashes identify the run, rather than assuming clock agreement. These are automated results, not a sign-off by an independent human tester.
 
-## Remaining steps in order
+## Human acceptance and independent review
 
-1. Start only `Dowlume-Windows11-Containment` and sign in as `DowlumeTester`. Run `C:\DowlumeAcceptance\containment-94ba177\Dowlume-0.1.0-win-x64-setup.exe` interactively. Complete [first use with a person](WINDOWS_ACCEPTANCE.md#first-use-with-a-person) on these exact artifacts: installer wizard/shortcuts, preview/cancel/organize/pause, tray overflow, selected-file disabled Recycle and safe Review/Undo, keyboard/scaling, actual Windows sign-in with startup enabled and disabled, and wizard upgrade/uninstall. Use a new fictional sample folder. Record tester, Windows build, date, hashes, observed outcomes and any issue. Automated checks do not certify these human checks. Do not rerun the completed automated kit or any native recycle probe.
-2. Obtain independent review of the integrated containment change and all acceptance results; resolve any findings and repeat affected checks if binaries change.
-3. Obtain the owner's explicit authorization to publish, as requested. The instruction to prepare and test the version is not treated as permission to skip unfinished gates.
-4. Finalize the release notes' draft warning, refresh its checksum if edited, and reverify every distributable checksum. Tag only the accepted source commit as `v0.1.0`, then publish the installer, portable ZIP, acceptance ZIP, build information, notes and checksums. Do not attach private VM images, profiles or raw reports containing local paths.
+On 2026-10-18, following the handoff of these exact artifacts, the owner reported that all human acceptance tests had been completed successfully and the application had no apparent problems. In a separate clarification, the owner explicitly confirmed that this included independent review of the change and results. This closes the human first-use, sign-in startup, wizard, selected-file Review/Undo, display/keyboard and independent-review gates described in the [acceptance procedure](WINDOWS_ACCEPTANCE.md#first-use-with-a-person).
+
+Provenance: owner-reported acceptance in the project conversation, not agent-observed manual execution. No separate tester identity or individual manual log was supplied; none is invented. The automated guest's Windows build and raw reports are recorded above. Historical native recycle failures remain failures, and missing contents remain unrecovered.
+
+## Publication handoff
+
+1. Verify the final draft contains exactly the six staged files (the five hashed files plus `SHA256SUMS.txt`), targets `94ba177ea0da5e4809f87a59edfe5c7893b65537`, and is still unpublished. Old draft assets are preserved with their original metadata and matching server digests in `artifacts/releases/archive-draft-414647025-20261018/`.
+2. Obtain the owner's explicit authorization to create `v0.1.0` and publish the prepared release, as required by the original instruction. Positive acceptance is recorded separately from publication authorization.
+3. Publish only the verified draft and create the tag at the accepted source commit. Update repository status to published and verify the public downloads against the checksums. Do not attach private VM images, profiles or raw reports containing local paths.
 
 The [release checklist](RELEASE_CHECKLIST.md) remains the publication gate. Recoverable quarantine, Linux and macOS remain deferred.

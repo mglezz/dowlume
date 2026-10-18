@@ -2,7 +2,7 @@
 
 Target: Windows x64, version 0.1.0. Local validation is recorded in [Validation](VALIDATION.md). Native recycling is disabled at every execution boundary for this version. Earlier clean-guest package acceptance and failed native capacity results remain historical evidence; they do not approve changed binaries. Stable publication requires final-artifact acceptance, independent review, and explicit owner authorization. A GitHub draft or locally built artifact is not a published stable release.
 
-The current candidate is clean merged commit `94ba177`, packaged in `artifacts/releases/v0.1.0-94ba177-20261018/`. Its 69 tests, fresh security scans, hosted checks, and exact-artifact host package/first-use automation passed. It is unsigned and records `DirtyWorkingTree: false`. See the [candidate hashes and remaining steps](RELEASE_CANDIDATE_0.1.0.md). The earlier dirty-tree containment package is retained as historical evidence and is not the publication candidate.
+The accepted candidate is clean merged commit `94ba177`, staged for publication in `artifacts/releases/v0.1.0-final-94ba177-20261018/`. Automated host/clean-guest checks passed; the owner confirmed all human tests and independent review passed on 2026-10-18. The tested binaries and build information are unchanged; standalone notes/checksums were finalized. It is unsigned and records `DirtyWorkingTree: false`. See the [candidate hashes and remaining steps](RELEASE_CANDIDATE_0.1.0.md). Earlier candidates remain historical evidence.
 
 ## Reproducible packaging
 
@@ -29,18 +29,18 @@ The [package workflow](../.github/workflows/package.yml) builds candidates and e
 - [x] Verify hosted build, test, formatting, security, and package checks for the containment change: PR packaging passed before merge; merged `94ba177` build/test/format and security passed. Exact merged artifacts also passed local package acceptance; see the candidate record for precise run identities.
 - [x] Rerun direct/transitive dependency, .NET security-analyzer, and redacted Git/source secret scans on clean `94ba177`; reports retained in `artifacts/security/merged-94ba177-20261018/`.
 - [x] Integrate the five implementation PRs into `main` after their hosted checks pass, preserving their commits.
-- [ ] Obtain independent release approval after checking the integrated branch and remaining acceptance results.
+- [x] Obtain independent review of the integrated change and acceptance results: explicitly confirmed by the owner on 2026-10-18; see the candidate record for provenance.
 - [x] Install on a clean supported Windows x64 machine without a preinstalled .NET runtime. The tester reported a passing standard-account guest run on Windows 11 Pro build 26300 for the exact `cf42326` candidate; see [evidence](VALIDATION.md#2026-10-16-clean-guest-package-acceptance).
 - [x] Repeat clean-machine package/upgrade checks for exact `94ba177` artifacts in the separate Windows 11 Pro build 26300 guest as standard `DowlumeTester`, without shared .NET. Package and first-use automation passed; raw reports, hashes and read-only extraction provenance are retained. Evidence VM unchanged.
-- [ ] Confirm first-run preview, cancellation, pause, tray reopen, and exit with a nontechnical tester.
-- [ ] Confirm Windows sign-in startup enabled/disabled behavior and manual wizard reinstall/uninstall in the guest.
+- [x] Confirm human first-run preview, cancellation, pause, tray reopen, and exit: owner reported all human acceptance tests passed on 2026-10-18.
+- [x] Confirm Windows sign-in startup enabled/disabled behavior and manual wizard reinstall/uninstall: included in the owner's positive human-acceptance report.
 - [x] Test a real move and undo between physical NVMe/SATA volumes and interrupt a 512 MiB copy; verify original/partial-copy preservation, NeedsAttention recovery, and blocked retry.
 - [x] Contain the [failed oversized/near-capacity Recycle Bin cases](RECYCLE_CAPACITY_INVESTIGATION.md) by disabling native recycling in the UI, organizer, internal executor, and adapter. Keep historical states and reports; do not relabel native tests as passed.
 - [x] Preserve both existing runs, checkpoints, exports, and recovery findings without modifying the evidence VM. Missing content remains unrecovered; quarantine is future work, outside v0.1.0.
-- [ ] Independently verify disabled recycling and safe review operations on the final artifacts. No native recycle/restore or capacity probe is required or permitted for this release scope.
+- [x] Verify disabled recycling and safe review operations on the final artifacts: included in the owner's positive human-acceptance and independent-review confirmations. No native recycle/restore or capacity probe was repeated.
 - [x] Test upgrade from the earlier local candidate and uninstall on the development PC; sample user files and the local database remain intact. Clean-machine acceptance remains separate.
 - [x] Record the signing decision: initial candidate artifacts are unsigned, identified by SHA-256 and source commit. No signing certificate is configured; signing can be added before publication if one becomes available.
-- [x] Rebuild the integrated containment change from clean merged `main` (`94ba177`); verify `DirtyWorkingTree: false`, checksums, draft notes, and unsigned signing decision. Independent review and remaining exact-artifact acceptance stay separate gates above.
+- [x] Rebuild the integrated containment change from clean merged `main` (`94ba177`); verify `DirtyWorkingTree: false`, checksums, final notes, and unsigned signing decision. Accepted binaries are preserved unchanged.
 - [ ] Obtain the owner's explicit publication authorization after all mandatory checks pass.
 - [ ] Only after authorization, publish release notes, checksums, installer, and ZIP; tag approved source as `v0.1.0`.
 
@@ -48,6 +48,6 @@ Do not mark unavailable hardware tests, clean-machine checks, remote CI, or sign
 
 ## Release draft and publication
 
-Use the [release notes draft](RELEASE_NOTES_0.1.0.md), targeting the tested merge commit. Attach the installer, portable ZIP, acceptance kit, build information, and checksums to an unpublished GitHub draft for `v0.1.0`. Keep the draft warning and do not create the stable Git tag while acceptance is incomplete.
+Use the [finalized release notes](RELEASE_NOTES_0.1.0.md), targeting the tested merge commit. The unpublished GitHub draft must contain only the accepted installer, portable ZIP, acceptance kit, build information, notes, and checksums. Do not create the stable Git tag or publish before the owner's explicit authorization.
 
-After the remaining checks pass for those exact artifacts, record independent review and obtain the owner's explicit authorization. Only then replace the draft warning with the acceptance result and publish the release/tag. Repository visibility is unchanged; a release in a private repository is accessible only to authorized users. Invite testers through the project's normal access process and use the bug-report form to collect problems without private files or database uploads.
+Acceptance and independent review are recorded as passed; publication authorization remains separate. After authorization, publish the verified release/tag, update the repository's publication status, and verify public downloads. Repository visibility is unchanged; a release in a private repository is accessible only to authorized users. Collect future reports without private files or database uploads.
