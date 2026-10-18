@@ -128,6 +128,7 @@
           <StackPanel Spacing="8" Margin="0,0,0,16">
             <TextBlock Text="A little space to decide" Classes="heading" />
             <TextBlock Text="Keep returns a file to its category permanently. Snooze returns it for 7 days. Nothing is deleted automatically." TextWrapping="Wrap" Classes="muted" />
+            <TextBlock Text="{Binding RecyclingNotice}" TextWrapping="Wrap" Classes="muted" />
           </StackPanel>
           <ListBox Grid.Row="1" ItemsSource="{Binding ReviewFiles}" SelectedItem="{Binding SelectedReview}">
             <ListBox.ItemTemplate>

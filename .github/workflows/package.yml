@@ -8,6 +8,8 @@ on:
       - 'scripts/Build-Release.ps1'
       - 'scripts/Test-WindowsPackage.ps1'
       - 'scripts/Test-WindowsTray.ps1'
+      - 'docs/RELEASE_NOTES_0.1.0.md'
+      - 'docs/WINDOWS_ACCEPTANCE.md'
       - '.github/workflows/package.yml'
 permissions:
   contents: read
@@ -38,6 +40,7 @@ jobs:
             artifacts/release-candidate/*.exe
             artifacts/release-candidate/SHA256SUMS.txt
             artifacts/release-candidate/BUILD-INFO.json
+            artifacts/release-candidate/RELEASE_NOTES_0.1.0.md
       - uses: actions/upload-artifact@v4
         if: always()
         with:

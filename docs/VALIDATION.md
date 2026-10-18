@@ -1,5 +1,37 @@
 # Local validation record
 
+## 2026-10-18: Hosted integration and separate clean-guest preparation
+
+Containment was committed as `715834e` and submitted in [PR #20](https://github.com/mglezz/dowlume/pull/20). The first hosted security scan passed. The first build/test run exposed a pre-existing test-fixture race in `FullQueueEventuallyDiscoversEveryFileAndIgnoresTemporaryFiles`: its unconditional `File.Move` callback treated a stale discovery hint as an existing file, and its completion counter advanced before the move. The fixture now exercises the real idempotent organizer, waits for monitor shutdown, and verifies all 40 completed journal entries and file contents. This changes the integration test, not application file-operation behavior. The failed hosted result is retained; it is not waived by local results.
+
+The VM opened for follow-up acceptance was identified as the original evidence VM, with all three checkpoints still present. A separate export of the clean, signed-in checkpoint (before package/native probes) was started into new host storage. The original VM was not restored or used to run tests. Export/preparation alone does not establish guest acceptance; results must identify the new VM and final candidate hashes.
+
+## 2026-10-18: v0.1.0 containment and Windows package validation
+
+Work started on 2026-10-17 and completed locally on 2026-10-18. Base commit: `2dcc06967adb7cf815d9378fc8845c2c8045bb7e`, with uncommitted containment changes. This entry supersedes earlier current-state statements that application changes were on hold or native recycling remained enabled. All earlier dated evidence remains below unchanged. No VM, checkpoint, export, original probe report, or native bin policy was modified; no destructive recycle probe was repeated.
+
+Native recycling is now disabled in the UI command, organizer API, internal decision/execution paths, and compatibility adapter. The organizer no longer has an injectable recycle dependency. COM deletion code and its progress sink are archived as exact text with SHA-256 hashes outside the projects and packages. Old probe entry points refuse before any action. Historical enum values and completed records remain compatible; recovery never replays recycling or infers success from missing content. Keep, Snooze, Move, and eligible Undo remain available. Quarantine is documented future work, not implemented.
+
+| Check | Result |
+| --- | --- |
+| Release regression/integration suite | **69 passed, 0 failed, 0 skipped**, including disabled adapter calls with locked/changed sources, repeated organizer calls, internal execution guards, forced UI command execution, old-journal restart/recovery, safe review/undo, monitoring, collisions, and file races. Native recycling tests were replaced by refusal regressions; the lower total than the old 72-test suite is not a skipped-test result. |
+| Evidence utilities | Five read-only inventory cases and nine in-memory metadata cases passed. No existing bin or guest data was changed. |
+| Release/security builds | Application solution and both helper projects built with **0 warnings and 0 errors**. Direct/transitive NuGet audit reported no vulnerable packages. All .NET security analyzers passed. |
+| Secret scans | Pinned, SHA-256-verified Gitleaks 8.30.1 reported no leaks in 32 local Git-history commits or the tracked/unignored working-source snapshot. This does not attest unseen remote history. |
+| Formatting and source review | Solution and both helper-project format checks passed; `git diff --check` passed. Native shell recycle calls are absent from executable project sources. |
+| Desktop/layout | Headless workflow passed, including the disabled visible Recycle button and forced execution refusal without confirmation or journal mutation. Review at 880 x 680 was inspected: safety explanation and safe controls remain readable. Updated only the affected published Review screenshot. Human Windows scaling/keyboard acceptance remains pending. |
+| Technical documentation | Ten PlantUML diagrams validated/rendered; only three functionally affected activity/state SVGs changed. Those three were visually inspected. Local Markdown paths/anchors validated, including the historical archive; canonical repository links now use `mglezz/dowlume`. External URLs were not network-validated. |
+| Windows packaging | Self-contained `win-x64` Release portable, per-user installer, acceptance kit, release notes, build information, and five SHA-256 entries generated in a fresh directory. No debug symbols or archived native source are distributed. |
+| Package integration on development PC | **Passed**: portable launch/exit; upgrade from verified `cf42326` installer; duplicate-instance refusal; native tray registration and hidden/minimized restore; running-app upgrade/uninstall refusal; startup-entry retention/removal; graceful exit; profile and fictional-file preservation after uninstall. All five artifact checksums matched. This host has .NET installed and is not clean-machine acceptance. |
+
+Local outputs: `artifacts/releases/v0.1.0-containment-20261018/`. Installer SHA-256: `CE14118D5BECECA71BE79B67D4004E88D59B5A7CB17C9143299E707036B4F173`. Portable SHA-256: `28F1ABABACEBC2D9704CD8FE43777A281EC63D2B6B5776A8A645EAD144C50B86`. `SHA256SUMS.txt` also covers release notes, acceptance ZIP, and `BUILD-INFO.json`. The build is **unsigned** and explicitly records **DirtyWorkingTree: true**; it is a local review candidate, not approved publication material.
+
+Reports are retained under `artifacts/validation-20261017-containment/` (TRX, package result, link check, screenshots) and `artifacts/security/containment-20261018/` (dependency JSON, SARIF, redacted scans, summary). The package report identifies its unique retained temporary installation/profile/fixture directory and both installer hashes. The earlier candidate is launched only for package upgrade acceptance; monitoring/native recycle operations are never started. Historical archive integrity checks matched all four retained source hashes.
+
+The prior physical NVMe/SATA move/interruption evidence is retained. The verified file-copy engine is unchanged; destructive/native capacity testing and evidence-VM use were not repeated. The missing oversized/sentinel contents remain unrecovered. No quarantine or Linux/macOS development was started.
+
+**Still mandatory before publication:** review and integrate the changes, pass hosted CI for the final revision, rebuild from clean merged `main`, rerun current security/package checks and affected clean-machine acceptance against those exact hashes in a separate environment, complete nontechnical first use, manual sign-in startup, wizard upgrade/uninstall, disabled-Recycle and safe-review checks, obtain independent approval, and then obtain the owner's explicit publication authorization. Final tag `v0.1.0` and release remain uncreated/unpublished by this work. See the [release checklist](RELEASE_CHECKLIST.md) and [Windows procedure](WINDOWS_ACCEPTANCE.md).
+
 ## 2026-10-17: Existing clear key permits checkpoint inspection
 
 A separate forensic copy of the exported failure checkpoint was opened read-only with host-only Dissect tools. The Windows partition contains an existing BitLocker clear key; unlocking in memory succeeded and exposed a valid NTFS filesystem. A recovery password is **not required for this image**. This corrects the earlier assessment below, which reflected the NTFS-only reader's limitation rather than the available BitLocker unlocking mechanisms.

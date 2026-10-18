@@ -18,12 +18,13 @@ REVIEW AND RECOVERY
 
 Aging files move into Expiring Files for your decision. Keep excludes a file
 from further age reviews. Snooze returns it to its category for seven days.
-Move lets you choose another folder. Recycle asks for confirmation and uses
-Windows Recycle Bin, with no permanent-delete fallback.
+Move lets you choose another folder. Recycling is disabled in v0.1.0 because
+Windows Recycle Bin could not reliably preserve files. Leave files in Review
+or use Keep, Snooze, or Move. Recoverable quarantine is future work.
 
 Activity provides search, filters, paths, and undo for eligible actions.
-Undo requires unchanged content and an available original location. Restore
-recycled files through Windows Recycle Bin. For an interrupted operation,
+Undo requires unchanged content and an available original location. Historical
+Recycle records do not guarantee a recoverable copy. For an interrupted move,
 inspect the recorded paths before choosing Retry interrupted operations.
 Ambiguous copies are preserved. Do not delete either copy without checking it.
 
@@ -40,7 +41,7 @@ up that entire folder. No account, cloud synchronization, or telemetry is used.
 
 HELP AND FEEDBACK
 
-Full guide: https://github.com/marcosgonzalezhidalgo/dowlume/blob/main/docs/USER_GUIDE.md
-Report an issue: https://github.com/marcosgonzalezhidalgo/dowlume/issues
+Full guide: https://github.com/mglezz/dowlume/blob/main/docs/USER_GUIDE.md
+Report an issue: https://github.com/mglezz/dowlume/issues
 Include your Windows version, Dowlume version, steps, and expected/actual result.
 Do not attach personal downloads, the database, or unredacted private paths.

@@ -16,7 +16,7 @@ public sealed class OrganizerTests : IDisposable
     {
         _store = new SqliteStateStore(_workspace.Database);
         _settings = new AppSettings { DownloadsPath = _workspace.Downloads };
-        _organizer = new DownloadOrganizer(_store, _mover, new ReadyFiles(), new RefuseRecycle(), _clock);
+        _organizer = new DownloadOrganizer(_store, _mover, new ReadyFiles(), _clock);
     }
 
     [Fact]
@@ -163,15 +163,23 @@ public sealed class OrganizerTests : IDisposable
     }
 
     [Fact]
-    public async Task RecycleFailureNeverFallsBackToDeletion()
+    public async Task DisabledRecyclePreservesContentAndJournalEvenForRepeatedRequests()
     {
         await _organizer.OrganizeAsync(_workspace.CreateFile("report.pdf"), _settings);
         _clock.Now = _clock.Now.AddDays(31);
         await _organizer.ReconcileAsync(_settings);
         TrackedFile file = Assert.Single(_store.GetFiles());
-        await Assert.ThrowsAsync<IOException>(() => _organizer.RecycleAsync(file.Id, _settings));
-        Assert.True(File.Exists(file.CurrentPath));
-        Assert.Equal(LifecycleStatus.InReview, Assert.Single(_store.GetFiles()).Status);
+        OperationRecord[] history = _store.GetOperations().ToArray();
+        await Task.WhenAll(Enumerable.Range(0, 20).Select(_ =>
+            Assert.ThrowsAsync<NotSupportedException>(() => _organizer.RecycleAsync(file.Id, _settings))));
+        using var canceled = new CancellationTokenSource();
+        canceled.Cancel();
+        await Assert.ThrowsAsync<NotSupportedException>(() => _organizer.RecycleAsync(Guid.NewGuid(), _settings, canceled.Token));
+        Assert.Equal(file.ContentHash, _mover.Hash(file.CurrentPath));
+        Assert.Equal(file, Assert.Single(_store.GetFiles()));
+        Assert.Equal(history, _store.GetOperations());
+        await _organizer.KeepAsync(file.Id, _settings);
+        Assert.Equal(LifecycleStatus.Kept, Assert.Single(_store.GetFiles()).Status);
     }
 
     [Fact]
@@ -200,7 +208,7 @@ public sealed class OrganizerTests : IDisposable
         await _organizer.ReconcileAsync(_settings);
         TrackedFile file = Assert.Single(_store.GetFiles());
         var readiness = new PausedReadiness();
-        var organizer = new DownloadOrganizer(_store, _mover, readiness, new RefuseRecycle(), _clock);
+        var organizer = new DownloadOrganizer(_store, _mover, readiness, _clock);
         Task keep = organizer.KeepAsync(file.Id, _settings);
         await readiness.Entered.Task.WaitAsync(TimeSpan.FromSeconds(5));
         Task snooze = organizer.SnoozeAsync(file.Id, _settings);
@@ -311,10 +319,6 @@ public sealed class OrganizerTests : IDisposable
         public Task<bool> IsReadyAsync(string path, CancellationToken cancellationToken) => Task.FromResult(File.Exists(path));
     }
 
-    private sealed class RefuseRecycle : IRecycleBin
-    {
-        public Task RecycleAsync(string path, string expectedHash) => throw new IOException("Simulated unavailable recycle bin.");
-    }
 
     private sealed class PausedReadiness : IFileReadiness
     {

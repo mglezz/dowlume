@@ -2,6 +2,8 @@
 
 This is the Hyper-V setup companion to [Windows acceptance](WINDOWS_ACCEPTANCE.md). Preparing a VM does not complete any guest acceptance check. Use only fictional files and keep the GitHub release unpublished until explicitly authorized.
 
+**Preserve the existing evidence VM and all checkpoints unchanged.** The examples below use a different VM name and storage root for final containment acceptance; never substitute the evidence VM. No VM was created or changed during containment work.
+
 ## Create the guest on the host
 
 Run PowerShell from an account authorized to manage Hyper-V. `Get-VM` must succeed; an empty result means there are no VMs. Choose a new directory on a fixed NTFS volume with at least 100 GiB free. The script refuses an existing directory or VM name and retains partial preparation if a command fails.
@@ -9,9 +11,9 @@ Run PowerShell from an account authorized to manage Hyper-V. `Get-VM` must succe
 ```powershell
 Get-VM
 # Choose storage paths suitable for this host; do not reuse a personal folder.
-New-Item -ItemType Directory -Path E:\Dowlume.AcceptanceVM\Media
+New-Item -ItemType Directory -Path E:\Dowlume.ContainmentAcceptance\Media
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\New-WindowsAcceptanceVm.ps1 `
-    -Path E:\Dowlume.AcceptanceVM\Windows11Vm
+    -Path E:\Dowlume.ContainmentAcceptance\Windows11Vm -Name 'Dowlume-Windows11-Containment'
 ```
 
 The guest has Generation 2 firmware, Microsoft Windows Secure Boot, a virtual TPM, two virtual CPUs, 4–6 GiB dynamic memory, and a 96 GiB dynamic system disk. It uses the existing Default Switch; no host networking or Recycle Bin settings are changed. Automatic start and automatic checkpoints are disabled. The guest stays powered off. Hyper-V Guest Service Interface is enabled for copying the test kit without a network share.
@@ -26,8 +28,8 @@ In host PowerShell, substitute the downloaded filename and published hash:
 
 ```powershell
 $ErrorActionPreference = 'Stop'
-$vm = Get-VM -Name 'Dowlume-Windows11-Acceptance'
-$iso = 'E:\Dowlume.AcceptanceVM\Media\<downloaded-file>.iso'
+$vm = Get-VM -Name 'Dowlume-Windows11-Containment'
+$iso = 'E:\Dowlume.ContainmentAcceptance\Media\<downloaded-file>.iso'
 $expectedHash = '<Microsoft SHA-256 for this exact ISO>'
 if ($expectedHash -notmatch '^[A-Fa-f0-9]{64}$') { throw 'Enter the official SHA-256 first.' }
 $actualHash = (Get-FileHash -LiteralPath $iso -Algorithm SHA256).Hash
@@ -41,9 +43,9 @@ Set-VMFirmware -VM $vm -FirstBootDevice $dvd
     Sha256 = $actualHash
     Source = 'https://www.microsoft.com/en-us/software-download/windows11'
     VerifiedAtUtc = [DateTime]::UtcNow.ToString('o')
-} | ConvertTo-Json | Set-Content -LiteralPath E:\Dowlume.AcceptanceVM\Windows11Vm\ISO-VERIFICATION.json -Encoding UTF8
+} | ConvertTo-Json | Set-Content -LiteralPath E:\Dowlume.ContainmentAcceptance\Windows11Vm\ISO-VERIFICATION.json -Encoding UTF8
 # VMConnect is intentionally visible for Windows setup.
-Start-Process -FilePath "$env:SystemRoot\System32\vmconnect.exe" -ArgumentList 'localhost','Dowlume-Windows11-Acceptance'
+Start-Process -FilePath "$env:SystemRoot\System32\vmconnect.exe" -ArgumentList 'localhost','Dowlume-Windows11-Containment'
 Start-VM -VM $vm
 ```
 
@@ -54,7 +56,7 @@ Finish Windows setup and updates. Create a separate **standard** local test acco
 Shut down the guest normally, then create the clean baseline from the host:
 
 ```powershell
-$vm = Get-VM -Name 'Dowlume-Windows11-Acceptance'
+$vm = Get-VM -Name 'Dowlume-Windows11-Containment'
 if ($vm.State -ne 'Off') { throw 'Shut down the guest before taking the clean baseline.' }
 Get-VMDvdDrive -VM $vm | Set-VMDvdDrive -Path $null
 Set-VMFirmware -VM $vm -FirstBootDevice (Get-VMHardDiskDrive -VM $vm)
@@ -70,9 +72,9 @@ With Windows running, copy the staged files from the host. The unique guest dire
 
 ```powershell
 $ErrorActionPreference = 'Stop'
-$vm = Get-VM -Name 'Dowlume-Windows11-Acceptance'
+$vm = Get-VM -Name 'Dowlume-Windows11-Containment'
 if ($vm.State -ne 'Running') { throw 'Start Windows and finish setup first.' }
-$kit = 'E:\Dowlume.AcceptanceVM\Kit-cf42326'
+$kit = 'E:\Dowlume.ContainmentAcceptance\Kit-final-candidate'
 $guestKit = 'C:\DowlumeAcceptance\' + [Guid]::NewGuid().ToString('N')
 Get-ChildItem -LiteralPath $kit -File | ForEach-Object {
     Copy-VMFile -VM $vm -SourcePath $_.FullName `
@@ -109,7 +111,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\Test-WindowsPackage.ps1 `
     -ReportPath $report -RequireNoSharedDotNet
 ```
 
-Keep the guest desktop unlocked while the script runs. UI Automation and native tray tests require an interactive desktop; PowerShell Direct alone does not provide one. Keep reports and fixture directories when a test fails. Record the guest's Windows build, image provenance, artifact hashes, and observed results. Complete the manual first-use, sign-in, Recycle Bin policy, and Windows restore checks in [Windows acceptance](WINDOWS_ACCEPTANCE.md), taking a guest checkpoint before changing guest Recycle Bin settings.
+Keep the guest desktop unlocked while the script runs. UI Automation and native tray tests require an interactive desktop; PowerShell Direct alone does not provide one. Keep reports and fixture directories when a test fails. Record the guest's Windows build, image provenance, artifact hashes, and observed results. Complete the manual first-use, sign-in, wizard, and disabled-recycling checks in [Windows acceptance](WINDOWS_ACCEPTANCE.md). Do not change bin policy or run native recycle/restore probes.
 
 ## Prepared host state — 2026-10-16
 
@@ -121,4 +123,4 @@ The staged candidate is from clean source `cf42326f4560515b1574ebe7794ef645a551b
 
 The tester subsequently completed Windows installation and signed in as standard `DowlumeTester`. `Start-WindowsGuestAcceptance.ps1` verified the transferred `KIT-VERIFICATION.json` manifest and reported passing clean-guest package acceptance. The runtime-free script retains a summary and transcript under the guest's local application data directory. Its manifest is created on the host from the verified release files and earlier installer; it covers both package scripts as well as the binaries.
 
-The later native capacity probes **failed**. The guest and all three checkpoints are now evidence: do not restore, delete, or rerun them while the [capacity investigation](RECYCLE_CAPACITY_INVESTIGATION.md) is open. `Collect-WindowsRecycleEvidence.ps1` is the read-only diagnostic entry point. `Test-WindowsRecycleAcceptance.ps1` changes guest policy and must not be confused with the collector. The native worker is self-contained, and its three Dowlume assemblies were replaced with the exact files from the verified candidate ZIP before hashing and transfer; developer builds alone are not evidence for the candidate. Manual first use and independent review remain pending, and the release remains unpublished.
+The later native capacity probes **failed**. The guest and all three checkpoints are now evidence: do not restore, delete, or rerun them while the [capacity investigation](RECYCLE_CAPACITY_INVESTIGATION.md) is open. `Collect-WindowsRecycleEvidence.ps1` is the read-only diagnostic entry point. The archived `Test-WindowsRecycleAcceptance.ps1` changed guest policy; its current entry point refuses execution. It must not be confused with the collector. The native worker is self-contained, and its three Dowlume assemblies were replaced with the exact files from the verified candidate ZIP before hashing and transfer; developer builds alone are not evidence for the candidate. Manual first use and independent review remain pending, and the release remains unpublished.

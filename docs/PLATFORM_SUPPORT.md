@@ -8,7 +8,7 @@ The application uses Avalonia and separates domain rules from desktop integratio
 
 | Area | Current implementation | Work required for another platform |
 | --- | --- | --- |
-| Recycling | [WindowsRecycleBin](../Dowlume/Dowlume.Infrastructure/WindowsRecycleBin.cs) uses Windows COM and a recycle-only progress sink | Native Trash adapter with verified recoverability and no permanent-delete fallback; refusal, cancellation, unavailable Trash, and interruption tests |
+| Recycling | [WindowsRecycleBin](../Dowlume/Dowlume.Infrastructure/WindowsRecycleBin.cs) always refuses; native recycling is disabled in v0.1.0 | Recoverable storage requires a separately reviewed design and validation; no native Trash or quarantine implementation is in scope now |
 | File manager | [DesktopDialogs](../Dowlume/Dowlume.App/Services/DesktopDialogs.cs) selects files in Explorer | Native reveal integration with argument-safe process invocation |
 | Folder discovery | [DownloadsFolder](../Dowlume/Dowlume.Infrastructure/DownloadsFolder.cs) uses the Windows known folder, with a simple home-directory fallback | Platform folder discovery, including configured Downloads locations |
 | Filesystem behavior | [PathSafety](../Dowlume/Dowlume.Infrastructure/PathSafety.cs), [SafeFileMover](../Dowlume/Dowlume.Infrastructure/SafeFileMover.cs), and monitoring are validated on Windows | Audit volume case sensitivity, path equality, protected folders, links, mount boundaries, writer locks, collisions, and cross-volume recovery on each target |

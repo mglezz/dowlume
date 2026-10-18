@@ -37,7 +37,7 @@ $packageName = "Dowlume-$version-win-x64"
 $publishDirectory = Join-Path $artifactDirectory $packageName
 
 if (-not $SkipTests) {
-    dotnet test $solution -c Release --filter 'Category!=WindowsShell'
+    dotnet test $solution -c Release
     if ($LASTEXITCODE -ne 0) { throw 'Tests failed. No release was packaged.' }
 }
 
@@ -65,11 +65,17 @@ Copy-Item -LiteralPath $buildInfoPath -Destination $publishDirectory
 $archive = Join-Path $artifactDirectory "$packageName.zip"
 Compress-Archive -Path (Join-Path $publishDirectory '*') -DestinationPath $archive
 $releaseFiles = @($archive, $buildInfoPath)
+$releaseNotes = Join-Path $artifactDirectory 'RELEASE_NOTES_0.1.0.md'
+Copy-Item -LiteralPath (Join-Path $repositoryRoot 'docs/RELEASE_NOTES_0.1.0.md') -Destination $releaseNotes
+$releaseFiles += $releaseNotes
 $acceptanceDirectory = Join-Path $artifactDirectory 'acceptance-kit'
 New-Item -ItemType Directory -Path $acceptanceDirectory | Out-Null
 Copy-Item -LiteralPath (Join-Path $repositoryRoot 'scripts/Test-WindowsPackage.ps1') -Destination $acceptanceDirectory
 Copy-Item -LiteralPath (Join-Path $repositoryRoot 'scripts/Test-WindowsTray.ps1') -Destination $acceptanceDirectory
-Copy-Item -LiteralPath (Join-Path $repositoryRoot 'docs/WINDOWS_ACCEPTANCE.md') -Destination $acceptanceDirectory
+# The standalone kit has no repository-relative docs tree. Resolve its guide links to the source revision.
+$guide = [IO.File]::ReadAllText((Join-Path $repositoryRoot 'docs/WINDOWS_ACCEPTANCE.md'))
+$guide = [regex]::Replace($guide, '\]\(([A-Za-z_]+\.md)(#[^)]*)?\)', ('](https://github.com/mglezz/dowlume/blob/{0}/docs/$1$2)' -f $sourceCommit))
+[IO.File]::WriteAllText((Join-Path $acceptanceDirectory 'WINDOWS_ACCEPTANCE.md'), $guide)
 $acceptanceArchive = Join-Path $artifactDirectory "Dowlume-$version-windows-acceptance.zip"
 Compress-Archive -Path (Join-Path $acceptanceDirectory '*') -DestinationPath $acceptanceArchive
 $releaseFiles += $acceptanceArchive

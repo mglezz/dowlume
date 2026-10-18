@@ -4,7 +4,7 @@ Dowlume is a Windows desktop download organizer. Version 0.1.0 is currently a re
 
 ## Install and start
 
-When a release package is available, download the installer or portable ZIP from [GitHub Releases](https://github.com/marcosgonzalezhidalgo/dowlume/releases). Until then, Dowlume can be [built and run from source](../GETTING_STARTED.md).
+When a release package is available, download the installer or portable ZIP from [GitHub Releases](https://github.com/mglezz/dowlume/releases). Until then, Dowlume can be [built and run from source](../GETTING_STARTED.md).
 
 For a downloaded or locally built package, run the setup executable (for example, `Dowlume-0.1.0-win-x64-setup.exe`). Installation is per user and does not require administrator privileges. Alternatively, extract the complete portable ZIP and run `Dowlume.App.exe`; do not move the executable out of its accompanying files. The .NET runtime is included.
 
@@ -38,7 +38,7 @@ In **Settings**, enable **Start Dowlume when I sign in to Windows** to open this
 
 ## Review files
 
-**Release-candidate limitation:** native Recycle Bin capacity tests failed. Keep valuable files in Review or use Keep/Move; do not use Recycle until the [preservation issue](RECYCLE_CAPACITY_INVESTIGATION.md) is resolved. The behavior below describes the intended workflow, not a validated capacity guarantee.
+**v0.1.0 safety restriction:** native recycling is disabled because Windows Recycle Bin did not reliably preserve files in [capacity testing](RECYCLE_CAPACITY_INVESTIGATION.md). Leave files in Review or use Keep, Snooze, or Move. A future recoverable quarantine is documented but is not implemented.
 
 A file's age starts when Dowlume first organizes it, not from its downloaded or modified timestamp. When its category's review period expires, it moves to `Expiring Files`.
 
@@ -47,12 +47,12 @@ Select a file in **Review**:
 - **Keep:** return it to its category and exclude it from future age reviews.
 - **Snooze 7 days:** return it to its category and review it again after seven days.
 - **Move to:** choose a destination and confirm; Dowlume stops managing that file.
-- **Recycle:** confirm a move to Windows Recycle Bin. Windows must report the file as recyclable; otherwise the action fails. There is no permanent-delete fallback.
+- **Recycle:** disabled in v0.1.0. The explanation appears above the review list; no shell deletion can be invoked through this action.
 - **Show in Explorer:** inspect the selected file without executing it.
 
 Review is a holding area. There is no automatic deletion deadline.
 
-![Review showing a sample archive and installer with Keep, Snooze, Move, and Recycle actions](images/review.png)
+![Review showing Keep, Snooze, Move, and a disabled Recycle action with its safety explanation](images/review.png)
 
 *Select a file to decide what happens next. Nothing is deleted automatically.*
 
@@ -70,7 +70,7 @@ The Overview attention count always includes all Pending and NeedsAttention oper
 
 ## Undo and recovery
 
-Select a completed operation in **Activity** and choose **Undo selected action**. Undo requires unchanged file content, an available original location, and no later completed action on the same file. Undoing initial organization returns the file to the root and marks it Kept, preventing immediate reorganization. Undoing an age-based review move returns the file to its category and snoozes it for seven days, so the next scan does not immediately move it back. Recycle actions are restored through Windows Recycle Bin, not the app.
+Select a completed operation in **Activity** and choose **Undo selected action**. Undo requires unchanged file content, an available original location, and no later completed action on the same file. Undoing initial organization returns the file to the root and marks it Kept, preventing immediate reorganization. Undoing an age-based review move returns the file to its category and snoozes it for seven days, so the next scan does not immediately move it back. Historical Recycle actions cannot be undone in the app; Windows may not have retained their contents.
 
 The operation journal is committed before moving a file. After interruption, **Retry interrupted operations** reconciles the recorded source and destination:
 
@@ -80,7 +80,7 @@ The operation journal is committed before moving a file. After interruption, **R
 | Source is absent and destination has matching content | Complete the interrupted journal entry. |
 | Both paths exist, neither exists, or content differs | Mark NeedsAttention and leave files untouched. |
 
-For NeedsAttention, copy the paths from Activity, inspect them in Explorer, and preserve any content you need. Once the filesystem has one unambiguous matching copy at the recorded source or destination, retry recovery. If recycling was interrupted after the file disappeared, restore it from Windows Recycle Bin to the original location before retrying recovery. Dowlume does not guess whether a missing file was recycled or removed elsewhere.
+For NeedsAttention, copy the paths from Activity, inspect them in Explorer, and preserve any content you need. For interrupted moves, once the filesystem has one unambiguous matching copy at the recorded source or destination, retry recovery. Historical Recycle records are never replayed or inferred complete: an unchanged source marks the attempt Failed and allows safe review decisions; missing or changed content stays NeedsAttention. If a recoverable copy actually exists, preserve it and restore it manually to the original path before checking recovery again. Retry does not restore missing content or guarantee Windows kept it.
 
 If a tracked file was edited, automatic moves refuse to act on the old content hash. Move the edited file to a location outside the managed root if you want to manage it yourself. If you intentionally want to import it again, return it to the Downloads root under a new name and preview it. External renames are not followed automatically.
 

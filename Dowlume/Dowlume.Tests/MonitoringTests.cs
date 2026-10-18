@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using Dowlume.Core;
+using Dowlume.Infrastructure;
 using Dowlume.Monitoring;
 
 namespace Dowlume.Tests;
@@ -32,7 +33,6 @@ public sealed class MonitoringTests
     public async Task FullQueueEventuallyDiscoversEveryFileAndIgnoresTemporaryFiles()
     {
         using var workspace = new TemporaryWorkspace();
-        var seen = new ConcurrentDictionary<string, byte>();
         var errors = new ConcurrentQueue<Exception>();
         for (int index = 0; index < 40; index++)
         {
@@ -40,14 +40,25 @@ public sealed class MonitoringTests
         }
         workspace.CreateFile("incomplete.crdownload");
         var settings = new AppSettings { DownloadsPath = workspace.Downloads };
-        await using var monitor = new DownloadMonitor(settings, async (path, token) =>
+        var store = new SqliteStateStore(workspace.Database);
+        var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness(TimeSpan.Zero, TimeSpan.Zero));
+        await using (var monitor = new DownloadMonitor(settings, async (path, token) =>
         {
             await Task.Delay(5, token);
-            seen.TryAdd(path, 0);
-            File.Move(path, Path.Combine(workspace.Root, Path.GetFileName(path)));
-        }, _ => Task.CompletedTask, errors.Enqueue, TimeSpan.FromMilliseconds(30), capacity: 3);
-        await WaitUntilAsync(() => seen.Count == 40);
+            // Watcher/scanner paths are hints and may be stale. Exercise the real idempotent consumer.
+            await organizer.OrganizeAsync(path, settings, token);
+        }, token => organizer.ReconcileAsync(settings, token), errors.Enqueue, TimeSpan.FromMilliseconds(30), capacity: 3))
+        {
+            // Durable SQLite commits on shared CI storage need more time than the old in-memory counter.
+            await WaitUntilAsync(() => store.GetFiles().Count == 40, TimeSpan.FromSeconds(60),
+                () => $"Only {store.GetFiles().Count}/40 files completed. Background errors: {string.Join(Environment.NewLine, errors)}");
+        }
+        // Shutdown must finish before checking background failures and final contents.
         Assert.Empty(errors);
+        Assert.Equal(40, store.GetOperations().Count);
+        Assert.All(store.GetOperations(), operation => Assert.Equal(OperationStatus.Completed, operation.Status));
+        Assert.All(store.GetFiles(), file => Assert.Equal("Disposable test data", File.ReadAllText(file.CurrentPath)));
+        Assert.Single(Directory.GetFiles(workspace.Downloads));
         Assert.True(File.Exists(Path.Combine(workspace.Downloads, "incomplete.crdownload")));
     }
 
@@ -73,12 +84,16 @@ public sealed class MonitoringTests
         await WaitUntilAsync(() => seen.Count == 2);
     }
 
-    private static async Task WaitUntilAsync(Func<bool> condition)
+    private static async Task WaitUntilAsync(Func<bool> condition, TimeSpan? timeoutDuration = null, Func<string>? diagnostics = null)
     {
-        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-        while (!condition())
+        using var timeout = new CancellationTokenSource(timeoutDuration ?? TimeSpan.FromSeconds(10));
+        try
         {
-            await Task.Delay(20, timeout.Token);
+            while (!condition())
+            {
+                await Task.Delay(20, timeout.Token);
+            }
         }
+        catch (OperationCanceledException) { Assert.Fail(diagnostics?.Invoke() ?? "The expected monitoring condition did not complete before the timeout."); }
     }
 }

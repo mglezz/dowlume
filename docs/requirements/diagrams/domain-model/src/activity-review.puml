@@ -46,12 +46,8 @@ case (Move)
     stop
   endif
 case (Recycle)
-  if (Recycling confirmed?) then (yes)
-    :Intended lifecycle = Recycled;\nWindows must permit recycling;
-  else (no)
-    :Remain InReview;
-    stop
-  endif
+  :Disabled in v0.1.0;\nno file or journal change;\nuse Keep, Snooze, or Move;
+  stop
 endswitch
 :Recheck selection, blocking, readiness,\nand destination; record and attempt\nthe chosen action when valid;
 if (Action and facts confirmed?) then (yes)
