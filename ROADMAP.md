@@ -11,7 +11,9 @@
 ## Remaining for public 0.1.0
 
 - [x] Earlier candidate clean-machine automated package acceptance (Windows 11 build 26300); retained as historical evidence.
-- [ ] Repeat affected package checks on the final containment build in a separate clean machine; complete manual first use, sign-in startup, and wizard checks.
+- [x] Integrate containment in `main`, pass hosted checks, and rebuild clean `94ba177` installer/portable with verified hashes; exact-artifact host package and automated first-use checks passed. See the [candidate record](docs/RELEASE_CANDIDATE_0.1.0.md).
+- [x] Repeat package/upgrade and automated first-use checks on exact `94ba177` artifacts in a separate clean Windows guest without shared .NET; retain independently retrieved raw reports and hashes.
+- [ ] Complete human first use, actual sign-in startup, wizard checks, and selected-file Review acceptance on those artifacts.
 - [x] Physical cross-volume move, undo, and interrupted-copy recovery testing on separate NVMe/SATA disks.
 - [x] Disable native recycling in v0.1.0 at the UI, organizer, and adapter boundaries after failed capacity probes; preserve evidence without rerunning them.
 - [ ] Independent release approval after integration and acceptance checks.

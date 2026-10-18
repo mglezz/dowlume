@@ -2,7 +2,7 @@
 
 Target: Windows x64, version 0.1.0. Local validation is recorded in [Validation](VALIDATION.md). Native recycling is disabled at every execution boundary for this version. Earlier clean-guest package acceptance and failed native capacity results remain historical evidence; they do not approve changed binaries. Stable publication requires final-artifact acceptance, independent review, and explicit owner authorization. A GitHub draft or locally built artifact is not a published stable release.
 
-The 2026-10-18 local containment candidate passed 69 regression tests, security scans, and host package/upgrade/uninstall acceptance. Its artifacts are in `artifacts/releases/v0.1.0-containment-20261018/`; they are unsigned and marked `DirtyWorkingTree: true`. See the [dated evidence](VALIDATION.md#2026-10-18-v010-containment-and-windows-package-validation). Rebuild after integration before final acceptance/publication.
+The current candidate is clean merged commit `94ba177`, packaged in `artifacts/releases/v0.1.0-94ba177-20261018/`. Its 69 tests, fresh security scans, hosted checks, and exact-artifact host package/first-use automation passed. It is unsigned and records `DirtyWorkingTree: false`. See the [candidate hashes and remaining steps](RELEASE_CANDIDATE_0.1.0.md). The earlier dirty-tree containment package is retained as historical evidence and is not the publication candidate.
 
 ## Reproducible packaging
 
@@ -26,12 +26,12 @@ The [package workflow](../.github/workflows/package.yml) builds candidates and e
 
 ## Before public release
 
-- [ ] Verify hosted build, test, formatting, security, and package checks for the final merged containment revision. Earlier candidate CI remains historical evidence.
-- [ ] Rerun direct/transitive dependency, .NET security-analyzer, and redacted Git/source secret scans on the final clean source; retain reports. See Validation for local containment-build results.
+- [x] Verify hosted build, test, formatting, security, and package checks for the containment change: PR packaging passed before merge; merged `94ba177` build/test/format and security passed. Exact merged artifacts also passed local package acceptance; see the candidate record for precise run identities.
+- [x] Rerun direct/transitive dependency, .NET security-analyzer, and redacted Git/source secret scans on clean `94ba177`; reports retained in `artifacts/security/merged-94ba177-20261018/`.
 - [x] Integrate the five implementation PRs into `main` after their hosted checks pass, preserving their commits.
 - [ ] Obtain independent release approval after checking the integrated branch and remaining acceptance results.
 - [x] Install on a clean supported Windows x64 machine without a preinstalled .NET runtime. The tester reported a passing standard-account guest run on Windows 11 Pro build 26300 for the exact `cf42326` candidate; see [evidence](VALIDATION.md#2026-10-16-clean-guest-package-acceptance).
-- [ ] Repeat clean-machine package/upgrade checks for the final containment artifacts in a separate environment, retaining hashes and raw reports. Do not change the evidence VM.
+- [x] Repeat clean-machine package/upgrade checks for exact `94ba177` artifacts in the separate Windows 11 Pro build 26300 guest as standard `DowlumeTester`, without shared .NET. Package and first-use automation passed; raw reports, hashes and read-only extraction provenance are retained. Evidence VM unchanged.
 - [ ] Confirm first-run preview, cancellation, pause, tray reopen, and exit with a nontechnical tester.
 - [ ] Confirm Windows sign-in startup enabled/disabled behavior and manual wizard reinstall/uninstall in the guest.
 - [x] Test a real move and undo between physical NVMe/SATA volumes and interrupt a 512 MiB copy; verify original/partial-copy preservation, NeedsAttention recovery, and blocked retry.
@@ -40,7 +40,7 @@ The [package workflow](../.github/workflows/package.yml) builds candidates and e
 - [ ] Independently verify disabled recycling and safe review operations on the final artifacts. No native recycle/restore or capacity probe is required or permitted for this release scope.
 - [x] Test upgrade from the earlier local candidate and uninstall on the development PC; sample user files and the local database remain intact. Clean-machine acceptance remains separate.
 - [x] Record the signing decision: initial candidate artifacts are unsigned, identified by SHA-256 and source commit. No signing certificate is configured; signing can be added before publication if one becomes available.
-- [ ] Rebuild from clean, reviewed, merged `main`; check `DirtyWorkingTree: false`, final checksums, notes, and signing decision. Repeat affected acceptance on those exact artifacts.
+- [x] Rebuild the integrated containment change from clean merged `main` (`94ba177`); verify `DirtyWorkingTree: false`, checksums, draft notes, and unsigned signing decision. Independent review and remaining exact-artifact acceptance stay separate gates above.
 - [ ] Obtain the owner's explicit publication authorization after all mandatory checks pass.
 - [ ] Only after authorization, publish release notes, checksums, installer, and ZIP; tag approved source as `v0.1.0`.
 
