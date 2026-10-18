@@ -1,5 +1,11 @@
 # Local validation record
 
+## 2026-10-18: Authorized v0.1.0 publication
+
+After all acceptance gates were completed, the owner explicitly authorized publishing v0.1.0 and creating its tag. [Release v0.1.0](https://github.com/mglezz/dowlume/releases/tag/v0.1.0) was published at `2026-10-18T17:00:48Z`. The tag resolves to tested source `94ba177ea0da5e4809f87a59edfe5c7893b65537`; it does not point to a later documentation-only commit. The finalization PR passed hosted build/test/format, security and packaging checks before merging.
+
+All six release assets were downloaded without authentication and independently checked against local accepted files, GitHub's SHA-256 digests, sizes, and the downloaded checksum manifest. All matched. The installer and portable are the exact accepted binaries; standalone notes were finalized and their checksum updated before authorization. Publication evidence is retained in `artifacts/validation-20261018-integration/`, including `published-release.json`, `published-tag.json`, `publication-authorization.json`, `public-download-verification.json`, and the downloaded assets. The [candidate record](RELEASE_CANDIDATE_0.1.0.md#publication-completed) and [checklist](RELEASE_CHECKLIST.md) identify the finished gates. No VM, checkpoint, or failed native-probe evidence was modified.
+
 ## 2026-10-18: Owner-confirmed human acceptance and independent review
 
 After receiving the exact `94ba177` candidate handoff, the owner reported all human tests completed successfully with no apparent application issues. A subsequent explicit clarification confirmed that independent review of the change and results was included. These are owner-reported results, not agent-observed manual execution; no individual tester identity or additional manual logs were supplied. The [candidate record](RELEASE_CANDIDATE_0.1.0.md#human-acceptance-and-independent-review) records the scope and provenance.

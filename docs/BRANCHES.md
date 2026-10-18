@@ -21,4 +21,4 @@ Do not force-push shared history. Ordinary topic PRs may be squashed into a desc
 
 ## Historical reference
 
-The initial implementation was integrated through [PRs #1–#5](https://github.com/mglezz/dowlume/pulls?q=is%3Apr+is%3Amerged+sort%3Acreated-asc) on 2026-10-15, preserving the original commits. Inspect it with `git log --graph --oneline --decorate main`. Revision comparisons and release-candidate evidence are retained in [Validation](VALIDATION.md); public `v0.1.0` publication remains subject to the [release checklist](RELEASE_CHECKLIST.md).
+The initial implementation was integrated through [PRs #1–#5](https://github.com/mglezz/dowlume/pulls?q=is%3Apr+is%3Amerged+sort%3Acreated-asc) on 2026-10-15, preserving the original commits. Inspect it with `git log --graph --oneline --decorate main`. Revision comparisons and release-candidate evidence are retained in [Validation](VALIDATION.md). Public `v0.1.0` was authorized and published on 2026-10-18; its tag points to the tested `94ba177` source, while later documentation commits record acceptance and publication. See the completed [release checklist](RELEASE_CHECKLIST.md).

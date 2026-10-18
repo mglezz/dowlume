@@ -2,6 +2,8 @@
 
 Target: Windows x64, version 0.1.0. Local validation is recorded in [Validation](VALIDATION.md). Native recycling is disabled at every execution boundary for this version. Earlier clean-guest package acceptance and failed native capacity results remain historical evidence; they do not approve changed binaries. Stable publication requires final-artifact acceptance, independent review, and explicit owner authorization. A GitHub draft or locally built artifact is not a published stable release.
 
+**Completed:** [v0.1.0 is published](https://github.com/mglezz/dowlume/releases/tag/v0.1.0) with explicit owner authorization on 2026-10-18. The tag targets tested commit `94ba177`; all six public downloads were independently downloaded and hash-verified.
+
 The accepted candidate is clean merged commit `94ba177`, staged for publication in `artifacts/releases/v0.1.0-final-94ba177-20261018/`. Automated host/clean-guest checks passed; the owner confirmed all human tests and independent review passed on 2026-10-18. The tested binaries and build information are unchanged; standalone notes/checksums were finalized. It is unsigned and records `DirtyWorkingTree: false`. See the [candidate hashes and remaining steps](RELEASE_CANDIDATE_0.1.0.md). Earlier candidates remain historical evidence.
 
 ## Reproducible packaging
@@ -41,13 +43,13 @@ The [package workflow](../.github/workflows/package.yml) builds candidates and e
 - [x] Test upgrade from the earlier local candidate and uninstall on the development PC; sample user files and the local database remain intact. Clean-machine acceptance remains separate.
 - [x] Record the signing decision: initial candidate artifacts are unsigned, identified by SHA-256 and source commit. No signing certificate is configured; signing can be added before publication if one becomes available.
 - [x] Rebuild the integrated containment change from clean merged `main` (`94ba177`); verify `DirtyWorkingTree: false`, checksums, final notes, and unsigned signing decision. Accepted binaries are preserved unchanged.
-- [ ] Obtain the owner's explicit publication authorization after all mandatory checks pass.
-- [ ] Only after authorization, publish release notes, checksums, installer, and ZIP; tag approved source as `v0.1.0`.
+- [x] Obtain the owner's explicit publication authorization after all mandatory checks pass: confirmed in the project conversation on 2026-10-18.
+- [x] Publish release notes, checksums, installer, portable and acceptance ZIPs, and build information after authorization; tag approved source `94ba177` as `v0.1.0`. Verify all public downloads.
 
 Do not mark unavailable hardware tests, clean-machine checks, remote CI, or signing complete based only on unit tests. Cross-volume failure simulations complement but do not replace real-volume testing.
 
-## Release draft and publication
+## Published release
 
-Use the [finalized release notes](RELEASE_NOTES_0.1.0.md), targeting the tested merge commit. The unpublished GitHub draft must contain only the accepted installer, portable ZIP, acceptance kit, build information, notes, and checksums. Do not create the stable Git tag or publish before the owner's explicit authorization.
+The [finalized release notes](RELEASE_NOTES_0.1.0.md) accompany the tested `94ba177` binaries. The former draft is now the public [v0.1.0 release](https://github.com/mglezz/dowlume/releases/tag/v0.1.0), containing exactly the accepted installer, portable ZIP, acceptance kit, build information, notes, and checksums. Earlier draft assets remain archived locally with verified hashes.
 
-Acceptance and independent review are recorded as passed; publication authorization remains separate. After authorization, publish the verified release/tag, update the repository's publication status, and verify public downloads. Repository visibility is unchanged; a release in a private repository is accessible only to authorized users. Collect future reports without private files or database uploads.
+Acceptance, independent review, explicit publication authorization, tag creation, and public-download verification are complete. Repository visibility is unchanged. Collect future reports without private files or database uploads; do not move the accepted tag or replace tested assets with rebuilt binaries.
