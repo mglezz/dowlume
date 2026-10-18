@@ -1,5 +1,11 @@
 # Local validation record
 
+## 2026-10-18: Hosted integration and separate clean-guest preparation
+
+Containment was committed as `715834e` and submitted in [PR #20](https://github.com/mglezz/dowlume/pull/20). The first hosted security scan passed. The first build/test run exposed a pre-existing test-fixture race in `FullQueueEventuallyDiscoversEveryFileAndIgnoresTemporaryFiles`: its unconditional `File.Move` callback treated a stale discovery hint as an existing file, and its completion counter advanced before the move. The fixture now exercises the real idempotent organizer, waits for monitor shutdown, and verifies all 40 completed journal entries and file contents. This changes the integration test, not application file-operation behavior. The failed hosted result is retained; it is not waived by local results.
+
+The VM opened for follow-up acceptance was identified as the original evidence VM, with all three checkpoints still present. A separate export of the clean, signed-in checkpoint (before package/native probes) was started into new host storage. The original VM was not restored or used to run tests. Export/preparation alone does not establish guest acceptance; results must identify the new VM and final candidate hashes.
+
 ## 2026-10-18: v0.1.0 containment and Windows package validation
 
 Work started on 2026-10-17 and completed locally on 2026-10-18. Base commit: `2dcc06967adb7cf815d9378fc8845c2c8045bb7e`, with uncommitted containment changes. This entry supersedes earlier current-state statements that application changes were on hold or native recycling remained enabled. All earlier dated evidence remains below unchanged. No VM, checkpoint, export, original probe report, or native bin policy was modified; no destructive recycle probe was repeated.
