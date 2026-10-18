@@ -2,7 +2,7 @@
 
 This is the Hyper-V setup companion to [Windows acceptance](WINDOWS_ACCEPTANCE.md). Preparing a VM does not complete any guest acceptance check. Use only fictional files and keep the GitHub release unpublished until explicitly authorized.
 
-**Preserve the existing evidence VM and all checkpoints unchanged.** The examples below use a different VM name and storage root for final containment acceptance; never substitute the evidence VM. No VM was created or changed during containment work.
+**Preserve the existing evidence VM and all checkpoints unchanged.** The examples below use a different VM name and storage root for final containment acceptance; never substitute the evidence VM. On 2026-10-18, a separate copy of the clean pre-test checkpoint was imported for final containment acceptance; see [the candidate record](RELEASE_CANDIDATE_0.1.0.md). The evidence VM was not restored or used for these tests.
 
 ## Create the guest on the host
 

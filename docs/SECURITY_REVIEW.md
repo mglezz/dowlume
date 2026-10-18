@@ -6,6 +6,8 @@ The 2026-10-17 review of two existing runs found no oversized source and no shel
 
 Run `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/Test-Security.ps1` from the repository. The script creates a fresh ignored report directory and fails on incomplete dependency results, vulnerable direct/transitive packages, analyzer warnings, or detected secrets. Gitleaks 8.30.1 is downloaded from its official release and verified against a pinned SHA-256 before execution. Reports redact secret values; CI uploads only report files, not source snapshots or private application profiles.
 
+The final clean candidate source `94ba177` passed fresh local and hosted security checks on 2026-10-18: no vulnerable direct/transitive packages, analyzer warnings, or detected secrets in the source snapshot and 35 local history commits. Exact artifact identities and remaining acceptance are in the [candidate record](RELEASE_CANDIDATE_0.1.0.md); passing scans alone do not authorize publication.
+
 All .NET security analyzers run during normal builds with warnings treated as errors. The dedicated security workflow additionally scans dependencies and all fetched Git history, plus a snapshot of tracked and unignored source files. Local helper projects are built with the same analyzers. NuGet data and scanner rules can change; rerun before publication. Passing scans do not prove that software is free of vulnerabilities.
 
 ## Reviewed boundaries
