@@ -49,7 +49,9 @@ public sealed class MonitoringTests
             await organizer.OrganizeAsync(path, settings, token);
         }, token => organizer.ReconcileAsync(settings, token), errors.Enqueue, TimeSpan.FromMilliseconds(30), capacity: 3))
         {
-            await WaitUntilAsync(() => store.GetFiles().Count == 40);
+            // Durable SQLite commits on shared CI storage need more time than the old in-memory counter.
+            await WaitUntilAsync(() => store.GetFiles().Count == 40, TimeSpan.FromSeconds(60),
+                () => $"Only {store.GetFiles().Count}/40 files completed. Background errors: {string.Join(Environment.NewLine, errors)}");
         }
         // Shutdown must finish before checking background failures and final contents.
         Assert.Empty(errors);
@@ -82,12 +84,16 @@ public sealed class MonitoringTests
         await WaitUntilAsync(() => seen.Count == 2);
     }
 
-    private static async Task WaitUntilAsync(Func<bool> condition)
+    private static async Task WaitUntilAsync(Func<bool> condition, TimeSpan? timeoutDuration = null, Func<string>? diagnostics = null)
     {
-        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-        while (!condition())
+        using var timeout = new CancellationTokenSource(timeoutDuration ?? TimeSpan.FromSeconds(10));
+        try
         {
-            await Task.Delay(20, timeout.Token);
+            while (!condition())
+            {
+                await Task.Delay(20, timeout.Token);
+            }
         }
+        catch (OperationCanceledException) { Assert.Fail(diagnostics?.Invoke() ?? "The expected monitoring condition did not complete before the timeout."); }
     }
 }
