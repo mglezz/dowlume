@@ -1,5 +1,11 @@
 # Local validation record
 
+## 2026-10-18: Owner-confirmed human acceptance and independent review
+
+After receiving the exact `94ba177` candidate handoff, the owner reported all human tests completed successfully with no apparent application issues. A subsequent explicit clarification confirmed that independent review of the change and results was included. These are owner-reported results, not agent-observed manual execution; no individual tester identity or additional manual logs were supplied. The [candidate record](RELEASE_CANDIDATE_0.1.0.md#human-acceptance-and-independent-review) records the scope and provenance.
+
+The installer, portable ZIP, acceptance ZIP and build information are preserved byte-for-byte. Final publication staging is `artifacts/releases/v0.1.0-final-94ba177-20261018/`; only standalone release notes and checksums were updated after acceptance. The earlier draft's five assets and metadata were preserved with hashes matching GitHub's digests before replacement. No VM or checkpoint was changed and no VM acceptance or native recycle probes were repeated for this documentation-only finalization. Hosted CI still validates documentation PRs through the normal workflows. Explicit publication authorization remains pending; no final tag or stable release is claimed.
+
 ## 2026-10-18: Clean merged candidate and final host acceptance
 
 [PR #20](https://github.com/mglezz/dowlume/pull/20) was merged as `94ba177ea0da5e4809f87a59edfe5c7893b65537` after build/test/format, security, and packaging checks passed. The realistic queue integration fixture also needed a bounded 60-second CI budget for durable SQLite writes; the test still requires all 40 completed journal entries and matching contents, and emits progress/error diagnostics on timeout. Both earlier hosted failures remain recorded. The changed fixture passed locally five consecutive times, then passed hosted CI. Post-merge build/test and security checks also passed.

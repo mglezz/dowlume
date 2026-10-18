@@ -5,7 +5,7 @@
 | Stage | Status | Details |
 | --- | --- | --- |
 | Windows MVP | Implemented | [Completed work](#completed-windows-mvp) |
-| Public 0.1.0 release | Pending acceptance and approval | [Release gates](#remaining-for-public-010) |
+| Public 0.1.0 release | Acceptance passed; pending publication authorization | [Release gates](#remaining-for-public-010) |
 | Post-MVP | Ideas, not delivery commitments | [Future work](#future-work) |
 
 ## Remaining for public 0.1.0
@@ -13,11 +13,12 @@
 - [x] Earlier candidate clean-machine automated package acceptance (Windows 11 build 26300); retained as historical evidence.
 - [x] Integrate containment in `main`, pass hosted checks, and rebuild clean `94ba177` installer/portable with verified hashes; exact-artifact host package and automated first-use checks passed. See the [candidate record](docs/RELEASE_CANDIDATE_0.1.0.md).
 - [x] Repeat package/upgrade and automated first-use checks on exact `94ba177` artifacts in a separate clean Windows guest without shared .NET; retain independently retrieved raw reports and hashes.
-- [ ] Complete human first use, actual sign-in startup, wizard checks, and selected-file Review acceptance on those artifacts.
+- [x] Complete human first use, actual sign-in startup, wizard checks, and selected-file Review acceptance: owner reported all human tests passed on 2026-10-18.
 - [x] Physical cross-volume move, undo, and interrupted-copy recovery testing on separate NVMe/SATA disks.
 - [x] Disable native recycling in v0.1.0 at the UI, organizer, and adapter boundaries after failed capacity probes; preserve evidence without rerunning them.
-- [ ] Independent release approval after integration and acceptance checks.
-- [ ] Decide on signing, sign when a certificate is available, and publish release notes, binaries, and checksums with tag `v0.1.0`.
+- [x] Independent review after integration and acceptance checks: explicitly confirmed by the owner on 2026-10-18.
+- [x] Record unsigned initial-release decision; finalize notes and checksums while preserving tested binaries.
+- [ ] Obtain explicit publication authorization, then publish the prepared release and tag `v0.1.0` at the tested commit.
 
 The [release checklist](docs/RELEASE_CHECKLIST.md) is the detailed acceptance record. Local package generation and automated tests do not complete these gates.
 
