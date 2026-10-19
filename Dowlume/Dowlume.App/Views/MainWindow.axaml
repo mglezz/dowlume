@@ -281,7 +281,7 @@
             <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Makeroomforyourroutine]}" Classes="heading" />
             <StackPanel Spacing="6">
               <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Language]}" FontWeight="SemiBold" />
-              <ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Language]}" MinWidth="180" />
+              <ComboBox AutomationProperties.AutomationId="LanguageSelector" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Language]}" MinWidth="180" />
               <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[LanguagechangesapplyimmediatelyandaresavedautomaticallyFolder]}" TextWrapping="Wrap" Classes="muted" />
             </StackPanel>
             <StackPanel Spacing="6" IsVisible="{Binding SupportsWindowsStartup}">

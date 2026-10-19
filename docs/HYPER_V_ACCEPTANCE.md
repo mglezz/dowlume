@@ -68,7 +68,7 @@ Start-VM -VM $vm
 
 ## Transfer and run the candidate
 
-Stage only the exact release files and the extracted acceptance kit in a dedicated host directory. Include the earlier installer, renamed `Dowlume-previous-setup.exe`, to exercise an actual candidate upgrade. Verify the candidate against its `SHA256SUMS.txt` and record the previous installer's hash separately. Do not copy your application profile or personal files.
+Stage only the exact release files and the extracted acceptance kit in a dedicated host directory. For 0.2.0, include the published 0.1.0 installer, renamed `Dowlume-previous-setup.exe`, to exercise an actual candidate upgrade. Verify the candidate against its `SHA256SUMS.txt` and record the previous installer's hash separately. Do not copy your application profile or personal files.
 
 With Windows running, copy the staged files from the host. The unique guest directory prevents reuse of an earlier run. This uses [Copy-VMFile](https://learn.microsoft.com/en-us/powershell/module/hyper-v/copy-vmfile); it does not mount a host drive in the guest.
 
@@ -107,10 +107,10 @@ Get-FileHash .\Dowlume-previous-setup.exe -Algorithm SHA256
 # Compare the previous installer hash with the host's record before continuing.
 $report = Join-Path $env:LOCALAPPDATA ('Dowlume.Acceptance\' + [Guid]::NewGuid().ToString('N') + '\package-result.json')
 powershell -NoProfile -ExecutionPolicy Bypass -File .\Test-WindowsPackage.ps1 `
-    -Installer .\Dowlume-0.1.0-win-x64-setup.exe `
-    -Archive .\Dowlume-0.1.0-win-x64.zip `
+    -Installer .\Dowlume-0.2.0-win-x64-setup.exe `
+    -Archive .\Dowlume-0.2.0-win-x64.zip `
     -PreviousInstaller .\Dowlume-previous-setup.exe `
-    -ReportPath $report -RequireNoSharedDotNet
+    -ReportPath $report -RequireNoSharedDotNet -RequireLocalization
 ```
 
 Keep the guest desktop unlocked while the script runs. UI Automation and native tray tests require an interactive desktop; PowerShell Direct alone does not provide one. Keep reports and fixture directories when a test fails. Record the guest's Windows build, image provenance, artifact hashes, and observed results. Complete the manual first-use, sign-in, wizard, and disabled-recycling checks in [Windows acceptance](WINDOWS_ACCEPTANCE.md). Do not change bin policy or run native recycle/restore probes.

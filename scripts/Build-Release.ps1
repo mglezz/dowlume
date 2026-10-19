@@ -69,13 +69,18 @@ Copy-Item -LiteralPath $buildInfoPath -Destination $publishDirectory
 $archive = Join-Path $artifactDirectory "$packageName.zip"
 Compress-Archive -Path (Join-Path $publishDirectory '*') -DestinationPath $archive
 $releaseFiles = @($archive, $buildInfoPath)
-$releaseNotes = Join-Path $artifactDirectory 'RELEASE_NOTES_0.1.0.md'
-Copy-Item -LiteralPath (Join-Path $repositoryRoot 'docs/RELEASE_NOTES_0.1.0.md') -Destination $releaseNotes
-$releaseFiles += $releaseNotes
+foreach ($language in @('en', 'es')) {
+    $notesName = if ($language -eq 'en') { "RELEASE_NOTES_$version.md" } else { "RELEASE_NOTES_$version.es.md" }
+    $notesSource = if ($language -eq 'en') { "docs/RELEASE_NOTES_$version.md" } else { "docs/es/RELEASE_NOTES_$version.md" }
+    $releaseNotes = Join-Path $artifactDirectory $notesName
+    Copy-Item -LiteralPath (Join-Path $repositoryRoot $notesSource) -Destination $releaseNotes
+    $releaseFiles += $releaseNotes
+}
 $acceptanceDirectory = Join-Path $artifactDirectory 'acceptance-kit'
 New-Item -ItemType Directory -Path $acceptanceDirectory | Out-Null
 Copy-Item -LiteralPath (Join-Path $repositoryRoot 'scripts/Test-WindowsPackage.ps1') -Destination $acceptanceDirectory
 Copy-Item -LiteralPath (Join-Path $repositoryRoot 'scripts/Test-WindowsTray.ps1') -Destination $acceptanceDirectory
+Copy-Item -LiteralPath (Join-Path $repositoryRoot 'scripts/Test-WindowsLocalization.ps1') -Destination $acceptanceDirectory
 # The standalone kit has no repository-relative docs tree. Resolve its guide links to the source revision.
 $guide = [IO.File]::ReadAllText((Join-Path $repositoryRoot 'docs/WINDOWS_ACCEPTANCE.md'))
 $guide = [regex]::Replace($guide, '\]\(((?:es/)?[A-Za-z_]+\.md)(#[^)]*)?\)', ('](https://github.com/mglezz/dowlume/blob/{0}/docs/$1$2)' -f $sourceCommit))

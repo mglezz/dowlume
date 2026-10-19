@@ -1,0 +1,24 @@
+# Dowlume 0.2.0 — English and Spanish
+
+[English](#) · [Español](https://github.com/mglezz/dowlume/blob/main/docs/es/RELEASE_NOTES_0.2.0.md)
+
+In 0.2.0 I add a language selector without replacing English. Pause monitoring, open **Settings > Language**, and choose **English** or **Español**. I save the selection immediately and restore it after restarting. Existing profiles start in English.
+
+I translate the application interface, confirmations, tray menu, and activity descriptions. Changing the language does not rename category folders, move files, or rewrite historical records. Windows supplies the native folder picker, whose language follows the operating system. I retain unrecognized historical messages as originally recorded.
+
+I include English and Spanish offline quick-start guides, release notes, and parallel repository documentation. I also verify package upgrades from the published 0.1.0 installer, language switching and persistence in the packaged application, and the presence of Spanish resources in both distributions.
+
+## Install or upgrade
+
+- `Dowlume-0.2.0-win-x64-setup.exe`: per-user Windows x64 installer. Close Dowlume before upgrading from 0.1.0; I retain the existing profile and user files.
+- `Dowlume-0.2.0-win-x64.zip`: extract the complete archive into a new folder and run `Dowlume.App.exe`. Keep all files together, including the `es` folder.
+- `Dowlume-0.2.0-windows-acceptance.zip`: automated package checks and the manual Windows acceptance procedure.
+- `BUILD-INFO.json` and `SHA256SUMS.txt`: source revision, build provenance, and artifact checksums.
+
+I include .NET in both distributions. These packages are unsigned; download them from this repository's release page and compare their SHA-256 values. I do not include macOS or Linux packages.
+
+## Limits
+
+Native recycling remains disabled after the earlier Windows capacity failures. Keep, Snooze, Move, and eligible Undo remain available; recoverable quarantine is future work. I start monitoring paused after every launch. Network shares, links, junctions, and cloud placeholders remain unsupported.
+
+Start with copies of disposable files and keep backups. Uninstall preserves user files and the local profile. See the [user guide](https://github.com/mglezz/dowlume/blob/main/docs/USER_GUIDE.md) and [Windows acceptance procedure](https://github.com/mglezz/dowlume/blob/main/docs/WINDOWS_ACCEPTANCE.md). I record acceptance separately for each exact build; acceptance of 0.1.0 does not certify 0.2.0.

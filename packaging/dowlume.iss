@@ -12,7 +12,8 @@
 AppId={{A65DE461-2F0E-47BC-8352-3F980674F3DB}
 AppName=Dowlume
 AppVersion={#ApplicationVersion}
-AppPublisher=Dowlume contributors
+VersionInfoVersion={#ApplicationVersion}
+AppPublisher=Marcos González Hidalgo
 AppPublisherURL=https://github.com/mglezz/dowlume
 DefaultDirName={localappdata}\Programs\Dowlume
 DefaultGroupName=Dowlume
