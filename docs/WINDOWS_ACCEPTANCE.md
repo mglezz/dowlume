@@ -2,13 +2,13 @@
 
 [English](#) · [Español](es/WINDOWS_ACCEPTANCE.md)
 
-I used this procedure for the exact installer and ZIP published as `v0.1.0`. I repeat affected checks for future packages; the old acceptance does not approve localization builds. Record their SHA-256 values, source commit from `BUILD-INFO.json`, Windows build, tester, date, and observed results. An unchecked item is not a pass. Do not use personal Downloads or change Recycle Bin settings on a daily-use computer.
+I use this procedure for the 0.2.0 candidate. The published 0.1.0 acceptance remains historical evidence; it does not approve these localization packages. Record their SHA-256 values, source commit from `BUILD-INFO.json`, Windows build, tester, date, and observed results. An unchecked item is not a pass. Do not use personal Downloads or change Recycle Bin settings on a daily-use computer.
 
 ## Prepare a clean environment
 
 Use a fresh Windows 11 x64 VM or spare machine, a standard user account, and no separately installed .NET runtime. Record how the image was created. A development PC or a GitHub runner with the SDK installed does not satisfy this check.
 
-Use a separate clean environment for this candidate. Do not modify, resume for testing, restore, or delete the existing evidence VM, exports, or checkpoints. No Recycle Bin policy changes or native capacity probes are part of v0.1.0 acceptance.
+Use a separate clean environment for this candidate. Do not modify, resume for testing, restore, or delete the existing evidence VM, exports, or checkpoints. I do not change Recycle Bin policies or run native capacity probes during this acceptance.
 
 Use the [Hyper-V preparation guide](HYPER_V_ACCEPTANCE.md) and `scripts/New-WindowsAcceptanceVm.ps1` to create the guest, verify official Windows media, transfer the candidate, and establish a clean checkpoint. Windows setup and the interactive acceptance checks still require the guest desktop.
 
@@ -19,12 +19,12 @@ Download the proposed installer, portable ZIP, `BUILD-INFO.json`, and `SHA256SUM
 The acceptance kit contains `Test-WindowsPackage.ps1`, which runs on Windows PowerShell without installing .NET. From the directory containing the downloaded artifacts:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\Test-WindowsPackage.ps1 -Installer .\Dowlume-0.1.0-win-x64-setup.exe -Archive .\Dowlume-0.1.0-win-x64.zip -ReportPath .\package-result.json -RequireNoSharedDotNet
+powershell -NoProfile -ExecutionPolicy Bypass -File .\Test-WindowsPackage.ps1 -Installer .\Dowlume-0.2.0-win-x64-setup.exe -Archive .\Dowlume-0.2.0-win-x64.zip -PreviousInstaller .\Dowlume-0.1.0-win-x64-setup.exe -ReportPath .\package-result.json -RequireNoSharedDotNet -RequireLocalization
 ```
 
-The kit includes `Test-WindowsTray.ps1`; keep it beside the package script. The script refuses an existing registered Dowlume installation or startup entry. It creates a unique temporary installation, application profile, and sample file; checks portable launch/exit, install/reinstall, duplicate-instance refusal, running-app upgrade/uninstall refusal, native tray registration/reopening, startup-entry retention/removal, and profile/file retention after uninstall. Tray reopening uses Windows UI Automation and a native tray-click message; it does not replace testing the overflow menu with a person. Reports and fixtures remain in the printed temporary directory for inspection. It records detected runtimes but does not independently prove that the OS image was clean.
+The kit includes `Test-WindowsTray.ps1` and `Test-WindowsLocalization.ps1`; keep both beside the package script. With `-RequireLocalization`, I verify both guides and Spanish resources, switch English → Español → English in the installed app, and restart after each switch to check persistence. The script refuses an existing registered Dowlume installation or startup entry. It creates a unique temporary installation, application profile, and sample file; checks portable launch/exit, install/reinstall, duplicate-instance refusal, running-app upgrade/uninstall refusal, native tray registration/reopening, startup-entry retention/removal, and profile/file retention after uninstall. Tray reopening uses Windows UI Automation and a native tray-click message; it does not replace testing the overflow menu with a person. Reports and fixtures remain in the printed temporary directory for inspection. It records detected runtimes but does not independently prove that the OS image was clean.
 
-To test an upgrade from the earlier candidate, add `-PreviousInstaller <path-to-previous-installer>`. Without that argument, the upgrade check is a reinstall of the same package. Preserve both installer hashes in the report. If a check fails, inspect its retained logs before rerunning; the script intentionally refuses to overwrite a registered installation left by a failed test.
+I use the published 0.1.0 installer as the upgrade baseline. To choose another baseline, use `-PreviousInstaller <path-to-previous-installer>`. Without that argument, the upgrade check is a reinstall of the same package. Preserve both installer hashes in the report. If a check fails, inspect its retained logs before rerunning; the script intentionally refuses to overwrite a registered installation left by a failed test.
 
 ## First use with a person
 
@@ -44,6 +44,16 @@ After the smoke test, install normally with the wizard and a standard account. A
 
 Record unclear wording, errors, unexpected windows, display scaling, and keyboard navigation problems. Attach only redacted screenshots; the journal and profile contain private paths.
 
+## Language and upgrade acceptance for 0.2.0
+
+I record the exact installer and ZIP hashes and the observed results for these checks before publication:
+
+1. With 0.1.0 installed in a disposable Windows account, configure a sample folder, organize a fictional file, pause monitoring, and confirm its Activity entry. Close the application and install 0.2.0. Confirm that the folder, settings, history, and file content remain intact and monitoring starts paused.
+2. In Settings > Language, choose Español. Check all five tabs, confirmation and cancellation dialogs, the disabled recycling explanation, and the tray menu. Confirm that no files move and existing category folder names remain unchanged when changing language.
+3. Close and reopen; verify Spanish persists. Return to English, restart, and verify English persists. Check both languages at minimum window size and your Windows display scaling, including keyboard navigation.
+4. Extract the portable ZIP into a new folder, keeping its `es` subfolder and both quick-start guides. Launch, change language, close, and reopen. Confirm the same behavior without installing .NET separately on the clean test machine.
+5. Record Windows version, display scaling, date, and any observed problem. An automated runner checks package mechanics but does not replace this human review or prove a clean machine.
+
 ## Native file-safety acceptance
 
 - **Cross-volume move and interruption:** on two separate local volumes, use the harness below. Record the physical disk/volume arrangement. Verify a completed move and undo, then terminate only the isolated worker during a copy. Recovery must preserve the intact source and partial destination, mark NeedsAttention, and block another move until resolved. A source-only or fully completed copy is an inconclusive interruption test.
@@ -59,4 +69,4 @@ Choose a writable folder on a second fixed local volume. The harness writes only
 
 ## Publication handoff
 
-Update the release checklist with evidence tied to the artifact hashes. Resolve failures, obtain independent acceptance review, and repeat affected checks after changes. Obtain my explicit publication authorization before creating the final tag or publishing stable `v0.1.0`. v0.1.0 is published. For a future localized package, I also check both languages, persistence after restart, dialogs, tray labels, keyboard navigation, and layout at minimum size and Windows display scaling. Linux/macOS work remains deferred.
+I record evidence tied to the artifact hashes, resolve failures, obtain independent acceptance review, and repeat affected checks after changes. Publication of 0.2.0 is authorized, but manual acceptance of its exact packages is still pending. I keep the release in draft until those results are recorded and publish the same tested assets. Linux/macOS work remains deferred.

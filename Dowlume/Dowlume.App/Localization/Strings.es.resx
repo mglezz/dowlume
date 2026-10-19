@@ -442,4 +442,7 @@ La ubicación original debe estar disponible y el archivo no debe haber cambiado
   <data name="NewerDatabase" xml:space="preserve">
     <value>Esta base de datos pertenece a una versión más reciente de Dowlume.</value>
   </data>
+  <data name="RecyclingDisabled" xml:space="preserve">
+    <value>El envío a la papelera está desactivado porque la Papelera de Windows no conservó los archivos de forma fiable. Usa Conservar, Posponer o Mover a.</value>
+  </data>
 </root>

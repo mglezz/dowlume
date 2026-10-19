@@ -1,14 +1,16 @@
-param(
+﻿param(
     [Parameter(Mandatory = $true)][string]$Installer,
     [string]$Archive = '',
     [string]$PreviousInstaller = '',
     [Parameter(Mandatory = $true)][string]$ReportPath,
-    [switch]$RequireNoSharedDotNet
+    [switch]$RequireNoSharedDotNet,
+    [switch]$RequireLocalization
 )
 
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 . (Join-Path $PSScriptRoot 'Test-WindowsTray.ps1')
+if ($RequireLocalization) { . (Join-Path $PSScriptRoot 'Test-WindowsLocalization.ps1') }
 $Installer = (Resolve-Path -LiteralPath $Installer).Path
 if ($Archive) { $Archive = (Resolve-Path -LiteralPath $Archive).Path }
 if ($PreviousInstaller) { $PreviousInstaller = (Resolve-Path -LiteralPath $PreviousInstaller).Path }
@@ -103,6 +105,7 @@ try {
         if (@(Get-ChildItem -LiteralPath $portableDirectory -Filter '*.pdb' -File -Recurse).Count -gt 0) {
             throw 'The portable package contains debug symbols that are not needed at runtime.'
         }
+        if ($RequireLocalization) { Assert-LanguageFiles $portableDirectory }
         $executable = Join-Path $portableDirectory 'Dowlume.App.exe'
         $application = Start-Application 'Dowlume'
         Close-Application $application
@@ -127,10 +130,21 @@ try {
         if (-not (Test-Path -LiteralPath (Join-Path $installDirectory $runtimeFile))) { throw "Missing packaged runtime dependency: $runtimeFile" }
     }
 
+    if ($RequireLocalization) { Assert-LanguageFiles $installDirectory }
     $application = Start-Application 'Dowlume'
     $secondInstance = Start-Application 'Dowlume*unable to start'
     Close-Application $secondInstance
     Test-WindowsTray $application
+    if ($RequireLocalization) {
+        Set-TestLanguage $application 'English' 'Español'
+        Close-Application $application
+        $application = Start-Application 'Dowlume'
+        Assert-TestLanguage $application 'Español'
+        Set-TestLanguage $application 'Español' 'English'
+        Close-Application $application
+        $application = Start-Application 'Dowlume'
+        Assert-TestLanguage $application 'English'
+    }
     $beforeUpgrade = (Get-FileHash -LiteralPath $executable).Hash
     $blockedInstall = Invoke-Setup $Installer @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', '/SP-', "/DIR=""$installDirectory""", "/LOG=""$(Join-Path $workspace 'blocked-upgrade.log')""")
     if ($blockedInstall -eq 0 -or $application.HasExited) { throw 'Setup did not refuse an upgrade while the application was running.' }
@@ -157,6 +171,8 @@ try {
         InstallerSha256 = (Get-FileHash -LiteralPath $Installer).Hash
         PortableArchiveSha256 = if ($Archive) { (Get-FileHash -LiteralPath $Archive).Hash } else { $null }
         PortableLaunchAndExit = [bool]$Archive
+        BilingualPackageResources = [bool]$RequireLocalization
+        LanguageSwitchAndRestartPersistence = [bool]$RequireLocalization
         PreviousInstallerSha256 = if ($PreviousInstaller) { (Get-FileHash -LiteralPath $PreviousInstaller).Hash } else { $null }
         InstallerUpgrade = if ($PreviousInstaller) { 'Previous package to candidate' } else { 'Candidate reinstall' }
         SingleInstanceRefusal = $true

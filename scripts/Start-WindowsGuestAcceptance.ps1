@@ -19,8 +19,12 @@ if ($sessionId -eq 0 -or -not [Environment]::UserInteractive -or -not $desktop.C
 
 $KitDirectory = (Resolve-Path -LiteralPath $KitDirectory).Path
 $manifest = Get-Content -LiteralPath (Join-Path $KitDirectory 'KIT-VERIFICATION.json') -Raw | ConvertFrom-Json
-$requiredFiles = @('BUILD-INFO.json', 'Dowlume-0.1.0-win-x64-setup.exe', 'Dowlume-0.1.0-win-x64.zip',
-    'Dowlume-previous-setup.exe', 'Test-WindowsPackage.ps1', 'Test-WindowsTray.ps1')
+$build = Get-Content -LiteralPath (Join-Path $KitDirectory 'BUILD-INFO.json') -Raw | ConvertFrom-Json
+if ($build.Version -notmatch '^\d+\.\d+\.\d+$') { throw 'Invalid candidate version.' }
+$installerName = "Dowlume-$($build.Version)-win-x64-setup.exe"
+$archiveName = "Dowlume-$($build.Version)-win-x64.zip"
+$requiredFiles = @('BUILD-INFO.json', $installerName, $archiveName,
+    'Dowlume-previous-setup.exe', 'Test-WindowsPackage.ps1', 'Test-WindowsTray.ps1', 'Test-WindowsLocalization.ps1')
 foreach ($fileName in $requiredFiles) {
     $entries = @($manifest | Where-Object FileName -eq $fileName)
     if ($entries.Count -ne 1 -or $entries[0].Sha256 -notmatch '^[A-Fa-f0-9]{64}$') {
@@ -50,16 +54,16 @@ $summary = [ordered]@{
     StandardTestAccount = $true
     InteractiveDesktop = $true
     SourceCommit = $build.SourceCommit
-    InstallerSha256 = (Get-FileHash -LiteralPath (Join-Path $KitDirectory 'Dowlume-0.1.0-win-x64-setup.exe')).Hash
+    InstallerSha256 = (Get-FileHash -LiteralPath (Join-Path $KitDirectory $installerName)).Hash
     Error = $null
 }
 Start-Transcript -LiteralPath (Join-Path $runDirectory 'transcript.txt') | Out-Null
 try {
     & (Join-Path $KitDirectory 'Test-WindowsPackage.ps1') `
-        -Installer (Join-Path $KitDirectory 'Dowlume-0.1.0-win-x64-setup.exe') `
-        -Archive (Join-Path $KitDirectory 'Dowlume-0.1.0-win-x64.zip') `
+        -Installer (Join-Path $KitDirectory $installerName) `
+        -Archive (Join-Path $KitDirectory $archiveName) `
         -PreviousInstaller (Join-Path $KitDirectory 'Dowlume-previous-setup.exe') `
-        -ReportPath $reportPath -RequireNoSharedDotNet
+        -ReportPath $reportPath -RequireNoSharedDotNet -RequireLocalization
     $packageResult = Get-Content -LiteralPath $reportPath -Raw | ConvertFrom-Json
     if ($packageResult.Passed -ne $true) { throw 'The package test did not report success.' }
     $summary.Passed = $true

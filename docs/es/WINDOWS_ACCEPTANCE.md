@@ -2,7 +2,7 @@
 
 [English](../WINDOWS_ACCEPTANCE.md) · [Índice en español](README.md)
 
-Utilicé este procedimiento para los paquetes publicados de v0.1.0. Repito las comprobaciones afectadas para cada binario posterior. Registro SHA-256, commit de `BUILD-INFO.json`, compilación de Windows, persona que prueba, fecha y resultado. Un control sin resultado no es una prueba superada.
+Utilizo este procedimiento para el candidato 0.2.0. Conservo la aceptación de v0.1.0 como evidencia histórica; no certifica estos paquetes localizados. Registro SHA-256, commit de `BUILD-INFO.json`, compilación de Windows, persona que prueba, fecha y resultado. Un control sin resultado no es una prueba superada.
 
 ## Entorno limpio
 
@@ -14,15 +14,15 @@ Descargo el instalador, ZIP, información de compilación y checksums del candid
 
 ## Prueba automatizada de paquetes
 
-El kit incluye `Test-WindowsPackage.ps1` y `Test-WindowsTray.ps1`; los mantengo juntos. En Windows PowerShell, sin instalar .NET:
+El kit incluye `Test-WindowsPackage.ps1`, `Test-WindowsTray.ps1` y `Test-WindowsLocalization.ps1`; los mantengo juntos. En Windows PowerShell, sin instalar .NET:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\Test-WindowsPackage.ps1 -Installer .\Dowlume-0.1.0-win-x64-setup.exe -Archive .\Dowlume-0.1.0-win-x64.zip -ReportPath .\package-result.json -RequireNoSharedDotNet
+powershell -NoProfile -ExecutionPolicy Bypass -File .\Test-WindowsPackage.ps1 -Installer .\Dowlume-0.2.0-win-x64-setup.exe -Archive .\Dowlume-0.2.0-win-x64.zip -PreviousInstaller .\Dowlume-0.1.0-win-x64-setup.exe -ReportPath .\package-result.json -RequireNoSharedDotNet -RequireLocalization
 ```
 
 El script rechaza instalaciones o entradas de inicio existentes. Crea instalación, perfil y muestra únicos; comprueba lanzamiento portátil, instalación, reinstalación, instancia duplicada, bloqueo de cambios mientras la aplicación está abierta, bandeja, entradas de inicio y conservación de datos tras desinstalar. Necesita escritorio interactivo.
 
-Para probar actualización desde otro candidato añado `-PreviousInstaller <ruta>`. Sin ese argumento, compruebo una reinstalación del mismo paquete. Conservo ambos hashes y los informes. Si falla, inspecciono los registros retenidos antes de repetir; no sobrescribo una instalación residual.
+Uso el instalador publicado de 0.1.0 como base de actualización. Para elegir otra base añado `-PreviousInstaller <ruta>`. Sin ese argumento, compruebo una reinstalación del mismo paquete. Conservo ambos hashes y los informes. Si falla, inspecciono los registros retenidos antes de repetir; no sobrescribo una instalación residual.
 
 ## Primer uso con una persona
 
@@ -42,6 +42,18 @@ Pido a alguien que no conozca la implementación que pruebe, sin ayuda de desarr
 
 Registro textos confusos, errores y problemas de navegación. Solo adjunto capturas revisadas que no revelen rutas privadas.
 
+## Idioma y actualización de 0.2.0
+
+Registro los hashes del instalador y ZIP exactos y los resultados observados antes de publicar:
+
+1. En una cuenta desechable, configuro una carpeta en 0.1.0, organizo un archivo ficticio, pauso y compruebo su entrada en Actividad. Cierro, instalo 0.2.0 y verifico carpeta, ajustes, historial, contenido intacto y supervisión en pausa.
+2. Elijo Español en Settings > Language. Reviso las cinco pestañas, confirmaciones y cancelaciones, explicación de la papelera desactivada y menú de bandeja. Compruebo que cambiar idioma no mueve archivos ni renombra las carpetas existentes.
+3. Cierro y vuelvo a abrir; verifico que persiste el español. Vuelvo a English y reinicio para verificar el inglés. Compruebo ambos idiomas al tamaño mínimo, con el escalado de Windows elegido y con teclado.
+4. Extraigo el ZIP portátil en una carpeta nueva, conservando `es` y ambas guías. Abro, cambio idioma, cierro y vuelvo a abrir. Compruebo lo mismo sin instalar .NET por separado en el equipo limpio.
+5. Registro versión de Windows, escalado, fecha y problemas. El runner comprueba el funcionamiento del paquete, pero no sustituye esta revisión humana ni demuestra un entorno limpio.
+
+Con `-RequireLocalization` compruebo recursos y guías, cambio inglés → español → inglés en la aplicación instalada y reinicio después de cada cambio para verificar la persistencia.
+
 ## Seguridad nativa
 
 Pruebo movimiento y deshacer entre dos volúmenes locales físicos. Interrumpo únicamente el proceso aislado durante una copia: deben quedar origen intacto y copia parcial, estado Requiere atención y rechazo de nuevas acciones hasta resolver. Si solo queda origen o una copia ya completa, la prueba de interrupción no es concluyente.
@@ -56,4 +68,4 @@ Para la papelera ejecuto solo regresiones de rechazo y conservación, nunca las 
 
 ## Publicación
 
-Relaciono la aceptación con los hashes, resuelvo fallos, obtengo revisión independiente y autorizo explícitamente cada publicación. v0.1.0 ya está publicada; los cambios de idioma necesitan validación para sus futuros paquetes. macOS y Linux quedan fuera de este procedimiento.
+Registro evidencia vinculada a los hashes, resuelvo fallos, obtengo revisión independiente y repito las pruebas afectadas si hay cambios. La publicación de 0.2.0 está autorizada, pero sigue pendiente la aceptación manual de sus paquetes exactos. Mantengo la release en borrador hasta registrar esos resultados y publico los mismos archivos probados. Dejo macOS y Linux para más adelante.

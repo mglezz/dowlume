@@ -40,7 +40,7 @@ Windows x64 remains the current target. macOS and Linux versions are deferred pe
 
 ## Languages
 
-I keep English as the default and provide Spanish in the current source. In **Settings → Language**, select **English** or **Español**; the interface changes immediately and remembers the choice for that profile. Pause monitoring first. Folder names, files, rules, and journal records are preserved. The published **v0.1.0 binaries remain English-only**; build current source to use the selector until a later release includes it.
+I keep English as the default and provide Spanish in the current source. In **Settings → Language**, select **English** or **Español**; the interface changes immediately and remembers the choice for that profile. Pause monitoring first. Folder names, files, rules, and journal records are preserved. The published **v0.1.0 binaries remain English-only**; I am preparing **0.2.0** with the selector; its exact Windows packages still need manual acceptance before publication. See the [0.2.0 release notes](docs/RELEASE_NOTES_0.2.0.md).
 
 I maintain the [Spanish documentation](docs/es/README.md) alongside these English pages. Screenshots and historical evidence identify the revision they document.
 
