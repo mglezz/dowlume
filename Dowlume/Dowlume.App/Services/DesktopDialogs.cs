@@ -3,10 +3,11 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Platform.Storage;
+using Dowlume.App.Localization;
 
 namespace Dowlume.App.Services;
 
-public sealed class DesktopDialogs(Window owner) : IDesktopDialogs
+public sealed class DesktopDialogs(Window owner, Localizer? localizer = null) : IDesktopDialogs
 {
     public async Task<string?> ChooseFolderAsync(string title)
     {
@@ -24,7 +25,7 @@ public sealed class DesktopDialogs(Window owner) : IDesktopDialogs
             CanResize = false,
             WindowStartupLocation = WindowStartupLocation.CenterOwner
         };
-        var cancel = new Button { Content = "Cancel" };
+        var cancel = new Button { Content = (localizer ?? new Localizer()).Translate("Cancel") };
         var confirm = new Button { Content = action };
         cancel.Click += (_, _) => dialog.Close(false);
         confirm.Click += (_, _) => dialog.Close(true);

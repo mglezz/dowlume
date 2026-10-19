@@ -1,14 +1,28 @@
 # Local validation record
 
+[English](#) · [Español](es/VALIDATION.md)
+
+I keep dated validation records here. A pending item in an older entry describes that revision and date; later entries record completion without changing the original evidence. Local artifact paths refer to retained private evidence and may be absent from a fresh clone.
+
+## 2026-10-19: English/Spanish localization and documentation review
+
+I added a per-profile English/Spanish selector to current source, retaining English defaults for older profiles and preserving folder names, file contents, rules, and stored history. I checked startup persistence, changes with unsaved settings, failed preference writes and retry, translated live views/tray/status/errors, and Spanish confirmation cancellation after changing language with an existing preview. Resource checks compare all English/Spanish keys, placeholders, and domain display labels. Desktop tests share one collection because Avalonia headless initialization is process-global. The first hosted Windows run exposed CRLF resource values failing to match LF confirmation templates; I normalized message lookup line endings, fixed resource checkout to LF, and added LF/CRLF regression coverage.
+
+On macOS with .NET SDK 10.0.401, the Release build and all **74 tests passed**, with no skips. The default macOS temporary path crosses a symbolic link, so I ran the filesystem suite with `TMPDIR` pointing to a real ignored directory under `artifacts/test-tmp`; I did not relax path-safety checks. Formatting verification, `git diff --check`, and the direct/transitive NuGet vulnerability audit passed. I rendered and inspected all five Spanish tabs at the 880 × 680 minimum size, adjusted wrapping for settings labels, and retained private test captures under ignored `artifacts/localization/` rather than publishing local paths.
+
+I added 20 Spanish documentation pages with cross-language navigation and checked all local links and heading targets across 40 Markdown pages. I retained English screenshots/UML and immutable historical sources as shared references, clarified their revision, updated the author voice, and corrected stale release/platform/localization status. I recovered the pending publication documentation through [PR #23](https://github.com/mglezz/dowlume/pull/23), which passed hosted checks before merging, and verified public v0.1.0 release metadata. I added a Spanish offline guide and a packaging guard for the Spanish resource assembly.
+
+These local checks do not constitute manual Windows acceptance or a new release. The published v0.1.0 binaries and tag remain unchanged and English-only. Native folder-picker controls follow Windows; startup failures before reading preferences fall back to English, and unknown historical messages retain their original wording. Future localized binaries require the affected Windows acceptance checks.
+
 ## 2026-10-18: Authorized v0.1.0 publication
 
-After all acceptance gates were completed, the owner explicitly authorized publishing v0.1.0 and creating its tag. [Release v0.1.0](https://github.com/mglezz/dowlume/releases/tag/v0.1.0) was published at `2026-10-18T17:00:48Z`. The tag resolves to tested source `94ba177ea0da5e4809f87a59edfe5c7893b65537`; it does not point to a later documentation-only commit. The finalization PR passed hosted build/test/format, security and packaging checks before merging.
+After all acceptance gates were completed, I explicitly authorized publishing v0.1.0 and creating its tag. [Release v0.1.0](https://github.com/mglezz/dowlume/releases/tag/v0.1.0) was published at `2026-10-18T17:00:48Z`. The tag resolves to tested source `94ba177ea0da5e4809f87a59edfe5c7893b65537`; it does not point to a later documentation-only commit. The finalization PR passed hosted build/test/format, security and packaging checks before merging.
 
 All six release assets were downloaded without authentication and independently checked against local accepted files, GitHub's SHA-256 digests, sizes, and the downloaded checksum manifest. All matched. The installer and portable are the exact accepted binaries; standalone notes were finalized and their checksum updated before authorization. Publication evidence is retained in `artifacts/validation-20261018-integration/`, including `published-release.json`, `published-tag.json`, `publication-authorization.json`, `public-download-verification.json`, and the downloaded assets. The [candidate record](RELEASE_CANDIDATE_0.1.0.md#publication-completed) and [checklist](RELEASE_CHECKLIST.md) identify the finished gates. No VM, checkpoint, or failed native-probe evidence was modified.
 
-## 2026-10-18: Owner-confirmed human acceptance and independent review
+## 2026-10-18: My confirmation of human acceptance and independent review
 
-After receiving the exact `94ba177` candidate handoff, the owner reported all human tests completed successfully with no apparent application issues. A subsequent explicit clarification confirmed that independent review of the change and results was included. These are owner-reported results, not agent-observed manual execution; no individual tester identity or additional manual logs were supplied. The [candidate record](RELEASE_CANDIDATE_0.1.0.md#human-acceptance-and-independent-review) records the scope and provenance.
+I recorded successful human acceptance for the exact `94ba177` candidate, with no apparent application issues, and confirmed that independent review of the change and results was included. This entry records my confirmation; it does not provide individual tester identities or additional manual logs. The [candidate record](RELEASE_CANDIDATE_0.1.0.md#human-acceptance-and-independent-review) records the scope and provenance.
 
 The installer, portable ZIP, acceptance ZIP and build information are preserved byte-for-byte. Final publication staging is `artifacts/releases/v0.1.0-final-94ba177-20261018/`; only standalone release notes and checksums were updated after acceptance. The earlier draft's five assets and metadata were preserved with hashes matching GitHub's digests before replacement. No VM or checkpoint was changed and no VM acceptance or native recycle probes were repeated for this documentation-only finalization. Hosted CI still validates documentation PRs through the normal workflows. Explicit publication authorization remains pending; no final tag or stable release is claimed.
 
@@ -50,7 +64,7 @@ Reports are retained under `artifacts/validation-20261017-containment/` (TRX, pa
 
 The prior physical NVMe/SATA move/interruption evidence is retained. The verified file-copy engine is unchanged; destructive/native capacity testing and evidence-VM use were not repeated. The missing oversized/sentinel contents remain unrecovered. No quarantine or Linux/macOS development was started.
 
-**Still mandatory before publication:** review and integrate the changes, pass hosted CI for the final revision, rebuild from clean merged `main`, rerun current security/package checks and affected clean-machine acceptance against those exact hashes in a separate environment, complete nontechnical first use, manual sign-in startup, wizard upgrade/uninstall, disabled-Recycle and safe-review checks, obtain independent approval, and then obtain the owner's explicit publication authorization. Final tag `v0.1.0` and release remain uncreated/unpublished by this work. See the [release checklist](RELEASE_CHECKLIST.md) and [Windows procedure](WINDOWS_ACCEPTANCE.md).
+**Still mandatory before publication:** review and integrate the changes, pass hosted CI for the final revision, rebuild from clean merged `main`, rerun current security/package checks and affected clean-machine acceptance against those exact hashes in a separate environment, complete nontechnical first use, manual sign-in startup, wizard upgrade/uninstall, disabled-Recycle and safe-review checks, obtain independent approval, and then obtain my explicit publication authorization. Final tag `v0.1.0` and release remain uncreated/unpublished by this work. See the [release checklist](RELEASE_CHECKLIST.md) and [Windows procedure](WINDOWS_ACCEPTANCE.md).
 
 ## 2026-10-17: Existing clear key permits checkpoint inspection
 
@@ -104,7 +118,7 @@ Hyper-V access now works from the development session; `Get-VM` initially return
 
 The exact clean `cf42326f4560515b1574ebe7794ef645a551bc21` candidate and the earlier `cdc5e35` installer were staged in dedicated test storage. All four release checksums and the earlier installer's SHA-256 matched. The preparation script and [Hyper-V handoff](HYPER_V_ACCEPTANCE.md) preserve the distinction between provisioning, automated interactive smoke, and manual acceptance. Microsoft's automated ISO link request was blocked; a browser download was requested. Personal files and host Recycle Bin policy were not changed, and the release remains unpublished.
 
-The user subsequently supplied the official English International x64 ISO. Its SHA-256 matched Microsoft's published value; [media details](HYPER_V_ACCEPTANCE.md#prepared-host-state--2026-10-16) are recorded with the VM handoff. The ISO is attached, the VM is running, and its console is open for interactive Windows setup. Preparation [PR #14](https://github.com/mglezz/dowlume/pull/14) passed build/test and security workflows before merging. Guest setup and acceptance remain pending.
+I subsequently supplied the official English International x64 ISO. Its SHA-256 matched Microsoft's published value; [media details](HYPER_V_ACCEPTANCE.md#prepared-host-state--2026-10-16) are recorded with the VM handoff. The ISO is attached, the VM is running, and its console is open for interactive Windows setup. Preparation [PR #14](https://github.com/mglezz/dowlume/pull/14) passed build/test and security workflows before merging. Guest setup and acceptance remain pending.
 
 ## 2026-10-16: Background access, race review, and security scans
 
@@ -130,7 +144,7 @@ Security/stability acceptance remains open for clean-guest installation, actual 
 
 ## 2026-10-16: Windows release hardening
 
-Implementation revision: `d01ae7b`. Environment: Windows 11 Pro x64 build 26200, .NET SDK 10.0.401, Inno Setup 6.7.3. File-operation tests used unique disposable directories; personal Downloads and Recycle Bin settings were not modified. The user confirmed that no clean Windows environment is currently available.
+Implementation revision: `d01ae7b`. Environment: Windows 11 Pro x64 build 26200, .NET SDK 10.0.401, Inno Setup 6.7.3. File-operation tests used unique disposable directories; personal Downloads and Recycle Bin settings were not modified. At that point, I confirmed that no clean Windows environment was available.
 
 | Check | Result |
 | --- | --- |

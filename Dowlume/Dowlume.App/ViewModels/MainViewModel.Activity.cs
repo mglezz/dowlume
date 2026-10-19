@@ -6,26 +6,22 @@ namespace Dowlume.App.ViewModels;
 
 public partial class MainViewModel
 {
-    public static IReadOnlyList<HistoryFilter<OperationKind>> ActivityKinds
-    {
-        get;
-    } =
-        [new("All actions", null), .. Enum.GetValues<OperationKind>().Select(kind => new HistoryFilter<OperationKind>(kind.ToString(), kind))];
+    public IReadOnlyList<HistoryFilter<OperationKind>> ActivityKinds =>
+        [new(Text.Translate("All actions"), null), .. Enum.GetValues<OperationKind>().Select(kind => new HistoryFilter<OperationKind>(Text.Translate(kind.ToString()), kind))];
 
-    public static IReadOnlyList<HistoryFilter<OperationStatus>> ActivityStatuses
-    {
-        get;
-    } =
-        [new("All statuses", null), .. Enum.GetValues<OperationStatus>().Select(status =>
-            new HistoryFilter<OperationStatus>(status == OperationStatus.NeedsAttention ? "Needs attention" : status.ToString(), status))];
+    public IReadOnlyList<HistoryFilter<OperationStatus>> ActivityStatuses =>
+        [new(Text.Translate("All statuses"), null), .. Enum.GetValues<OperationStatus>().Select(status =>
+            new HistoryFilter<OperationStatus>(Text.Translate(status == OperationStatus.NeedsAttention ? "Needs attention" : status.ToString()), status))];
 
     private OperationHistoryQuery _historyQuery = new();
     private OperationHistoryPage? _historyPage;
 
     [ObservableProperty] private string _activitySearch = string.Empty;
-    [ObservableProperty] private HistoryFilter<OperationKind> _selectedActivityKind = ActivityKinds[0];
-    [ObservableProperty] private HistoryFilter<OperationStatus> _selectedActivityStatus = ActivityStatuses[0];
-    [ObservableProperty] private string _activityPageLabel = "No operations yet.";
+    [ObservableProperty] private HistoryFilter<OperationKind> _selectedActivityKind = new("All actions", null);
+    [ObservableProperty] private HistoryFilter<OperationStatus> _selectedActivityStatus = new("All statuses", null);
+    public string ActivityPageLabel => _historyPage is not { } page ? Text.Translate("No operations yet.") :
+        page.TotalCount == 0 ? Text.Translate("No matching operations.") :
+        Text.Format("Page {0} of {1} · {2} matching operations", page.PageNumber, page.PageCount, page.TotalCount);
     [ObservableProperty] private bool _hasPreviousActivityPage;
     [ObservableProperty] private bool _hasNextActivityPage;
     [ObservableProperty] private bool _isActivityEmpty = true;
@@ -82,7 +78,6 @@ public partial class MainViewModel
         HasPreviousActivityPage = page.HasPreviousPage;
         HasNextActivityPage = page.HasNextPage;
         IsActivityEmpty = page.TotalCount == 0;
-        ActivityPageLabel = page.TotalCount == 0 ? "No matching operations." :
-            $"Page {page.PageNumber} of {page.PageCount} · {page.TotalCount} matching operations";
+        OnPropertyChanged(nameof(ActivityPageLabel));
     }
 }

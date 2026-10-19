@@ -50,6 +50,10 @@ Get-ChildItem -LiteralPath $publishDirectory -Filter '*.pdb' -File -Recurse |
 
 Copy-Item -LiteralPath (Join-Path $repositoryRoot 'LICENSE') -Destination $publishDirectory
 Copy-Item -LiteralPath (Join-Path $repositoryRoot 'packaging/START-HERE.txt') -Destination $publishDirectory
+Copy-Item -LiteralPath (Join-Path $repositoryRoot 'packaging/es/START-HERE.txt') -Destination (Join-Path $publishDirectory 'START-HERE.es.txt')
+if (-not (Test-Path -LiteralPath (Join-Path $publishDirectory 'es/Dowlume.App.resources.dll'))) {
+    throw 'The published application is missing its Spanish language resources.'
+}
 $buildInfo = [ordered]@{
     Version = $version
     SourceCommit = $sourceCommit
@@ -74,7 +78,7 @@ Copy-Item -LiteralPath (Join-Path $repositoryRoot 'scripts/Test-WindowsPackage.p
 Copy-Item -LiteralPath (Join-Path $repositoryRoot 'scripts/Test-WindowsTray.ps1') -Destination $acceptanceDirectory
 # The standalone kit has no repository-relative docs tree. Resolve its guide links to the source revision.
 $guide = [IO.File]::ReadAllText((Join-Path $repositoryRoot 'docs/WINDOWS_ACCEPTANCE.md'))
-$guide = [regex]::Replace($guide, '\]\(([A-Za-z_]+\.md)(#[^)]*)?\)', ('](https://github.com/mglezz/dowlume/blob/{0}/docs/$1$2)' -f $sourceCommit))
+$guide = [regex]::Replace($guide, '\]\(((?:es/)?[A-Za-z_]+\.md)(#[^)]*)?\)', ('](https://github.com/mglezz/dowlume/blob/{0}/docs/$1$2)' -f $sourceCommit))
 [IO.File]::WriteAllText((Join-Path $acceptanceDirectory 'WINDOWS_ACCEPTANCE.md'), $guide)
 $acceptanceArchive = Join-Path $artifactDirectory "Dowlume-$version-windows-acceptance.zip"
 Compress-Archive -Path (Join-Path $acceptanceDirectory '*') -DestinationPath $acceptanceArchive

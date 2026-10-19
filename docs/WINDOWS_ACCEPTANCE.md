@@ -1,6 +1,8 @@
 # Windows release acceptance
 
-Use this procedure for the exact installer and ZIP proposed for `v0.1.0`. Record their SHA-256 values, source commit from `BUILD-INFO.json`, Windows build, tester, date, and observed results. An unchecked item is not a pass. Do not use personal Downloads or change Recycle Bin settings on a daily-use computer.
+[English](#) · [Español](es/WINDOWS_ACCEPTANCE.md)
+
+I used this procedure for the exact installer and ZIP published as `v0.1.0`. I repeat affected checks for future packages; the old acceptance does not approve localization builds. Record their SHA-256 values, source commit from `BUILD-INFO.json`, Windows build, tester, date, and observed results. An unchecked item is not a pass. Do not use personal Downloads or change Recycle Bin settings on a daily-use computer.
 
 ## Prepare a clean environment
 
@@ -57,4 +59,4 @@ Choose a writable folder on a second fixed local volume. The harness writes only
 
 ## Publication handoff
 
-Update the release checklist with evidence tied to the artifact hashes. Resolve failures, obtain independent acceptance review, and repeat affected checks after changes. Obtain the owner's explicit publication authorization before creating the final tag or publishing stable `v0.1.0`. New features and Linux/macOS work remain deferred.
+Update the release checklist with evidence tied to the artifact hashes. Resolve failures, obtain independent acceptance review, and repeat affected checks after changes. Obtain my explicit publication authorization before creating the final tag or publishing stable `v0.1.0`. v0.1.0 is published. For a future localized package, I also check both languages, persistence after restart, dialogs, tray labels, keyboard navigation, and layout at minimum size and Windows display scaling. Linux/macOS work remains deferred.

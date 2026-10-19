@@ -1,8 +1,14 @@
 # Contributing
 
-Use English for code, comments, documentation, UI, branches, and commit messages.
+[English](#) · [Español](docs/es/CONTRIBUTING.md)
+
+I keep code identifiers, comments, branches, and Conventional Commit messages in English. I maintain documentation in English and [Spanish](docs/es/README.md), and both interface languages. I write project decisions and investigations in the first person singular; technical definitions and user instructions can stay direct. I retain attribution, licenses, original evidence, and the distinction between recorded results and tests actually performed.
 
 Keep changes focused. Use domain names, cohesive methods, immutable records, constructor injection, and explicit failure handling. Keep business decisions out of views, and use comments to explain constraints or non-obvious safety decisions. Read the [architecture and safety boundaries](docs/ARCHITECTURE.md) before changing file operations.
+
+## Localization
+
+I store matching keys and format placeholders in `Dowlume.App/Localization/Strings.resx` and `Strings.es.resx`. English is the fallback for old profiles and unsupported language codes. I translate display labels only: file paths, configured folder names, enum values, and historical journal data keep their original values. I update both documentation languages when behavior changes. Shared historical diagrams, screenshots, scripts, and evidence keep a single original copy linked from the Spanish section.
 
 ## Validation
 

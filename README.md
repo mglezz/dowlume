@@ -1,16 +1,18 @@
 # Dowlume
 
+[English](#) · [Español](docs/es/README.md)
+
 [![Build and test](https://github.com/mglezz/dowlume/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/mglezz/dowlume/actions/workflows/build.yml?query=branch%3Amain)
 
 **Your downloads, under control.**
 
-Dowlume is a local-first Windows desktop application that organizes completed downloads, moves aging files into a review area, and leaves the final decision with you.
+I build Dowlume as a local-first Windows desktop application that organizes completed downloads, moves aging files into a review area, and leaves the final decision with you.
 
 **Status:** [Dowlume v0.1.0 for Windows x64 is published](https://github.com/mglezz/dowlume/releases/tag/v0.1.0). Download the [installer](https://github.com/mglezz/dowlume/releases/download/v0.1.0/Dowlume-0.1.0-win-x64-setup.exe) or [portable ZIP](https://github.com/mglezz/dowlume/releases/download/v0.1.0/Dowlume-0.1.0-win-x64.zip), and verify the [SHA-256 checksums](https://github.com/mglezz/dowlume/releases/download/v0.1.0/SHA256SUMS.txt). These initial packages are unsigned. See [validation](docs/VALIDATION.md) and the [release checklist](docs/RELEASE_CHECKLIST.md).
 
-The current focus is Windows release reliability. **Native recycling is disabled in v0.1.0**, including internal execution, after Recycle Bin capacity tests failed to preserve files. Keep, Snooze, Move, and eligible Undo remain available. The [investigation and future quarantine design](docs/RECYCLE_CAPACITY_INVESTIGATION.md) retain the failed evidence. Automated acceptance passed; the owner confirmed human acceptance and independent review, then explicitly authorized publication on 2026-10-18. See the [release acceptance record](docs/RELEASE_CANDIDATE_0.1.0.md).
+I continue to focus on Windows release reliability. **Native recycling is disabled in v0.1.0**, including internal execution, after Recycle Bin capacity tests failed to preserve files. Keep, Snooze, Move, and eligible Undo remain available. The [investigation and future quarantine design](docs/RECYCLE_CAPACITY_INVESTIGATION.md) retain the failed evidence. Automated acceptance passed; I confirmed human acceptance and independent review, then explicitly authorized publication on 2026-10-18. See the [release acceptance record](docs/RELEASE_CANDIDATE_0.1.0.md).
 
-[User guide](docs/USER_GUIDE.md) · [Developer setup](GETTING_STARTED.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
+[Español](docs/es/README.md) · [User guide](docs/USER_GUIDE.md) · [Developer setup](GETTING_STARTED.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
 
 ![Dowlume Overview showing six managed files, category counts, and two files awaiting review](docs/images/overview.png)
 
@@ -18,7 +20,7 @@ The current focus is Windows release reliability. **Native recycling is disabled
 
 ## Why Dowlume
 
-Downloads folders accumulate useful documents, one-off installers, and files that are easy to forget. Dowlume was built to turn that clutter into a reviewable workflow: organize completed downloads, bring aging files back to your attention, and keep the final decision with you. The engineering focus is making file automation recoverable when downloads, disk operations, or the application are interrupted.
+Downloads folders accumulate useful documents, one-off installers, and files that are easy to forget. I built Dowlume to turn that clutter into a reviewable workflow: organize completed downloads, bring aging files back to your attention, and keep the final decision with you. I focus on making file automation recoverable when downloads, disk operations, or the application are interrupted.
 
 ## At a glance
 
@@ -35,6 +37,12 @@ There is no automatic permanent deletion, online account, cloud sync, or telemet
 Activity now includes searchable history with action/status filters and pagination, so older operations remain accessible. See [finding an earlier action](docs/USER_GUIDE.md#find-an-earlier-action).
 
 Windows x64 remains the current target. macOS and Linux versions are deferred pending native file-safety integrations and validation; see [platform support](docs/PLATFORM_SUPPORT.md).
+
+## Languages
+
+I keep English as the default and provide Spanish in the current source. In **Settings → Language**, select **English** or **Español**; the interface changes immediately and remembers the choice for that profile. Pause monitoring first. Folder names, files, rules, and journal records are preserved. The published **v0.1.0 binaries remain English-only**; build current source to use the selector until a later release includes it.
+
+I maintain the [Spanish documentation](docs/es/README.md) alongside these English pages. Screenshots and historical evidence identify the revision they document.
 
 ## Technologies
 

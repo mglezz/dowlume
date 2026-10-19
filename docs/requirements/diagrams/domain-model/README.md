@@ -1,6 +1,10 @@
 # Domain-model diagrams
 
-The [domain model](../../DOMAIN_MODEL.md) explains these ten manually authored UML views. `src/` contains their PlantUML sources and the shared `style.iuml`; `svg/` contains generated vector images embedded directly in Markdown. Edit the sources, then regenerate the SVGs. Do not edit generated SVGs by hand.
+[English](#) · [Español](../../../es/requirements/diagrams/domain-model/README.md)
+
+I keep one set of English UML sources and diagrams shared by both documentation languages. The Spanish domain guide provides the corresponding vocabulary and rules.
+
+The [domain model](../../DOMAIN_MODEL.md) explains these ten UML views. `src/` contains their PlantUML sources and the shared `style.iuml`; `svg/` contains generated vector images embedded directly in Markdown. Edit the sources, then regenerate the SVGs. Do not edit generated SVGs by hand.
 
 ## Reproduce the images
 

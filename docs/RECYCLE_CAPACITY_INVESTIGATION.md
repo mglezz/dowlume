@@ -1,14 +1,16 @@
 # Recycle Bin capacity investigation
 
-Status: **historical preservation failures retained; native recycling disabled for v0.1.0**. Preserve the failed guest, checkpoints, exports, and reports without modification. Do not repeat the failing probes. This document records observed evidence and a proposed future replacement; recoverable quarantine is not implemented.
+[English](#) · [Español](es/RECYCLE_CAPACITY_INVESTIGATION.md)
+
+Status: **historical preservation failures retained; native recycling disabled for v0.1.0**. Preserve the failed guest, checkpoints, exports, and reports without modification. Do not repeat the failing probes. I record observed evidence and my proposed future replacement here; I have not implemented recoverable quarantine.
 
 ## 2026-10-17: v0.1.0 containment decision
 
-The owner authorized release hardening with native recycling disabled, while preserving all existing evidence. The UI shows a disabled Recycle command and explanation; forced command execution, the organizer API, internal operation executor, and compatibility adapter all refuse. The organizer no longer receives an `IRecycleBin` dependency, and the native COM adapter/sink are excluded from compilation. Exact pre-containment sources and probe scripts are retained in the [historical source archive](archive/native-recycle/README.md). The current capacity launcher and worker refuse execution before any fixture, policy, or report change.
+I authorized release hardening with native recycling disabled, while preserving all existing evidence. The UI shows a disabled Recycle command and explanation; forced command execution, the organizer API, internal operation executor, and compatibility adapter all refuse. The organizer no longer receives an `IRecycleBin` dependency, and the native COM adapter/sink are excluded from compilation. Exact pre-containment sources and probe scripts are retained in the [historical source archive](archive/native-recycle/README.md). The current capacity launcher and worker refuse execution before any fixture, policy, or report change.
 
 Keep, Snooze, Move, and eligible Undo remain available. Existing native journal kinds and lifecycle values retain their serialized identities. Pending/NeedsAttention Recycle records are inspected only: an unchanged source becomes Failed with safe-action guidance; absent or changed content remains NeedsAttention, regardless of a recorded destination. Completed historical records remain unchanged. No missing contents are claimed restored.
 
-The original native acceptance results remain failed. They are removed from the v0.1.0 execution scope, not waived as successful. Final-artifact acceptance and independent review must verify containment before publication; the owner's explicit authorization is also required. Future quarantine and its acceptance plan below remain deferred. This decision supersedes earlier holds on application changes without permitting any change to the evidence VM or destructive rerun.
+The original native acceptance results remain failed. They are removed from the v0.1.0 execution scope, not waived as successful. I completed final-artifact acceptance, independent review, and publication authorization for the contained v0.1.0 build on 2026-10-18. Future binaries require new evidence. Future quarantine and its acceptance plan below remain deferred. This decision supersedes earlier holds on application changes without permitting any change to the evidence VM or destructive rerun.
 
 ## Candidate and evidence
 
@@ -77,7 +79,7 @@ Microsoft recommends minimizing writes when [attempting deleted-file recovery](h
 
 ### Checkpoint access with its existing clear key
 
-The user's current-guest report (`FullyEncrypted`, `ProtectionStatus: Off`, no listed key protectors) justified checking the checkpoint metadata before requesting a recovery password. Encryption and protection are separate states: Microsoft's [operations guide](https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/operations-guide) describes pre-provisioned encrypted volumes with a clear protector, and its [FAQ](https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/faq) explains the clear key retained during suspension. The current guest's status alone could not establish the older checkpoint's state.
+My current-guest report (`FullyEncrypted`, `ProtectionStatus: Off`, no listed key protectors) justified checking the checkpoint metadata before requesting a recovery password. Encryption and protection are separate states: Microsoft's [operations guide](https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/operations-guide) describes pre-provisioned encrypted volumes with a clear protector, and its [FAQ](https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/faq) explains the clear key retained during suspension. The current guest's status alone could not establish the older checkpoint's state.
 
 A new physical copy of the exported VHDX was inspected with read-only file access on the host. Its SHA-256 matched the exported image before inspection and remained unchanged afterward: `3AE5611E04F6031DF15EC3E4F6B78323C3B1D8E0B29650892461866751AC65C5` (25,337,790,464 bytes). The original export, VM, and all checkpoints were left untouched. The copy was neither mounted nor booted; no BitLocker metadata, protectors, protection state, or disk sectors were changed.
 
@@ -118,7 +120,7 @@ Use a distinct operation kind and file state for quarantine. Keep historical nat
 
 This design protects against ordinary application failures and Windows bin policy; it is not a backup against disk failure or another process deliberately modifying files with the same user's privileges. The source/destination and journal invariants still require validation.
 
-Before implementing the replacement, retain the complete failing evidence and review the oversized-case diagnosis and recovery limits. v0.1.0 applies the short-term containment: native recycling is disabled and files can stay in Review. This is not a quarantine implementation or a claim that the missing fixtures were recovered. Publication still requires the final acceptance and approval gates.
+Before implementing the replacement, retain the complete failing evidence and review the oversized-case diagnosis and recovery limits. v0.1.0 applies the short-term containment: native recycling is disabled and files can stay in Review. This is not a quarantine implementation or a claim that the missing fixtures were recovered. I completed acceptance and publication of the contained v0.1.0 build on 2026-10-18; a future replacement still requires its own acceptance and approval.
 
 ## Required regression coverage for the replacement
 

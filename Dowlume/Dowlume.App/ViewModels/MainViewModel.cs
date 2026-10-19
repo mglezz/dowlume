@@ -3,6 +3,7 @@ using System.Text.Json;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Dowlume.App.Localization;
 using Dowlume.App.Services;
 using Dowlume.Core;
 using Dowlume.Infrastructure;
@@ -25,8 +26,79 @@ public partial class MainViewModel : ObservableObject
 
     [ObservableProperty] private string _downloadsPath = string.Empty;
     [ObservableProperty] private string _excludedExtensions = string.Empty;
-    [ObservableProperty] private string _statusMessage = "Choose a folder, preview the changes, then start organizing.";
-    [ObservableProperty] private string _errorMessage = string.Empty;
+    private string _statusMessage = "Choose a folder, preview the changes, then start organizing.";
+    private object[] _statusArguments = [];
+    public string StatusMessage
+    {
+        get => Text.Format(_statusMessage, _statusArguments);
+        set => SetStatus(value);
+    }
+
+    private void SetStatus(string message, params object[] arguments)
+    {
+        _statusMessage = message;
+        _statusArguments = arguments;
+        OnPropertyChanged(nameof(StatusMessage));
+    }
+    private string _errorMessage = string.Empty;
+    public string ErrorMessage
+    {
+        get => Text.Translate(_errorMessage);
+        private set
+        {
+            _errorMessage = value;
+            OnPropertyChanged();
+        }
+    }
+    public Localizer Text
+    {
+        get;
+    }
+    public static IReadOnlyList<LanguageOption> Languages { get; } = [new("en", "English"), new("es", "Español")];
+    [ObservableProperty] private LanguageOption _selectedLanguage = Languages[0];
+
+    partial void OnSelectedLanguageChanged(LanguageOption value)
+    {
+        try
+        {
+            // Persist only the language, retaining saved rules and any unsaved edits in the form.
+            AppSettings saved = _store.LoadSettings() ?? new AppSettings { DownloadsPath = DownloadsFolder.Suggest() };
+            _store.SaveSettings(saved with
+            {
+                Language = value.Code
+            });
+            Text.SetLanguage(value.Code);
+            if (_previewSettings is not null)
+            {
+                _previewSettings = _previewSettings with
+                {
+                    Language = value.Code
+                };
+            }
+            RefreshLanguage();
+        }
+        catch (Exception error)
+        {
+            _selectedLanguage = Languages.Single(language => language.Code == Text.Language);
+            OnPropertyChanged(nameof(SelectedLanguage));
+            ShowError(error);
+        }
+    }
+
+    private void RefreshLanguage()
+    {
+        OnPropertyChanged(nameof(StatusMessage));
+        OnPropertyChanged(nameof(ErrorMessage));
+        OnPropertyChanged(nameof(MonitoringLabel));
+        OnPropertyChanged(nameof(RecyclingNotice));
+        OnPropertyChanged(nameof(ActivityPageLabel));
+        OperationKind? kind = SelectedActivityKind.Value;
+        OperationStatus? status = SelectedActivityStatus.Value;
+        OnPropertyChanged(nameof(ActivityKinds));
+        OnPropertyChanged(nameof(ActivityStatuses));
+        SelectedActivityKind = ActivityKinds.Single(filter => filter.Value == kind);
+        SelectedActivityStatus = ActivityStatuses.Single(filter => filter.Value == status);
+    }
     [ObservableProperty] private bool _isBusy;
     [ObservableProperty] private bool _isMonitoring;
     [ObservableProperty] private bool _hasPreview;
@@ -42,7 +114,7 @@ public partial class MainViewModel : ObservableObject
     public bool CanReviewSelectedFile => IsIdle && SelectedReview is not null;
     public bool CanUndoSelectedOperation => IsIdle && SelectedOperation?.CanUndo == true;
     public bool CanConfigure => !IsBusy && !IsMonitoring;
-    public string MonitoringLabel => IsMonitoring ? "Monitoring is on" : "Monitoring is paused";
+    public string MonitoringLabel => Text.Translate(IsMonitoring ? "Monitoring is on" : "Monitoring is paused");
     public ObservableCollection<CategoryRuleViewModel> Rules { get; } = [];
     public ObservableCollection<PreviewItem> PreviewItems { get; } = [];
     public ObservableCollection<TrackedFile> ReviewFiles { get; } = [];
@@ -51,8 +123,9 @@ public partial class MainViewModel : ObservableObject
     public ObservableCollection<CategorySummary> Categories { get; } = [];
 
     public MainViewModel(IStateStore store, DownloadOrganizer organizer, IDesktopDialogs dialogs, DiagnosticLog log,
-        IStartupRegistration? startup = null)
+        IStartupRegistration? startup = null, Localizer? localizer = null)
     {
+        Text = localizer ?? new Localizer();
         _store = store;
         _organizer = organizer;
         _dialogs = dialogs;
@@ -64,6 +137,9 @@ public partial class MainViewModel : ObservableObject
         }
         catch (Exception error) { ShowError(error); }
         AppSettings settings = store.LoadSettings() ?? new AppSettings { DownloadsPath = DownloadsFolder.Suggest() };
+        Text.SetLanguage(settings.Language);
+        _selectedLanguage = Languages.Single(language => language.Code == Text.Language);
+        RefreshLanguage();
         DownloadsPath = settings.DownloadsPath;
         ExcludedExtensions = string.Join(", ", settings.ExcludedExtensions);
         foreach (CategoryRule rule in settings.Categories)
@@ -112,7 +188,7 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private Task ChooseFolderAsync() => RunAsync(async () =>
     {
-        string? folder = await _dialogs.ChooseFolderAsync("Choose your Downloads folder");
+        string? folder = await _dialogs.ChooseFolderAsync(Text.Translate("Choose your Downloads folder"));
         if (folder is not null)
         {
             DownloadsPath = folder;
@@ -138,7 +214,7 @@ public partial class MainViewModel : ObservableObject
         Replace(PreviewItems, items);
         _previewSettings = settings;
         HasPreview = true;
-        StatusMessage = $"{items.Count} completed files are ready. Busy, recent, excluded, and already tracked files are skipped. Nothing has moved.";
+        SetStatus("{0} completed files are ready. Busy, recent, excluded, and already tracked files are skipped. Nothing has moved.", items.Count);
     });
 
     [RelayCommand]
@@ -149,8 +225,8 @@ public partial class MainViewModel : ObservableObject
         {
             throw new InvalidOperationException("Preview the current settings before starting.");
         }
-        if (!await _dialogs.ConfirmAsync("Start organizing downloads?",
-                $"Organize {PreviewItems.Count} previewed files and monitor this folder for completed downloads?\n\n{settings.DownloadsPath}\n\nFuture and currently unfinished downloads will also be organized. Aging files will move to Expiring Files for your review. No files will be deleted automatically.", "Organize and monitor"))
+        if (!await _dialogs.ConfirmAsync(Text.Translate("Start organizing downloads?"),
+                Text.Format("Organize {0} previewed files and monitor this folder for completed downloads?\n\n{1}\n\nFuture and currently unfinished downloads will also be organized. Aging files will move to Expiring Files for your review. No files will be deleted automatically.", PreviewItems.Count, settings.DownloadsPath), Text.Translate("Organize and monitor")))
         {
             return;
         }
@@ -186,12 +262,12 @@ public partial class MainViewModel : ObservableObject
     private Task MoveAsync() => RunAsync(async () =>
     {
         TrackedFile file = RequireReviewSelection();
-        string? folder = await _dialogs.ChooseFolderAsync("Choose where to move this file");
+        string? folder = await _dialogs.ChooseFolderAsync(Text.Translate("Choose where to move this file"));
         if (folder is null)
         {
             return;
         }
-        if (!await _dialogs.ConfirmAsync("Move file?", $"Move {file.Name} to:\n\n{folder}\n\nDowlume will stop monitoring this file. Existing files will not be overwritten.", "Move file"))
+        if (!await _dialogs.ConfirmAsync(Text.Translate("Move file?"), Text.Format("Move {0} to:\n\n{1}\n\nDowlume will stop monitoring this file. Existing files will not be overwritten.", file.Name, folder), Text.Translate("Move file")))
         {
             return;
         }
@@ -199,18 +275,18 @@ public partial class MainViewModel : ObservableObject
         await RefreshAsync();
     });
 
-    public string RecyclingNotice => WindowsRecycleBin.DisabledMessage;
+    public string RecyclingNotice => Text.Translate(WindowsRecycleBin.DisabledMessage);
 
     private static bool CanRecycle() => false;
 
     [RelayCommand(CanExecute = nameof(CanRecycle))]
-    private Task RecycleAsync() => RunAsync(() => Task.FromException(new NotSupportedException(RecyclingNotice)));
+    private Task RecycleAsync() => RunAsync(() => Task.FromException(new NotSupportedException(WindowsRecycleBin.DisabledMessage)));
 
     [RelayCommand]
     private Task UndoAsync() => RunAsync(async () =>
     {
         OperationRecord operation = SelectedOperation ?? throw new InvalidOperationException("Select an action in Activity first.");
-        if (!await _dialogs.ConfirmAsync("Undo this action?", $"Undo {operation.Description}?\n\nThe original location must be available and the file must be unchanged. Undoing initial organization keeps the file in place permanently. Undoing a review move snoozes the file for seven days.", "Undo action"))
+        if (!await _dialogs.ConfirmAsync(Text.Translate("Undo this action?"), Text.Format("Undo {0}?\n\nThe original location must be available and the file must be unchanged. Undoing initial organization keeps the file in place permanently. Undoing a review move snoozes the file for seven days.", Text.Describe(operation)), Text.Translate("Undo action")))
         {
             return;
         }
@@ -292,6 +368,7 @@ public partial class MainViewModel : ObservableObject
         }
         var settings = new AppSettings
         {
+            Language = Text.Language,
             DownloadsPath = Path.TrimEndingDirectorySeparator(Path.GetFullPath(DownloadsPath.Trim())),
             Categories = Rules.Select(rule => rule.ToRule()).ToList(),
             ExcludedExtensions = CategoryRuleViewModel.ParseExtensions(ExcludedExtensions)

@@ -1,0 +1,42 @@
+# Candidato aceptado y publicado: v0.1.0
+
+[English](../RELEASE_CANDIDATE_0.1.0.md) · [Índice en español](README.md)
+
+Conservo aquí la identidad de los artefactos aceptados. Publiqué el candidato sin firma como [v0.1.0](https://github.com/mglezz/dowlume/releases/tag/v0.1.0) el 18 de octubre de 2026, después de completar aceptación, confirmar revisión independiente y autorizar la publicación. La papelera nativa sigue desactivada.
+
+## Identidad de los artefactos
+
+La etiqueta apunta a `94ba177ea0da5e4809f87a59edfe5c7893b65537`, integrado mediante el [PR #20](https://github.com/mglezz/dowlume/pull/20). `BUILD-INFO.json` registra `DirtyWorkingTree: false`, destino autónomo `win-x64` y ausencia de firma. Los commits documentales posteriores no cambian esa identidad.
+
+| Archivo | SHA-256 |
+| --- | --- |
+| `Dowlume-0.1.0-win-x64-setup.exe` | `8B389F71177BE3EB5B8D83AD0618444D27B438AC4AFB239C63143FC1A88FDEAF` |
+| `Dowlume-0.1.0-win-x64.zip` | `8806F9181E348AE1429921FE69476BFE6693072A419F9DA6CD22F3632B5148C3` |
+| `Dowlume-0.1.0-windows-acceptance.zip` | `3E24F5E9EAD0F7BC0A7A01F5E4813B955A242A7C70A19BF0332AB0F2792A6E02` |
+| `BUILD-INFO.json` | `2C3C714D4261759253D1E0AA248780AB88BA474D617F8F73BD706AC2C4795A8F` |
+| `RELEASE_NOTES_0.1.0.md` adjunto a la publicación | `4A7336D76C5803C2625FECD26B47FE815CFF1370C205EDF447C505035C1D6BF2` |
+
+Estas cinco entradas figuran en el manifiesto publicado. Conservo los directorios locales `artifacts/releases/v0.1.0-94ba177-20261018/` y `artifacts/releases/v0.1.0-final-94ba177-20261018/` como evidencias privadas; pueden no existir en una clonación nueva. Solo finalicé las notas independientes y su checksum tras la aceptación humana. Los binarios permanecieron idénticos. Las notas editadas posteriormente en el repositorio no sustituyen el adjunto cuyo hash aparece arriba.
+
+## Comprobaciones registradas
+
+- [Compilación, 69 pruebas, formato y utilidades de evidencia](https://github.com/mglezz/dowlume/actions/runs/39122455468): superadas en el commit integrado.
+- [Seguridad](https://github.com/mglezz/dowlume/actions/runs/39122455435): superada en ese commit.
+- [Empaquetado y prueba del paquete](https://github.com/mglezz/dowlume/actions/runs/39122234994): superados antes de integrar; no los presento como una ejecución posterior.
+- Empaquetado local, auditoría de dependencias, analizadores y escaneo de secretos: superados.
+- Instalación, actualización, bandeja, instancias duplicadas, cierre y conservación de datos: superados para los artefactos exactos.
+- Automatización de primer uso: vista previa, cancelación, hashes, archivos parciales, pausa y papelera desactivada superados. No sustituye la aceptación humana.
+
+## Entorno limpio y aceptación humana
+
+Utilicé una copia independiente del checkpoint limpio con nueva identidad, sin tocar la máquina virtual de evidencia ni sus tres checkpoints. El invitado `Dowlume-Windows11-Containment` ejecutaba Windows 11 Pro, compilación 26300, con cuenta estándar `DowlumeTester`, sin SDK ni .NET compartido.
+
+Los informes originales de paquete y primer uso dieron resultado satisfactorio. Recuperé los informes desde un disco dedicado mediante lectura sin escritura y verifiqué su integridad. Conservo el manifiesto y la procedencia bajo `artifacts/validation-20261018-integration/`. El reloj del invitado iba aproximadamente una hora adelantado; mantengo los tiempos originales y relaciono los resultados por hashes.
+
+El 18 de octubre confirmé que las pruebas humanas de primer uso, inicio de sesión, asistente, revisión, deshacer, teclado y pantalla habían pasado, incluida revisión independiente. Registro mi confirmación separadamente de los informes automatizados; no adjunto identidades de revisores ni registros manuales individuales adicionales.
+
+## Publicación
+
+Autoricé la etiqueta y publicación el 18 de octubre. La publicación, ID `414647025`, pasó a pública a las `2026-10-18T17:00:48Z`, con seis adjuntos, `draft: false` y `prerelease: false`. La descarga pública de los seis archivos coincidió en tamaño y SHA-256 con las copias aceptadas y los resúmenes de GitHub.
+
+Conservo el detalle de rutas, identidades de máquina, manifiestos y hashes anteriores en el [registro original](../RELEASE_CANDIDATE_0.1.0.md). No modifiqué los binarios ni recuperé el contenido perdido durante esa publicación. La localización posterior necesita su propia aceptación de distribución.

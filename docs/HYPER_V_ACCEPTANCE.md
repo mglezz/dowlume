@@ -1,6 +1,8 @@
 # Prepare a Windows 11 acceptance VM
 
-This is the Hyper-V setup companion to [Windows acceptance](WINDOWS_ACCEPTANCE.md). Preparing a VM does not complete any guest acceptance check. Use only fictional files and keep the GitHub release unpublished until explicitly authorized.
+[English](#) · [Español](es/HYPER_V_ACCEPTANCE.md)
+
+I use this Hyper-V setup guide alongside [Windows acceptance](WINDOWS_ACCEPTANCE.md). Preparing a VM does not complete any guest acceptance check. I use only fictional files and authorize each release separately. v0.1.0 is already published; these procedures also guide future acceptance.
 
 **Preserve the existing evidence VM and all checkpoints unchanged.** The examples below use a different VM name and storage root for final containment acceptance; never substitute the evidence VM. On 2026-10-18, a separate copy of the clean pre-test checkpoint was imported for final containment acceptance; see [the candidate record](RELEASE_CANDIDATE_0.1.0.md). The evidence VM was not restored or used for these tests.
 
@@ -115,9 +117,11 @@ Keep the guest desktop unlocked while the script runs. UI Automation and native 
 
 ## Prepared host state — 2026-10-16
 
+I retain the following paragraphs as a dated preparation record. Later acceptance and publication supersede their pending status; see the [final v0.1.0 record](RELEASE_CANDIDATE_0.1.0.md). They do not describe current release availability.
+
 `Get-VM` succeeded in the development session and initially returned no VMs. `Dowlume-Windows11-Acceptance` was created with the configuration above under `E:\Dowlume.AcceptanceVM\Windows11Vm`. Secure Boot and virtual TPM were queried and confirmed enabled. The guest was initially left powered off without an OS. Microsoft's ISO link-generation request was blocked, requiring a browser download.
 
-Later that day, the user supplied `Windows11_Client_x64_en-gb_26300_9457.iso` (9,061,271,552 bytes). Its computed SHA-256, `7E3F373BD3C2321B5D5125DFCF718DFBF1A0ABC50A267118669951890DF98A5D`, matched Microsoft's English International 64-bit checksum. The verified ISO was attached as the first boot device, VMConnect was opened, and the guest was started with 4 GiB assigned RAM. Interactive Windows installation and account setup remain pending; no guest acceptance result is claimed. ISO verification is retained locally in `ISO-VERIFICATION.json` beside the VM preparation manifest.
+Later that day, I supplied `Windows11_Client_x64_en-gb_26300_9457.iso` (9,061,271,552 bytes). Its computed SHA-256, `7E3F373BD3C2321B5D5125DFCF718DFBF1A0ABC50A267118669951890DF98A5D`, matched Microsoft's English International 64-bit checksum. The verified ISO was attached as the first boot device, VMConnect was opened, and the guest was started with 4 GiB assigned RAM. Interactive Windows installation and account setup remain pending; no guest acceptance result is claimed. ISO verification is retained locally in `ISO-VERIFICATION.json` beside the VM preparation manifest.
 
 The staged candidate is from clean source `cf42326f4560515b1574ebe7794ef645a551bc21`. Its installer SHA-256 is `73C465CBFC4A47562D4859B9EF9AE0338EF66C9D836C5B07599E4CD37C93F507`; the earlier candidate installer SHA-256 is `859B87DEC3096A263F35C05697A2871EECF471A9C9185912A9751D9D3E04F5B0`. The local preparation manifest records the VM identity. VM creation is infrastructure evidence only: clean-machine smoke, manual acceptance, disabled/full-bin behavior, and Windows restore are still pending. No release was published.
 

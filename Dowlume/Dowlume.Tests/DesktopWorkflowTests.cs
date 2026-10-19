@@ -12,6 +12,7 @@ using Dowlume.Monitoring;
 
 namespace Dowlume.Tests;
 
+[Collection("Desktop")]
 public sealed class DesktopWorkflowTests
 {
     [Fact]
@@ -159,8 +160,8 @@ public sealed class DesktopWorkflowTests
                 Assert.Equal(olderPageId, model.Activity[0].Id);
 
                 model.ActivitySearch = "older REPORT";
-                model.SelectedActivityKind = MainViewModel.ActivityKinds.Single(filter => filter.Value == OperationKind.Organize);
-                model.SelectedActivityStatus = MainViewModel.ActivityStatuses.Single(filter => filter.Value == OperationStatus.Completed);
+                model.SelectedActivityKind = model.ActivityKinds.Single(filter => filter.Value == OperationKind.Organize);
+                model.SelectedActivityStatus = model.ActivityStatuses.Single(filter => filter.Value == OperationStatus.Completed);
                 await model.SearchActivityCommand.ExecuteAsync(null);
                 Assert.Equal(original.Id, Assert.Single(model.Activity).Id);
                 Assert.False(model.HasPreviousActivityPage);

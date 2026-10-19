@@ -1,5 +1,9 @@
 # Domain model
 
+[English](#) · [Español](../es/requirements/DOMAIN_MODEL.md)
+
+I analyze Dowlume through the concepts, rules, and scenarios below. Interface language is a presentation preference; it does not change the domain states or rules.
+
 ## 1. Introduction and scope
 
 Dowlume helps a person organize completed downloads and decide what to do with aging files. Its domain is **local download organization, review, and accountable file actions**. The central questions are which files may be organized, where they belong, when they should be reviewed, and what can safely be concluded after an action or interruption.
@@ -43,7 +47,7 @@ Candidate nouns were extracted from the current workflow and checked against act
 | Age, filename, path, extension, content hash | Descriptive or comparison values. A fingerprint checks content, not global file identity. | Model as attributes or derived values. |
 | User, browser, operating system, Recycle Bin | External context for instructions, file production, and recycling. | Mention where behavior requires it; no actor model in this phase. |
 | Watcher, bounded channel, semaphore, SQLite, repository, view model, window, tray | Mechanisms for realizing the behavior, not concepts of download organization. | Exclude; see Architecture. |
-| AI classifier, cloud account, duplicate group | No corresponding MVP capability. | Exclude. |
+| Content classifier, cloud account, duplicate group | No corresponding MVP capability. | Exclude. |
 
 ## 3. Selected concepts and modeling decisions
 
@@ -284,7 +288,7 @@ The complementary views share the same vocabulary. Class multiplicities allow em
 
 - Paths and fingerprints are values. Physical duplicate copies caused by an interruption are represented by observed locations during recovery, not by adding a new duplicate-management feature.
 - Six fixed Categories are instances of a concept, not subclasses. A rule includes a period because the MVP configures it alongside classification, without introducing a separate generalized retention-policy framework.
-- No durable Preview history, Consent ledger, autonomous decision agent, or separate Folder repository is implied. Domain concepts need not have one corresponding persisted C# object.
+- No durable Preview history, Consent ledger or separate Folder repository is implied. Domain concepts need not have one corresponding persisted C# object.
 - File Conditions use a `phase` value to distinguish Before from IntendedAfter. Each occurrence belongs to one Operation; their ownership says nothing about deleting physical files.
 - The File state machine describes one episode. It does not claim automatic identity continuity after external rename, completed recycling/restoration, or re-import. Candidate readiness and filesystem facts can change between observations.
 - No finality claim is made for a physical file outside Dowlume. Moved, Recycled, and Missing describe the application's knowledge and management boundary.

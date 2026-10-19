@@ -1,6 +1,8 @@
 # Platform support
 
-Windows x64 remains the supported development and packaging target. macOS and Linux versions are deferred; no packages or acceptance results are claimed for those systems.
+[English](#) · [Español](es/PLATFORM_SUPPORT.md)
+
+I support Windows x64 as the development and packaging target. macOS and Linux versions are deferred; no packages or acceptance results are claimed for those systems.
 
 ## Current assessment
 
@@ -23,4 +25,4 @@ The application uses Avalonia and separates domain rules from desktop integratio
 4. Validate real desktop behavior and Trash recovery on each supported OS and architecture, including failures and interrupted cross-volume moves.
 5. Build and test native packages, document remaining limits, and update the support table only when evidence is available.
 
-The current [Windows release gates](RELEASE_CHECKLIST.md) remain open independently of this portability work. The [roadmap](../ROADMAP.md) records the ports as future work without a promised date.
+I completed the [Windows v0.1.0 release gates](RELEASE_CHECKLIST.md); future binaries and ports require their own acceptance. The [roadmap](../ROADMAP.md) records the ports as future work without a promised date.

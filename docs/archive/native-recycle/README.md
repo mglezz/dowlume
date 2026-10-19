@@ -1,5 +1,9 @@
 # Historical native recycling sources
 
+[English](#) · [Español](../../es/archive/native-recycle/README.md)
+
+I keep this source archive as evidence for my investigation, preserving the original bytes and hashes.
+
 These `.txt` files preserve the exact source bytes from the repository before v0.1.0 containment on 2026-10-17. They are reference material only, outside all build projects and release packages. Do not rename, compile, or execute them to repeat the failed probes. `SHA256SUMS.txt` records the archived bytes.
 
 The source was copied from the clean working tree at base commit `2dcc06967adb7cf815d9378fc8845c2c8045bb7e`. Git attributes disable newline conversion for these historical source copies so their recorded hashes survive checkout.

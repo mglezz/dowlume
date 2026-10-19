@@ -1,6 +1,8 @@
 # Architecture and safety boundaries
 
-The [domain model](requirements/DOMAIN_MODEL.md) explains the conceptual vocabulary, business rules, and UML behavior of the MVP. This document describes the software components and mechanisms that implement that behavior.
+[English](#) · [Español](es/ARCHITECTURE.md)
+
+The [domain model](requirements/DOMAIN_MODEL.md) explains the conceptual vocabulary, business rules, and UML behavior of the MVP. I describe the software components and mechanisms that implement that behavior here.
 
 ## Project responsibilities
 
@@ -111,6 +113,12 @@ Activity reads pages of 50 operations from the existing schema, with parameteriz
 Rows follow reverse insertion order, consistent with the journal's existing ordering. Navigation captures the highest row sequence when leaving the live first page, keeping newly inserted operations from shifting older pages. Existing statuses remain current; the page is clamped if filtering leaves fewer results. Searching again, clearing filters, or returning to page one includes new arrivals. Refreshes are serialized, stale filter results are discarded, and shutdown waits for an active read.
 
 The attention count queries all Pending and NeedsAttention entries independently of paging and filters. Undo still consults the complete journal and applies the original safety checks. No database migration or journal pruning is needed. Search and counts still scan JSON records; pagination bounds materialized history, not query time for arbitrarily large profiles. [History tests](../Dowlume/Dowlume.Tests/OperationHistoryTests.cs) cover pagination, concurrent arrivals between reads, updates, literal searches, and filter validation.
+
+## Interface languages
+
+I keep localization in `Dowlume.App`, using matching .NET resource files and a window-scoped `Localizer`. Bindings observe language changes, including values inside existing file/history rows. I persist the `en`/`es` preference in the versioned settings JSON, defaulting to English when absent or unsupported; no schema migration is needed. Changing language saves only that preference against the saved settings, retaining unsaved form edits and the current preview. It does not rename folders, move files, or rewrite journal entries.
+
+I translate recognized historical messages at presentation time and retain unknown messages verbatim. Dates are displayed in local time with the selected culture. I keep enum values, paths, and diagnostic codes language-independent. Native folder-picker chrome follows Windows. A startup failure before settings can be read uses the English fallback.
 
 ## Diagnostics and references
 

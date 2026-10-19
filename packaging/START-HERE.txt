@@ -1,5 +1,12 @@
 Dowlume - Your downloads, under control
 
+LANGUAGE
+
+In current builds, pause monitoring and choose English or Español in
+Settings > Language. I save the choice immediately without renaming folders
+or changing files. The Spanish offline guide is START-HERE.es.txt.
+The original published v0.1.0 packages predate this selector and remain English-only.
+
 GET STARTED
 
 1. Run Dowlume.App.exe. Keep all files in this package together.

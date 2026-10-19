@@ -1,6 +1,8 @@
 # Using Dowlume
 
-Dowlume is a Windows desktop download organizer. [Version 0.1.0 for Windows x64 is available](https://github.com/mglezz/dowlume/releases/tag/v0.1.0) as an unsigned per-user installer or self-contained portable ZIP. Verify the release checksums. Start with a disposable folder containing copies of sample files before choosing your real Downloads folder.
+[English](#) · [Español](es/USER_GUIDE.md)
+
+I designed Dowlume to organize downloads on the Windows desktop. [Version 0.1.0 for Windows x64 is available](https://github.com/mglezz/dowlume/releases/tag/v0.1.0) as an unsigned per-user installer or self-contained portable ZIP. Verify the release checksums. Start with a disposable folder containing copies of sample files before choosing your real Downloads folder.
 
 ## Install and start
 
@@ -11,6 +13,14 @@ For a downloaded or locally built package, run the setup executable (for example
 The v0.1.0 release packages are unsigned. Only use a package from a source you trust and compare its SHA-256 checksum with the accompanying `SHA256SUMS.txt`.
 
 The package includes `START-HERE.txt`, which opens offline in a text editor. The installer adds a **Dowlume quick start** Start menu shortcut. Exit Dowlume, including any instance hidden in the tray, before upgrading or uninstalling; Setup refuses while the app is running. Installation and uninstall retain your files and local profile.
+
+## Choose a language
+
+In current source builds, pause monitoring and open **Settings → Language**. Choose **English** or **Español**. I apply the choice immediately and save it automatically for that profile, including when folder settings have unsaved edits. Those edits are not saved by changing language. Restarting retains the language; older profiles default to English.
+
+I translate tabs, buttons, confirmations, tray items, categories, states, dates, and known error messages. I preserve configured folder names, filenames, paths, and journal data. `Expiring Files` keeps its name in both languages. Unknown historical or operating-system messages retain their original wording. Native folder-picker controls follow Windows language settings.
+
+The published v0.1.0 packages predate the selector and remain English-only. Until a later release, [build current source](../GETTING_STARTED.md) to use Spanish. [Guía en español](es/USER_GUIDE.md).
 
 ## First use
 
