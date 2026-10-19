@@ -36,7 +36,7 @@ There is no automatic permanent deletion, online account, cloud sync, or telemet
 
 Activity now includes searchable history with action/status filters and pagination, so older operations remain accessible. See [finding an earlier action](docs/USER_GUIDE.md#find-an-earlier-action).
 
-Windows x64 remains the current target. macOS and Linux versions are deferred pending native file-safety integrations and validation; see [platform support](docs/PLATFORM_SUPPORT.md).
+Windows x64 remains the supported target. I plan common platform foundations in 0.3.0, macOS in 0.4.0, Linux in 0.5.0, and stabilization toward 1.0. These are gated milestones, not existing support or promised dates; see the [roadmap](ROADMAP.md#planned-releases-toward-10) and [platform scope](docs/PLATFORM_SUPPORT.md).
 
 ## Languages
 
