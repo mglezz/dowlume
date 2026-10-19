@@ -1,4 +1,7 @@
-<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:vm="using:Dowlume.App.ViewModels" xmlns:core="using:Dowlume.Core" x:Class="Dowlume.App.Views.MainWindow" x:DataType="vm:MainViewModel" x:CompileBindings="True" Title="Dowlume" Icon="/Assets/dowlume.ico" Width="1120" Height="820" MinWidth="880" MinHeight="680" Background="#F5F6FA" RequestedThemeVariant="Light">
+<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:vm="using:Dowlume.App.ViewModels" xmlns:core="using:Dowlume.Core" xmlns:loc="using:Dowlume.App.Localization" x:Class="Dowlume.App.Views.MainWindow" x:DataType="vm:MainViewModel" x:CompileBindings="True" Title="Dowlume" Icon="/Assets/dowlume.ico" Width="1120" Height="820" MinWidth="880" MinHeight="680" Background="#F5F6FA" RequestedThemeVariant="Light">
+  <Window.Resources>
+    <loc:LocalizedValueConverter x:Key="LocalizedValue" />
+  </Window.Resources>
   <Window.Styles>
     <Style Selector="TextBlock.heading">
       <Setter Property="FontSize" Value="24" />
@@ -33,33 +36,33 @@
     <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,22">
       <StackPanel Spacing="5">
         <TextBlock Text="Dowlume" FontSize="32" FontWeight="Bold" Foreground="#172137" />
-        <TextBlock Text="Your downloads, under control." Classes="muted" />
+        <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Yourdownloadsundercontrol]}" Classes="muted" />
       </StackPanel>
       <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
         <TextBlock Text="{Binding MonitoringLabel}" VerticalAlignment="Center" Classes="muted" />
-        <Button Content="Pause" Command="{Binding PauseCommand}" IsEnabled="{Binding IsIdle}" IsVisible="{Binding IsMonitoring}" />
-        <Button Content="Hide to tray" Click="OnHideToTray" />
+        <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Pause]}" Command="{Binding PauseCommand}" IsEnabled="{Binding IsIdle}" IsVisible="{Binding IsMonitoring}" />
+        <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Hidetotray]}" Click="OnHideToTray" />
       </StackPanel>
     </Grid>
     <TabControl Grid.Row="1">
-      <TabItem Header="Overview">
+      <TabItem Header="{ReflectionBinding $parent[Window].DataContext.Text[Overview]}">
         <Grid RowDefinitions="Auto,Auto,*" Margin="0,20,0,0">
           <Grid ColumnDefinitions="*,*,*" ColumnSpacing="16">
             <Border Classes="card">
               <StackPanel Spacing="8">
-                <TextBlock Text="Managed files" Classes="muted" />
+                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Managedfiles]}" Classes="muted" />
                 <TextBlock Text="{Binding ManagedCount}" FontSize="36" FontWeight="SemiBold" />
               </StackPanel>
             </Border>
             <Border Grid.Column="1" Classes="card">
               <StackPanel Spacing="8">
-                <TextBlock Text="Awaiting your review" Classes="muted" />
+                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Awaitingyourreview]}" Classes="muted" />
                 <TextBlock Text="{Binding ReviewCount}" FontSize="36" Foreground="#3456CF" FontWeight="SemiBold" />
               </StackPanel>
             </Border>
             <Border Grid.Column="2" Classes="card">
               <StackPanel Spacing="8">
-                <TextBlock Text="Need attention" Classes="muted" />
+                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Needattention]}" Classes="muted" />
                 <TextBlock Text="{Binding AttentionCount}" FontSize="36" FontWeight="SemiBold" />
               </StackPanel>
             </Border>
@@ -73,7 +76,15 @@
             <ItemsControl.ItemTemplate>
               <DataTemplate x:DataType="vm:CategorySummary">
                 <StackPanel Spacing="5">
-                  <TextBlock Text="{Binding Category}" Classes="muted" />
+                  <TextBlock Classes="muted" >
+                    <TextBlock.Text>
+                      <MultiBinding Converter="{StaticResource LocalizedValue}">
+                        <Binding Path="Category" />
+                        <ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                        <ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                      </MultiBinding>
+                    </TextBlock.Text>
+                  </TextBlock>
                   <TextBlock Text="{Binding Count}" FontSize="22" />
                 </StackPanel>
               </DataTemplate>
@@ -82,16 +93,32 @@
           <Border Grid.Row="2" Classes="card">
             <Grid RowDefinitions="Auto,*">
               <StackPanel Spacing="6" Margin="0,0,0,12">
-                <TextBlock Text="Your organized files" Classes="heading" />
-                <TextBlock Text="Start in Settings, then preview your folder. Files in review stay safe until you decide." TextWrapping="Wrap" Classes="muted" />
+                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Yourorganizedfiles]}" Classes="heading" />
+                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[StartinSettingsthenpreviewyourfolderFilesin]}" TextWrapping="Wrap" Classes="muted" />
               </StackPanel>
               <ListBox Grid.Row="1" ItemsSource="{Binding ManagedFiles}" Background="Transparent">
                 <ListBox.ItemTemplate>
                   <DataTemplate x:DataType="core:TrackedFile">
-                    <Grid ColumnDefinitions="*,120,100">
+                    <Grid ColumnDefinitions="*,130,140">
                       <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding CurrentPath}" />
-                      <TextBlock Grid.Column="1" Text="{Binding Category}" Classes="muted" />
-                      <TextBlock Grid.Column="2" Text="{Binding Status}" />
+                      <TextBlock Grid.Column="1" Classes="muted" >
+                    <TextBlock.Text>
+                      <MultiBinding Converter="{StaticResource LocalizedValue}">
+                        <Binding Path="Category" />
+                        <ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                        <ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                      </MultiBinding>
+                    </TextBlock.Text>
+                  </TextBlock>
+                      <TextBlock Grid.Column="2" >
+                    <TextBlock.Text>
+                      <MultiBinding Converter="{StaticResource LocalizedValue}">
+                        <Binding Path="Status" />
+                        <ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                        <ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                      </MultiBinding>
+                    </TextBlock.Text>
+                  </TextBlock>
                     </Grid>
                   </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -100,11 +127,11 @@
           </Border>
         </Grid>
       </TabItem>
-      <TabItem Header="Preview">
+      <TabItem Header="{ReflectionBinding $parent[Window].DataContext.Text[Preview]}">
         <Grid RowDefinitions="Auto,*,Auto" Margin="0,20,0,0">
           <StackPanel Spacing="8" Margin="0,0,0,16">
-            <TextBlock Text="See what will change" Classes="heading" />
-            <TextBlock Text="Preview checks completed files at the top of your chosen folder. Existing subfolders are left alone." TextWrapping="Wrap" Classes="muted" />
+            <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Seewhatwillchange]}" Classes="heading" />
+            <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Previewcheckscompletedfilesatthetopofyour]}" TextWrapping="Wrap" Classes="muted" />
             <TextBlock Text="{Binding DownloadsPath}" TextWrapping="Wrap" />
           </StackPanel>
           <ListBox Grid.Row="1" ItemsSource="{Binding PreviewItems}">
@@ -118,16 +145,16 @@
             </ListBox.ItemTemplate>
           </ListBox>
           <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="12" Margin="0,16,0,0" IsEnabled="{Binding CanConfigure}">
-            <Button Content="Refresh preview" Command="{Binding PreviewCommand}" />
-            <Button Content="Organize and monitor" Classes="primary" Command="{Binding StartCommand}" IsEnabled="{Binding HasPreview}" />
+            <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Refreshpreview]}" Command="{Binding PreviewCommand}" />
+            <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Organizeandmonitor]}" Classes="primary" Command="{Binding StartCommand}" IsEnabled="{Binding HasPreview}" />
           </StackPanel>
         </Grid>
       </TabItem>
-      <TabItem Header="Review">
+      <TabItem Header="{ReflectionBinding $parent[Window].DataContext.Text[Review]}">
         <Grid RowDefinitions="Auto,*,Auto" Margin="0,20,0,0">
           <StackPanel Spacing="8" Margin="0,0,0,16">
-            <TextBlock Text="A little space to decide" Classes="heading" />
-            <TextBlock Text="Keep returns a file to its category permanently. Snooze returns it for 7 days. Nothing is deleted automatically." TextWrapping="Wrap" Classes="muted" />
+            <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Alittlespacetodecide]}" Classes="heading" />
+            <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[KeepreturnsafiletoitscategorypermanentlySnooze]}" TextWrapping="Wrap" Classes="muted" />
             <TextBlock Text="{Binding RecyclingNotice}" TextWrapping="Wrap" Classes="muted" />
           </StackPanel>
           <ListBox Grid.Row="1" ItemsSource="{Binding ReviewFiles}" SelectedItem="{Binding SelectedReview}">
@@ -136,99 +163,160 @@
                 <StackPanel Spacing="4">
                   <Grid ColumnDefinitions="*,120">
                     <TextBlock Text="{Binding Name}" FontWeight="SemiBold" />
-                    <TextBlock Grid.Column="1" Text="{Binding Category}" Classes="muted" />
+                    <TextBlock Grid.Column="1" Classes="muted" >
+                    <TextBlock.Text>
+                      <MultiBinding Converter="{StaticResource LocalizedValue}">
+                        <Binding Path="Category" />
+                        <ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                        <ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                      </MultiBinding>
+                    </TextBlock.Text>
+                  </TextBlock>
                   </Grid>
                   <TextBlock Text="{Binding CurrentPath}" FontSize="12" TextTrimming="CharacterEllipsis" Classes="muted" />
-                  <TextBlock Text="{Binding FirstSeenUtc, StringFormat='First tracked: {0:yyyy-MM-dd}'}" FontSize="12" Classes="muted" />
+                  <TextBlock FontSize="12" Classes="muted" >
+                    <TextBlock.Text>
+                      <MultiBinding Converter="{StaticResource LocalizedValue}" ConverterParameter="FirstTracked">
+                        <Binding Path="FirstSeenUtc" />
+                        <ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                        <ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                      </MultiBinding>
+                    </TextBlock.Text>
+                  </TextBlock>
                 </StackPanel>
               </DataTemplate>
             </ListBox.ItemTemplate>
           </ListBox>
           <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="10" Margin="0,16,0,0" IsEnabled="{Binding CanReviewSelectedFile}">
-            <Button Content="Keep" Command="{Binding KeepCommand}" Classes="primary" />
-            <Button Content="Snooze 7 days" Command="{Binding SnoozeCommand}" />
-            <Button Content="Move to…" Command="{Binding MoveCommand}" />
-            <Button Content="Recycle…" Command="{Binding RecycleCommand}" />
-            <Button Content="Show in Explorer" Command="{Binding RevealReviewCommand}" />
+            <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Keep]}" Command="{Binding KeepCommand}" Classes="primary" />
+            <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Snooze7days]}" Command="{Binding SnoozeCommand}" />
+            <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Moveto]}" Command="{Binding MoveCommand}" />
+            <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Recycle]}" Command="{Binding RecycleCommand}" />
+            <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[ShowinExplorer]}" Command="{Binding RevealReviewCommand}" />
           </StackPanel>
         </Grid>
       </TabItem>
-      <TabItem Header="Activity">
+      <TabItem Header="{ReflectionBinding $parent[Window].DataContext.Text[Activity]}">
         <Grid RowDefinitions="Auto,Auto,*,Auto,Auto,Auto" Margin="0,20,0,0">
           <StackPanel Spacing="8" Margin="0,0,0,16">
-            <TextBlock Text="A clear record of every action" Classes="heading" />
-            <TextBlock Text="Browse all recorded actions, newest first, across your saved folders. Select an action to inspect its paths." TextWrapping="Wrap" Classes="muted" />
+            <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Aclearrecordofeveryaction]}" Classes="heading" />
+            <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Browseallrecordedactionsnewestfirstacrossyoursaved]}" TextWrapping="Wrap" Classes="muted" />
           </StackPanel>
-          <Grid Grid.Row="1" ColumnDefinitions="*,140,155,Auto,Auto" ColumnSpacing="8" Margin="0,0,0,12" IsEnabled="{Binding IsIdle}">
-            <TextBox Text="{Binding ActivitySearch}" PlaceholderText="Search filenames or paths" AutomationProperties.Name="Search activity filenames or paths">
+          <Grid Grid.Row="1" ColumnDefinitions="*,170,170,Auto,Auto" ColumnSpacing="8" Margin="0,0,0,12" IsEnabled="{Binding IsIdle}">
+            <TextBox Text="{Binding ActivitySearch}" PlaceholderText="{ReflectionBinding $parent[Window].DataContext.Text[Searchfilenamesorpaths]}" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Searchactivityfilenamesorpaths]}">
               <TextBox.KeyBindings>
                 <KeyBinding Gesture="Enter" Command="{Binding SearchActivityCommand}" />
               </TextBox.KeyBindings>
             </TextBox>
-            <ComboBox Grid.Column="1" ItemsSource="{Binding ActivityKinds}" SelectedItem="{Binding SelectedActivityKind}" HorizontalAlignment="Stretch" AutomationProperties.Name="Filter activity by action" />
-            <ComboBox Grid.Column="2" ItemsSource="{Binding ActivityStatuses}" SelectedItem="{Binding SelectedActivityStatus}" HorizontalAlignment="Stretch" AutomationProperties.Name="Filter activity by status" />
-            <Button Grid.Column="3" Content="Search / refresh" Command="{Binding SearchActivityCommand}" />
-            <Button Grid.Column="4" Content="Clear" Command="{Binding ClearActivityFiltersCommand}" />
+            <ComboBox Grid.Column="1" ItemsSource="{Binding ActivityKinds}" SelectedItem="{Binding SelectedActivityKind}" HorizontalAlignment="Stretch" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Filteractivitybyaction]}" />
+            <ComboBox Grid.Column="2" ItemsSource="{Binding ActivityStatuses}" SelectedItem="{Binding SelectedActivityStatus}" HorizontalAlignment="Stretch" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Filteractivitybystatus]}" />
+            <Button Grid.Column="3" Content="{ReflectionBinding $parent[Window].DataContext.Text[Searchrefresh]}" Command="{Binding SearchActivityCommand}" />
+            <Button Grid.Column="4" Content="{ReflectionBinding $parent[Window].DataContext.Text[Clear]}" Command="{Binding ClearActivityFiltersCommand}" />
           </Grid>
           <ListBox Grid.Row="2" ItemsSource="{Binding Activity}" SelectedItem="{Binding SelectedOperation}">
             <ListBox.ItemTemplate>
               <DataTemplate x:DataType="core:OperationRecord">
-                <Grid ColumnDefinitions="160,*,130">
-                  <TextBlock Text="{Binding TimestampUtc, StringFormat='{}{0:yyyy-MM-dd HH:mm}'}" Classes="muted" />
-                  <TextBlock Grid.Column="1" Text="{Binding Description}" TextTrimming="CharacterEllipsis" />
-                  <TextBlock Grid.Column="2" Text="{Binding Status}" />
+                <Grid ColumnDefinitions="160,*,150">
+                  <TextBlock Classes="muted" >
+                    <TextBlock.Text>
+                      <MultiBinding Converter="{StaticResource LocalizedValue}" ConverterParameter="Timestamp">
+                        <Binding Path="TimestampUtc" />
+                        <ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                        <ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                      </MultiBinding>
+                    </TextBlock.Text>
+                  </TextBlock>
+                  <TextBlock Grid.Column="1" TextTrimming="CharacterEllipsis" >
+                    <TextBlock.Text>
+                      <MultiBinding Converter="{StaticResource LocalizedValue}" ConverterParameter="Operation">
+                        <Binding Path="." />
+                        <ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                        <ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                      </MultiBinding>
+                    </TextBlock.Text>
+                  </TextBlock>
+                  <TextBlock Grid.Column="2" >
+                    <TextBlock.Text>
+                      <MultiBinding Converter="{StaticResource LocalizedValue}">
+                        <Binding Path="Status" />
+                        <ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                        <ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                      </MultiBinding>
+                    </TextBlock.Text>
+                  </TextBlock>
                 </Grid>
               </DataTemplate>
             </ListBox.ItemTemplate>
           </ListBox>
-          <TextBlock Grid.Row="2" Text="No operations match. Try another search or clear the filters." IsVisible="{Binding IsActivityEmpty}" HorizontalAlignment="Center" VerticalAlignment="Center" Classes="muted" />
+          <TextBlock Grid.Row="2" Text="{ReflectionBinding $parent[Window].DataContext.Text[NooperationsmatchTryanothersearchorclearthe]}" IsVisible="{Binding IsActivityEmpty}" HorizontalAlignment="Center" VerticalAlignment="Center" Classes="muted" />
           <Grid Grid.Row="3" ColumnDefinitions="Auto,*,Auto" Margin="0,12,0,0" IsEnabled="{Binding IsIdle}">
-            <Button Content="Previous" Command="{Binding PreviousActivityPageCommand}" IsEnabled="{Binding HasPreviousActivityPage}" />
+            <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Previous]}" Command="{Binding PreviousActivityPageCommand}" IsEnabled="{Binding HasPreviousActivityPage}" />
             <TextBlock Grid.Column="1" Text="{Binding ActivityPageLabel}" HorizontalAlignment="Center" VerticalAlignment="Center" Classes="muted" />
-            <Button Grid.Column="2" Content="Next" Command="{Binding NextActivityPageCommand}" IsEnabled="{Binding HasNextActivityPage}" />
+            <Button Grid.Column="2" Content="{ReflectionBinding $parent[Window].DataContext.Text[Next]}" Command="{Binding NextActivityPageCommand}" IsEnabled="{Binding HasNextActivityPage}" />
           </Grid>
           <Border Grid.Row="4" Classes="card" Margin="0,12,0,0" Padding="12">
             <StackPanel Spacing="4">
               <SelectableTextBlock Text="{Binding SelectedOperation.SourcePath}" TextWrapping="Wrap" />
               <SelectableTextBlock Text="{Binding SelectedOperation.DestinationPath}" TextWrapping="Wrap" />
-              <TextBlock Text="{Binding SelectedOperation.Error}" TextWrapping="Wrap" Foreground="#9E361B" />
+              <TextBlock TextWrapping="Wrap" Foreground="#9E361B" >
+                    <TextBlock.Text>
+                      <MultiBinding Converter="{StaticResource LocalizedValue}">
+                        <Binding Path="SelectedOperation.Error" />
+                        <ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                        <ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                      </MultiBinding>
+                    </TextBlock.Text>
+                  </TextBlock>
             </StackPanel>
           </Border>
           <StackPanel Grid.Row="5" Orientation="Horizontal" Spacing="12" Margin="0,12,0,0" IsEnabled="{Binding IsIdle}">
-            <Button Content="Undo selected action…" Command="{Binding UndoCommand}" IsEnabled="{Binding CanUndoSelectedOperation}" />
-            <Button Content="Retry interrupted operations" Command="{Binding RetryRecoveryCommand}" />
+            <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Undoselectedaction]}" Command="{Binding UndoCommand}" IsEnabled="{Binding CanUndoSelectedOperation}" />
+            <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Retryinterruptedoperations]}" Command="{Binding RetryRecoveryCommand}" />
           </StackPanel>
         </Grid>
       </TabItem>
-      <TabItem Header="Settings">
-        <ScrollViewer Margin="0,20,0,0">
+      <TabItem Header="{ReflectionBinding $parent[Window].DataContext.Text[Settings]}">
+        <ScrollViewer Margin="0,20,0,0" Padding="0,0,14,0">
           <StackPanel Spacing="18" IsEnabled="{Binding CanConfigure}">
-            <TextBlock Text="Make room for your routine" Classes="heading" />
-            <StackPanel Spacing="6" IsVisible="{Binding SupportsWindowsStartup}">
-              <CheckBox Content="Start Dowlume when I sign in to Windows" IsChecked="{Binding StartWithWindows, Mode=OneWay}" Command="{Binding ToggleWindowsStartupCommand}" />
-              <TextBlock Text="Applied immediately for your Windows account. Monitoring starts paused. Windows Settings can also disable startup apps." TextWrapping="Wrap" Classes="muted" />
+            <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Makeroomforyourroutine]}" Classes="heading" />
+            <StackPanel Spacing="6">
+              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Language]}" FontWeight="SemiBold" />
+              <ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Language]}" MinWidth="180" />
+              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[LanguagechangesapplyimmediatelyandaresavedautomaticallyFolder]}" TextWrapping="Wrap" Classes="muted" />
             </StackPanel>
-            <TextBlock Text="Pause monitoring to change these settings. Saved rules apply to future organization; existing categories are not rearranged." TextWrapping="Wrap" Classes="muted" />
+            <StackPanel Spacing="6" IsVisible="{Binding SupportsWindowsStartup}">
+              <CheckBox Content="{ReflectionBinding $parent[Window].DataContext.Text[StartDowlumewhenIsignintoWindows]}" IsChecked="{Binding StartWithWindows, Mode=OneWay}" Command="{Binding ToggleWindowsStartupCommand}" />
+              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[AppliedimmediatelyforyourWindowsaccountMonitoringstartspaused]}" TextWrapping="Wrap" Classes="muted" />
+            </StackPanel>
+            <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[PausemonitoringtochangethesesettingsSavedrulesapply]}" TextWrapping="Wrap" Classes="muted" />
             <StackPanel Spacing="8">
-              <TextBlock Text="Downloads folder" FontWeight="SemiBold" />
+              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Downloadsfolder]}" FontWeight="SemiBold" />
               <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
-                <TextBox Text="{Binding DownloadsPath}" PlaceholderText="Choose a local folder" />
-                <Button Grid.Column="1" Content="Browse…" Command="{Binding ChooseFolderCommand}" />
+                <TextBox Text="{Binding DownloadsPath}" PlaceholderText="{ReflectionBinding $parent[Window].DataContext.Text[Choosealocalfolder]}" />
+                <Button Grid.Column="1" Content="{ReflectionBinding $parent[Window].DataContext.Text[Browse]}" Command="{Binding ChooseFolderCommand}" />
               </Grid>
             </StackPanel>
             <Border Classes="card">
               <StackPanel Spacing="12">
                 <Grid ColumnDefinitions="110,150,*,110" ColumnSpacing="12">
-                  <TextBlock Text="Category" />
-                  <TextBlock Grid.Column="1" Text="Folder name" />
-                  <TextBlock Grid.Column="2" Text="Extensions (comma separated)" />
-                  <TextBlock Grid.Column="3" Text="Review days" />
+                  <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Category]}" />
+                  <TextBlock Grid.Column="1" Text="{ReflectionBinding $parent[Window].DataContext.Text[Foldername]}" />
+                  <TextBlock Grid.Column="2" Text="{ReflectionBinding $parent[Window].DataContext.Text[Extensionscommaseparated]}" TextWrapping="Wrap" />
+                  <TextBlock Grid.Column="3" Text="{ReflectionBinding $parent[Window].DataContext.Text[Reviewdays]}" TextWrapping="Wrap" />
                 </Grid>
                 <ItemsControl ItemsSource="{Binding Rules}">
                   <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="vm:CategoryRuleViewModel">
                       <Grid ColumnDefinitions="110,150,*,110" ColumnSpacing="12" Margin="0,0,0,8">
-                        <TextBlock Text="{Binding Category}" VerticalAlignment="Center" />
+                        <TextBlock VerticalAlignment="Center" >
+                    <TextBlock.Text>
+                      <MultiBinding Converter="{StaticResource LocalizedValue}">
+                        <Binding Path="Category" />
+                        <ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                        <ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                      </MultiBinding>
+                    </TextBlock.Text>
+                  </TextBlock>
                         <TextBox Grid.Column="1" Text="{Binding FolderName}" />
                         <TextBox Grid.Column="2" Text="{Binding Extensions}" />
                         <NumericUpDown Grid.Column="3" Value="{Binding ReviewAfterDays}" Minimum="1" Maximum="3650" FormatString="0" />
@@ -239,12 +327,12 @@
               </StackPanel>
             </Border>
             <StackPanel Spacing="8">
-              <TextBlock Text="Excluded extensions" FontWeight="SemiBold" />
-              <TextBox Text="{Binding ExcludedExtensions}" PlaceholderText="For example: .log, .bak" />
-              <TextBlock Text="Browser partial downloads are always excluded. Unrecognized extensions go to Other." Classes="muted" />
+              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Excludedextensions]}" FontWeight="SemiBold" />
+              <TextBox Text="{Binding ExcludedExtensions}" PlaceholderText="{ReflectionBinding $parent[Window].DataContext.Text[Forexamplelogbak]}" />
+              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[BrowserpartialdownloadsarealwaysexcludedUnrecognizedextensionsgo]}" Classes="muted" />
             </StackPanel>
-            <Button Content="Save settings" Command="{Binding SaveSettingsCommand}" Classes="primary" />
-            <TextBlock Text="Local only. No account, cloud sync, or telemetry. Closing the window stops monitoring; Hide to tray keeps it running." TextWrapping="Wrap" Classes="muted" />
+            <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Savesettings]}" Command="{Binding SaveSettingsCommand}" Classes="primary" />
+            <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[LocalonlyNoaccountcloudsyncortelemetryClosing]}" TextWrapping="Wrap" Classes="muted" />
           </StackPanel>
         </ScrollViewer>
       </TabItem>

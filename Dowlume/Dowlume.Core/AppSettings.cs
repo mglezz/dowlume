@@ -4,6 +4,8 @@ public sealed record AppSettings
 {
     public const string ReviewFolderName = "Expiring Files";
 
+    public string Language { get; init; } = "en";
+
     public string DownloadsPath { get; init; } = string.Empty;
     public List<CategoryRule> Categories
     {

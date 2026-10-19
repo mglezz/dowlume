@@ -1,0 +1,52 @@
+Dowlume - Tus descargas, bajo control
+
+PRIMEROS PASOS
+
+1. Ejecuta Dowlume.App.exe y conserva juntos todos los archivos del paquete.
+   Incluyo .NET; no necesitas instalar el runtime por separado.
+2. En Settings > Language, elige Español. El cambio se guarda inmediatamente.
+   Para volver al inglés, abre Ajustes > Idioma y elige English.
+   Pausa la supervisión antes de cambiar ajustes. El idioma no renombra carpetas.
+3. Elige una carpeta desechable con COPIAS de descargas de ejemplo en Ajustes.
+   Guarda, abre Vista previa y pulsa Actualizar vista previa.
+4. Comprueba los destinos. Organizar y supervisar pide confirmación antes de
+   mover archivos e incluye las futuras descargas completas de esa carpeta.
+5. Pausar detiene la supervisión. Cerrar la ventana detiene la aplicación.
+   Ocultar en la bandeja la mantiene abierta; usa el icono del área de
+   notificación, quizá entre los iconos ocultos, para restaurar o salir.
+   El inicio con Windows es opcional. La supervisión siempre empieza en pausa.
+6. Cuando conozcas el flujo, elige tu carpeta local de descargas.
+
+REVISIÓN Y RECUPERACIÓN
+
+Llevo los archivos antiguos a Expiring Files para que decidas. Conservar evita
+nuevas revisiones por antigüedad; Posponer devuelve a su categoría siete días.
+Mover a permite elegir otra carpeta. Desactivé la papelera nativa en v0.1.0
+porque Windows no conservó archivos de forma fiable en las pruebas de capacidad.
+Mantén los archivos en Revisión o usa Conservar, Posponer o Mover a.
+La cuarentena recuperable sigue siendo trabajo futuro.
+
+Actividad ofrece búsqueda, filtros, rutas y deshacer para acciones compatibles.
+Exijo contenido intacto y ubicación original libre. Los envíos históricos a la
+papelera no garantizan una copia recuperable. Ante un movimiento interrumpido,
+inspecciona las rutas antes de reintentar. Conservo las copias ambiguas; no borres
+ninguna sin comprobar su contenido.
+
+ARCHIVOS Y PRIVACIDAD
+
+Solo descubro archivos directamente en la carpeta elegida. No importo las
+subcarpetas existentes. No admito red, enlaces, junctions ni marcadores de nube.
+Mantén copias de seguridad. Cierra Dowlume antes de actualizar o desinstalar.
+La desinstalación conserva tus archivos y el perfil en %LOCALAPPDATA%\Dowlume.
+La base de datos privada contiene rutas y hashes. Cierra la aplicación antes de
+copiar el directorio completo para respaldarlo. No uso cuentas, nube ni telemetría.
+
+AYUDA
+
+Guía: https://github.com/mglezz/dowlume/blob/main/docs/es/USER_GUIDE.md
+Incidencias: https://github.com/mglezz/dowlume/issues
+Incluye versiones de Windows y Dowlume, pasos y resultado esperado y observado.
+No adjuntes descargas personales, bases de datos ni rutas privadas sin ocultar.
+
+Esta guía acompaña las compilaciones actuales con selector. Los paquetes
+originales publicados de v0.1.0 son anteriores a la localización y siguen en inglés.

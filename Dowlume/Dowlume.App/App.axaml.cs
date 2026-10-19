@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Dowlume.App.Localization;
 using Dowlume.App.Services;
 using Dowlume.App.ViewModels;
 using Dowlume.App.Views;
@@ -25,6 +26,7 @@ public partial class App : Application
         {
             string dataDirectory = Program.DataDirectory;
             var log = new DiagnosticLog(Path.Combine(dataDirectory, "diagnostics.jsonl"));
+            var text = new Localizer();
             try
             {
                 Directory.CreateDirectory(dataDirectory);
@@ -32,10 +34,12 @@ public partial class App : Application
                 var store = new SqliteStateStore(Path.Combine(dataDirectory, "dowlume.db"));
                 var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness());
                 var window = new MainWindow();
-                window.DataContext = new MainViewModel(store, organizer, new DesktopDialogs(window), log,
-                    new WindowsStartupRegistration());
+                text.SetLanguage(store.LoadSettings()?.Language);
+                var model = new MainViewModel(store, organizer, new DesktopDialogs(window, text), log,
+                    new WindowsStartupRegistration(), text);
+                window.DataContext = model;
                 desktop.MainWindow = window;
-                _tray = new DesktopTray(this, window);
+                _tray = new DesktopTray(this, window, text);
                 log.Write("application_started");
             }
             catch (Exception error)
@@ -43,14 +47,14 @@ public partial class App : Application
                 log.Write("startup_failed", error);
                 desktop.MainWindow = new Window
                 {
-                    Title = "Dowlume — unable to start",
+                    Title = text.Translate("Dowlume — unable to start"),
                     Width = 520,
                     Height = 220,
                     Content = new TextBlock
                     {
                         Margin = new Thickness(28),
                         TextWrapping = Avalonia.Media.TextWrapping.Wrap,
-                        Text = "Dowlume could not open its local data. Another instance may already be running. Close it and try again. If the problem persists, back up your local database before repairing or reinstalling."
+                        Text = text.Translate("Dowlume could not open its local data. Another instance may already be running. Close it and try again. If the problem persists, back up your local database before repairing or reinstalling.")
                     }
                 };
             }

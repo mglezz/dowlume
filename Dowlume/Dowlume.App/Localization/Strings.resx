@@ -1,0 +1,445 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <data name="Yourdownloadsundercontrol" xml:space="preserve">
+    <value>Your downloads, under control.</value>
+  </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="Hidetotray" xml:space="preserve">
+    <value>Hide to tray</value>
+  </data>
+  <data name="Overview" xml:space="preserve">
+    <value>Overview</value>
+  </data>
+  <data name="Managedfiles" xml:space="preserve">
+    <value>Managed files</value>
+  </data>
+  <data name="Awaitingyourreview" xml:space="preserve">
+    <value>Awaiting your review</value>
+  </data>
+  <data name="Needattention" xml:space="preserve">
+    <value>Need attention</value>
+  </data>
+  <data name="Yourorganizedfiles" xml:space="preserve">
+    <value>Your organized files</value>
+  </data>
+  <data name="StartinSettingsthenpreviewyourfolderFilesin" xml:space="preserve">
+    <value>Start in Settings, then preview your folder. Files in review stay safe until you decide.</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="Seewhatwillchange" xml:space="preserve">
+    <value>See what will change</value>
+  </data>
+  <data name="Previewcheckscompletedfilesatthetopofyour" xml:space="preserve">
+    <value>Preview checks completed files at the top of your chosen folder. Existing subfolders are left alone.</value>
+  </data>
+  <data name="Refreshpreview" xml:space="preserve">
+    <value>Refresh preview</value>
+  </data>
+  <data name="Organizeandmonitor" xml:space="preserve">
+    <value>Organize and monitor</value>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>Review</value>
+  </data>
+  <data name="Alittlespacetodecide" xml:space="preserve">
+    <value>A little space to decide</value>
+  </data>
+  <data name="KeepreturnsafiletoitscategorypermanentlySnooze" xml:space="preserve">
+    <value>Keep returns a file to its category permanently. Snooze returns it for 7 days. Nothing is deleted automatically.</value>
+  </data>
+  <data name="Keep" xml:space="preserve">
+    <value>Keep</value>
+  </data>
+  <data name="Snooze7days" xml:space="preserve">
+    <value>Snooze 7 days</value>
+  </data>
+  <data name="Moveto" xml:space="preserve">
+    <value>Move to…</value>
+  </data>
+  <data name="Recycle" xml:space="preserve">
+    <value>Recycle…</value>
+  </data>
+  <data name="ShowinExplorer" xml:space="preserve">
+    <value>Show in Explorer</value>
+  </data>
+  <data name="Activity" xml:space="preserve">
+    <value>Activity</value>
+  </data>
+  <data name="Aclearrecordofeveryaction" xml:space="preserve">
+    <value>A clear record of every action</value>
+  </data>
+  <data name="Browseallrecordedactionsnewestfirstacrossyoursaved" xml:space="preserve">
+    <value>Browse all recorded actions, newest first, across your saved folders. Select an action to inspect its paths.</value>
+  </data>
+  <data name="Searchfilenamesorpaths" xml:space="preserve">
+    <value>Search filenames or paths</value>
+  </data>
+  <data name="Searchactivityfilenamesorpaths" xml:space="preserve">
+    <value>Search activity filenames or paths</value>
+  </data>
+  <data name="Filteractivitybyaction" xml:space="preserve">
+    <value>Filter activity by action</value>
+  </data>
+  <data name="Filteractivitybystatus" xml:space="preserve">
+    <value>Filter activity by status</value>
+  </data>
+  <data name="Searchrefresh" xml:space="preserve">
+    <value>Search / refresh</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="NooperationsmatchTryanothersearchorclearthe" xml:space="preserve">
+    <value>No operations match. Try another search or clear the filters.</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="Undoselectedaction" xml:space="preserve">
+    <value>Undo selected action…</value>
+  </data>
+  <data name="Retryinterruptedoperations" xml:space="preserve">
+    <value>Retry interrupted operations</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Makeroomforyourroutine" xml:space="preserve">
+    <value>Make room for your routine</value>
+  </data>
+  <data name="StartDowlumewhenIsignintoWindows" xml:space="preserve">
+    <value>Start Dowlume when I sign in to Windows</value>
+  </data>
+  <data name="AppliedimmediatelyforyourWindowsaccountMonitoringstartspaused" xml:space="preserve">
+    <value>Applied immediately for your Windows account. Monitoring starts paused. Windows Settings can also disable startup apps.</value>
+  </data>
+  <data name="PausemonitoringtochangethesesettingsSavedrulesapply" xml:space="preserve">
+    <value>Pause monitoring to change these settings. Saved rules apply to future organization; existing categories are not rearranged.</value>
+  </data>
+  <data name="Downloadsfolder" xml:space="preserve">
+    <value>Downloads folder</value>
+  </data>
+  <data name="Choosealocalfolder" xml:space="preserve">
+    <value>Choose a local folder</value>
+  </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Browse…</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Foldername" xml:space="preserve">
+    <value>Folder name</value>
+  </data>
+  <data name="Extensionscommaseparated" xml:space="preserve">
+    <value>Extensions (comma separated)</value>
+  </data>
+  <data name="Reviewdays" xml:space="preserve">
+    <value>Review days</value>
+  </data>
+  <data name="Excludedextensions" xml:space="preserve">
+    <value>Excluded extensions</value>
+  </data>
+  <data name="Forexamplelogbak" xml:space="preserve">
+    <value>For example: .log, .bak</value>
+  </data>
+  <data name="BrowserpartialdownloadsarealwaysexcludedUnrecognizedextensionsgo" xml:space="preserve">
+    <value>Browser partial downloads are always excluded. Unrecognized extensions go to Other.</value>
+  </data>
+  <data name="Savesettings" xml:space="preserve">
+    <value>Save settings</value>
+  </data>
+  <data name="LocalonlyNoaccountcloudsyncortelemetryClosing" xml:space="preserve">
+    <value>Local only. No account, cloud sync, or telemetry. Closing the window stops monitoring; Hide to tray keeps it running.</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LanguagechangesapplyimmediatelyandaresavedautomaticallyFolder" xml:space="preserve">
+    <value>Language changes apply immediately and are saved automatically. Folder names and files stay unchanged.</value>
+  </data>
+  <data name="Monitoringison" xml:space="preserve">
+    <value>Monitoring is on</value>
+  </data>
+  <data name="Monitoringispaused" xml:space="preserve">
+    <value>Monitoring is paused</value>
+  </data>
+  <data name="Chooseafolderpreviewthechangesthenstartorganizing" xml:space="preserve">
+    <value>Choose a folder, preview the changes, then start organizing.</value>
+  </data>
+  <data name="Windowsstartupisunavailableforthisapplicationhost" xml:space="preserve">
+    <value>Windows startup is unavailable for this application host.</value>
+  </data>
+  <data name="DowlumewillopenwhenyousigninMonitoringwill" xml:space="preserve">
+    <value>Dowlume will open when you sign in. Monitoring will remain paused until you preview and start.</value>
+  </data>
+  <data name="Dowlumewillnolongerstartautomaticallyfromthislocation" xml:space="preserve">
+    <value>Dowlume will no longer start automatically from this location.</value>
+  </data>
+  <data name="ChooseyourDownloadsfolder" xml:space="preserve">
+    <value>Choose your Downloads folder</value>
+  </data>
+  <data name="SettingssavedPreviewthefolderbeforestartingmonitoring" xml:space="preserve">
+    <value>Settings saved. Preview the folder before starting monitoring.</value>
+  </data>
+  <data name="CheckingcompleteddownloadsLargefilesmaytakeamoment" xml:space="preserve">
+    <value>Checking completed downloads. Large files may take a moment.</value>
+  </data>
+  <data name="0completedfilesarereadyBusyrecentexcludedand" xml:space="preserve">
+    <value>{0} completed files are ready. Busy, recent, excluded, and already tracked files are skipped. Nothing has moved.</value>
+  </data>
+  <data name="Previewthecurrentsettingsbeforestarting" xml:space="preserve">
+    <value>Preview the current settings before starting.</value>
+  </data>
+  <data name="Startorganizingdownloads" xml:space="preserve">
+    <value>Start organizing downloads?</value>
+  </data>
+  <data name="MonitoringcompleteddownloadsYoucanpauseatanytime" xml:space="preserve">
+    <value>Monitoring completed downloads. You can pause at any time.</value>
+  </data>
+  <data name="MonitoringpausedPreviewagainwhenyouarereadyto" xml:space="preserve">
+    <value>Monitoring paused. Preview again when you are ready to resume.</value>
+  </data>
+  <data name="Choosewheretomovethisfile" xml:space="preserve">
+    <value>Choose where to move this file</value>
+  </data>
+  <data name="Movefile" xml:space="preserve">
+    <value>Move file?</value>
+  </data>
+  <data name="MovefileMore" xml:space="preserve">
+    <value>Move file</value>
+  </data>
+  <data name="SelectanactioninActivityfirst" xml:space="preserve">
+    <value>Select an action in Activity first.</value>
+  </data>
+  <data name="Undothisaction" xml:space="preserve">
+    <value>Undo this action?</value>
+  </data>
+  <data name="Undoaction" xml:space="preserve">
+    <value>Undo action</value>
+  </data>
+  <data name="RecoverycheckedInspectanyNeedsAttentionentriesinActivityboth" xml:space="preserve">
+    <value>Recovery checked. Inspect any NeedsAttention entries in Activity; both paths are shown there.</value>
+  </data>
+  <data name="Pausemonitoringbeforechangingsettingsorpreviewingfiles" xml:space="preserve">
+    <value>Pause monitoring before changing settings or previewing files.</value>
+  </data>
+  <data name="ChooseanabsoluteDownloadsfolderpath" xml:space="preserve">
+    <value>Choose an absolute Downloads folder path.</value>
+  </data>
+  <data name="SaveandpreviewaDownloadsfolderfirst" xml:space="preserve">
+    <value>Save and preview a Downloads folder first.</value>
+  </data>
+  <data name="Selectafileinthereviewlistfirst" xml:space="preserve">
+    <value>Select a file in the review list first.</value>
+  </data>
+  <data name="Allactions" xml:space="preserve">
+    <value>All actions</value>
+  </data>
+  <data name="Allstatuses" xml:space="preserve">
+    <value>All statuses</value>
+  </data>
+  <data name="Needsattention" xml:space="preserve">
+    <value>Needs attention</value>
+  </data>
+  <data name="Nooperationsyet" xml:space="preserve">
+    <value>No operations yet.</value>
+  </data>
+  <data name="Nomatchingoperations" xml:space="preserve">
+    <value>No matching operations.</value>
+  </data>
+  <data name="Page0of12matchingoperations" xml:space="preserve">
+    <value>Page {0} of {1} · {2} matching operations</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="OpenDowlume" xml:space="preserve">
+    <value>Open Dowlume</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="Dowlumeyourdownloadsundercontrol" xml:space="preserve">
+    <value>Dowlume — your downloads, under control</value>
+  </data>
+  <data name="Dowlumeunabletostart" xml:space="preserve">
+    <value>Dowlume — unable to start</value>
+  </data>
+  <data name="DowlumecouldnotopenitslocaldataAnotherinstance" xml:space="preserve">
+    <value>Dowlume could not open its local data. Another instance may already be running. Close it and try again. If the problem persists, back up your local database before repairing or reinstalling.</value>
+  </data>
+  <data name="ExplorerisavailableonWindows" xml:space="preserve">
+    <value>Explorer is available on Windows.</value>
+  </data>
+  <data name="WindowsstartuprequiresthepackagedDowlumeapplication" xml:space="preserve">
+    <value>Windows startup requires the packaged Dowlume application.</value>
+  </data>
+  <data name="Defineexactlyoneruleforeachcategory" xml:space="preserve">
+    <value>Define exactly one rule for each category.</value>
+  </data>
+  <data name="Categoryfoldersmustbeuniquereviewperiodsmustbe" xml:space="preserve">
+    <value>Category folders must be unique; review periods must be 1–3650 days.</value>
+  </data>
+  <data name="Anextensioncanbelongtoonlyonecategory" xml:space="preserve">
+    <value>An extension can belong to only one category.</value>
+  </data>
+  <data name="CategorynamesmustbesafeWindowsfoldernames" xml:space="preserve">
+    <value>Category names must be safe Windows folder names.</value>
+  </data>
+  <data name="Extensionsmuststartwithadotandcontainonly" xml:space="preserve">
+    <value>Extensions must start with a dot and contain only letters and numbers.</value>
+  </data>
+  <data name="Chooseanexistinglocalfoldernotadriveroot" xml:space="preserve">
+    <value>Choose an existing local folder, not a drive root or network share.</value>
+  </data>
+  <data name="Systemandapplicationdatafolderscannotbemonitored" xml:space="preserve">
+    <value>System and application-data folders cannot be monitored.</value>
+  </data>
+  <data name="ChooseadestinationoutsidethereviewfolderandDownloads" xml:space="preserve">
+    <value>Choose a destination outside the review folder and Downloads root.</value>
+  </data>
+  <data name="ThisfileisnolongerawaitingreviewRefreshthe" xml:space="preserve">
+    <value>This file is no longer awaiting review. Refresh the list.</value>
+  </data>
+  <data name="ThisactioncannotbeundoneinDowlumeHistoricalrecycling" xml:space="preserve">
+    <value>This action cannot be undone in Dowlume. Historical recycling does not guarantee that Windows retained a recoverable copy.</value>
+  </data>
+  <data name="AlateractionchangedthisfileUndoitslatest" xml:space="preserve">
+    <value>A later action changed this file. Undo its latest eligible action first.</value>
+  </data>
+  <data name="AccessdeniedCheckfolderpermissionsandretry" xml:space="preserve">
+    <value>Access denied. Check folder permissions and retry.</value>
+  </data>
+  <data name="Thefileisbusychangedmissingoritsdestination" xml:space="preserve">
+    <value>The file is busy, changed, missing, or its destination is unavailable. Inspect it in Explorer and retry.</value>
+  </data>
+  <data name="Theoperationwascanceledunfinishedworkcanberetried" xml:space="preserve">
+    <value>The operation was canceled; unfinished work can be retried.</value>
+  </data>
+  <data name="TheoperationfailedLocaldiagnosticscontainatechnicalerror" xml:space="preserve">
+    <value>The operation failed. Local diagnostics contain a technical error code. Restart and retry recovery.</value>
+  </data>
+  <data name="Recyclingisdisabledinv010becauseWindows" xml:space="preserve">
+    <value>Recycling is disabled in v0.1.0 because Windows Recycle Bin could not reliably preserve files. Use Keep, Snooze, or Move to instead.</value>
+  </data>
+  <data name="HistoricalrecyclingwasnotcompletedThesourceisintact" xml:space="preserve">
+    <value>Historical recycling was not completed. The source is intact. Recycling is disabled; use Keep, Snooze, or Move to.</value>
+  </data>
+  <data name="HistoricalrecyclingcouldnotbeverifiedPreserveanyremaining" xml:space="preserve">
+    <value>Historical recycling could not be verified. Preserve any remaining copies and inspect the file manually. Recycling is disabled; retrying recovery does not restore missing content.</value>
+  </data>
+  <data name="InterruptedbeforemovingThesourceisintactretrythe" xml:space="preserve">
+    <value>Interrupted before moving. The source is intact; retry the original action.</value>
+  </data>
+  <data name="InspectthesourceanddestinationinExplorerthenretry" xml:space="preserve">
+    <value>Inspect the source and destination in Explorer, then retry recovery. Nothing will be removed automatically.</value>
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>Documents</value>
+  </data>
+  <data name="Images" xml:space="preserve">
+    <value>Images</value>
+  </data>
+  <data name="Videos" xml:space="preserve">
+    <value>Videos</value>
+  </data>
+  <data name="Archives" xml:space="preserve">
+    <value>Archives</value>
+  </data>
+  <data name="Installers" xml:space="preserve">
+    <value>Installers</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="Organize" xml:space="preserve">
+    <value>Organize</value>
+  </data>
+  <data name="Snooze" xml:space="preserve">
+    <value>Snooze</value>
+  </data>
+  <data name="Move" xml:space="preserve">
+    <value>Move</value>
+  </data>
+  <data name="RecycleMore" xml:space="preserve">
+    <value>Recycle</value>
+  </data>
+  <data name="Undo" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>Failed</value>
+  </data>
+  <data name="OperationNeedsAttention" xml:space="preserve">
+    <value>NeedsAttention</value>
+  </data>
+  <data name="Organized" xml:space="preserve">
+    <value>Organized</value>
+  </data>
+  <data name="InReview" xml:space="preserve">
+    <value>InReview</value>
+  </data>
+  <data name="Kept" xml:space="preserve">
+    <value>Kept</value>
+  </data>
+  <data name="Snoozed" xml:space="preserve">
+    <value>Snoozed</value>
+  </data>
+  <data name="Moved" xml:space="preserve">
+    <value>Moved</value>
+  </data>
+  <data name="Recycled" xml:space="preserve">
+    <value>Recycled</value>
+  </data>
+  <data name="Missing" xml:space="preserve">
+    <value>Missing</value>
+  </data>
+  <data name="Firsttracked0d" xml:space="preserve">
+    <value>First tracked: {0:d}</value>
+  </data>
+  <data name="Organize0previewedfilesandmonitorthisfolderfor" xml:space="preserve">
+    <value>Organize {0} previewed files and monitor this folder for completed downloads?
+
+{1}
+
+Future and currently unfinished downloads will also be organized. Aging files will move to Expiring Files for your review. No files will be deleted automatically.</value>
+  </data>
+  <data name="Move0to1Dowlumewillstopmonitoringthis" xml:space="preserve">
+    <value>Move {0} to:
+
+{1}
+
+Dowlume will stop monitoring this file. Existing files will not be overwritten.</value>
+  </data>
+  <data name="Undo0Theoriginallocationmustbeavailableand" xml:space="preserve">
+    <value>Undo {0}?
+
+The original location must be available and the file must be unchanged. Undoing initial organization keeps the file in place permanently. Undoing a review move snoozes the file for seven days.</value>
+  </data>
+  <data name="HistoryFiltersInvalid" xml:space="preserve">
+    <value>Choose valid history filters and a nonnegative history boundary.</value>
+  </data>
+  <data name="NewerDatabase" xml:space="preserve">
+    <value>This database belongs to a newer version of Dowlume.</value>
+  </data>
+</root>

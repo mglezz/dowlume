@@ -1,0 +1,445 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <data name="Yourdownloadsundercontrol" xml:space="preserve">
+    <value>Tus descargas, bajo control.</value>
+  </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Pausar</value>
+  </data>
+  <data name="Hidetotray" xml:space="preserve">
+    <value>Ocultar en la bandeja</value>
+  </data>
+  <data name="Overview" xml:space="preserve">
+    <value>Resumen</value>
+  </data>
+  <data name="Managedfiles" xml:space="preserve">
+    <value>Archivos gestionados</value>
+  </data>
+  <data name="Awaitingyourreview" xml:space="preserve">
+    <value>Pendientes de revisión</value>
+  </data>
+  <data name="Needattention" xml:space="preserve">
+    <value>Requieren atención</value>
+  </data>
+  <data name="Yourorganizedfiles" xml:space="preserve">
+    <value>Tus archivos organizados</value>
+  </data>
+  <data name="StartinSettingsthenpreviewyourfolderFilesin" xml:space="preserve">
+    <value>Empieza en Ajustes y previsualiza tu carpeta. Los archivos en revisión se conservan hasta que decidas.</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Vista previa</value>
+  </data>
+  <data name="Seewhatwillchange" xml:space="preserve">
+    <value>Comprueba qué va a cambiar</value>
+  </data>
+  <data name="Previewcheckscompletedfilesatthetopofyour" xml:space="preserve">
+    <value>La vista previa comprueba las descargas completas de la carpeta elegida. No modifica las subcarpetas existentes.</value>
+  </data>
+  <data name="Refreshpreview" xml:space="preserve">
+    <value>Actualizar vista previa</value>
+  </data>
+  <data name="Organizeandmonitor" xml:space="preserve">
+    <value>Organizar y supervisar</value>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>Revisión</value>
+  </data>
+  <data name="Alittlespacetodecide" xml:space="preserve">
+    <value>Un espacio para decidir</value>
+  </data>
+  <data name="KeepreturnsafiletoitscategorypermanentlySnooze" xml:space="preserve">
+    <value>Conservar devuelve el archivo a su categoría de forma permanente. Posponer lo devuelve durante 7 días. No se elimina nada automáticamente.</value>
+  </data>
+  <data name="Keep" xml:space="preserve">
+    <value>Conservar</value>
+  </data>
+  <data name="Snooze7days" xml:space="preserve">
+    <value>Posponer 7 días</value>
+  </data>
+  <data name="Moveto" xml:space="preserve">
+    <value>Mover a…</value>
+  </data>
+  <data name="Recycle" xml:space="preserve">
+    <value>Enviar a la papelera…</value>
+  </data>
+  <data name="ShowinExplorer" xml:space="preserve">
+    <value>Mostrar en el Explorador</value>
+  </data>
+  <data name="Activity" xml:space="preserve">
+    <value>Actividad</value>
+  </data>
+  <data name="Aclearrecordofeveryaction" xml:space="preserve">
+    <value>Un registro de cada acción</value>
+  </data>
+  <data name="Browseallrecordedactionsnewestfirstacrossyoursaved" xml:space="preserve">
+    <value>Consulta las acciones de todas tus carpetas guardadas, de más reciente a más antigua. Selecciona una acción para ver sus rutas.</value>
+  </data>
+  <data name="Searchfilenamesorpaths" xml:space="preserve">
+    <value>Buscar nombres o rutas</value>
+  </data>
+  <data name="Searchactivityfilenamesorpaths" xml:space="preserve">
+    <value>Buscar nombres o rutas en la actividad</value>
+  </data>
+  <data name="Filteractivitybyaction" xml:space="preserve">
+    <value>Filtrar actividad por acción</value>
+  </data>
+  <data name="Filteractivitybystatus" xml:space="preserve">
+    <value>Filtrar actividad por estado</value>
+  </data>
+  <data name="Searchrefresh" xml:space="preserve">
+    <value>Buscar / actualizar</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Limpiar</value>
+  </data>
+  <data name="NooperationsmatchTryanothersearchorclearthe" xml:space="preserve">
+    <value>No hay coincidencias. Prueba otra búsqueda o limpia los filtros.</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Anterior</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Siguiente</value>
+  </data>
+  <data name="Undoselectedaction" xml:space="preserve">
+    <value>Deshacer acción seleccionada…</value>
+  </data>
+  <data name="Retryinterruptedoperations" xml:space="preserve">
+    <value>Reintentar operaciones interrumpidas</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Ajustes</value>
+  </data>
+  <data name="Makeroomforyourroutine" xml:space="preserve">
+    <value>Adapta Dowlume a tu rutina</value>
+  </data>
+  <data name="StartDowlumewhenIsignintoWindows" xml:space="preserve">
+    <value>Iniciar Dowlume al entrar en Windows</value>
+  </data>
+  <data name="AppliedimmediatelyforyourWindowsaccountMonitoringstartspaused" xml:space="preserve">
+    <value>Se aplica inmediatamente a tu cuenta de Windows. La supervisión empieza en pausa. También puedes desactivar el inicio desde los ajustes de Windows.</value>
+  </data>
+  <data name="PausemonitoringtochangethesesettingsSavedrulesapply" xml:space="preserve">
+    <value>Pausa la supervisión para cambiar estos ajustes. Las reglas guardadas se aplican a futuras descargas; no reorganizan las categorías existentes.</value>
+  </data>
+  <data name="Downloadsfolder" xml:space="preserve">
+    <value>Carpeta de descargas</value>
+  </data>
+  <data name="Choosealocalfolder" xml:space="preserve">
+    <value>Elige una carpeta local</value>
+  </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Examinar…</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Categoría</value>
+  </data>
+  <data name="Foldername" xml:space="preserve">
+    <value>Nombre de carpeta</value>
+  </data>
+  <data name="Extensionscommaseparated" xml:space="preserve">
+    <value>Extensiones (separadas por comas)</value>
+  </data>
+  <data name="Reviewdays" xml:space="preserve">
+    <value>Días hasta la revisión</value>
+  </data>
+  <data name="Excludedextensions" xml:space="preserve">
+    <value>Extensiones excluidas</value>
+  </data>
+  <data name="Forexamplelogbak" xml:space="preserve">
+    <value>Por ejemplo: .log, .bak</value>
+  </data>
+  <data name="BrowserpartialdownloadsarealwaysexcludedUnrecognizedextensionsgo" xml:space="preserve">
+    <value>Las descargas parciales se excluyen siempre. Las extensiones desconocidas van a Otros.</value>
+  </data>
+  <data name="Savesettings" xml:space="preserve">
+    <value>Guardar ajustes</value>
+  </data>
+  <data name="LocalonlyNoaccountcloudsyncortelemetryClosing" xml:space="preserve">
+    <value>Todo es local. Sin cuenta, sincronización ni telemetría. Cerrar la ventana detiene la supervisión; ocultarla en la bandeja la mantiene activa.</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+  <data name="LanguagechangesapplyimmediatelyandaresavedautomaticallyFolder" xml:space="preserve">
+    <value>El idioma se aplica y se guarda al instante. Los nombres de las carpetas y los archivos no cambian.</value>
+  </data>
+  <data name="Monitoringison" xml:space="preserve">
+    <value>Supervisión activa</value>
+  </data>
+  <data name="Monitoringispaused" xml:space="preserve">
+    <value>Supervisión en pausa</value>
+  </data>
+  <data name="Chooseafolderpreviewthechangesthenstartorganizing" xml:space="preserve">
+    <value>Elige una carpeta, revisa la vista previa y empieza a organizar.</value>
+  </data>
+  <data name="Windowsstartupisunavailableforthisapplicationhost" xml:space="preserve">
+    <value>El inicio con Windows no está disponible en este entorno.</value>
+  </data>
+  <data name="DowlumewillopenwhenyousigninMonitoringwill" xml:space="preserve">
+    <value>Dowlume se abrirá al iniciar sesión. La supervisión seguirá en pausa hasta que revises la vista previa y la inicies.</value>
+  </data>
+  <data name="Dowlumewillnolongerstartautomaticallyfromthislocation" xml:space="preserve">
+    <value>Dowlume ya no se iniciará automáticamente desde esta ubicación.</value>
+  </data>
+  <data name="ChooseyourDownloadsfolder" xml:space="preserve">
+    <value>Elige tu carpeta de descargas</value>
+  </data>
+  <data name="SettingssavedPreviewthefolderbeforestartingmonitoring" xml:space="preserve">
+    <value>Ajustes guardados. Revisa la vista previa antes de iniciar la supervisión.</value>
+  </data>
+  <data name="CheckingcompleteddownloadsLargefilesmaytakeamoment" xml:space="preserve">
+    <value>Comprobando descargas completas. Los archivos grandes pueden tardar un poco.</value>
+  </data>
+  <data name="0completedfilesarereadyBusyrecentexcludedand" xml:space="preserve">
+    <value>Archivos completos listos: {0}. Se omiten los ocupados, recientes, excluidos y ya registrados. No se ha movido nada.</value>
+  </data>
+  <data name="Previewthecurrentsettingsbeforestarting" xml:space="preserve">
+    <value>Revisa la vista previa con los ajustes actuales antes de empezar.</value>
+  </data>
+  <data name="Startorganizingdownloads" xml:space="preserve">
+    <value>¿Empezar a organizar las descargas?</value>
+  </data>
+  <data name="MonitoringcompleteddownloadsYoucanpauseatanytime" xml:space="preserve">
+    <value>Supervisando las descargas completas. Puedes pausar cuando quieras.</value>
+  </data>
+  <data name="MonitoringpausedPreviewagainwhenyouarereadyto" xml:space="preserve">
+    <value>Supervisión en pausa. Actualiza la vista previa cuando quieras continuar.</value>
+  </data>
+  <data name="Choosewheretomovethisfile" xml:space="preserve">
+    <value>Elige dónde mover este archivo</value>
+  </data>
+  <data name="Movefile" xml:space="preserve">
+    <value>¿Mover el archivo?</value>
+  </data>
+  <data name="MovefileMore" xml:space="preserve">
+    <value>Mover archivo</value>
+  </data>
+  <data name="SelectanactioninActivityfirst" xml:space="preserve">
+    <value>Selecciona primero una acción en Actividad.</value>
+  </data>
+  <data name="Undothisaction" xml:space="preserve">
+    <value>¿Deshacer esta acción?</value>
+  </data>
+  <data name="Undoaction" xml:space="preserve">
+    <value>Deshacer acción</value>
+  </data>
+  <data name="RecoverycheckedInspectanyNeedsAttentionentriesinActivityboth" xml:space="preserve">
+    <value>Recuperación comprobada. Revisa las entradas que requieren atención en Actividad; allí aparecen ambas rutas.</value>
+  </data>
+  <data name="Pausemonitoringbeforechangingsettingsorpreviewingfiles" xml:space="preserve">
+    <value>Pausa la supervisión antes de cambiar los ajustes o previsualizar archivos.</value>
+  </data>
+  <data name="ChooseanabsoluteDownloadsfolderpath" xml:space="preserve">
+    <value>Elige una ruta absoluta para la carpeta de descargas.</value>
+  </data>
+  <data name="SaveandpreviewaDownloadsfolderfirst" xml:space="preserve">
+    <value>Guarda una carpeta de descargas y revisa su vista previa primero.</value>
+  </data>
+  <data name="Selectafileinthereviewlistfirst" xml:space="preserve">
+    <value>Selecciona primero un archivo de la lista de revisión.</value>
+  </data>
+  <data name="Allactions" xml:space="preserve">
+    <value>Todas las acciones</value>
+  </data>
+  <data name="Allstatuses" xml:space="preserve">
+    <value>Todos los estados</value>
+  </data>
+  <data name="Needsattention" xml:space="preserve">
+    <value>Requiere atención</value>
+  </data>
+  <data name="Nooperationsyet" xml:space="preserve">
+    <value>Todavía no hay operaciones.</value>
+  </data>
+  <data name="Nomatchingoperations" xml:space="preserve">
+    <value>No hay operaciones coincidentes.</value>
+  </data>
+  <data name="Page0of12matchingoperations" xml:space="preserve">
+    <value>Página {0} de {1} · Coincidencias: {2}</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="OpenDowlume" xml:space="preserve">
+    <value>Abrir Dowlume</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Salir</value>
+  </data>
+  <data name="Dowlumeyourdownloadsundercontrol" xml:space="preserve">
+    <value>Dowlume — tus descargas, bajo control</value>
+  </data>
+  <data name="Dowlumeunabletostart" xml:space="preserve">
+    <value>Dowlume — no se puede iniciar</value>
+  </data>
+  <data name="DowlumecouldnotopenitslocaldataAnotherinstance" xml:space="preserve">
+    <value>Dowlume no ha podido abrir sus datos locales. Puede que ya haya otra instancia abierta. Ciérrala e inténtalo de nuevo. Si el problema persiste, guarda una copia de la base de datos local antes de reparar o reinstalar.</value>
+  </data>
+  <data name="ExplorerisavailableonWindows" xml:space="preserve">
+    <value>El Explorador está disponible en Windows.</value>
+  </data>
+  <data name="WindowsstartuprequiresthepackagedDowlumeapplication" xml:space="preserve">
+    <value>El inicio con Windows requiere la versión empaquetada de Dowlume.</value>
+  </data>
+  <data name="Defineexactlyoneruleforeachcategory" xml:space="preserve">
+    <value>Define una única regla para cada categoría.</value>
+  </data>
+  <data name="Categoryfoldersmustbeuniquereviewperiodsmustbe" xml:space="preserve">
+    <value>Las carpetas de las categorías deben ser distintas; el plazo de revisión debe estar entre 1 y 3650 días.</value>
+  </data>
+  <data name="Anextensioncanbelongtoonlyonecategory" xml:space="preserve">
+    <value>Cada extensión solo puede pertenecer a una categoría.</value>
+  </data>
+  <data name="CategorynamesmustbesafeWindowsfoldernames" xml:space="preserve">
+    <value>Los nombres de las categorías deben ser nombres de carpeta válidos en Windows.</value>
+  </data>
+  <data name="Extensionsmuststartwithadotandcontainonly" xml:space="preserve">
+    <value>Las extensiones deben empezar por un punto y contener solo letras y números.</value>
+  </data>
+  <data name="Chooseanexistinglocalfoldernotadriveroot" xml:space="preserve">
+    <value>Elige una carpeta local existente, que no sea la raíz de una unidad ni un recurso de red.</value>
+  </data>
+  <data name="Systemandapplicationdatafolderscannotbemonitored" xml:space="preserve">
+    <value>No se pueden supervisar carpetas del sistema ni de datos de aplicaciones.</value>
+  </data>
+  <data name="ChooseadestinationoutsidethereviewfolderandDownloads" xml:space="preserve">
+    <value>Elige un destino fuera de la carpeta de revisión y de la raíz de descargas.</value>
+  </data>
+  <data name="ThisfileisnolongerawaitingreviewRefreshthe" xml:space="preserve">
+    <value>Este archivo ya no está pendiente de revisión. Actualiza la lista.</value>
+  </data>
+  <data name="ThisactioncannotbeundoneinDowlumeHistoricalrecycling" xml:space="preserve">
+    <value>No se puede deshacer esta acción en Dowlume. Un envío anterior a la papelera no garantiza que Windows conserve una copia recuperable.</value>
+  </data>
+  <data name="AlateractionchangedthisfileUndoitslatest" xml:space="preserve">
+    <value>Una acción posterior modificó este archivo. Deshaz primero su última acción compatible.</value>
+  </data>
+  <data name="AccessdeniedCheckfolderpermissionsandretry" xml:space="preserve">
+    <value>Acceso denegado. Comprueba los permisos de la carpeta e inténtalo de nuevo.</value>
+  </data>
+  <data name="Thefileisbusychangedmissingoritsdestination" xml:space="preserve">
+    <value>El archivo está ocupado, ha cambiado, falta o su destino no está disponible. Revísalo en el Explorador e inténtalo de nuevo.</value>
+  </data>
+  <data name="Theoperationwascanceledunfinishedworkcanberetried" xml:space="preserve">
+    <value>Se ha cancelado la operación; puedes reintentar el trabajo pendiente.</value>
+  </data>
+  <data name="TheoperationfailedLocaldiagnosticscontainatechnicalerror" xml:space="preserve">
+    <value>La operación ha fallado. El registro local de diagnóstico contiene un código técnico. Reinicia y reintenta la recuperación.</value>
+  </data>
+  <data name="Recyclingisdisabledinv010becauseWindows" xml:space="preserve">
+    <value>El envío a la papelera está desactivado en v0.1.0 porque la Papelera de Windows no conservó los archivos de forma fiable. Usa Conservar, Posponer o Mover a.</value>
+  </data>
+  <data name="HistoricalrecyclingwasnotcompletedThesourceisintact" xml:space="preserve">
+    <value>El envío anterior a la papelera no se completó. El origen está intacto. La papelera está desactivada; usa Conservar, Posponer o Mover a.</value>
+  </data>
+  <data name="HistoricalrecyclingcouldnotbeverifiedPreserveanyremaining" xml:space="preserve">
+    <value>No se pudo verificar el envío anterior a la papelera. Conserva las copias restantes y revisa el archivo manualmente. La papelera está desactivada; reintentar la recuperación no restaura el contenido perdido.</value>
+  </data>
+  <data name="InterruptedbeforemovingThesourceisintactretrythe" xml:space="preserve">
+    <value>Interrumpido antes de mover. El origen está intacto; reintenta la acción original.</value>
+  </data>
+  <data name="InspectthesourceanddestinationinExplorerthenretry" xml:space="preserve">
+    <value>Revisa el origen y el destino en el Explorador y reintenta la recuperación. No se eliminará nada automáticamente.</value>
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>Documentos</value>
+  </data>
+  <data name="Images" xml:space="preserve">
+    <value>Imágenes</value>
+  </data>
+  <data name="Videos" xml:space="preserve">
+    <value>Vídeos</value>
+  </data>
+  <data name="Archives" xml:space="preserve">
+    <value>Comprimidos</value>
+  </data>
+  <data name="Installers" xml:space="preserve">
+    <value>Instaladores</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Otros</value>
+  </data>
+  <data name="Organize" xml:space="preserve">
+    <value>Organizar</value>
+  </data>
+  <data name="Snooze" xml:space="preserve">
+    <value>Posponer</value>
+  </data>
+  <data name="Move" xml:space="preserve">
+    <value>Mover</value>
+  </data>
+  <data name="RecycleMore" xml:space="preserve">
+    <value>Enviar a la papelera</value>
+  </data>
+  <data name="Undo" xml:space="preserve">
+    <value>Deshacer</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Pendiente</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Completada</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>Fallida</value>
+  </data>
+  <data name="OperationNeedsAttention" xml:space="preserve">
+    <value>Requiere atención</value>
+  </data>
+  <data name="Organized" xml:space="preserve">
+    <value>Organizado</value>
+  </data>
+  <data name="InReview" xml:space="preserve">
+    <value>En revisión</value>
+  </data>
+  <data name="Kept" xml:space="preserve">
+    <value>Conservado</value>
+  </data>
+  <data name="Snoozed" xml:space="preserve">
+    <value>Pospuesto</value>
+  </data>
+  <data name="Moved" xml:space="preserve">
+    <value>Movido</value>
+  </data>
+  <data name="Recycled" xml:space="preserve">
+    <value>Enviado a la papelera</value>
+  </data>
+  <data name="Missing" xml:space="preserve">
+    <value>No encontrado</value>
+  </data>
+  <data name="Firsttracked0d" xml:space="preserve">
+    <value>Registrado por primera vez: {0:d}</value>
+  </data>
+  <data name="Organize0previewedfilesandmonitorthisfolderfor" xml:space="preserve">
+    <value>¿Organizar los {0} archivos de la vista previa y supervisar las descargas completas de esta carpeta?
+
+{1}
+
+También se organizarán las descargas futuras y las que aún no hayan terminado. Los archivos antiguos pasarán a Expiring Files para que los revises. No se eliminarán archivos automáticamente.</value>
+  </data>
+  <data name="Move0to1Dowlumewillstopmonitoringthis" xml:space="preserve">
+    <value>Mover {0} a:
+
+{1}
+
+Dowlume dejará de supervisar este archivo. No se sobrescribirán los archivos existentes.</value>
+  </data>
+  <data name="Undo0Theoriginallocationmustbeavailableand" xml:space="preserve">
+    <value>¿Deshacer {0}?
+
+La ubicación original debe estar disponible y el archivo no debe haber cambiado. Deshacer la organización inicial conserva el archivo en su ubicación permanentemente. Deshacer un traslado a revisión lo pospone siete días.</value>
+  </data>
+  <data name="HistoryFiltersInvalid" xml:space="preserve">
+    <value>Elige filtros de historial válidos y un límite de historial no negativo.</value>
+  </data>
+  <data name="NewerDatabase" xml:space="preserve">
+    <value>Esta base de datos pertenece a una versión más reciente de Dowlume.</value>
+  </data>
+</root>
