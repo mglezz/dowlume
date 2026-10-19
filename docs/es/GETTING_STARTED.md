@@ -6,7 +6,7 @@
 
 Desarrollo y distribuyo la aplicación para Windows x64. Utilizo un SDK .NET **10.0.4xx**: [`global.json`](../../global.json) fija `10.0.400` con `rollForward: latestPatch`; CI utiliza `10.0.401`. Para generar el instalador también necesito Inno Setup 6.
 
-Mantengo identificadores, comentarios, ramas y mensajes Conventional Commits en inglés. La interfaz y la documentación están disponibles en inglés y español en el código actual. Los paquetes publicados de v0.1.0 son anteriores al selector.
+Mantengo identificadores, comentarios, ramas y mensajes Conventional Commits en inglés. La interfaz y la documentación están disponibles en inglés y español. El instalador y el ZIP portátil publicados de 0.2.0 incluyen el selector de idioma.
 
 ## Compilar y probar
 

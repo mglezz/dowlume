@@ -4,6 +4,10 @@
 
 I keep dated validation records here. A pending item in an older entry describes that revision and date; later entries record completion without changing the original evidence. Local artifact paths refer to retained private evidence and may be absent from a fresh clone.
 
+## 2026-10-20: Published 0.2.0 with English and Spanish
+
+I confirmed that all functionality worked correctly in the final Windows package and published the same seven accepted draft assets as v0.2.0. The 74 tests, security checks, and final package checks passed. I verified all public downloads against the accepted hashes. The [0.2.0 acceptance record](RELEASE_CANDIDATE_0.2.0.md) records source, checksums, manual confirmation, and the limits of the available evidence.
+
 ## 2026-10-19: English/Spanish localization and documentation review
 
 I added a per-profile English/Spanish selector to current source, retaining English defaults for older profiles and preserving folder names, file contents, rules, and stored history. I checked startup persistence, changes with unsaved settings, failed preference writes and retry, translated live views/tray/status/errors, and Spanish confirmation cancellation after changing language with an existing preview. Resource checks compare all English/Spanish keys, placeholders, and domain display labels. Desktop tests share one collection because Avalonia headless initialization is process-global. The first hosted Windows run exposed CRLF resource values failing to match LF confirmation templates; I normalized message lookup line endings, fixed resource checkout to LF, and added LF/CRLF regression coverage.

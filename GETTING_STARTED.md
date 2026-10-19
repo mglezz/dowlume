@@ -4,11 +4,11 @@
 
 ## Requirements
 
-- Windows x64 for the supported desktop application. Native recycling is disabled in v0.1.0.
+- Windows x64 for the supported desktop application. Native recycling remains disabled.
 - .NET SDK from the **10.0.4xx family**: [`global.json`](global.json) sets `10.0.400` with `rollForward: latestPatch`. CI uses `10.0.401`, a compatible patch in the same feature band.
 - Inno Setup 6 only when building the installer.
 
-I use C#, Avalonia MVVM, SQLite, System.Threading.Channels, and xUnit. I keep code identifiers, comments, branch names, and Conventional Commits in English. I maintain English and Spanish UI resources and a [Spanish documentation section](docs/es/README.md). The language selector is in current source; the published v0.1.0 packages predate it.
+I use C#, Avalonia MVVM, SQLite, System.Threading.Channels, and xUnit. I keep code identifiers, comments, branch names, and Conventional Commits in English. I maintain English and Spanish UI resources and a [Spanish documentation section](docs/es/README.md). The published 0.2.0 installer and portable ZIP include the language selector.
 
 ## Build and test
 

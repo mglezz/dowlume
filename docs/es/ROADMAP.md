@@ -16,7 +16,9 @@ Publiqué [v0.1.0 para Windows x64](https://github.com/mglezz/dowlume/releases/t
 | Robustez | Recuperación de interrupciones, protección de copias ambiguas y pruebas de cambios, bloqueos y carreras. |
 | Distribución | ZIP autónomo e instalador por usuario, aceptación Windows y publicación de v0.1.0. |
 | Historial | Búsqueda por nombre/ruta, filtros y páginas de operaciones antiguas. |
-| Idiomas, código actual | Selector inglés/español persistente y documentación paralela. No está incluido en los binarios v0.1.0 ya publicados. |
+| Idiomas, v0.2.0 publicada | Selector inglés/español persistente y documentación paralela. Conservo intactos los binarios anteriores de v0.1.0. |
+
+Publiqué [v0.2.0](https://github.com/mglezz/dowlume/releases/tag/v0.2.0) el 20 de octubre de 2026 tras superar las pruebas automáticas y confirmar que todas las funcionalidades del paquete final funcionaban correctamente. Registro los archivos exactos en la [aceptación de 0.2.0](RELEASE_CANDIDATE_0.2.0.md).
 
 ## Controles de v0.1.0
 

@@ -2,6 +2,8 @@
 
 [English](#) · [Español](es/RELEASE_CHECKLIST.md)
 
+For the current release, see the [0.2.0 acceptance and publication record](RELEASE_CANDIDATE_0.2.0.md). I retain the completed 0.1.0 checklist below unchanged.
+
 I retain this checklist as the completed acceptance record for the published v0.1.0 artifacts. I assess changed binaries separately.
 
 Target: Windows x64, version 0.1.0. Local validation is recorded in [Validation](VALIDATION.md). Native recycling is disabled at every execution boundary for this version. Earlier clean-guest package acceptance and failed native capacity results remain historical evidence; they do not approve changed binaries. Stable publication requires final-artifact acceptance, independent review, and my explicit authorization. A GitHub draft or locally built artifact is not a published stable release.

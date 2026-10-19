@@ -2,7 +2,7 @@
 
 [English](#) · [Español](es/WINDOWS_ACCEPTANCE.md)
 
-I use this procedure for the 0.2.0 candidate. The published 0.1.0 acceptance remains historical evidence; it does not approve these localization packages. Record their SHA-256 values, source commit from `BUILD-INFO.json`, Windows build, tester, date, and observed results. An unchecked item is not a pass. Do not use personal Downloads or change Recycle Bin settings on a daily-use computer.
+I used this procedure for the published 0.2.0 packages; the [acceptance record](RELEASE_CANDIDATE_0.2.0.md) states the results actually recorded. The published 0.1.0 acceptance remains historical evidence; it does not approve these localization packages. Record their SHA-256 values, source commit from `BUILD-INFO.json`, Windows build, tester, date, and observed results. An unchecked item is not a pass. Do not use personal Downloads or change Recycle Bin settings on a daily-use computer.
 
 ## Prepare a clean environment
 
@@ -69,4 +69,4 @@ Choose a writable folder on a second fixed local volume. The harness writes only
 
 ## Publication handoff
 
-I record evidence tied to the artifact hashes, resolve failures, obtain independent acceptance review, and repeat affected checks after changes. Publication of 0.2.0 is authorized, but manual acceptance of its exact packages is still pending. I keep the release in draft until those results are recorded and publish the same tested assets. Linux/macOS work remains deferred.
+I record evidence tied to the artifact hashes, resolve failures, obtain independent acceptance review, and repeat affected checks after changes. On 2026-10-20 I confirmed that all functionality worked correctly and published 0.2.0 using the same seven accepted draft assets. The packaged copy of this procedure retains its build-time pending status; the [acceptance record](RELEASE_CANDIDATE_0.2.0.md) supersedes that status. Linux/macOS work remains deferred.

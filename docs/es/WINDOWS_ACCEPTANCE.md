@@ -2,7 +2,7 @@
 
 [English](../WINDOWS_ACCEPTANCE.md) · [Índice en español](README.md)
 
-Utilizo este procedimiento para el candidato 0.2.0. Conservo la aceptación de v0.1.0 como evidencia histórica; no certifica estos paquetes localizados. Registro SHA-256, commit de `BUILD-INFO.json`, compilación de Windows, persona que prueba, fecha y resultado. Un control sin resultado no es una prueba superada.
+Utilicé este procedimiento para los paquetes publicados de 0.2.0; el [registro de aceptación](RELEASE_CANDIDATE_0.2.0.md) distingue los resultados documentados. Conservo la aceptación de v0.1.0 como evidencia histórica; no certifica estos paquetes localizados. Registro SHA-256, commit de `BUILD-INFO.json`, compilación de Windows, persona que prueba, fecha y resultado. Un control sin resultado no es una prueba superada.
 
 ## Entorno limpio
 
@@ -68,4 +68,4 @@ Para la papelera ejecuto solo regresiones de rechazo y conservación, nunca las 
 
 ## Publicación
 
-Registro evidencia vinculada a los hashes, resuelvo fallos, obtengo revisión independiente y repito las pruebas afectadas si hay cambios. La publicación de 0.2.0 está autorizada, pero sigue pendiente la aceptación manual de sus paquetes exactos. Mantengo la release en borrador hasta registrar esos resultados y publico los mismos archivos probados. Dejo macOS y Linux para más adelante.
+Registro evidencia vinculada a los hashes, resuelvo fallos, obtengo revisión independiente y repito las pruebas afectadas si hay cambios. El 20 de octubre de 2026 confirmé que todas las funcionalidades funcionaban correctamente y publiqué 0.2.0 con los mismos siete archivos aceptados del borrador. La copia del procedimiento incluida en el kit conserva el estado pendiente de cuando lo compilé; el [registro de aceptación](RELEASE_CANDIDATE_0.2.0.md) actualiza ese estado. Dejo macOS y Linux para más adelante.
