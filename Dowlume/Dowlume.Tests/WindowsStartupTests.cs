@@ -5,12 +5,13 @@ namespace Dowlume.Tests;
 
 public sealed class WindowsStartupTests
 {
-    [Fact]
+    [WindowsFact]
+    [Trait("Category", "WindowsNative")]
     public void StartupQuotesTheExecutableAndOnlyRemovesItsOwnRegistration()
     {
         if (!OperatingSystem.IsWindows())
         {
-            return;
+            throw new PlatformNotSupportedException("This native test requires Windows.");
         }
         using var workspace = new TemporaryWorkspace();
         string executable = workspace.CreateFile("Application with spaces/Dowlume.App.exe");

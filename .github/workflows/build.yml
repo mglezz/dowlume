@@ -6,26 +6,60 @@ permissions:
   contents: read
 jobs:
   verify:
-    runs-on: windows-latest
+    name: Verify ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: windows-x64
+            runner: windows-2025
+            architecture: X64
+          - platform: macos-arm64
+            runner: macos-15
+            architecture: Arm64
+          - platform: linux-x64
+            runner: ubuntu-24.04
+            architecture: X64
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 10.0.401
+      - name: Record native environment and prepare isolated test directories
+        shell: pwsh
+        env:
+          EXPECTED_ARCHITECTURE: ${{ matrix.architecture }}
+        run: |
+          if ([Runtime.InteropServices.RuntimeInformation]::OSArchitecture.ToString() -ne $env:EXPECTED_ARCHITECTURE) {
+            throw 'The runner does not match the intended native architecture.'
+          }
+          $temporary = Join-Path $env:GITHUB_WORKSPACE 'artifacts/test-tmp'
+          New-Item -ItemType Directory -Path $temporary -Force | Out-Null
+          "TMPDIR=$temporary" >> $env:GITHUB_ENV
+          "TMP=$temporary" >> $env:GITHUB_ENV
+          "TEMP=$temporary" >> $env:GITHUB_ENV
+          dotnet --info | Tee-Object -FilePath artifacts/dotnet-info.txt
       - run: dotnet restore Dowlume/Dowlume.slnx
       - run: dotnet build Dowlume/Dowlume.slnx -c Release --no-restore
-      - run: dotnet test Dowlume/Dowlume.slnx -c Release --no-build --logger trx
+      - name: Run shared and applicable native tests (unsupported native tests report skipped)
+        run: dotnet test Dowlume/Dowlume.slnx -c Release --no-build --logger trx
       - run: dotnet format Dowlume/Dowlume.slnx --verify-no-changes --no-restore
       - run: dotnet build scripts/FileOperationAcceptance -c Release
       - run: dotnet format scripts/FileOperationAcceptance/FileOperationAcceptance.csproj --verify-no-changes --no-restore
       - name: Test read-only Recycle Bin evidence inventory
+        if: runner.os == 'Windows'
         shell: powershell
         run: ./scripts/Test-RecycleEvidenceInventory.ps1
       - name: Test read-only Recycle Bin metadata decoding
+        if: runner.os == 'Windows'
         shell: powershell
         run: ./scripts/Test-RecycleMetadataReader.ps1
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: test-results
-          path: '**/TestResults/*.trx'
+          name: test-results-${{ matrix.platform }}-${{ github.event_name }}
+          path: |
+            **/TestResults/*.trx
+            artifacts/dotnet-info.txt

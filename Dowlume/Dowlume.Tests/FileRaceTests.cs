@@ -4,12 +4,13 @@ namespace Dowlume.Tests;
 
 public sealed class FileRaceTests
 {
-    [Fact]
+    [WindowsFact]
+    [Trait("Category", "WindowsNative")]
     public void VerifiedMoveHandleRejectsConcurrentWritesAndSourceReplacement()
     {
         if (!OperatingSystem.IsWindows())
         {
-            return;
+            throw new PlatformNotSupportedException("This native test requires Windows.");
         }
         using var workspace = new TemporaryWorkspace();
         string source = workspace.CreateFile("report.txt", "Original verified file");
@@ -28,12 +29,13 @@ public sealed class FileRaceTests
         Assert.False(File.Exists(source));
     }
 
-    [Fact]
+    [WindowsFact]
+    [Trait("Category", "WindowsNative")]
     public void DestinationCreatedAfterSelectionIsNeverReplaced()
     {
         if (!OperatingSystem.IsWindows())
         {
-            return;
+            throw new PlatformNotSupportedException("This native test requires Windows.");
         }
         using var workspace = new TemporaryWorkspace();
         string source = workspace.CreateFile("original.txt", "Original");
@@ -53,12 +55,13 @@ public sealed class FileRaceTests
         Assert.Equal("Created by another application", File.ReadAllText(destination));
     }
 
-    [Fact]
+    [WindowsFact]
+    [Trait("Category", "WindowsNative")]
     public void DirectoryLeasePreventsAncestorReplacementDuringAnOperation()
     {
         if (!OperatingSystem.IsWindows())
         {
-            return;
+            throw new PlatformNotSupportedException("This native test requires Windows.");
         }
         using var workspace = new TemporaryWorkspace();
         string source = workspace.CreateFile("report.txt");

@@ -10,7 +10,7 @@ Soporto Windows x64 en la versión 0.2.0 publicada. Planifico bases comunes en 0
 | --- | --- | --- |
 | Windows x64 | Publicado y aceptado en [0.2.0](RELEASE_CANDIDATE_0.2.0.md) | Conservar funciones, compatibilidad de perfiles y pruebas nativas de seguridad de archivos ante cada cambio compartido. |
 | macOS Apple Silicon | Planificado; sin declaración de soporte | Destino principal de 0.4.0. En 0.3.0 concreto versiones de macOS y sistemas de archivos según las dependencias fijadas y el acceso a pruebas nativas. |
-| macOS Intel | Condicional; no lo garantiza la adaptación ARM64 | Añadir solo con paquete x64 nativo y aceptación propia sobre la matriz declarada. |
+| macOS Intel | Fuera de alcance | No planifico implementación, CI ni paquetes x64. Una entrega posterior podría reconsiderarlo con aceptación propia. |
 | Linux x64 | Planificado; sin declaración de soporte | Alcance inicial de 0.5.0: una versión concreta de Ubuntu LTS y GNOME. En 0.3.0 fijo versión, formato de paquete, sistema de archivos, bibliotecas y cobertura de backend/sesiones X11/Wayland. |
 | Otras distribuciones, escritorios y ARM64 de Linux | Fuera del alcance estable inicial | Ampliar solo con capacidad de mantenimiento, paquetes nativos y aceptación registrada. |
 
