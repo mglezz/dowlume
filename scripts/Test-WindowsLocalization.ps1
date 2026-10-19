@@ -32,7 +32,7 @@ function Assert-TestLanguage([Diagnostics.Process]$Application, [string]$Languag
     $settings = Find-LanguageElement $Application $settingsName
     $settings.GetCurrentPattern([Windows.Automation.SelectionItemPattern]::Pattern).Select()
     $selector = Find-LanguageElement $Application 'LanguageSelector' -ById
-    $selected = $selector.GetCurrentPattern([Windows.Automation.SelectionPattern]::Pattern).GetCurrentSelection()
+    $selected = $selector.GetCurrentPattern([Windows.Automation.SelectionPattern]::Pattern).Current.GetSelection()
     if ($selected.Count -ne 1 -or $selected[0].Current.Name -ne $Language) {
         throw "The language selector did not retain $Language."
     }
