@@ -5,12 +5,13 @@ namespace Dowlume.Tests;
 
 public sealed class JunctionTests
 {
-    [Fact]
+    [WindowsFact]
+    [Trait("Category", "WindowsNative")]
     public void RejectsJunctionDestinationsWithoutTouchingTheirTargets()
     {
         if (!OperatingSystem.IsWindows())
         {
-            return;
+            throw new PlatformNotSupportedException("This native test requires Windows.");
         }
         using var workspace = new TemporaryWorkspace();
         string outside = Directory.CreateDirectory(Path.Combine(workspace.Root, "Outside")).FullName;

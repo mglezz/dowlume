@@ -10,7 +10,7 @@ I support Windows x64 in the published 0.2.0 release. I plan common foundations 
 | --- | --- | --- |
 | Windows x64 | Published and accepted in [0.2.0](RELEASE_CANDIDATE_0.2.0.md) | Retain functionality, profile compatibility, and native file-safety checks through every shared-code change. |
 | macOS Apple Silicon | Planned; no product support claim | Primary 0.4.0 target. In 0.3.0 I name supported macOS versions and filesystems against the pinned dependencies and native test access. |
-| macOS Intel | Conditional; not promised by the ARM64 port | Add only with a native x64 package and independent acceptance on the declared matrix. |
+| macOS Intel | Out of scope | No x64 implementation, CI job, or package is planned. A later release may revisit this with its own acceptance. |
 | Linux x64 | Planned; no product support claim | Initial 0.5.0 scope: one named Ubuntu LTS release and GNOME. In 0.3.0 I pin the distribution version, package format, filesystem, native libraries, and X11/Wayland backend/session coverage. |
 | Other Linux distributions, desktops, and ARM64 | Outside the initial stable scope | Expand only with maintenance capacity, native packages, and recorded acceptance. |
 
