@@ -8,7 +8,7 @@ Esta página recoge en español la cronología y los límites de los resultados.
 
 ## 19 de octubre de 2026: localización y revisión documental
 
-Añadí selección inglés/español por perfil, con inglés inicial para perfiles antiguos y sin cambiar nombres de carpetas, contenido, reglas ni historial persistido. Comprobé reinicio, cambios con ajustes pendientes, fallo al guardar y reintento, actualización de pantallas y bandeja, errores traducidos y cancelación de confirmación en español tras cambiar el idioma con una vista previa existente. Comparé claves y argumentos de ambos recursos y las etiquetas del dominio.
+Añadí selección inglés/español por perfil, con inglés inicial para perfiles antiguos y sin cambiar nombres de carpetas, contenido, reglas ni historial persistido. Comprobé reinicio, cambios con ajustes pendientes, fallo al guardar y reintento, actualización de pantallas y bandeja, errores traducidos y cancelación de confirmación en español tras cambiar el idioma con una vista previa existente. Comparé claves y argumentos de ambos recursos y las etiquetas del dominio. La primera ejecución de Windows detectó que recursos con CRLF no coincidían con plantillas de confirmación con LF; normalicé la búsqueda, fijé LF para los recursos en Git y añadí cobertura de ambas variantes.
 
 En macOS con SDK .NET 10.0.401 superé la compilación Release y **74 pruebas, sin omisiones**, además de formato, auditoría de dependencias y `git diff --check`. Usé una carpeta temporal real mediante `TMPDIR` porque la predeterminada de macOS atraviesa un enlace simbólico; no relajé las protecciones. Inspeccioné capturas de las cinco pestañas españolas a 880 × 680 y corregí el ajuste de encabezados. Las capturas privadas quedan ignoradas porque incluyen rutas locales.
 

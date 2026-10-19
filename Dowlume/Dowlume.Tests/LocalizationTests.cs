@@ -32,6 +32,11 @@ public sealed class LocalizationTests
         foreach ((string key, string value) in english)
         {
             Assert.False(string.IsNullOrWhiteSpace(spanish[key]));
+            var localized = new Localizer();
+            localized.SetLanguage("es");
+            Assert.Equal(spanish[key], localized.Translate(value.Replace("\r\n", "\n", StringComparison.Ordinal)));
+            Assert.Equal(spanish[key], localized.Translate(value.Replace("\r\n", "\n", StringComparison.Ordinal)
+                .Replace("\n", "\r\n", StringComparison.Ordinal)));
             Assert.Equal(Regex.Matches(value, @"\{\d+(?::[^}]+)?\}").Select(match => match.Value).Order(),
                 Regex.Matches(spanish[key], @"\{\d+(?::[^}]+)?\}").Select(match => match.Value).Order());
         }
@@ -193,7 +198,7 @@ public sealed class LocalizationTests
             dialog.UpdateLayout();
             Assert.Equal("¿Empezar a organizar las descargas?", dialog.Title);
             Assert.Contains(dialog.GetVisualDescendants().OfType<Button>(), button => button.Content as string == "Cancelar");
-            Assert.Contains(dialog.GetVisualDescendants().OfType<TextBlock>(), block => block.Text!.Contains("No se eliminarán archivos automáticamente."));
+            Assert.Contains("No se eliminarán archivos automáticamente.", string.Join("\n", dialog.GetVisualDescendants().OfType<TextBlock>().Select(block => block.Text)));
             dialog.Close(false);
             await pending;
             Assert.True(File.Exists(source));
