@@ -2,12 +2,13 @@
 
 [English](#) · [Español](docs/es/ROADMAP.md)
 
-**Current state:** [v0.1.0 for Windows x64 is published](https://github.com/mglezz/dowlume/releases/tag/v0.1.0), following automated acceptance, my confirmation of human tests and independent review, and explicit publication authorization on 2026-10-18. Evidence is recorded in [VALIDATION.md](docs/VALIDATION.md).
+**Current state:** I published [v0.2.0 for Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.2.0) with English/Spanish selection on 2026-10-20, after automated checks and my confirmation that all functionality worked correctly in the final package. See the [0.2.0 acceptance record](docs/RELEASE_CANDIDATE_0.2.0.md).
 
 | Stage | Status | Details |
 | --- | --- | --- |
 | Windows MVP | Implemented | [Completed work](#completed-windows-mvp) |
 | Public 0.1.0 release | Published 2026-10-18 | [Completed release gates](#completed-public-010-gates) |
+| Public 0.2.0 release | Published 2026-10-20 | [Accepted artifacts](docs/RELEASE_CANDIDATE_0.2.0.md) |
 | Post-MVP | Ideas, not delivery commitments | [Future work](#future-work) |
 
 ## Completed public 0.1.0 gates
@@ -24,7 +25,7 @@
 
 The [release checklist](docs/RELEASE_CHECKLIST.md) is the detailed acceptance record. Local package generation and automated tests do not complete these gates.
 
-I have completed the v0.1.0 release gates and am adding English/Spanish localization to current source. Earlier clean-guest results do not approve changed binaries. The evidence VM and checkpoints must remain untouched; use a separate environment for final acceptance. The [acceptance kit and procedure](docs/WINDOWS_ACCEPTANCE.md) define acceptance for future packages; Linux/macOS work stays deferred.
+I completed the v0.1.0 release gates and published English/Spanish localization in v0.2.0. Earlier clean-guest results do not approve changed binaries. The evidence VM and checkpoints must remain untouched; use a separate environment for final acceptance. The [acceptance kit and procedure](docs/WINDOWS_ACCEPTANCE.md) define acceptance for future packages; Linux/macOS work stays deferred.
 
 ## Completed Windows MVP
 
@@ -84,7 +85,7 @@ I have completed the v0.1.0 release gates and am adding English/Spanish localiza
 - [x] Browse older history in bounded pages while preserving undo checks and the global attention count.
 - [x] Assess [macOS and Linux prerequisites](docs/PLATFORM_SUPPORT.md); native implementations and validation remain deferred.
 
-- [x] English/Spanish interface selection, saved per profile, and a parallel Spanish documentation section in current source. These changes are not part of the published v0.1.0 binaries.
+- [x] English/Spanish interface selection, saved per profile, and a parallel Spanish documentation section in the published v0.2.0 packages. I retain the original v0.1.0 binaries unchanged.
 
 ## Future work
 

@@ -2,25 +2,25 @@
 
 [English](#) · [Español](es/USER_GUIDE.md)
 
-I designed Dowlume to organize downloads on the Windows desktop. [Version 0.1.0 for Windows x64 is available](https://github.com/mglezz/dowlume/releases/tag/v0.1.0) as an unsigned per-user installer or self-contained portable ZIP. Verify the release checksums. Start with a disposable folder containing copies of sample files before choosing your real Downloads folder.
+I designed Dowlume to organize downloads on the Windows desktop. [Version 0.2.0 for Windows x64 is available](https://github.com/mglezz/dowlume/releases/tag/v0.2.0) as an unsigned per-user installer or self-contained portable ZIP. Verify the release checksums. Start with a disposable folder containing copies of sample files before choosing your real Downloads folder.
 
 ## Install and start
 
-Download the installer or portable ZIP from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.1.0). Developers can also [build and run from source](../GETTING_STARTED.md).
+Download the installer or portable ZIP from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.2.0). Developers can also [build and run from source](../GETTING_STARTED.md).
 
-For a downloaded or locally built package, run the setup executable (for example, `Dowlume-0.1.0-win-x64-setup.exe`). Installation is per user and does not require administrator privileges. Alternatively, extract the complete portable ZIP and run `Dowlume.App.exe`; do not move the executable out of its accompanying files. The .NET runtime is included.
+For a downloaded or locally built package, run the setup executable (for example, `Dowlume-0.2.0-win-x64-setup.exe`). Installation is per user and does not require administrator privileges. Alternatively, extract the complete portable ZIP and run `Dowlume.App.exe`; do not move the executable out of its accompanying files. The .NET runtime is included.
 
-The v0.1.0 release packages are unsigned. Only use a package from a source you trust and compare its SHA-256 checksum with the accompanying `SHA256SUMS.txt`.
+The v0.2.0 release packages are unsigned. Only use a package from a source you trust and compare its SHA-256 checksum with the accompanying `SHA256SUMS.txt`.
 
 The package includes `START-HERE.txt`, which opens offline in a text editor. The installer adds a **Dowlume quick start** Start menu shortcut. Exit Dowlume, including any instance hidden in the tray, before upgrading or uninstalling; Setup refuses while the app is running. Installation and uninstall retain your files and local profile.
 
 ## Choose a language
 
-In current source builds, pause monitoring and open **Settings → Language**. Choose **English** or **Español**. I apply the choice immediately and save it automatically for that profile, including when folder settings have unsaved edits. Those edits are not saved by changing language. Restarting retains the language; older profiles default to English.
+In version 0.2.0, pause monitoring and open **Settings → Language**. Choose **English** or **Español**. I apply the choice immediately and save it automatically for that profile, including when folder settings have unsaved edits. Those edits are not saved by changing language. Restarting retains the language; older profiles default to English.
 
 I translate tabs, buttons, confirmations, tray items, categories, states, dates, and known error messages. I preserve configured folder names, filenames, paths, and journal data. `Expiring Files` keeps its name in both languages. Unknown historical or operating-system messages retain their original wording. Native folder-picker controls follow Windows language settings.
 
-The published v0.1.0 packages predate the selector and remain English-only. Until a later release, [build current source](../GETTING_STARTED.md) to use Spanish. [Guía en español](es/USER_GUIDE.md).
+The published 0.2.0 installer and portable ZIP include the selector. Older 0.1.0 packages remain English-only. [Guía en español](es/USER_GUIDE.md).
 
 ## First use
 
@@ -48,7 +48,7 @@ In **Settings**, enable **Start Dowlume when I sign in to Windows** to open this
 
 ## Review files
 
-**v0.1.0 safety restriction:** native recycling is disabled because Windows Recycle Bin did not reliably preserve files in [capacity testing](RECYCLE_CAPACITY_INVESTIGATION.md). Leave files in Review or use Keep, Snooze, or Move. A future recoverable quarantine is documented but is not implemented.
+**Safety restriction retained in 0.2.0:** native recycling is disabled because Windows Recycle Bin did not reliably preserve files in [capacity testing](RECYCLE_CAPACITY_INVESTIGATION.md). Leave files in Review or use Keep, Snooze, or Move. A future recoverable quarantine is documented but is not implemented.
 
 A file's age starts when Dowlume first organizes it, not from its downloaded or modified timestamp. When its category's review period expires, it moves to `Expiring Files`.
 
@@ -57,7 +57,7 @@ Select a file in **Review**:
 - **Keep:** return it to its category and exclude it from future age reviews.
 - **Snooze 7 days:** return it to its category and review it again after seven days.
 - **Move to:** choose a destination and confirm; Dowlume stops managing that file.
-- **Recycle:** disabled in v0.1.0. The explanation appears above the review list; no shell deletion can be invoked through this action.
+- **Recycle:** remains disabled. The explanation appears above the review list; no shell deletion can be invoked through this action.
 - **Show in Explorer:** inspect the selected file without executing it.
 
 Review is a holding area. There is no automatic deletion deadline.

@@ -2,23 +2,23 @@
 
 [English](../USER_GUIDE.md) · [Índice en español](README.md)
 
-Diseñé Dowlume para organizar descargas en Windows. Publiqué [v0.1.0 para Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.1.0) como instalador por usuario y ZIP portátil con .NET incluido. Empieza con copias de archivos de ejemplo en una carpeta desechable.
+Diseñé Dowlume para organizar descargas en Windows. Publiqué [v0.2.0 para Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.2.0) como instalador por usuario y ZIP portátil con .NET incluido. Empieza con copias de archivos de ejemplo en una carpeta desechable.
 
 ## Instalar y abrir
 
-Descarga el instalador o el ZIP desde la publicación de GitHub. Los paquetes de v0.1.0 no están firmados: utiliza una fuente de confianza y compara el SHA-256 con `SHA256SUMS.txt`.
+Descarga el instalador o el ZIP desde la publicación de GitHub. Los paquetes de v0.2.0 no están firmados: utiliza una fuente de confianza y compara el SHA-256 con `SHA256SUMS.txt`.
 
-Ejecuta `Dowlume-0.1.0-win-x64-setup.exe` sin permisos de administrador. Para la versión portátil, extrae todo el ZIP y ejecuta `Dowlume.App.exe` junto a sus archivos. No necesita una instalación separada de .NET.
+Ejecuta `Dowlume-0.2.0-win-x64-setup.exe` sin permisos de administrador. Para la versión portátil, extrae todo el ZIP y ejecuta `Dowlume.App.exe` junto a sus archivos. No necesita una instalación separada de .NET.
 
 Incluyo `START-HERE.txt` para consulta sin conexión y un acceso **Dowlume quick start** en el menú Inicio. Cierra también cualquier instancia oculta en la bandeja antes de actualizar o desinstalar; el instalador se niega a continuar mientras la aplicación está abierta. Conservo los archivos organizados y el perfil local al desinstalar.
 
 ## Elegir idioma
 
-En compilaciones del código actual, pausa la supervisión y abre **Settings → Language**. Selecciona **Español** o **English**. El cambio se aplica y se guarda inmediatamente para ese perfil. Al reiniciar se conserva; los perfiles antiguos empiezan en inglés.
+En la versión 0.2.0, pausa la supervisión y abre **Settings → Language**. Selecciona **Español** o **English**. El cambio se aplica y se guarda inmediatamente para ese perfil. Al reiniciar se conserva; los perfiles antiguos empiezan en inglés.
 
 Cambio pestañas, botones, confirmaciones, bandeja, categorías, estados, fechas y mensajes conocidos. Mantengo los nombres de archivos y carpetas, las rutas y los datos históricos. La carpeta `Expiring Files` conserva ese nombre. No guardo otros ajustes pendientes al cambiar de idioma. Los mensajes históricos desconocidos mantienen su texto original y los controles nativos del selector de carpetas siguen el idioma de Windows.
 
-**Los paquetes publicados de v0.1.0 no incluyen el selector y siguen en inglés.** Para usarlo hasta una publicación posterior, [compila el código actual](GETTING_STARTED.md).
+**El instalador y el ZIP portátil publicados de 0.2.0 incluyen el selector.** Los paquetes anteriores de 0.1.0 siguen en inglés.
 
 ## Primer uso
 

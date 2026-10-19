@@ -6,6 +6,10 @@ Mantengo registros fechados y vinculados a revisiones. Un pendiente en una entra
 
 Esta página recoge en español la cronología y los límites de los resultados. Conservo las tablas originales, comandos exactos, identificadores de ejecuciones y rutas detalladas en el [registro inglés](../VALIDATION.md).
 
+## 2026-10-20: Publicación de 0.2.0 en inglés y español
+
+Confirmé que todas las funcionalidades del paquete final de Windows funcionaban correctamente y publiqué los mismos siete archivos aceptados del borrador como v0.2.0. Superé las 74 pruebas, los controles de seguridad y la aceptación automatizada de paquetes. Verifiqué las descargas públicas contra los hashes aceptados. El [registro de aceptación de 0.2.0](RELEASE_CANDIDATE_0.2.0.md) recoge código, hashes, confirmación manual y límites de la evidencia disponible.
+
 ## 19 de octubre de 2026: localización y revisión documental
 
 Añadí selección inglés/español por perfil, con inglés inicial para perfiles antiguos y sin cambiar nombres de carpetas, contenido, reglas ni historial persistido. Comprobé reinicio, cambios con ajustes pendientes, fallo al guardar y reintento, actualización de pantallas y bandeja, errores traducidos y cancelación de confirmación en español tras cambiar el idioma con una vista previa existente. Comparé claves y argumentos de ambos recursos y las etiquetas del dominio. La primera ejecución de Windows detectó que recursos con CRLF no coincidían con plantillas de confirmación con LF; normalicé la búsqueda, fijé LF para los recursos en Git y añadí cobertura de ambas variantes.

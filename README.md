@@ -8,9 +8,9 @@
 
 I build Dowlume as a local-first Windows desktop application that organizes completed downloads, moves aging files into a review area, and leaves the final decision with you.
 
-**Status:** [Dowlume v0.1.0 for Windows x64 is published](https://github.com/mglezz/dowlume/releases/tag/v0.1.0). Download the [installer](https://github.com/mglezz/dowlume/releases/download/v0.1.0/Dowlume-0.1.0-win-x64-setup.exe) or [portable ZIP](https://github.com/mglezz/dowlume/releases/download/v0.1.0/Dowlume-0.1.0-win-x64.zip), and verify the [SHA-256 checksums](https://github.com/mglezz/dowlume/releases/download/v0.1.0/SHA256SUMS.txt). These initial packages are unsigned. See [validation](docs/VALIDATION.md) and the [release checklist](docs/RELEASE_CHECKLIST.md).
+**Status:** [Dowlume v0.2.0 for Windows x64 is published](https://github.com/mglezz/dowlume/releases/tag/v0.2.0). Download the [installer](https://github.com/mglezz/dowlume/releases/download/v0.2.0/Dowlume-0.2.0-win-x64-setup.exe) or [portable ZIP](https://github.com/mglezz/dowlume/releases/download/v0.2.0/Dowlume-0.2.0-win-x64.zip), and verify the [SHA-256 checksums](https://github.com/mglezz/dowlume/releases/download/v0.2.0/SHA256SUMS.txt). These packages are unsigned. See [validation](docs/VALIDATION.md) and the [release checklist](docs/RELEASE_CHECKLIST.md).
 
-I continue to focus on Windows release reliability. **Native recycling is disabled in v0.1.0**, including internal execution, after Recycle Bin capacity tests failed to preserve files. Keep, Snooze, Move, and eligible Undo remain available. The [investigation and future quarantine design](docs/RECYCLE_CAPACITY_INVESTIGATION.md) retain the failed evidence. Automated acceptance passed; I confirmed human acceptance and independent review, then explicitly authorized publication on 2026-10-18. See the [release acceptance record](docs/RELEASE_CANDIDATE_0.1.0.md).
+I continue to focus on Windows release reliability. **Native recycling remains disabled**, including internal execution, after Recycle Bin capacity tests failed to preserve files. Keep, Snooze, Move, and eligible Undo remain available. The [investigation and future quarantine design](docs/RECYCLE_CAPACITY_INVESTIGATION.md) retain the failed evidence. I published 0.2.0 after automated checks passed and I confirmed that all functionality worked correctly in the final Windows package on 2026-10-20. See the [release acceptance record](docs/RELEASE_CANDIDATE_0.2.0.md).
 
 [Español](docs/es/README.md) · [User guide](docs/USER_GUIDE.md) · [Developer setup](GETTING_STARTED.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
 
@@ -40,7 +40,7 @@ Windows x64 remains the current target. macOS and Linux versions are deferred pe
 
 ## Languages
 
-I keep English as the default and provide Spanish in the current source. In **Settings → Language**, select **English** or **Español**; the interface changes immediately and remembers the choice for that profile. Pause monitoring first. Folder names, files, rules, and journal records are preserved. The published **v0.1.0 binaries remain English-only**; I am preparing **0.2.0** with the selector; its exact Windows packages still need manual acceptance before publication. See the [0.2.0 release notes](docs/RELEASE_NOTES_0.2.0.md).
+I keep English as the default and provide Spanish in v0.2.0. In **Settings → Language**, select **English** or **Español**; the interface changes immediately and remembers the choice for that profile. Pause monitoring first. Folder names, files, rules, and journal records are preserved. The **0.2.0 installer and portable ZIP include the selector**. I retain the original English-only 0.1.0 assets unchanged. See the [0.2.0 release notes](docs/RELEASE_NOTES_0.2.0.md).
 
 I maintain the [Spanish documentation](docs/es/README.md) alongside these English pages. Screenshots and historical evidence identify the revision they document.
 
@@ -71,7 +71,7 @@ Choose a disposable sample folder in Settings first, then use Preview. See [deve
 
 ## Packages
 
-Download the installer or portable ZIP from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.1.0). Both include the runtime; no separate .NET installation is required. To build from source or prepare future packages, see [packaging instructions](docs/RELEASE_CHECKLIST.md). Local packages in `artifacts/` remain distinct from the published, verified release assets.
+Download the installer or portable ZIP from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.2.0). Both include the runtime; no separate .NET installation is required. To build from source or prepare future packages, see [packaging instructions](docs/RELEASE_CHECKLIST.md). Local packages in `artifacts/` remain distinct from the published, verified release assets.
 
 ## Explore the project
 
