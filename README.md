@@ -6,9 +6,9 @@
 
 Dowlume is a local-first Windows desktop application that organizes completed downloads, moves aging files into a review area, and leaves the final decision with you.
 
-**Status:** Windows MVP implemented; **0.1.0 is a release candidate, not a published stable release**. Run from source while public packages are pending. See [validation](docs/VALIDATION.md) and the [release checklist](docs/RELEASE_CHECKLIST.md).
+**Status:** [Dowlume v0.1.0 for Windows x64 is published](https://github.com/mglezz/dowlume/releases/tag/v0.1.0). Download the [installer](https://github.com/mglezz/dowlume/releases/download/v0.1.0/Dowlume-0.1.0-win-x64-setup.exe) or [portable ZIP](https://github.com/mglezz/dowlume/releases/download/v0.1.0/Dowlume-0.1.0-win-x64.zip), and verify the [SHA-256 checksums](https://github.com/mglezz/dowlume/releases/download/v0.1.0/SHA256SUMS.txt). These initial packages are unsigned. See [validation](docs/VALIDATION.md) and the [release checklist](docs/RELEASE_CHECKLIST.md).
 
-The current focus is Windows release reliability. **Native recycling is disabled in v0.1.0**, including internal execution, after Recycle Bin capacity tests failed to preserve files. Keep, Snooze, Move, and eligible Undo remain available. The [investigation and future quarantine design](docs/RECYCLE_CAPACITY_INVESTIGATION.md) retain the failed evidence. Automated acceptance passed; the owner confirmed human acceptance and independent review passed on 2026-10-18. Explicit publication authorization remains pending; see the [accepted candidate](docs/RELEASE_CANDIDATE_0.1.0.md).
+The current focus is Windows release reliability. **Native recycling is disabled in v0.1.0**, including internal execution, after Recycle Bin capacity tests failed to preserve files. Keep, Snooze, Move, and eligible Undo remain available. The [investigation and future quarantine design](docs/RECYCLE_CAPACITY_INVESTIGATION.md) retain the failed evidence. Automated acceptance passed; the owner confirmed human acceptance and independent review, then explicitly authorized publication on 2026-10-18. See the [release acceptance record](docs/RELEASE_CANDIDATE_0.1.0.md).
 
 [User guide](docs/USER_GUIDE.md) · [Developer setup](GETTING_STARTED.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
 
@@ -63,7 +63,7 @@ Choose a disposable sample folder in Settings first, then use Preview. See [deve
 
 ## Packages
 
-When a release package is available, download the installer or portable ZIP from [GitHub Releases](https://github.com/mglezz/dowlume/releases). Until then, build and run from source. The release script can generate a self-contained Windows x64 ZIP and a per-user installer locally; see [packaging instructions](docs/RELEASE_CHECKLIST.md). Local packages in `artifacts/` are not published releases.
+Download the installer or portable ZIP from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.1.0). Both include the runtime; no separate .NET installation is required. To build from source or prepare future packages, see [packaging instructions](docs/RELEASE_CHECKLIST.md). Local packages in `artifacts/` remain distinct from the published, verified release assets.
 
 ## Explore the project
 

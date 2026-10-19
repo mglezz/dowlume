@@ -1,14 +1,14 @@
 # Using Dowlume
 
-Dowlume is a Windows desktop download organizer. Version 0.1.0 is currently a release candidate; public release packages are pending. Start with a disposable folder containing copies of sample files before choosing your real Downloads folder.
+Dowlume is a Windows desktop download organizer. [Version 0.1.0 for Windows x64 is available](https://github.com/mglezz/dowlume/releases/tag/v0.1.0) as an unsigned per-user installer or self-contained portable ZIP. Verify the release checksums. Start with a disposable folder containing copies of sample files before choosing your real Downloads folder.
 
 ## Install and start
 
-When a release package is available, download the installer or portable ZIP from [GitHub Releases](https://github.com/mglezz/dowlume/releases). Until then, Dowlume can be [built and run from source](../GETTING_STARTED.md).
+Download the installer or portable ZIP from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.1.0). Developers can also [build and run from source](../GETTING_STARTED.md).
 
 For a downloaded or locally built package, run the setup executable (for example, `Dowlume-0.1.0-win-x64-setup.exe`). Installation is per user and does not require administrator privileges. Alternatively, extract the complete portable ZIP and run `Dowlume.App.exe`; do not move the executable out of its accompanying files. The .NET runtime is included.
 
-Current locally built packages are unsigned; release signing is still a publication decision. Only use a package from a source you trust and compare its SHA-256 checksum with the accompanying `SHA256SUMS.txt`.
+The v0.1.0 release packages are unsigned. Only use a package from a source you trust and compare its SHA-256 checksum with the accompanying `SHA256SUMS.txt`.
 
 The package includes `START-HERE.txt`, which opens offline in a text editor. The installer adds a **Dowlume quick start** Start menu shortcut. Exit Dowlume, including any instance hidden in the tray, before upgrading or uninstalling; Setup refuses while the app is running. Installation and uninstall retain your files and local profile.
 

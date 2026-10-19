@@ -1,14 +1,14 @@
 # Dowlume roadmap
 
-**Current state:** the Windows MVP is implemented as a 0.1.0 release candidate. A stable public release is still pending. Evidence is recorded in [VALIDATION.md](docs/VALIDATION.md).
+**Current state:** [v0.1.0 for Windows x64 is published](https://github.com/mglezz/dowlume/releases/tag/v0.1.0), following automated acceptance, owner-confirmed human tests and independent review, and explicit publication authorization on 2026-10-18. Evidence is recorded in [VALIDATION.md](docs/VALIDATION.md).
 
 | Stage | Status | Details |
 | --- | --- | --- |
 | Windows MVP | Implemented | [Completed work](#completed-windows-mvp) |
-| Public 0.1.0 release | Acceptance passed; pending publication authorization | [Release gates](#remaining-for-public-010) |
+| Public 0.1.0 release | Published 2026-10-18 | [Completed release gates](#completed-public-010-gates) |
 | Post-MVP | Ideas, not delivery commitments | [Future work](#future-work) |
 
-## Remaining for public 0.1.0
+## Completed public 0.1.0 gates
 
 - [x] Earlier candidate clean-machine automated package acceptance (Windows 11 build 26300); retained as historical evidence.
 - [x] Integrate containment in `main`, pass hosted checks, and rebuild clean `94ba177` installer/portable with verified hashes; exact-artifact host package and automated first-use checks passed. See the [candidate record](docs/RELEASE_CANDIDATE_0.1.0.md).
@@ -18,7 +18,7 @@
 - [x] Disable native recycling in v0.1.0 at the UI, organizer, and adapter boundaries after failed capacity probes; preserve evidence without rerunning them.
 - [x] Independent review after integration and acceptance checks: explicitly confirmed by the owner on 2026-10-18.
 - [x] Record unsigned initial-release decision; finalize notes and checksums while preserving tested binaries.
-- [ ] Obtain explicit publication authorization, then publish the prepared release and tag `v0.1.0` at the tested commit.
+- [x] Obtain explicit publication authorization, publish the prepared release, and tag `v0.1.0` at tested commit `94ba177`; public downloads match all six accepted files.
 
 The [release checklist](docs/RELEASE_CHECKLIST.md) is the detailed acceptance record. Local package generation and automated tests do not complete these gates.
 

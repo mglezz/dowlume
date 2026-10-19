@@ -1,6 +1,6 @@
 # Windows v0.1.0 candidate: 94ba177
 
-This is an accepted, unpublished, unsigned candidate. Native recycling is disabled. Automated acceptance passed; on 2026-10-18 the owner reported all human tests and independent review passed. No final tag or stable release has been created by this work. Explicit publication authorization is the remaining gate.
+This accepted, unsigned candidate was [published as v0.1.0](https://github.com/mglezz/dowlume/releases/tag/v0.1.0) on 2026-10-18 after automated acceptance, owner-confirmed human tests and independent review, and explicit owner authorization to publish and create the tag. Native recycling remains disabled. Tag `v0.1.0` resolves to the tested `94ba177` commit.
 
 ## Exact artifacts
 
@@ -47,10 +47,12 @@ On 2026-10-18, following the handoff of these exact artifacts, the owner reporte
 
 Provenance: owner-reported acceptance in the project conversation, not agent-observed manual execution. No separate tester identity or individual manual log was supplied; none is invented. The automated guest's Windows build and raw reports are recorded above. Historical native recycle failures remain failures, and missing contents remain unrecovered.
 
-## Publication handoff
+## Publication completed
 
-1. Verify the final draft contains exactly the six staged files (the five hashed files plus `SHA256SUMS.txt`), targets `94ba177ea0da5e4809f87a59edfe5c7893b65537`, and is still unpublished. Old draft assets are preserved with their original metadata and matching server digests in `artifacts/releases/archive-draft-414647025-20261018/`.
-2. Obtain the owner's explicit authorization to create `v0.1.0` and publish the prepared release, as required by the original instruction. Positive acceptance is recorded separately from publication authorization.
-3. Publish only the verified draft and create the tag at the accepted source commit. Update repository status to published and verify the public downloads against the checksums. Do not attach private VM images, profiles or raw reports containing local paths.
+The owner explicitly authorized publication of v0.1.0 and creation of its tag on 2026-10-18. The verified draft (release ID `414647025`) was published at `2026-10-18T17:00:48Z`, with `draft: false`, `prerelease: false`, and exactly six accepted assets. The tag was independently queried and resolves to `94ba177ea0da5e4809f87a59edfe5c7893b65537`.
 
-The [release checklist](RELEASE_CHECKLIST.md) remains the publication gate. Recoverable quarantine, Linux and macOS remain deferred.
+All six assets were downloaded from the public release without authentication. Their sizes and SHA-256 values match the accepted local files and GitHub digests; the downloaded checksum manifest also verifies all five listed files. Reports: `artifacts/validation-20261018-integration/published-release.json`, `published-tag.json`, and `public-download-verification.json`. No private VM image, profile, fixture or raw acceptance report was uploaded.
+
+Old draft assets remain preserved with their original metadata and matching server digests in `artifacts/releases/archive-draft-414647025-20261018/`. The installer, portable and build identity were not changed during publication.
+
+The [release checklist](RELEASE_CHECKLIST.md) records the completed gates. Recoverable quarantine, Linux and macOS remain deferred.
