@@ -1,6 +1,8 @@
 # Dowlume roadmap
 
-**Current state:** [v0.1.0 for Windows x64 is published](https://github.com/mglezz/dowlume/releases/tag/v0.1.0), following automated acceptance, owner-confirmed human tests and independent review, and explicit publication authorization on 2026-10-18. Evidence is recorded in [VALIDATION.md](docs/VALIDATION.md).
+[English](#) · [Español](docs/es/ROADMAP.md)
+
+**Current state:** [v0.1.0 for Windows x64 is published](https://github.com/mglezz/dowlume/releases/tag/v0.1.0), following automated acceptance, my confirmation of human tests and independent review, and explicit publication authorization on 2026-10-18. Evidence is recorded in [VALIDATION.md](docs/VALIDATION.md).
 
 | Stage | Status | Details |
 | --- | --- | --- |
@@ -13,16 +15,16 @@
 - [x] Earlier candidate clean-machine automated package acceptance (Windows 11 build 26300); retained as historical evidence.
 - [x] Integrate containment in `main`, pass hosted checks, and rebuild clean `94ba177` installer/portable with verified hashes; exact-artifact host package and automated first-use checks passed. See the [candidate record](docs/RELEASE_CANDIDATE_0.1.0.md).
 - [x] Repeat package/upgrade and automated first-use checks on exact `94ba177` artifacts in a separate clean Windows guest without shared .NET; retain independently retrieved raw reports and hashes.
-- [x] Complete human first use, actual sign-in startup, wizard checks, and selected-file Review acceptance: owner reported all human tests passed on 2026-10-18.
+- [x] Complete human first use, actual sign-in startup, wizard checks, and selected-file Review acceptance: I reported that all human tests passed on 2026-10-18.
 - [x] Physical cross-volume move, undo, and interrupted-copy recovery testing on separate NVMe/SATA disks.
 - [x] Disable native recycling in v0.1.0 at the UI, organizer, and adapter boundaries after failed capacity probes; preserve evidence without rerunning them.
-- [x] Independent review after integration and acceptance checks: explicitly confirmed by the owner on 2026-10-18.
+- [x] Independent review after integration and acceptance checks: explicitly confirmed by me on 2026-10-18.
 - [x] Record unsigned initial-release decision; finalize notes and checksums while preserving tested binaries.
 - [x] Obtain explicit publication authorization, publish the prepared release, and tag `v0.1.0` at tested commit `94ba177`; public downloads match all six accepted files.
 
 The [release checklist](docs/RELEASE_CHECKLIST.md) is the detailed acceptance record. Local package generation and automated tests do not complete these gates.
 
-Current work is limited to Windows release hardening. Earlier clean-guest results do not approve changed binaries. The evidence VM and checkpoints must remain untouched; use a separate environment for final acceptance. The [acceptance kit and procedure](docs/WINDOWS_ACCEPTANCE.md) prepare the remaining tests; new features and Linux/macOS work stay deferred.
+I have completed the v0.1.0 release gates and am adding English/Spanish localization to current source. Earlier clean-guest results do not approve changed binaries. The evidence VM and checkpoints must remain untouched; use a separate environment for final acceptance. The [acceptance kit and procedure](docs/WINDOWS_ACCEPTANCE.md) define acceptance for future packages; Linux/macOS work stays deferred.
 
 ## Completed Windows MVP
 
@@ -82,6 +84,8 @@ Current work is limited to Windows release hardening. Earlier clean-guest result
 - [x] Browse older history in bounded pages while preserving undo checks and the global attention count.
 - [x] Assess [macOS and Linux prerequisites](docs/PLATFORM_SUPPORT.md); native implementations and validation remain deferred.
 
+- [x] English/Spanish interface selection, saved per profile, and a parallel Spanish documentation section in current source. These changes are not part of the published v0.1.0 binaries.
+
 ## Future work
 
 These are possible directions after the MVP release, without scheduled versions or dates.
@@ -92,6 +96,6 @@ These are possible directions after the MVP release, without scheduled versions 
 - Multi-folder simultaneous monitoring.
 - Following external renames and explicitly accepting edited tracked content.
 - Incremental organizer/recovery queries and indexed history searches for very large folders.
-- [Linux/macOS platform implementations](docs/PLATFORM_SUPPORT.md), localization, and broader accessibility review.
+- [Linux/macOS platform implementations](docs/PLATFORM_SUPPORT.md), additional languages, and broader accessibility review.
 
-No AI classification, cloud synchronization, arbitrary scripts, or permanent automatic deletion is included in this MVP.
+I keep content-based classification, cloud synchronization, arbitrary scripts, and permanent automatic deletion outside this MVP.

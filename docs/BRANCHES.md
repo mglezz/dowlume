@@ -1,5 +1,9 @@
 # Branch policy
 
+[English](#) · [Español](es/BRANCHES.md)
+
+I use one permanent branch and short-lived topic branches for my project.
+
 `main` is the default and only permanent branch. It contains the complete application and the README shown on the repository home page.
 
 ## Contribution workflow

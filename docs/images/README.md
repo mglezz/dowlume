@@ -1,5 +1,9 @@
 # Documentation screenshots
 
+[English](#) · [Español](../es/images/README.md)
+
+I retain these English screenshots as illustrations of the v0.1.0 interface. They predate the language selector; I do not present them as captures of the localized revision.
+
 These PNGs show the real Avalonia `MainWindow` rendered headlessly on Windows, with staged fictional data. They illustrate separate Overview, Preview, Review, and Activity states; they are not evidence that file operations or native Windows dialogs passed acceptance testing.
 
 | Image | Demonstrates |

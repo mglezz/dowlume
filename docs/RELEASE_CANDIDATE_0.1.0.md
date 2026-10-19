@@ -1,6 +1,10 @@
 # Windows v0.1.0 candidate: 94ba177
 
-This accepted, unsigned candidate was [published as v0.1.0](https://github.com/mglezz/dowlume/releases/tag/v0.1.0) on 2026-10-18 after automated acceptance, owner-confirmed human tests and independent review, and explicit owner authorization to publish and create the tag. Native recycling remains disabled. Tag `v0.1.0` resolves to the tested `94ba177` commit.
+[English](#) · [Español](es/RELEASE_CANDIDATE_0.1.0.md)
+
+I retain the exact artifacts and evidence used for my v0.1.0 release here.
+
+This accepted, unsigned candidate was [published as v0.1.0](https://github.com/mglezz/dowlume/releases/tag/v0.1.0) on 2026-10-18 after automated acceptance, my confirmation of human tests and independent review, and my explicit authorization to publish and create the tag. Native recycling remains disabled. Tag `v0.1.0` resolves to the tested `94ba177` commit.
 
 ## Exact artifacts
 
@@ -16,7 +20,7 @@ Original tested candidate: `artifacts/releases/v0.1.0-94ba177-20261018/`. Final 
 | `BUILD-INFO.json` | `2C3C714D4261759253D1E0AA248780AB88BA474D617F8F73BD706AC2C4795A8F` |
 | `RELEASE_NOTES_0.1.0.md` | `4A7336D76C5803C2625FECD26B47FE815CFF1370C205EDF447C505035C1D6BF2` |
 
-The final `SHA256SUMS.txt` contains those five entries. The original candidate's draft notes remain retained with hash `DA0760C60B8E793A3D773146F18DE986C09E795F189358BA559A750DD54172CA`; they are not the final notes. The earlier upgrade fixture is the retained `cf42326` installer with SHA-256 `73C465CBFC4A47562D4859B9EF9AE0338EF66C9D836C5B07599E4CD37C93F507`.
+The final `SHA256SUMS.txt` contains those five entries. These hashes identify release attachments; later editorial changes to repository documentation do not replace the attached notes. The original candidate's draft notes remain retained with hash `DA0760C60B8E793A3D773146F18DE986C09E795F189358BA559A750DD54172CA`; they are not the final notes. The earlier upgrade fixture is the retained `cf42326` installer with SHA-256 `73C465CBFC4A47562D4859B9EF9AE0338EF66C9D836C5B07599E4CD37C93F507`.
 
 ## Completed checks
 
@@ -31,7 +35,7 @@ The final `SHA256SUMS.txt` contains those five entries. The original candidate's
 
 The clean pre-test checkpoint was exported and imported with a new identity into `E:\Dowlume.ContainmentAcceptance\clean-20261018-7c1adee0`. The imported system disk is standalone, with no parent disk in the evidence VM. Only the imported copy's saved state was removed for a fresh boot. The original VM and its three checkpoint identities remain unchanged; neither native probes nor recovery attempts were repeated.
 
-New VM: `Dowlume-Windows11-Containment`, ID `98a117ea-3f5d-4391-abb7-cb23ccade398`. The copy is disconnected from the network, has automatic start/checkpoints disabled, and uses a dedicated disposable report-transfer disk. No .NET SDK/runtime was installed. The user signed in as the standard `DowlumeTester` account.
+New VM: `Dowlume-Windows11-Containment`, ID `98a117ea-3f5d-4391-abb7-cb23ccade398`. The copy is disconnected from the network, has automatic start/checkpoints disabled, and uses a dedicated disposable report-transfer disk. No .NET SDK/runtime was installed. I signed in as the standard `DowlumeTester` account.
 
 The host kit is `E:\Dowlume.ContainmentAcceptance\clean-20261018-7c1adee0\Kit-94ba177`; its per-file manifest covers packages and scripts. The guest kit is `C:\DowlumeAcceptance\containment-94ba177`. The runner verifies the account, interactive desktop, artifact hashes, clean-build identity and dedicated report marker before testing. Its first preflight refused because Windows did not expose the FAT volume label; the guard was corrected to identify the marker on the expected-size FAT disk. No application test or evidence-VM operation occurred during that refused preflight.
 
@@ -43,13 +47,13 @@ The cloned guest clock was approximately one hour ahead of the host when these r
 
 ## Human acceptance and independent review
 
-On 2026-10-18, following the handoff of these exact artifacts, the owner reported that all human acceptance tests had been completed successfully and the application had no apparent problems. In a separate clarification, the owner explicitly confirmed that this included independent review of the change and results. This closes the human first-use, sign-in startup, wizard, selected-file Review/Undo, display/keyboard and independent-review gates described in the [acceptance procedure](WINDOWS_ACCEPTANCE.md#first-use-with-a-person).
+On 2026-10-18, I confirmed that all human acceptance tests for these exact artifacts had completed successfully, with no apparent application problems. I also explicitly confirmed that independent review of the change and results was included. This closes the human first-use, sign-in startup, wizard, selected-file Review/Undo, display/keyboard and independent-review gates described in the [acceptance procedure](WINDOWS_ACCEPTANCE.md#first-use-with-a-person).
 
-Provenance: owner-reported acceptance in the project conversation, not agent-observed manual execution. No separate tester identity or individual manual log was supplied; none is invented. The automated guest's Windows build and raw reports are recorded above. Historical native recycle failures remain failures, and missing contents remain unrecovered.
+I recorded this acceptance in the project discussion. I retain it as my confirmation, separate from automated reports; I have no separate tester identity or individual manual log to attach. The automated guest's Windows build and raw reports are recorded above. Historical native recycle failures remain failures, and missing contents remain unrecovered.
 
 ## Publication completed
 
-The owner explicitly authorized publication of v0.1.0 and creation of its tag on 2026-10-18. The verified draft (release ID `414647025`) was published at `2026-10-18T17:00:48Z`, with `draft: false`, `prerelease: false`, and exactly six accepted assets. The tag was independently queried and resolves to `94ba177ea0da5e4809f87a59edfe5c7893b65537`.
+I explicitly authorized publication of v0.1.0 and creation of its tag on 2026-10-18. The verified draft (release ID `414647025`) was published at `2026-10-18T17:00:48Z`, with `draft: false`, `prerelease: false`, and exactly six accepted assets. The tag was independently queried and resolves to `94ba177ea0da5e4809f87a59edfe5c7893b65537`.
 
 All six assets were downloaded from the public release without authentication. Their sizes and SHA-256 values match the accepted local files and GitHub digests; the downloaded checksum manifest also verifies all five listed files. Reports: `artifacts/validation-20261018-integration/published-release.json`, `published-tag.json`, and `public-download-verification.json`. No private VM image, profile, fixture or raw acceptance report was uploaded.
 
