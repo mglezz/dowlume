@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
@@ -7,7 +6,7 @@ using Dowlume.App.Localization;
 
 namespace Dowlume.App.Services;
 
-public sealed class DesktopDialogs(Window owner, Localizer? localizer = null) : IDesktopDialogs
+public sealed class DesktopDialogs(Window owner, Localizer? localizer = null, IFileManager? fileManager = null) : IDesktopDialogs
 {
     public async Task<string?> ChooseFolderAsync(string title)
     {
@@ -42,16 +41,5 @@ public sealed class DesktopDialogs(Window owner, Localizer? localizer = null) : 
         return dialog.ShowDialog<bool>(owner);
     }
 
-    public void RevealFile(string path)
-    {
-        if (!OperatingSystem.IsWindows())
-        {
-            throw new PlatformNotSupportedException("Explorer is available on Windows.");
-        }
-        string explorer = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "explorer.exe");
-        var start = new ProcessStartInfo(explorer) { UseShellExecute = false };
-        start.ArgumentList.Add("/select,");
-        start.ArgumentList.Add(Path.GetFullPath(path));
-        Process.Start(start)?.Dispose();
-    }
+    public void RevealFile(string path) => (fileManager ?? DesktopPlatform.Current.FileManager).Reveal(path);
 }

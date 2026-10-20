@@ -83,7 +83,7 @@ Copy-Item -LiteralPath (Join-Path $repositoryRoot 'scripts/Test-WindowsTray.ps1'
 Copy-Item -LiteralPath (Join-Path $repositoryRoot 'scripts/Test-WindowsLocalization.ps1') -Destination $acceptanceDirectory
 # The standalone kit has no repository-relative docs tree. Resolve its guide links to the source revision.
 $guide = [IO.File]::ReadAllText((Join-Path $repositoryRoot 'docs/WINDOWS_ACCEPTANCE.md'))
-$guide = [regex]::Replace($guide, '\]\(((?:es/)?[A-Za-z_]+\.md)(#[^)]*)?\)', ('](https://github.com/mglezz/dowlume/blob/{0}/docs/$1$2)' -f $sourceCommit))
+$guide = [regex]::Replace($guide, '\]\(((?:es/)?[A-Za-z0-9_.-]+\.md)(#[^)]*)?\)', ('](https://github.com/mglezz/dowlume/blob/{0}/docs/$1$2)' -f $sourceCommit))
 [IO.File]::WriteAllText((Join-Path $acceptanceDirectory 'WINDOWS_ACCEPTANCE.md'), $guide)
 $acceptanceArchive = Join-Path $artifactDirectory "Dowlume-$version-windows-acceptance.zip"
 Compress-Archive -Path (Join-Path $acceptanceDirectory '*') -DestinationPath $acceptanceArchive

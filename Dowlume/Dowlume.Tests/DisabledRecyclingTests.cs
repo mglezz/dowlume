@@ -15,7 +15,7 @@ public sealed class DisabledRecyclingTests
         using var workspace = new TemporaryWorkspace();
         string source = workspace.CreateFile("review.txt", "Reviewed content");
         string sentinel = workspace.CreateFile("sentinel.txt", "Earlier content");
-        string hash = new SafeFileMover().Hash(source);
+        string hash = FixtureFileMover.Create(workspace).Hash(source);
         if (changed)
         {
             File.WriteAllText(source, "Changed content");
@@ -37,10 +37,10 @@ public sealed class DisabledRecyclingTests
     {
         using var workspace = new TemporaryWorkspace();
         var store = new SqliteStateStore(workspace.Database);
-        var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness());
+        var organizer = new DownloadOrganizer(store, FixtureFileMover.Create(workspace), new FileReadiness());
         string source = workspace.CreateFile("review.txt");
         var file = new TrackedFile(Guid.NewGuid(), source, source, FileCategory.Documents,
-            DateTimeOffset.UtcNow, LifecycleStatus.InReview, new SafeFileMover().Hash(source));
+            DateTimeOffset.UtcNow, LifecycleStatus.InReview, FixtureFileMover.Create(workspace).Hash(source));
         MethodInfo execute = typeof(DownloadOrganizer).GetMethod("ExecuteAsync", BindingFlags.Instance | BindingFlags.NonPublic)!;
         TargetInvocationException error = Assert.Throws<TargetInvocationException>(() => execute.Invoke(organizer,
             [OperationKind.Recycle, file, file with { Status = LifecycleStatus.Recycled }, source, null, CancellationToken.None, null]));
@@ -48,7 +48,7 @@ public sealed class DisabledRecyclingTests
         MethodInfo decide = typeof(DownloadOrganizer).GetMethod("DecideAsync", BindingFlags.Instance | BindingFlags.NonPublic)!;
         await Assert.ThrowsAsync<NotSupportedException>(() => (Task)decide.Invoke(organizer,
             [file.Id, null, OperationKind.Recycle, null, CancellationToken.None])!);
-        Assert.Equal(file.ContentHash, new SafeFileMover().Hash(source));
+        Assert.Equal(file.ContentHash, FixtureFileMover.Create(workspace).Hash(source));
         Assert.Empty(store.GetOperations());
         Assert.Empty(store.GetFiles());
     }
@@ -64,7 +64,7 @@ public sealed class DisabledRecyclingTests
     {
         using var workspace = new TemporaryWorkspace();
         var store = new SqliteStateStore(workspace.Database);
-        var mover = new SafeFileMover();
+        var mover = FixtureFileMover.Create(workspace);
         string source = sourceState == "missing" ? Path.Combine(workspace.Downloads, "absent.txt") : workspace.CreateFile("review.txt", "Original");
         string reference = workspace.CreateFile("reference.txt", "Original");
         string? destination = hasDestination ? workspace.CreateFile("unexpected-copy.txt", "Original") : null;

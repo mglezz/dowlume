@@ -2,7 +2,7 @@ Dowlume - Your downloads, under control
 
 LANGUAGE
 
-In version 0.2.0, pause monitoring and choose English or Español in
+In version 0.3.0, pause monitoring and choose English or Español in
 Settings > Language. I save the choice immediately without renaming folders
 or changing files. The Spanish offline guide is START-HERE.es.txt.
 The original published v0.1.0 packages predate this selector and remain English-only.

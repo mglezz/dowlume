@@ -74,8 +74,8 @@ public sealed class LocalizationTests
             var settings = new AppSettings { DownloadsPath = workspace.Downloads };
             store.SaveSettings(settings);
             string source = workspace.CreateFile("report.pdf");
-            string hash = new SafeFileMover().Hash(source);
-            var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness(TimeSpan.Zero, TimeSpan.Zero));
+            string hash = FixtureFileMover.Create(workspace).Hash(source);
+            var organizer = new DownloadOrganizer(store, FixtureFileMover.Create(workspace), new FileReadiness(TimeSpan.Zero, TimeSpan.Zero));
             await organizer.OrganizeAsync(source, settings);
             OperationRecord original = Assert.Single(store.GetOperations());
             var text = new Localizer();
@@ -136,7 +136,7 @@ public sealed class LocalizationTests
             Assert.Equal("Settings", ((TabItem)tabs.Items[4]!).Header);
             model.SelectedLanguage = MainViewModel.Languages[1];
             Assert.Equal(original, Assert.Single(store.GetOperations()));
-            Assert.Equal(hash, new SafeFileMover().Hash(original.DestinationPath!));
+            Assert.Equal(hash, FixtureFileMover.Create(workspace).Hash(original.DestinationPath!));
             Assert.True(File.Exists(previewSource));
             var restarted = new MainViewModel(store, organizer, new DesktopDialogs(window),
                 new DiagnosticLog(Path.Combine(workspace.Root, "restart.jsonl")));
@@ -156,7 +156,7 @@ public sealed class LocalizationTests
         var database = new SqliteStateStore(workspace.Database);
         database.SaveSettings(new AppSettings { DownloadsPath = workspace.Downloads, Language = "es" });
         var store = new FailingSettingsStore(database);
-        var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness());
+        var organizer = new DownloadOrganizer(store, FixtureFileMover.Create(workspace), new FileReadiness());
         var model = new MainViewModel(store, organizer, new UnusedDialogs(),
             new DiagnosticLog(Path.Combine(workspace.Root, "diagnostics.jsonl")));
         store.RefuseSave = true;
@@ -186,7 +186,7 @@ public sealed class LocalizationTests
             store.SaveSettings(new AppSettings { DownloadsPath = workspace.Downloads });
             var text = new Localizer();
             var window = new MainWindow();
-            var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness(TimeSpan.Zero, TimeSpan.Zero));
+            var organizer = new DownloadOrganizer(store, FixtureFileMover.Create(workspace), new FileReadiness(TimeSpan.Zero, TimeSpan.Zero));
             var model = new MainViewModel(store, organizer, new DesktopDialogs(window, text),
                 new DiagnosticLog(Path.Combine(workspace.Root, "diagnostics.jsonl")), localizer: text);
             window.DataContext = model;

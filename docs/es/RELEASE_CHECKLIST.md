@@ -2,6 +2,8 @@
 
 [English](../RELEASE_CHECKLIST.md) · [Índice en español](README.md)
 
+Para 0.3.0 sigo el [procedimiento Windows actual](WINDOWS_ACCEPTANCE.md), las [notas](RELEASE_NOTES_0.3.0.md) y el [alcance experimental](PLATFORM_SUPPORT.md). La implementación y CI no sustituyen la aceptación humana final.
+
 Para la versión actual, consulta el [registro de aceptación y publicación de 0.2.0](RELEASE_CANDIDATE_0.2.0.md). Conservo debajo el registro histórico de 0.1.0.
 
 Mantengo este registro para los artefactos Windows x64 de **v0.1.0**, publicados el 18 de octubre de 2026 desde `94ba177`. Los seis archivos públicos fueron descargados y verificados. Las pruebas anteriores no aprueban binarios modificados, incluido el selector de idioma añadido después.

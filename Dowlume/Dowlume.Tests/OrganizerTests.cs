@@ -10,10 +10,11 @@ public sealed class OrganizerTests : IDisposable
     private readonly AppSettings _settings;
     private readonly DownloadOrganizer _organizer;
     private readonly TestClock _clock = new();
-    private readonly SafeFileMover _mover = new();
+    private readonly IFileMover _mover;
 
     public OrganizerTests()
     {
+        _mover = FixtureFileMover.Create(_workspace);
         _store = new SqliteStateStore(_workspace.Database);
         _settings = new AppSettings { DownloadsPath = _workspace.Downloads };
         _organizer = new DownloadOrganizer(_store, _mover, new ReadyFiles(), _clock);

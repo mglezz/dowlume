@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
 using Dowlume.App.Localization;
 using Dowlume.App.Services;
 using Dowlume.App.ViewModels;
@@ -35,16 +36,27 @@ public partial class App : Application
                 var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness());
                 var window = new MainWindow();
                 text.SetLanguage(store.LoadSettings()?.Language);
-                var model = new MainViewModel(store, organizer, new DesktopDialogs(window, text), log,
-                    new WindowsStartupRegistration(), text);
+                var platform = DesktopPlatform.Current;
+                var model = new MainViewModel(store, organizer, new DesktopDialogs(window, text, platform.FileManager), log,
+                    platform.Startup, text, platform.SuggestedDownloads);
                 window.DataContext = model;
                 desktop.MainWindow = window;
-                _tray = new DesktopTray(this, window, text);
+                if (platform.HasAcceptedTray)
+                {
+                    try
+                    {
+                        _tray = new DesktopTray(this, window, text);
+                        window.ConfigureTray(true);
+                    }
+                    catch (Exception error) { log.Write("tray_unavailable", error); }
+                }
                 log.Write("application_started");
             }
             catch (Exception error)
             {
                 log.Write("startup_failed", error);
+                if (Program.IsSmokeTest)
+                    Environment.ExitCode = 1;
                 desktop.MainWindow = new Window
                 {
                     Title = text.Translate("Dowlume — unable to start"),
@@ -57,6 +69,11 @@ public partial class App : Application
                         Text = text.Translate("Dowlume could not open its local data. Another instance may already be running. Close it and try again. If the problem persists, back up your local database before repairing or reinstalling.")
                     }
                 };
+            }
+            if (Program.IsSmokeTest)
+            {
+                Window smokeWindow = desktop.MainWindow!;
+                smokeWindow.Opened += (_, _) => DispatcherTimer.RunOnce(smokeWindow.Close, TimeSpan.FromSeconds(1));
             }
             desktop.Exit += (_, _) => { _tray?.Dispose(); _instanceLock?.Dispose(); };
         }

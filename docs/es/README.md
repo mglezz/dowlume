@@ -18,7 +18,7 @@ Desactivé el envío nativo a la Papelera en v0.1.0 tras comprobar que las prueb
 
 *Conservo esta captura de la interfaz inglesa de v0.1.0 con datos ficticios. Es anterior al selector de idioma. [Procedencia de las imágenes](images/README.md).*
 
-**Próximos hitos:** planifico bases comunes en 0.3.0, macOS en 0.4.0, Linux en 0.5.0 y estabilización hacia 1.0. Windows x64 sigue siendo la plataforma soportada. Son objetivos con criterios de aceptación, no soporte ya disponible ni fechas prometidas; consulta la [hoja de ruta](ROADMAP.md) y el [alcance por plataforma](PLATFORM_SUPPORT.md).
+**Próximos hitos:** el código de 0.3.0 incorpora CI nativa, adaptadores y vistas previas restringidas para macOS 15 Apple Silicon y Ubuntu 24.04 x64. Mantengo bloqueadas las modificaciones de archivos en estas vistas previas. Planifico soporte aceptado macOS en 0.4.0, Linux en 0.5.0 y estabilización hacia 1.0. Windows x64 sigue siendo la plataforma soportada. Son objetivos con criterios de aceptación, no soporte ya disponible ni fechas prometidas; consulta la [hoja de ruta](ROADMAP.md) y el [alcance por plataforma](PLATFORM_SUPPORT.md).
 
 ## Por qué lo desarrollo
 
@@ -34,7 +34,7 @@ No elimino archivos automáticamente. La supervisión empieza en pausa en cada a
 
 Utilizo **C#, .NET 10, Avalonia con MVVM, SQLite y xUnit**. Separo la interfaz, las reglas, la supervisión y el acceso al sistema de archivos. Compruebo la estabilidad de las descargas, verifico contenido mediante SHA-256 y registro cada intención antes de mover. Si quedan copias ambiguas, las conservo para su inspección. Explico estas decisiones en [Arquitectura](ARCHITECTURE.md).
 
-Windows x64 es mi plataforma de distribución. Mantengo [macOS y Linux](PLATFORM_SUPPORT.md) como trabajo futuro; compilar en esos sistemas no equivale a validar sus operaciones nativas.
+Windows x64 es mi plataforma de distribución. Ofrezco bases experimentales para [macOS Apple Silicon y Linux](PLATFORM_SUPPORT.md); compilar y abrir la aplicación no equivale a validar sus operaciones nativas.
 
 ## Ejecutar desde el código
 

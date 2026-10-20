@@ -2,7 +2,9 @@
 
 [English](#) · [Español](es/WINDOWS_ACCEPTANCE.md)
 
-I used this procedure for the published 0.2.0 packages; the [acceptance record](RELEASE_CANDIDATE_0.2.0.md) states the results actually recorded. The published 0.1.0 acceptance remains historical evidence; it does not approve these localization packages. Record their SHA-256 values, source commit from `BUILD-INFO.json`, Windows build, tester, date, and observed results. An unchecked item is not a pass. Do not use personal Downloads or change Recycle Bin settings on a daily-use computer.
+I used this procedure for the published 0.2.0 packages; the [acceptance record](RELEASE_CANDIDATE_0.2.0.md) states the results actually recorded. The published 0.1.0 acceptance remains historical evidence; it does not approve these new packages. Record their SHA-256 values, source commit from `BUILD-INFO.json`, Windows build, tester, date, and observed results. An unchecked item is not a pass. Do not use personal Downloads or change Recycle Bin settings on a daily-use computer.
+
+I now apply this procedure to 0.3.0, upgrading from 0.2.0. Previous acceptance does not approve these new artifacts.
 
 ## Prepare a clean environment
 
@@ -19,12 +21,12 @@ Download the proposed installer, portable ZIP, `BUILD-INFO.json`, and `SHA256SUM
 The acceptance kit contains `Test-WindowsPackage.ps1`, which runs on Windows PowerShell without installing .NET. From the directory containing the downloaded artifacts:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\Test-WindowsPackage.ps1 -Installer .\Dowlume-0.2.0-win-x64-setup.exe -Archive .\Dowlume-0.2.0-win-x64.zip -PreviousInstaller .\Dowlume-0.1.0-win-x64-setup.exe -ReportPath .\package-result.json -RequireNoSharedDotNet -RequireLocalization
+powershell -NoProfile -ExecutionPolicy Bypass -File .\Test-WindowsPackage.ps1 -Installer .\Dowlume-0.3.0-win-x64-setup.exe -Archive .\Dowlume-0.3.0-win-x64.zip -PreviousInstaller .\Dowlume-0.2.0-win-x64-setup.exe -ReportPath .\package-result.json -RequireNoSharedDotNet -RequireLocalization
 ```
 
 The kit includes `Test-WindowsTray.ps1` and `Test-WindowsLocalization.ps1`; keep both beside the package script. With `-RequireLocalization`, I verify both guides and Spanish resources, switch English → Español → English in the installed app, and restart after each switch to check persistence. The script refuses an existing registered Dowlume installation or startup entry. It creates a unique temporary installation, application profile, and sample file; checks portable launch/exit, install/reinstall, duplicate-instance refusal, running-app upgrade/uninstall refusal, native tray registration/reopening, startup-entry retention/removal, and profile/file retention after uninstall. Tray reopening uses Windows UI Automation and a native tray-click message; it does not replace testing the overflow menu with a person. Reports and fixtures remain in the printed temporary directory for inspection. It records detected runtimes but does not independently prove that the OS image was clean.
 
-I use the published 0.1.0 installer as the upgrade baseline. To choose another baseline, use `-PreviousInstaller <path-to-previous-installer>`. Without that argument, the upgrade check is a reinstall of the same package. Preserve both installer hashes in the report. If a check fails, inspect its retained logs before rerunning; the script intentionally refuses to overwrite a registered installation left by a failed test.
+I use the published 0.2.0 installer as the upgrade baseline. To choose another baseline, use `-PreviousInstaller <path-to-previous-installer>`. Without that argument, the upgrade check is a reinstall of the same package. Preserve both installer hashes in the report. If a check fails, inspect its retained logs before rerunning; the script intentionally refuses to overwrite a registered installation left by a failed test.
 
 ## First use with a person
 
@@ -44,11 +46,11 @@ After the smoke test, install normally with the wizard and a standard account. A
 
 Record unclear wording, errors, unexpected windows, display scaling, and keyboard navigation problems. Attach only redacted screenshots; the journal and profile contain private paths.
 
-## Language and upgrade acceptance for 0.2.0
+## Language and upgrade acceptance for 0.3.0
 
 I record the exact installer and ZIP hashes and the observed results for these checks before publication:
 
-1. With 0.1.0 installed in a disposable Windows account, configure a sample folder, organize a fictional file, pause monitoring, and confirm its Activity entry. Close the application and install 0.2.0. Confirm that the folder, settings, history, and file content remain intact and monitoring starts paused.
+1. With 0.2.0 installed in a disposable Windows account, configure a sample folder, organize a fictional file, pause monitoring, and confirm its Activity entry. Close the application and install 0.3.0. Confirm that the folder, settings, history, and file content remain intact and monitoring starts paused.
 2. In Settings > Language, choose Español. Check all five tabs, confirmation and cancellation dialogs, the disabled recycling explanation, and the tray menu. Confirm that no files move and existing category folder names remain unchanged when changing language.
 3. Close and reopen; verify Spanish persists. Return to English, restart, and verify English persists. Check both languages at minimum window size and your Windows display scaling, including keyboard navigation.
 4. Extract the portable ZIP into a new folder, keeping its `es` subfolder and both quick-start guides. Launch, change language, close, and reopen. Confirm the same behavior without installing .NET separately on the clean test machine.
@@ -69,4 +71,4 @@ Choose a writable folder on a second fixed local volume. The harness writes only
 
 ## Publication handoff
 
-I record evidence tied to the artifact hashes, resolve failures, obtain independent acceptance review, and repeat affected checks after changes. On 2026-10-20 I confirmed that all functionality worked correctly and published 0.2.0 using the same seven accepted draft assets. The packaged copy of this procedure retains its build-time pending status; the [acceptance record](RELEASE_CANDIDATE_0.2.0.md) supersedes that status. Linux/macOS work remains deferred.
+I record evidence tied to the artifact hashes, resolve failures, obtain independent acceptance review, and repeat affected checks after changes. On 2026-10-20 I confirmed that all functionality worked correctly and published 0.2.0 using the same seven accepted draft assets. The packaged copy of this procedure retains its build-time pending status; the [acceptance record](RELEASE_CANDIDATE_0.2.0.md) supersedes that status. For 0.3.0 I repeat the affected Windows acceptance on its exact hashes. macOS/Linux packages are restricted previews, with separate launch reports and no stable acceptance claim.

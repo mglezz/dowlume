@@ -2,6 +2,8 @@
 
 [English](#) · [Español](es/RELEASE_CHECKLIST.md)
 
+For 0.3.0 I follow the current [Windows acceptance procedure](WINDOWS_ACCEPTANCE.md), [release notes](RELEASE_NOTES_0.3.0.md) and [experimental platform scope](PLATFORM_SUPPORT.md). Implementation and hosted automation do not replace final human acceptance.
+
 For the current release, see the [0.2.0 acceptance and publication record](RELEASE_CANDIDATE_0.2.0.md). I retain the completed 0.1.0 checklist below unchanged.
 
 I retain this checklist as the completed acceptance record for the published v0.1.0 artifacts. I assess changed binaries separately.

@@ -4,6 +4,12 @@
 
 I keep dated validation records here. A pending item in an older entry describes that revision and date; later entries record completion without changing the original evidence. Local artifact paths refer to retained private evidence and may be absent from a fresh clone.
 
+## 2026-10-20: 0.3.0 foundation validation
+
+I added native capability selection, restricted preview hosts, fixed schema-1 profile regressions and native archive packaging. On local macOS ARM64, 79 tests passed and six native tests were explicitly skipped (five Windows, one Linux). Formatting and the acceptance harness build passed. The local macOS archive passed ad-hoc signature verification before and after extraction and native window launch/clean exit. This exploratory build had uncommitted changes and is not a release candidate.
+
+I keep hosted checks, final committed artifact provenance and human Windows acceptance separate. The [platform matrix](PLATFORM_SUPPORT.md) and [file-operation contract](FILE_OPERATION_CONTRACT.md) explain test-only movers, disabled production mutations on the ports, and outstanding native gates. I do not reuse 0.2.0 manual acceptance for 0.3.0.
+
 ## 2026-10-20: Published 0.2.0 with English and Spanish
 
 I confirmed that all functionality worked correctly in the final Windows package and published the same seven accepted draft assets as v0.2.0. The 74 tests, security checks, and final package checks passed. I verified all public downloads against the accepted hashes. The [0.2.0 acceptance record](RELEASE_CANDIDATE_0.2.0.md) records source, checksums, manual confirmation, and the limits of the available evidence.

@@ -23,6 +23,19 @@ All tests run without invoking native recycling. The previous native tests and c
 
 Use a disposable folder for initial UI testing. The real Downloads directory is never used by automated tests. To isolate application state as well, pass `-- --data-directory C:\path\to\test-profile` to `dotnet run`.
 
+## Experimental native development
+
+I also build on macOS 15 Apple Silicon and Ubuntu 24.04 x64. These hosts expose folder preview and preferences; production file operations, recovery, tray hiding and login startup are unavailable. Intel Macs are excluded. See [platform packages and dependencies](docs/PLATFORM_SUPPORT.md).
+
+On macOS I use a real temporary directory inside the repository so safety checks do not traverse the system temporary-directory symlink:
+
+```sh
+mkdir -p artifacts/test-tmp
+TMPDIR="$PWD/artifacts/test-tmp" dotnet test Dowlume/Dowlume.slnx -c Release
+```
+
+Shared tests use a fixture mover outside Windows; explicit native skips do not count as native acceptance. I preserve the accepted Windows profile location and use separate preview profiles. I document [backup and file-operation limits](docs/FILE_OPERATION_CONTRACT.md).
+
 ## Next steps
 
 Follow [First use](docs/USER_GUIDE.md#first-use) for Settings, Preview, consent, and review decisions. The [domain model](docs/requirements/DOMAIN_MODEL.md) explains the concepts and business rules. Read [Architecture](docs/ARCHITECTURE.md) before changing detection, file operations, or recovery; it defines the safety boundaries and practical filesystem limits.

@@ -445,4 +445,28 @@ La ubicación original debe estar disponible y el archivo no debe haber cambiado
   <data name="RecyclingDisabled" xml:space="preserve">
     <value>El envío a la papelera está desactivado porque la Papelera de Windows no conservó los archivos de forma fiable. Usa Conservar, Posponer o Mover a.</value>
   </data>
+  <data name="PlatformPreviewNotice" xml:space="preserve">
+    <value>Esta plataforma está en modo de vista previa. Las operaciones de archivos y la recuperación automática no están disponibles hasta completar la validación nativa de seguridad.</value>
+  </data>
+  <data name="LoginStartupUnavailable" xml:space="preserve">
+    <value>El inicio de sesión automático no está disponible en esta plataforma.</value>
+  </data>
+  <data name="MissingSelectedFile" xml:space="preserve">
+    <value>El archivo seleccionado ya no está disponible.</value>
+  </data>
+  <data name="UnavailableFileManager" xml:space="preserve">
+    <value>La integración con el gestor de archivos no está disponible en esta plataforma.</value>
+  </data>
+  <data name="StartDowlumeAtLogin" xml:space="preserve">
+    <value>Iniciar Dowlume al iniciar sesión</value>
+  </data>
+  <data name="PreviewPrivacyNotice" xml:space="preserve">
+    <value>Todo es local. Sin cuenta, sincronización ni telemetría. Cerrar la ventana sale de Dowlume.</value>
+  </data>
+  <data name="PreviewInitialStatus" xml:space="preserve">
+    <value>Elige una carpeta en Ajustes y consulta su vista previa. Las operaciones de archivos no están disponibles en esta plataforma.</value>
+  </data>
+  <data name="PreviewSettingsSaved" xml:space="preserve">
+    <value>Ajustes guardados. Puedes consultar la carpeta en Vista previa. Las operaciones de archivos siguen sin estar disponibles.</value>
+  </data>
 </root>

@@ -445,4 +445,28 @@ The original location must be available and the file must be unchanged. Undoing 
   <data name="RecyclingDisabled" xml:space="preserve">
     <value>Recycling is disabled because Windows Recycle Bin could not reliably preserve files. Use Keep, Snooze, or Move to instead.</value>
   </data>
+  <data name="PlatformPreviewNotice" xml:space="preserve">
+    <value>This platform is in preview mode. File operations and automatic recovery are unavailable until native safety validation is complete.</value>
+  </data>
+  <data name="LoginStartupUnavailable" xml:space="preserve">
+    <value>Login startup is unavailable on this platform.</value>
+  </data>
+  <data name="MissingSelectedFile" xml:space="preserve">
+    <value>The selected file is no longer available.</value>
+  </data>
+  <data name="UnavailableFileManager" xml:space="preserve">
+    <value>File manager integration is unavailable on this platform.</value>
+  </data>
+  <data name="StartDowlumeAtLogin" xml:space="preserve">
+    <value>Start Dowlume when I sign in</value>
+  </data>
+  <data name="PreviewPrivacyNotice" xml:space="preserve">
+    <value>Local only. No account, cloud sync, or telemetry. Closing the window exits Dowlume.</value>
+  </data>
+  <data name="PreviewInitialStatus" xml:space="preserve">
+    <value>Choose a folder in Settings, then inspect its preview. File operations are unavailable on this platform.</value>
+  </data>
+  <data name="PreviewSettingsSaved" xml:space="preserve">
+    <value>Settings saved. You can inspect the folder in Preview. File operations remain unavailable.</value>
+  </data>
 </root>

@@ -29,6 +29,17 @@ dotnet run --project Dowlume/Dowlume.App -c Release -- --data-directory C:\Dowlu
 
 En macOS, la carpeta temporal del sistema puede atravesar enlaces simbólicos que el proyecto rechaza. Para ejecutar comprobaciones de desarrollo, utiliza una carpeta temporal real con `TMPDIR`; esto no convierte macOS en una plataforma de distribución aceptada.
 
+## Desarrollo nativo experimental
+
+También compilo en macOS 15 Apple Silicon y Ubuntu 24.04 x64. Estos sistemas ofrecen vista previa y preferencias; bloqueo modificaciones, recuperación, ocultar en bandeja e inicio automático. Excluyo los Mac Intel. Detallo [paquetes y dependencias](PLATFORM_SUPPORT.md).
+
+```sh
+mkdir -p artifacts/test-tmp
+TMPDIR="$PWD/artifacts/test-tmp" dotnet test Dowlume/Dowlume.slnx -c Release
+```
+
+Fuera de Windows, las pruebas compartidas usan un adaptador de muestras; las omisiones explícitas no cuentan como aceptación nativa. Conservo la ubicación del perfil Windows y separo los experimentales. Documento [copias y límites de operaciones](FILE_OPERATION_CONTRACT.md).
+
 ## Siguientes pasos
 
 Explico el flujo completo en la [guía de uso](USER_GUIDE.md), los conceptos en el [modelo de dominio](requirements/DOMAIN_MODEL.md) y los límites de las operaciones en [Arquitectura](ARCHITECTURE.md).

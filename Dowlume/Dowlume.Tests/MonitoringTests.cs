@@ -41,7 +41,7 @@ public sealed class MonitoringTests
         workspace.CreateFile("incomplete.crdownload");
         var settings = new AppSettings { DownloadsPath = workspace.Downloads };
         var store = new SqliteStateStore(workspace.Database);
-        var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness(TimeSpan.Zero, TimeSpan.Zero));
+        var organizer = new DownloadOrganizer(store, FixtureFileMover.Create(workspace), new FileReadiness(TimeSpan.Zero, TimeSpan.Zero));
         await using (var monitor = new DownloadMonitor(settings, async (path, token) =>
         {
             await Task.Delay(5, token);
@@ -82,6 +82,29 @@ public sealed class MonitoringTests
         workspace.CreateFile("offline.pdf");
         await using var second = new DownloadMonitor(settings, Process, _ => Task.CompletedTask, _ => { }, TimeSpan.FromMilliseconds(30));
         await WaitUntilAsync(() => seen.Count == 2);
+    }
+
+    [LinuxFact]
+    [Trait("Category", "LinuxNative")]
+    public async Task InitialScanDoesNotCollapseCaseDistinctFiles()
+    {
+        using var workspace = new TemporaryWorkspace();
+        string lower = workspace.CreateFile("case.pdf", "lower");
+        string upper = workspace.CreateFile("CASE.pdf", "upper");
+        Assert.Equal("lower", File.ReadAllText(lower));
+        var seen = new ConcurrentDictionary<string, byte>(StringComparer.Ordinal);
+        var errors = new ConcurrentQueue<Exception>();
+        var settings = new AppSettings { DownloadsPath = workspace.Downloads };
+        await using var monitor = new DownloadMonitor(settings, async (path, token) =>
+        {
+            seen.TryAdd(path, 0);
+            // Keep the first hint queued while the initial scan enumerates the second name.
+            await Task.Delay(100, token);
+        }, _ => Task.CompletedTask, errors.Enqueue, scanInterval: TimeSpan.FromMinutes(1));
+        await WaitUntilAsync(() => seen.Count == 2);
+        Assert.Contains(lower, seen.Keys);
+        Assert.Contains(upper, seen.Keys);
+        Assert.Empty(errors);
     }
 
     private static async Task WaitUntilAsync(Func<bool> condition, TimeSpan? timeoutDuration = null, Func<string>? diagnostics = null)

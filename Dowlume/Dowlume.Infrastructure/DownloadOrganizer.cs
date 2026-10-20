@@ -4,10 +4,21 @@ namespace Dowlume.Infrastructure;
 
 public sealed class DownloadOrganizer(
     IStateStore store,
-    SafeFileMover mover,
+    IFileMover mover,
     IFileReadiness readiness,
     TimeProvider? timeProvider = null)
 {
+    public const string ReadOnlyMessage = "This platform is in preview mode. File operations and automatic recovery are unavailable until native safety validation is complete.";
+    public bool CanMutateFiles => mover.CanMove;
+
+    public void RequireFileOperations()
+    {
+        if (!CanMutateFiles)
+        {
+            throw new PlatformNotSupportedException(ReadOnlyMessage);
+        }
+    }
+
     private readonly SemaphoreSlim _gate = new(1, 1);
     private readonly TimeProvider _clock = timeProvider ?? TimeProvider.System;
 
@@ -18,7 +29,10 @@ public sealed class DownloadOrganizer(
         await _gate.WaitAsync(cancellationToken);
         try
         {
-            RecoverPendingOperations();
+            if (CanMutateFiles)
+            {
+                RecoverPendingOperations();
+            }
             var result = new List<PreviewItem>();
             IReadOnlyList<TrackedFile> tracked = store.GetFiles();
             foreach (string path in Directory.EnumerateFiles(settings.DownloadsPath).Order(StringComparer.OrdinalIgnoreCase))
@@ -39,6 +53,7 @@ public sealed class DownloadOrganizer(
 
     public async Task OrganizeAsync(string path, AppSettings settings, CancellationToken cancellationToken = default, string? expectedHash = null)
     {
+        RequireFileOperations();
         await _gate.WaitAsync(cancellationToken);
         try
         {
@@ -61,6 +76,7 @@ public sealed class DownloadOrganizer(
 
     public async Task ReconcileAsync(AppSettings settings, CancellationToken cancellationToken = default)
     {
+        RequireFileOperations();
         await _gate.WaitAsync(cancellationToken);
         try
         {
@@ -123,6 +139,7 @@ public sealed class DownloadOrganizer(
 
     private async Task DecideAsync(Guid fileId, AppSettings settings, OperationKind kind, string? destinationFolder, CancellationToken cancellationToken)
     {
+        RequireFileOperations();
         if (kind == OperationKind.Recycle)
         {
             throw new NotSupportedException(WindowsRecycleBin.DisabledMessage);
@@ -170,6 +187,7 @@ public sealed class DownloadOrganizer(
 
     public async Task UndoAsync(Guid operationId, AppSettings settings, CancellationToken cancellationToken = default)
     {
+        RequireFileOperations();
         await _gate.WaitAsync(cancellationToken);
         try
         {
@@ -212,6 +230,7 @@ public sealed class DownloadOrganizer(
 
     public async Task RetryRecoveryAsync(CancellationToken cancellationToken = default)
     {
+        RequireFileOperations();
         await _gate.WaitAsync(cancellationToken);
         try
         {
@@ -247,6 +266,7 @@ public sealed class DownloadOrganizer(
 
     private Task ExecuteAsync(OperationKind kind, TrackedFile? before, TrackedFile after, string source, string? destination, CancellationToken cancellationToken, Guid? undoes = null)
     {
+        RequireFileOperations();
         // Defense in depth: reject before journaling or touching the filesystem.
         if (kind == OperationKind.Recycle)
         {

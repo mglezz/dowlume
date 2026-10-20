@@ -29,10 +29,12 @@
       <Setter Property="Padding" Value="12" />
     </Style>
     <Style Selector="TabItem">
+      <Setter Property="FontSize" Value="18" />
+      <Setter Property="MinWidth" Value="150" />
       <Setter Property="Padding" Value="20,14" />
     </Style>
   </Window.Styles>
-  <Grid RowDefinitions="Auto,*,Auto" Margin="28">
+  <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="28">
     <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,22">
       <StackPanel Spacing="5">
         <TextBlock Text="Dowlume" FontSize="32" FontWeight="Bold" Foreground="#172137" />
@@ -41,10 +43,13 @@
       <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
         <TextBlock Text="{Binding MonitoringLabel}" VerticalAlignment="Center" Classes="muted" />
         <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Pause]}" Command="{Binding PauseCommand}" IsEnabled="{Binding IsIdle}" IsVisible="{Binding IsMonitoring}" />
-        <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Hidetotray]}" Click="OnHideToTray" />
+        <Button x:Name="HideToTrayButton" IsVisible="False" Content="{ReflectionBinding $parent[Window].DataContext.Text[Hidetotray]}" Click="OnHideToTray" />
       </StackPanel>
     </Grid>
-    <TabControl Grid.Row="1">
+    <Border Grid.Row="1" IsVisible="{Binding IsPreviewPlatform}" Background="#FFF3CD" Padding="12" Margin="0,0,0,12" CornerRadius="6">
+      <TextBlock Text="{Binding PlatformNotice}" TextWrapping="Wrap" Foreground="#594300" />
+    </Border>
+    <TabControl Grid.Row="2">
       <TabItem Header="{ReflectionBinding $parent[Window].DataContext.Text[Overview]}">
         <Grid RowDefinitions="Auto,Auto,*" Margin="0,20,0,0">
           <Grid ColumnDefinitions="*,*,*" ColumnSpacing="16">
@@ -284,11 +289,11 @@
               <ComboBox AutomationProperties.AutomationId="LanguageSelector" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Language]}" MinWidth="180" />
               <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[LanguagechangesapplyimmediatelyandaresavedautomaticallyFolder]}" TextWrapping="Wrap" Classes="muted" />
             </StackPanel>
-            <StackPanel Spacing="6" IsVisible="{Binding SupportsWindowsStartup}">
-              <CheckBox Content="{ReflectionBinding $parent[Window].DataContext.Text[StartDowlumewhenIsignintoWindows]}" IsChecked="{Binding StartWithWindows, Mode=OneWay}" Command="{Binding ToggleWindowsStartupCommand}" />
+            <StackPanel Spacing="6" IsVisible="{Binding SupportsLoginStartup}">
+              <CheckBox Content="{ReflectionBinding $parent[Window].DataContext.Text[StartDowlumeAtLogin]}" IsChecked="{Binding StartAtLogin, Mode=OneWay}" Command="{Binding ToggleLoginStartupCommand}" />
               <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[AppliedimmediatelyforyourWindowsaccountMonitoringstartspaused]}" TextWrapping="Wrap" Classes="muted" />
             </StackPanel>
-            <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[PausemonitoringtochangethesesettingsSavedrulesapply]}" TextWrapping="Wrap" Classes="muted" />
+            <TextBlock IsVisible="{Binding SupportsFileOperations}" Text="{ReflectionBinding $parent[Window].DataContext.Text[PausemonitoringtochangethesesettingsSavedrulesapply]}" TextWrapping="Wrap" Classes="muted" />
             <StackPanel Spacing="8">
               <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Downloadsfolder]}" FontWeight="SemiBold" />
               <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
@@ -332,12 +337,12 @@
               <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[BrowserpartialdownloadsarealwaysexcludedUnrecognizedextensionsgo]}" Classes="muted" />
             </StackPanel>
             <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Savesettings]}" Command="{Binding SaveSettingsCommand}" Classes="primary" />
-            <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[LocalonlyNoaccountcloudsyncortelemetryClosing]}" TextWrapping="Wrap" Classes="muted" />
+            <TextBlock Text="{Binding PrivacyNotice}" TextWrapping="Wrap" Classes="muted" />
           </StackPanel>
         </ScrollViewer>
       </TabItem>
     </TabControl>
-    <StackPanel Grid.Row="2" Spacing="7" Margin="0,18,0,0">
+    <StackPanel Grid.Row="3" Spacing="7" Margin="0,18,0,0">
       <ProgressBar IsIndeterminate="True" IsVisible="{Binding IsBusy}" Height="3" />
       <TextBlock Text="{Binding StatusMessage}" TextWrapping="Wrap" Classes="muted" />
       <TextBlock Text="{Binding ErrorMessage}" TextWrapping="Wrap" Foreground="#9E361B" />
