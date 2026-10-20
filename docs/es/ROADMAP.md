@@ -22,6 +22,12 @@ Después de 0.2.0 priorizo el funcionamiento seguro en varias plataformas. Estas
 
 Integré y publiqué las bases de 0.3.0 tras superar los controles nativos automáticos y [confirmar el funcionamiento final Windows](RELEASE_CANDIDATE_0.3.0.md). La aceptación estable de macOS/Linux sigue prevista para 0.4.0/0.5.0.
 
+### En desarrollo: 0.4.0 para Apple Silicon
+
+He empezado la implementación macOS con descriptores de lectura nativos, comprobación de identidad y pruebas desechables en ambas variantes de APFS. Integro estas lecturas en el cálculo del hash de la vista previa y mantengo bloqueadas las modificaciones nativas. Registro implementación, comprobaciones reproducibles y requisitos pendientes en [implementación macOS](MACOS_IMPLEMENTATION.md).
+
+Los siguientes bloques son modificaciones y recuperación nativas seguras, integración de escritorio y aceptación de los paquetes exactos. La firma Developer ID y la notarización no están configuradas; puedo desarrollar y probar localmente, pero queda pendiente la distribución estable. No incorporo Intel ni declaro estable una vista previa para eludir esos criterios.
+
 ### Primera secuencia de implementación: 0.3.0
 
 He implementado en el código de 0.3.0 CI nativa, adaptadores, rechazo de modificaciones experimentales, regresiones fijas de perfiles 0.2.0 y paquetes nativos de vista previa. Defino umbrales iniciales de rendimiento en el [contrato](FILE_OPERATION_CONTRACT.md); las bases medidas de las adaptaciones estables siguen pendientes. La aceptación final de paquetes es independiente de la implementación.

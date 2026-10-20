@@ -29,6 +29,12 @@ I prioritize safe cross-platform operation after 0.2.0. These versions describe 
 
 I integrated and published the 0.3.0 foundation after native automated checks and [final Windows functional confirmation](docs/RELEASE_CANDIDATE_0.3.0.md). Stable macOS/Linux acceptance remains work for 0.4.0/0.5.0.
 
+### In progress: 0.4.0 for Apple Silicon
+
+I have started the macOS implementation with native read handles, file identity checks and disposable tests on both APFS case policies. I integrate these reads into preview hashing while keeping native mutations disabled. I record the implementation, reproducible checks and remaining gates in [macOS implementation](docs/MACOS_IMPLEMENTATION.md).
+
+My next blocks are safe native mutation and recovery, desktop integration, and exact-package acceptance. Developer ID signing and notarization are not configured; I can develop and test locally, but the stable distribution gate remains open. I do not add Intel support or promote a development preview to stable to bypass those criteria.
+
 ### First implementation sequence: 0.3.0
 
 I have implemented native CI, capability adapters, production refusal on experimental hosts, fixed 0.2.0 profile regressions and native preview packaging in the 0.3.0 source. I define initial performance investigation thresholds in the [contract](docs/FILE_OPERATION_CONTRACT.md); measured stable-port baselines remain pending. Final package acceptance is separate from implementation.

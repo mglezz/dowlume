@@ -59,6 +59,7 @@ Empieza con una carpeta desechable y archivos de ejemplo. En [Preparación del e
 | [Modelo de dominio](requirements/DOMAIN_MODEL.md) | Conceptos, reglas y vistas UML compartidas |
 | [Arquitectura](ARCHITECTURE.md) | Componentes, procesamiento y límites de seguridad |
 | [Hoja de ruta](ROADMAP.md) y [plataformas](PLATFORM_SUPPORT.md) | Trabajo realizado y posibilidades futuras |
+| [Implementación macOS](MACOS_IMPLEMENTATION.md) | Desarrollo de 0.4.0, pruebas de lectura nativa y aceptación pendiente |
 | [Validación](VALIDATION.md) y [seguridad](SECURITY_REVIEW.md) | Resultados, procedencia y limitaciones |
 | [Notas de v0.3.0](RELEASE_NOTES_0.3.0.md) | Comportamiento de los binarios publicados |
 | [Aceptación de 0.3.0](RELEASE_CANDIDATE_0.3.0.md) y [registro histórico de 0.1.0](RELEASE_CHECKLIST.md) | Identidad de los artefactos y controles completados |
