@@ -1,0 +1,20 @@
+# Dowlume 0.3.0 — bases de plataforma
+
+[English](https://github.com/mglezz/dowlume/blob/main/docs/RELEASE_NOTES_0.3.0.md) · [Español](#)
+
+Preparo la base común de macOS y Linux y mantengo Windows x64 como producto soportado. Esta versión no declara soporte estable de macOS/Linux. Solo incluyo Apple Silicon; Intel queda fuera de esta entrega.
+
+- Ejecuto CI nativa en Windows x64, macOS ARM64 y Ubuntu x64. Las pruebas exclusivas de Windows se indican como omitidas fuera de Windows.
+- Separo gestor de archivos, capacidades de inicio de sesión y selección de perfiles de las vistas. Conservo la ubicación del perfil Windows y separo los perfiles experimentales.
+- Retiro la alternativa no validada de movimientos fuera de Windows. Los hosts experimentales permiten vista previa y preferencias, pero no organizar, supervisar, revisar, deshacer ni reproducir recuperaciones. El motor rechaza estas acciones antes de registrar operaciones o tocar archivos.
+- Mantengo la ventana visible cuando no hay integración de bandeja aceptada. Los paquetes experimentales no ofrecen ocultar en bandeja ni inicio de sesión automático.
+- Leo las ubicaciones configuradas de Descargas de Linux como datos, sin ejecutar una shell. Linux abre la carpeta contenedora y macOS muestra el archivo en Finder.
+- Conservo los avisos de supervisión que difieren por mayúsculas, en lugar de fusionarlos. La identidad nativa de rutas y aceptación de operaciones siguen siendo requisitos para las adaptaciones.
+
+## Paquetes
+
+El instalador y ZIP portátil de Windows incluyen .NET, recursos inglés/español y ambas guías. Cierra Dowlume antes de actualizar desde 0.2.0. Los paquetes Windows siguen sin firma. Conservo ajustes, archivos e historial; la desinstalación mantiene el perfil y los archivos del usuario.
+
+Los artefactos separados `osx-arm64-preview.zip` y `linux-x64-preview.tar.gz` son experimentales. El paquete macOS solo tiene firma ad hoc, sin Developer ID ni notarización. Pruebo el arranque Linux con X11 bajo Xvfb y las bibliotecas documentadas; la aceptación de escritorio XWayland/Wayland nativo sigue pendiente. Probar el inicio desde un archivo extraído no sustituye la aceptación manual ni la de equipo limpio. Usa copias desechables y conserva todo el paquete extraído.
+
+Registro código, hashes y evidencia por plataforma junto a los archivos. Mantengo la papelera nativa desactivada. No altero las evidencias históricas, activo soporte de nube/red/enlaces ni prometo importar perfiles entre sistemas. El [alcance por plataforma](https://github.com/mglezz/dowlume/blob/main/docs/es/PLATFORM_SUPPORT.md) recoge los requisitos pendientes para 0.4.0 y 0.5.0.

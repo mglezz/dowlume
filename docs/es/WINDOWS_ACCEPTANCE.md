@@ -4,6 +4,8 @@
 
 Utilicé este procedimiento para los paquetes publicados de 0.2.0; el [registro de aceptación](RELEASE_CANDIDATE_0.2.0.md) distingue los resultados documentados. Conservo la aceptación de v0.1.0 como evidencia histórica; no certifica estos paquetes localizados. Registro SHA-256, commit de `BUILD-INFO.json`, compilación de Windows, persona que prueba, fecha y resultado. Un control sin resultado no es una prueba superada.
 
+Aplico ahora este procedimiento a 0.3.0, actualizando desde 0.2.0. La aceptación anterior no aprueba estos archivos nuevos.
+
 ## Entorno limpio
 
 Utilizo una máquina virtual nueva o un equipo de repuesto con Windows 11 x64, cuenta estándar y sin .NET moderno instalado por separado. Documento la procedencia de la imagen. Un equipo de desarrollo o un runner con SDK no satisface este requisito.
@@ -17,12 +19,12 @@ Descargo el instalador, ZIP, información de compilación y checksums del candid
 El kit incluye `Test-WindowsPackage.ps1`, `Test-WindowsTray.ps1` y `Test-WindowsLocalization.ps1`; los mantengo juntos. En Windows PowerShell, sin instalar .NET:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\Test-WindowsPackage.ps1 -Installer .\Dowlume-0.2.0-win-x64-setup.exe -Archive .\Dowlume-0.2.0-win-x64.zip -PreviousInstaller .\Dowlume-0.1.0-win-x64-setup.exe -ReportPath .\package-result.json -RequireNoSharedDotNet -RequireLocalization
+powershell -NoProfile -ExecutionPolicy Bypass -File .\Test-WindowsPackage.ps1 -Installer .\Dowlume-0.3.0-win-x64-setup.exe -Archive .\Dowlume-0.3.0-win-x64.zip -PreviousInstaller .\Dowlume-0.2.0-win-x64-setup.exe -ReportPath .\package-result.json -RequireNoSharedDotNet -RequireLocalization
 ```
 
 El script rechaza instalaciones o entradas de inicio existentes. Crea instalación, perfil y muestra únicos; comprueba lanzamiento portátil, instalación, reinstalación, instancia duplicada, bloqueo de cambios mientras la aplicación está abierta, bandeja, entradas de inicio y conservación de datos tras desinstalar. Necesita escritorio interactivo.
 
-Uso el instalador publicado de 0.1.0 como base de actualización. Para elegir otra base añado `-PreviousInstaller <ruta>`. Sin ese argumento, compruebo una reinstalación del mismo paquete. Conservo ambos hashes y los informes. Si falla, inspecciono los registros retenidos antes de repetir; no sobrescribo una instalación residual.
+Uso el instalador publicado de 0.2.0 como base de actualización. Para elegir otra base añado `-PreviousInstaller <ruta>`. Sin ese argumento, compruebo una reinstalación del mismo paquete. Conservo ambos hashes y los informes. Si falla, inspecciono los registros retenidos antes de repetir; no sobrescribo una instalación residual.
 
 ## Primer uso con una persona
 
@@ -42,11 +44,11 @@ Pido a alguien que no conozca la implementación que pruebe, sin ayuda de desarr
 
 Registro textos confusos, errores y problemas de navegación. Solo adjunto capturas revisadas que no revelen rutas privadas.
 
-## Idioma y actualización de 0.2.0
+## Idioma y actualización de 0.3.0
 
 Registro los hashes del instalador y ZIP exactos y los resultados observados antes de publicar:
 
-1. En una cuenta desechable, configuro una carpeta en 0.1.0, organizo un archivo ficticio, pauso y compruebo su entrada en Actividad. Cierro, instalo 0.2.0 y verifico carpeta, ajustes, historial, contenido intacto y supervisión en pausa.
+1. En una cuenta desechable, configuro una carpeta en 0.2.0, organizo un archivo ficticio, pauso y compruebo su entrada en Actividad. Cierro, instalo 0.3.0 y verifico carpeta, ajustes, historial, contenido intacto y supervisión en pausa.
 2. Elijo Español en Settings > Language. Reviso las cinco pestañas, confirmaciones y cancelaciones, explicación de la papelera desactivada y menú de bandeja. Compruebo que cambiar idioma no mueve archivos ni renombra las carpetas existentes.
 3. Cierro y vuelvo a abrir; verifico que persiste el español. Vuelvo a English y reinicio para verificar el inglés. Compruebo ambos idiomas al tamaño mínimo, con el escalado de Windows elegido y con teclado.
 4. Extraigo el ZIP portátil en una carpeta nueva, conservando `es` y ambas guías. Abro, cambio idioma, cierro y vuelvo a abrir. Compruebo lo mismo sin instalar .NET por separado en el equipo limpio.
@@ -68,4 +70,4 @@ Para la papelera ejecuto solo regresiones de rechazo y conservación, nunca las 
 
 ## Publicación
 
-Registro evidencia vinculada a los hashes, resuelvo fallos, obtengo revisión independiente y repito las pruebas afectadas si hay cambios. El 20 de octubre de 2026 confirmé que todas las funcionalidades funcionaban correctamente y publiqué 0.2.0 con los mismos siete archivos aceptados del borrador. La copia del procedimiento incluida en el kit conserva el estado pendiente de cuando lo compilé; el [registro de aceptación](RELEASE_CANDIDATE_0.2.0.md) actualiza ese estado. Dejo macOS y Linux para más adelante.
+Registro evidencia vinculada a los hashes, resuelvo fallos, obtengo revisión independiente y repito las pruebas afectadas si hay cambios. El 20 de octubre de 2026 confirmé que todas las funcionalidades funcionaban correctamente y publiqué 0.2.0 con los mismos siete archivos aceptados del borrador. La copia del procedimiento incluida en el kit conserva el estado pendiente de cuando lo compilé; el [registro de aceptación](RELEASE_CANDIDATE_0.2.0.md) actualiza ese estado. Para 0.3.0 repito la aceptación Windows afectada sobre sus hashes exactos. macOS/Linux son vistas previas restringidas, con informes separados de arranque y sin aceptación estable.

@@ -6,6 +6,12 @@ Mantengo registros fechados y vinculados a revisiones. Un pendiente en una entra
 
 Esta página recoge en español la cronología y los límites de los resultados. Conservo las tablas originales, comandos exactos, identificadores de ejecuciones y rutas detalladas en el [registro inglés](../VALIDATION.md).
 
+## 2026-10-20: validación de las bases de 0.3.0
+
+Incorporo selección de capacidades, vistas previas restringidas, regresiones fijas de perfiles del esquema 1 y paquetes nativos. En macOS ARM64 local superé 79 pruebas y omití explícitamente seis nativas (cinco Windows y una Linux). Pasaron formato y compilación del arnés. El ZIP macOS local superó firma ad hoc antes/después de extraer y arranque/cierre de ventana nativa. Esta compilación exploratoria tenía cambios sin confirmar y no constituye un candidato.
+
+Distingo CI, procedencia de los artefactos finales confirmados y aceptación humana Windows. La [matriz](PLATFORM_SUPPORT.md) y el [contrato](FILE_OPERATION_CONTRACT.md) explican los adaptadores exclusivos de pruebas, las modificaciones bloqueadas en los puertos y sus requisitos pendientes. No reutilizo la aceptación manual de 0.2.0 para 0.3.0.
+
 ## 2026-10-20: Publicación de 0.2.0 en inglés y español
 
 Confirmé que todas las funcionalidades del paquete final de Windows funcionaban correctamente y publiqué los mismos siete archivos aceptados del borrador como v0.2.0. Superé las 74 pruebas, los controles de seguridad y la aceptación automatizada de paquetes. Verifiqué las descargas públicas contra los hashes aceptados. El [registro de aceptación de 0.2.0](RELEASE_CANDIDATE_0.2.0.md) recoge código, hashes, confirmación manual y límites de la evidencia disponible.

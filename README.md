@@ -36,7 +36,7 @@ There is no automatic permanent deletion, online account, cloud sync, or telemet
 
 Activity now includes searchable history with action/status filters and pagination, so older operations remain accessible. See [finding an earlier action](docs/USER_GUIDE.md#find-an-earlier-action).
 
-Windows x64 remains the supported target. I plan common platform foundations in 0.3.0, macOS in 0.4.0, Linux in 0.5.0, and stabilization toward 1.0. These are gated milestones, not existing support or promised dates; see the [roadmap](ROADMAP.md#planned-releases-toward-10) and [platform scope](docs/PLATFORM_SUPPORT.md).
+Windows x64 remains the supported target. The 0.3.0 source adds native CI, platform adapters and restricted previews for macOS 15 Apple Silicon and Ubuntu 24.04 x64. File mutations remain disabled on these previews. I plan accepted macOS support in 0.4.0, Linux in 0.5.0, and stabilization toward 1.0. These are gated milestones, not existing support or promised dates; see the [roadmap](ROADMAP.md#planned-releases-toward-10) and [platform scope](docs/PLATFORM_SUPPORT.md).
 
 ## Languages
 
