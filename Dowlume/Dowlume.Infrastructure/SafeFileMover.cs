@@ -9,6 +9,14 @@ public sealed class SafeFileMover : IFileMover
 
     public string Hash(string path)
     {
+        if (OperatingSystem.IsMacOS())
+        {
+            using FileStream native = MacFileHandle.OpenRead(path);
+            MacFileHandle.Snapshot before = MacFileHandle.Capture(native.SafeFileHandle);
+            string hash = Convert.ToHexString(SHA256.HashData(native));
+            MacFileHandle.VerifyUnchanged(path, native.SafeFileHandle, before);
+            return hash;
+        }
         PathSafety.RejectLinks(path);
         using var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, 81920, FileOptions.SequentialScan);
         return Convert.ToHexString(SHA256.HashData(stream));
@@ -53,6 +61,23 @@ public sealed class SafeFileMover : IFileMover
 
     public FileStream OpenVerifiedRead(string path, string expectedHash)
     {
+        if (OperatingSystem.IsMacOS())
+        {
+            FileStream native = MacFileHandle.OpenRead(path);
+            try
+            {
+                MacFileHandle.Snapshot before = MacFileHandle.Capture(native.SafeFileHandle);
+                VerifyHash(native, expectedHash);
+                MacFileHandle.VerifyUnchanged(path, native.SafeFileHandle, before);
+                // Verification describes this read; it does not grant a mutation lease.
+                return native;
+            }
+            catch
+            {
+                native.Dispose();
+                throw;
+            }
+        }
         PathSafety.RejectLinks(path);
         // Deny writes while processing; delete sharing permits Windows shell moves.
         var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read | FileShare.Delete, 81920, FileOptions.SequentialScan);
