@@ -1,8 +1,8 @@
-# Dowlume 0.3.0 — candidate acceptance
+# Dowlume 0.3.0 — acceptance and publication
 
 [English](#) · [Español](es/RELEASE_CANDIDATE_0.3.0.md)
 
-I prepared the 0.3.0 release draft on 2026-10-20 from clean commit `6b8a33d7b43f8da5889d17dd2506b8c4c7a5e647`, integrated through [PR #29](https://github.com/mglezz/dowlume/pull/29), after the native CI foundation in [PR #28](https://github.com/mglezz/dowlume/pull/28). **Final human Windows acceptance is pending.** I retain [0.2.0](https://github.com/mglezz/dowlume/releases/tag/v0.2.0) as the latest stable release. The draft is visible to repository maintainers; the linked workflow artifacts retain the same candidate packages.
+I published [v0.3.0](https://github.com/mglezz/dowlume/releases/tag/v0.3.0) as the latest stable Windows x64 release on 2026-10-20, at `2026-10-20T16:50:30Z`, using the same 15 verified draft assets without rebuilding or replacing them. Source and tag target: `6b8a33d7b43f8da5889d17dd2506b8c4c7a5e647`, integrated through [PR #29](https://github.com/mglezz/dowlume/pull/29), after the native CI foundation in [PR #28](https://github.com/mglezz/dowlume/pull/28). I retain 0.2.0 and its assets unchanged. macOS/Linux remain restricted experimental previews; Intel Macs remain excluded.
 
 ## Final-source evidence
 
@@ -16,15 +16,19 @@ I prepared the 0.3.0 release draft on 2026-10-20 from clean commit `6b8a33d7b43f
 
 I reviewed the macOS Spanish window and normal shutdown during development and corrected clipped tab labels and preview-only instructions. This is development UI inspection, not final independent desktop acceptance. The native archive reports leave manual desktop and clean-machine acceptance false. Shared tests outside Windows use a test-only fixture mover; production mutations and recovery remain disabled on the ports. See the [platform scope](PLATFORM_SUPPORT.md) and [file-operation contract](FILE_OPERATION_CONTRACT.md).
 
-## Remaining Windows acceptance
+## Manual acceptance and scope
 
-I test these exact installer/ZIP hashes using the [current procedure](WINDOWS_ACCEPTANCE.md): upgrade from 0.2.0 with fictional files, preserve preferences/history/content, verify preview/cancel, organization/pause, review/eligible Undo, languages after restart, tray and shutdown. I record Windows build, scaling, date and observed results. The hosted runner contains shared .NET; its report does not prove a clean machine. I retain that limitation until I obtain a separate clean-machine result.
+On 2026-10-20, after receiving the exact candidate and requested checks for upgrade from 0.2.0, preserved settings/history/content, language persistence, organization, review, Undo and tray, I confirmed: “funciona perfectamente sigue adelante”. I recorded this as overall functional acceptance of the new Windows binaries and completed the authorized publication.
 
-I do not reuse 0.2.0 human acceptance, alter the evidence VM/checkpoints or repeat retired recycling probes. I promote the same candidate files only after final functional confirmation; rebuilding requires repeating affected checks. macOS/Linux remain restricted previews in this release, and Intel Macs remain excluded.
+I did not record the human tester's Windows build, display scaling or a separate new clean-machine report. The automated package report identifies Windows build 26100 and shared .NET runtimes on its own runner; it does not describe the human environment. I retain that evidence limit and do not present historical clean-guest results as new acceptance. I did not alter the evidence VM/checkpoints or repeat retired recycling probes.
 
-## Candidate files
+The packaged notes and acceptance kit retain their build-time wording. This publication record supersedes that pending status while preserving the exact accepted files. A future rebuild requires repeating affected checks.
 
-I retain the Windows checksum list and separate native checksum lists. The release draft contains these 15 files; no accepted older asset was replaced.
+I downloaded all 15 public release assets without authentication and verified their sizes and SHA-256 values against the accepted draft.
+
+## Published files
+
+I retain the Windows checksum list and separate native checksum lists. The published release contains these 15 files; no accepted older asset was replaced.
 
 | File | SHA-256 |
 | --- | --- |

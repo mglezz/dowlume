@@ -2,6 +2,8 @@
 
 [English](../../ROADMAP.md) · [Índice en español](README.md)
 
+**Estado actual:** publiqué [v0.3.0 para Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.3.0) el 20 de octubre de 2026 tras los controles automáticos y mi confirmación funcional final. Incluyo vistas previas restringidas de macOS Apple Silicon y Linux como bases de las adaptaciones. Registro la [aceptación de 0.3.0](RELEASE_CANDIDATE_0.3.0.md).
+
 Publiqué [v0.1.0 para Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.1.0) el 18 de octubre de 2026 tras completar aceptación automatizada, confirmar pruebas humanas y revisión independiente, y autorizar su publicación. Mantengo las evidencias en [Validación](VALIDATION.md).
 
 ## Versiones previstas hacia 1.0
@@ -18,7 +20,7 @@ Después de 0.2.0 priorizo el funcionamiento seguro en varias plataformas. Estas
 
 «Soportado» significa que las funciones documentadas funcionan en las versiones, arquitecturas, sistemas de archivos y sesiones de escritorio indicados. No significa todas las distribuciones Linux, todas las versiones de macOS ni convenciones visuales nativas idénticas. En 0.3.0 fijo la matriz inicial según las dependencias .NET/Avalonia reales y los entornos de prueba disponibles; añadir un destino exige aceptación, no solo otro identificador de runtime. Detallo el [alcance y la evidencia por plataforma](PLATFORM_SUPPORT.md).
 
-Integré la implementación de 0.3.0 y preparé su candidato desde el código final. Superé los controles automáticos de los tres destinos; [sigue pendiente la aceptación humana final Windows](RELEASE_CANDIDATE_0.3.0.md).
+Integré y publiqué las bases de 0.3.0 tras superar los controles nativos automáticos y [confirmar el funcionamiento final Windows](RELEASE_CANDIDATE_0.3.0.md). La aceptación estable de macOS/Linux sigue prevista para 0.4.0/0.5.0.
 
 ### Primera secuencia de implementación: 0.3.0
 

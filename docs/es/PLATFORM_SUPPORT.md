@@ -2,13 +2,13 @@
 
 [English](../PLATFORM_SUPPORT.md) · [Índice en español](README.md)
 
-Conservo [0.2.0](RELEASE_CANDIDATE_0.2.0.md) como versión aceptada de Windows mientras preparo 0.3.0. El código de 0.3.0 incluye adaptadores, CI nativa y paquetes experimentales. No declaro soporte estable de macOS/Linux: sus operaciones sobre archivos siguen bloqueadas. Consulta la [hoja de ruta](ROADMAP.md) y las [notas de 0.3.0](RELEASE_NOTES_0.3.0.md).
+Soporto Windows x64 en la versión [0.3.0 publicada](RELEASE_CANDIDATE_0.3.0.md). El código de 0.3.0 incluye adaptadores, CI nativa y paquetes experimentales. No declaro soporte estable de macOS/Linux: sus operaciones sobre archivos siguen bloqueadas. Consulta la [hoja de ruta](ROADMAP.md) y las [notas de 0.3.0](RELEASE_NOTES_0.3.0.md).
 
 ## Matriz
 
 | Destino | Alcance de 0.3.0 | Requisito pendiente |
 | --- | --- | --- |
-| Windows x64 | Operaciones, ubicación del perfil, Explorer, bandeja e inicio de sesión existentes; instalador y ZIP portátil | Repetir la aceptación afectada sobre los paquetes finales de 0.3.0, incluida actualización desde 0.2.0. |
+| Windows x64 | Operaciones, ubicación del perfil, Explorer, bandeja e inicio de sesión existentes; instalador y ZIP portátil | Automatización y confirmación funcional de 0.3.0 completadas; documento los límites del entorno manual y equipo limpio en el registro. Repito las comprobaciones afectadas ante cambios futuros. |
 | macOS 15, Apple Silicon | CI ARM64 nativa; `.app` autocontenida en ZIP; vista previa, ajustes, ambos idiomas, historial y Finder; perfil separado | 0.4.0: seguridad nativa, APFS sensible/insensible a mayúsculas y Unicode, permisos, ciclo de vida, distribución firmada/notarizada y aceptación de instalación/actualización. Otras versiones de macOS requieren evidencia propia. |
 | macOS Intel | Excluido | Sin implementación, CI ni paquete x64. Podría reconsiderarlo posteriormente con aceptación propia. |
 | Ubuntu 24.04 x64 | CI nativa; `.tar.gz` autocontenido; funciones de vista previa; Descargas XDG; abrir carpeta contenedora; arranque X11 bajo Xvfb | 0.5.0: seguridad ext4, escritorio GNOME, permisos, inicio automático, integración y actualización; XWayland y Wayland nativo requieren pruebas separadas. |

@@ -6,7 +6,7 @@ Mantengo registros fechados y vinculados a revisiones. Un pendiente en una entra
 
 Esta página recoge en español la cronología y los límites de los resultados. Conservo las tablas originales, comandos exactos, identificadores de ejecuciones y rutas detalladas en el [registro inglés](../VALIDATION.md).
 
-Integré las bases finales en `6b8a33d` y superé pruebas nativas, seguridad y paquetes de ese código. El [registro del candidato](RELEASE_CANDIDATE_0.3.0.md) conserva hashes exactos y distingue automatización completada y aceptación humana pendiente.
+Integré las bases finales en `6b8a33d` y superé pruebas nativas, seguridad y paquetes de ese código. Después confirmé el funcionamiento final Windows y publiqué los mismos 15 archivos como v0.3.0. El [registro de publicación](RELEASE_CANDIDATE_0.3.0.md) conserva los hashes y los límites de la aceptación registrada.
 
 ## 2026-10-20: validación de las bases de 0.3.0
 

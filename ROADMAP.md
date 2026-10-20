@@ -2,14 +2,15 @@
 
 [English](#) · [Español](docs/es/ROADMAP.md)
 
-**Current state:** I published [v0.2.0 for Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.2.0) with English/Spanish selection on 2026-10-20, after automated checks and my confirmation that all functionality worked correctly in the final package. See the [0.2.0 acceptance record](docs/RELEASE_CANDIDATE_0.2.0.md).
+**Current state:** I published [v0.3.0 for Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.3.0) on 2026-10-20 after automated checks and my final functional confirmation. I include restricted macOS Apple Silicon/Linux previews as the porting foundation. See the [0.3.0 acceptance record](docs/RELEASE_CANDIDATE_0.3.0.md).
 
 | Stage | Status | Details |
 | --- | --- | --- |
 | Windows MVP | Implemented | [Completed work](#completed-windows-mvp) |
 | Public 0.1.0 release | Published 2026-10-18 | [Completed release gates](#completed-public-010-gates) |
 | Public 0.2.0 release | Published 2026-10-20 | [Accepted artifacts](docs/RELEASE_CANDIDATE_0.2.0.md) |
-| Cross-platform releases | Planned 0.3.0 → 0.4.0 → 0.5.0 → stabilization → 1.0.0 | [Release criteria](#planned-releases-toward-10) |
+| Public 0.3.0 foundation | Published 2026-10-20 | [Accepted files and preview limits](docs/RELEASE_CANDIDATE_0.3.0.md) |
+| Cross-platform releases | Planned 0.4.0 → 0.5.0 → stabilization → 1.0.0 | [Release criteria](#planned-releases-toward-10) |
 | Additional product ideas | Unscheduled | [Future work](#future-work) |
 
 ## Planned releases toward 1.0
@@ -26,7 +27,7 @@ I prioritize safe cross-platform operation after 0.2.0. These versions describe 
 
 “Supported” means the documented feature set works on the named OS versions, architectures, filesystems, and desktop sessions. It does not mean every Linux distribution, every macOS version, or identical native UI conventions. In 0.3.0 I pin the initial matrix against the actual .NET/Avalonia dependencies and available native test environments; adding a target requires acceptance, not only a new runtime identifier. See [platform scope and evidence](docs/PLATFORM_SUPPORT.md).
 
-I integrated the 0.3.0 implementation and prepared its final-source candidate. Automated checks passed on all three targets; [final Windows human acceptance remains pending](docs/RELEASE_CANDIDATE_0.3.0.md).
+I integrated and published the 0.3.0 foundation after native automated checks and [final Windows functional confirmation](docs/RELEASE_CANDIDATE_0.3.0.md). Stable macOS/Linux acceptance remains work for 0.4.0/0.5.0.
 
 ### First implementation sequence: 0.3.0
 

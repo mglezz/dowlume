@@ -8,9 +8,9 @@
 
 I build Dowlume as a local-first Windows desktop application that organizes completed downloads, moves aging files into a review area, and leaves the final decision with you.
 
-**Status:** [Dowlume v0.2.0 for Windows x64 is published](https://github.com/mglezz/dowlume/releases/tag/v0.2.0). Download the [installer](https://github.com/mglezz/dowlume/releases/download/v0.2.0/Dowlume-0.2.0-win-x64-setup.exe) or [portable ZIP](https://github.com/mglezz/dowlume/releases/download/v0.2.0/Dowlume-0.2.0-win-x64.zip), and verify the [SHA-256 checksums](https://github.com/mglezz/dowlume/releases/download/v0.2.0/SHA256SUMS.txt). These packages are unsigned. See [validation](docs/VALIDATION.md) and the [release checklist](docs/RELEASE_CHECKLIST.md).
+**Status:** [Dowlume v0.3.0 for Windows x64 is published](https://github.com/mglezz/dowlume/releases/tag/v0.3.0). Download the [installer](https://github.com/mglezz/dowlume/releases/download/v0.3.0/Dowlume-0.3.0-win-x64-setup.exe) or [portable ZIP](https://github.com/mglezz/dowlume/releases/download/v0.3.0/Dowlume-0.3.0-win-x64.zip), and verify the [SHA-256 checksums](https://github.com/mglezz/dowlume/releases/download/v0.3.0/SHA256SUMS.txt). These packages are unsigned. See [validation](docs/VALIDATION.md) and the [release checklist](docs/RELEASE_CHECKLIST.md).
 
-I continue to focus on Windows release reliability. **Native recycling remains disabled**, including internal execution, after Recycle Bin capacity tests failed to preserve files. Keep, Snooze, Move, and eligible Undo remain available. The [investigation and future quarantine design](docs/RECYCLE_CAPACITY_INVESTIGATION.md) retain the failed evidence. I published 0.2.0 after automated checks passed and I confirmed that all functionality worked correctly in the final Windows package on 2026-10-20. See the [release acceptance record](docs/RELEASE_CANDIDATE_0.2.0.md).
+I continue to focus on Windows release reliability. **Native recycling remains disabled**, including internal execution, after Recycle Bin capacity tests failed to preserve files. Keep, Snooze, Move, and eligible Undo remain available. The [investigation and future quarantine design](docs/RECYCLE_CAPACITY_INVESTIGATION.md) retain the failed evidence. I published 0.3.0 after automated checks passed and I confirmed that the final Windows candidate worked correctly on 2026-10-20. See the [release acceptance record](docs/RELEASE_CANDIDATE_0.3.0.md).
 
 [Español](docs/es/README.md) · [User guide](docs/USER_GUIDE.md) · [Developer setup](GETTING_STARTED.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
 
@@ -38,11 +38,11 @@ Activity now includes searchable history with action/status filters and paginati
 
 Windows x64 remains the supported target. The 0.3.0 source adds native CI, platform adapters and restricted previews for macOS 15 Apple Silicon and Ubuntu 24.04 x64. File mutations remain disabled on these previews. I plan accepted macOS support in 0.4.0, Linux in 0.5.0, and stabilization toward 1.0. These are gated milestones, not existing support or promised dates; see the [roadmap](ROADMAP.md#planned-releases-toward-10) and [platform scope](docs/PLATFORM_SUPPORT.md).
 
-I have integrated the 0.3.0 foundation and prepared its release draft. I keep final Windows human acceptance pending; see the [candidate evidence and hashes](docs/RELEASE_CANDIDATE_0.3.0.md).
+I have published the 0.3.0 foundation, including clearly labeled experimental macOS/Linux archives. I record [acceptance evidence and hashes](docs/RELEASE_CANDIDATE_0.3.0.md) separately from the stable support claims.
 
 ## Languages
 
-I keep English as the default and provide Spanish in v0.2.0. In **Settings → Language**, select **English** or **Español**; the interface changes immediately and remembers the choice for that profile. Pause monitoring first. Folder names, files, rules, and journal records are preserved. The **0.2.0 installer and portable ZIP include the selector**. I retain the original English-only 0.1.0 assets unchanged. See the [0.2.0 release notes](docs/RELEASE_NOTES_0.2.0.md).
+I keep English as the default and provide Spanish in v0.2.0. In **Settings → Language**, select **English** or **Español**; the interface changes immediately and remembers the choice for that profile. Pause monitoring first. Folder names, files, rules, and journal records are preserved. The **0.3.0 installer and portable ZIP retain the selector introduced in 0.2.0**. I retain the original English-only 0.1.0 assets unchanged. See the [0.2.0 release notes](docs/RELEASE_NOTES_0.2.0.md).
 
 I maintain the [Spanish documentation](docs/es/README.md) alongside these English pages. Screenshots and historical evidence identify the revision they document.
 
@@ -73,7 +73,7 @@ Choose a disposable sample folder in Settings first, then use Preview. See [deve
 
 ## Packages
 
-Download the installer or portable ZIP from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.2.0). Both include the runtime; no separate .NET installation is required. To build from source or prepare future packages, see [packaging instructions](docs/RELEASE_CHECKLIST.md). Local packages in `artifacts/` remain distinct from the published, verified release assets.
+Download the installer or portable ZIP from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.3.0). Both include the runtime; no separate .NET installation is required. To build from source or prepare future packages, see [packaging instructions](docs/RELEASE_CHECKLIST.md). Local packages in `artifacts/` remain distinct from the published, verified release assets.
 
 ## Explore the project
 

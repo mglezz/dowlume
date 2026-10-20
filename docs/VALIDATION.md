@@ -4,7 +4,7 @@
 
 I keep dated validation records here. A pending item in an older entry describes that revision and date; later entries record completion without changing the original evidence. Local artifact paths refer to retained private evidence and may be absent from a fresh clone.
 
-I integrated the final foundation at `6b8a33d` and passed the final-source native tests, security and package checks. The [candidate record](RELEASE_CANDIDATE_0.3.0.md) retains exact hashes and distinguishes completed automation from pending human acceptance.
+I integrated the final foundation at `6b8a33d` and passed the final-source native tests, security and package checks. I then confirmed the final Windows candidate worked correctly and published the same 15 files as v0.3.0. The [publication record](RELEASE_CANDIDATE_0.3.0.md) retains exact hashes and the limits of the recorded acceptance.
 
 ## 2026-10-20: 0.3.0 foundation validation
 

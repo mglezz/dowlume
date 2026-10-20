@@ -1,8 +1,8 @@
-# Dowlume 0.3.0 — aceptación del candidato
+# Dowlume 0.3.0 — aceptación y publicación
 
 [English](../RELEASE_CANDIDATE_0.3.0.md) · [Índice en español](README.md)
 
-Preparé el borrador de 0.3.0 el 20 de octubre de 2026 desde el commit limpio `6b8a33d7b43f8da5889d17dd2506b8c4c7a5e647`, integrado mediante el [PR #29](https://github.com/mglezz/dowlume/pull/29), tras las bases de CI nativa del [PR #28](https://github.com/mglezz/dowlume/pull/28). **La aceptación humana final en Windows está pendiente.** Conservo [0.2.0](https://github.com/mglezz/dowlume/releases/tag/v0.2.0) como versión estable más reciente. El borrador es visible para quienes mantienen el repositorio; los artefactos de los workflows enlazados conservan los mismos candidatos.
+Publiqué [v0.3.0](https://github.com/mglezz/dowlume/releases/tag/v0.3.0) como versión estable más reciente de Windows x64 el 20 de octubre de 2026, a las `2026-10-20T16:50:30Z`, con los mismos 15 archivos verificados del borrador, sin recompilar ni reemplazarlos. Código y destino de la etiqueta: `6b8a33d7b43f8da5889d17dd2506b8c4c7a5e647`, integrado mediante el [PR #29](https://github.com/mglezz/dowlume/pull/29), tras la CI nativa del [PR #28](https://github.com/mglezz/dowlume/pull/28). Conservo intactos 0.2.0 y sus archivos. macOS/Linux siguen como vistas previas experimentales restringidas; los Mac Intel quedan excluidos.
 
 ## Evidencia del código final
 
@@ -16,15 +16,19 @@ Preparé el borrador de 0.3.0 el 20 de octubre de 2026 desde el commit limpio `6
 
 Revisé durante el desarrollo la ventana macOS en español y su cierre; corregí pestañas recortadas e instrucciones inadecuadas para la vista previa. Es revisión de interfaz de desarrollo, no aceptación independiente final. Los informes nativos dejan pendientes aceptación manual y equipo limpio. Las pruebas compartidas fuera de Windows usan un adaptador exclusivo de pruebas; las modificaciones y recuperación de producción siguen bloqueadas. Detallo el [alcance](PLATFORM_SUPPORT.md) y el [contrato](FILE_OPERATION_CONTRACT.md).
 
-## Aceptación Windows pendiente
+## Aceptación manual y alcance
 
-Pruebo estos hashes exactos siguiendo el [procedimiento actual](WINDOWS_ACCEPTANCE.md): actualización desde 0.2.0 con muestras ficticias, conservación de ajustes/historial/contenido, vista previa/cancelación, organización/pausa, revisión/Deshacer compatible, idiomas tras reiniciar, bandeja y cierre. Registro compilación de Windows, escalado, fecha y resultados. El runner tiene .NET compartido; su informe no demuestra un equipo limpio. Conservo esa limitación hasta obtener un resultado separado.
+El 20 de octubre de 2026, tras recibir el candidato exacto y las comprobaciones de actualización desde 0.2.0, conservación de ajustes/historial/contenido, idiomas tras reiniciar, organización, revisión, Deshacer y bandeja, confirmé: «funciona perfectamente sigue adelante». Registré esta confirmación como aceptación funcional general de los nuevos binarios Windows y completé la publicación autorizada.
 
-No reutilizo la aceptación humana de 0.2.0, altero la máquina/checkpoints de evidencias ni repito pruebas retiradas de papelera. Promuevo los mismos archivos solo tras confirmar su funcionamiento final; recompilar exige repetir las comprobaciones afectadas. macOS/Linux continúan como vistas previas restringidas y los Mac Intel quedan excluidos.
+No registré la compilación de Windows ni el escalado de la prueba humana, ni un informe nuevo de equipo limpio. El informe automático identifica Windows 26100 y runtimes .NET compartidos de su propio runner; no describe el entorno humano. Conservo esa limitación y no presento pruebas históricas de equipo limpio como aceptación nueva. No modifiqué la máquina/checkpoints de evidencias ni repetí pruebas retiradas de papelera.
 
-## Archivos candidatos
+Las notas y el kit conservan la redacción de cuando se construyeron. Este registro actualiza el estado pendiente sin modificar los archivos aceptados. Una recompilación futura exige repetir las comprobaciones afectadas.
 
-Conservo la lista de hashes Windows y las listas nativas separadas. El borrador contiene estos 15 archivos; no he reemplazado archivos aceptados anteriores.
+Descargué los 15 archivos públicos sin autenticación y verifiqué tamaños y SHA-256 contra el borrador aceptado.
+
+## Archivos publicados
+
+Conservo la lista de hashes Windows y las listas nativas separadas. La release publicada contiene estos 15 archivos; no he reemplazado archivos aceptados anteriores.
 
 | Archivo | SHA-256 |
 | --- | --- |
