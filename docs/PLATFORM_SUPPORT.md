@@ -2,13 +2,13 @@
 
 [English](#) · [Español](es/PLATFORM_SUPPORT.md)
 
-I retain [0.2.0](RELEASE_CANDIDATE_0.2.0.md) as the accepted Windows release while preparing 0.3.0. The 0.3.0 source contains platform adapters, native CI, and experimental packages. I do not claim stable macOS/Linux support: their file operations remain disabled. See the [roadmap](../ROADMAP.md) and [0.3.0 notes](RELEASE_NOTES_0.3.0.md).
+I support Windows x64 in the published [0.3.0 release](RELEASE_CANDIDATE_0.3.0.md). The 0.3.0 source contains platform adapters, native CI, and experimental packages. I do not claim stable macOS/Linux support: their file operations remain disabled. See the [roadmap](../ROADMAP.md) and [0.3.0 notes](RELEASE_NOTES_0.3.0.md).
 
 ## Matrix
 
 | Target | 0.3.0 scope | Remaining release gate |
 | --- | --- | --- |
-| Windows x64 | Existing file operations, profile location, Explorer, tray and login startup; installer and portable ZIP | Repeat affected acceptance on the final 0.3.0 packages, including upgrade from 0.2.0. |
+| Windows x64 | Existing file operations, profile location, Explorer, tray and login startup; installer and portable ZIP | 0.3.0 automation and overall functional confirmation completed; manual environment and new clean-machine evidence limits remain documented in the acceptance record. Repeat affected checks for future changes. |
 | macOS 15, Apple Silicon | Native ARM64 CI; self-contained `.app` in ZIP; folder preview, settings, both languages, history, Finder reveal; separate preview profile | 0.4.0: native file safety, APFS case-sensitive/insensitive and Unicode behavior, permissions, desktop lifecycle, signed/notarized distribution, installation and upgrade acceptance. Newer macOS versions require their own evidence. |
 | macOS Intel | Excluded | No x64 implementation, CI job or package. I may reconsider it in a later release with separate acceptance. |
 | Ubuntu 24.04 x64 | Native CI; self-contained `.tar.gz`; preview capabilities; XDG Downloads discovery; containing-folder reveal; X11 launch under Xvfb | 0.5.0: ext4 file safety, GNOME desktop acceptance, permissions, autostart, package integration and upgrade; XWayland and native Wayland require separate testing. |
