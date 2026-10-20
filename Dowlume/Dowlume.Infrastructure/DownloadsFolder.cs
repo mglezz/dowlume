@@ -19,7 +19,28 @@ public static class DownloadsFolder
             }
             finally { Marshal.FreeCoTaskMem(path); }
         }
-        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+        string home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        if (OperatingSystem.IsLinux())
+        {
+            string? configured = Environment.GetEnvironmentVariable("XDG_CONFIG_HOME");
+            string configHome = configured is not null && Path.IsPathFullyQualified(configured)
+                ? configured : Path.Combine(home, ".config");
+            string file = Path.Combine(configHome, "user-dirs.dirs");
+            try
+            {
+                if (File.Exists(file))
+                {
+                    using var reader = File.OpenText(file);
+                    char[] buffer = new char[65537];
+                    int length = reader.ReadBlock(buffer, 0, buffer.Length);
+                    string? downloads = XdgUserDirectories.ParseDownloads(new string(buffer, 0, length), home);
+                    if (downloads is not null)
+                        return downloads;
+                }
+            }
+            catch (Exception error) when (error is IOException or UnauthorizedAccessException) { }
+        }
+        return Path.Combine(home, "Downloads");
     }
 
     [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]

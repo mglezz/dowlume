@@ -48,5 +48,5 @@ Incidencias: https://github.com/mglezz/dowlume/issues
 Incluye versiones de Windows y Dowlume, pasos y resultado esperado y observado.
 No adjuntes descargas personales, bases de datos ni rutas privadas sin ocultar.
 
-Esta guía acompaña la versión 0.2.0 con selector. Los paquetes
+Esta guía acompaña la versión 0.3.0 con selector. Los paquetes
 originales publicados de v0.1.0 son anteriores a la localización y siguen en inglés.

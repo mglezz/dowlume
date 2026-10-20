@@ -12,7 +12,7 @@ public sealed class DownloadMonitor : IAsyncDisposable
     private readonly Action<Exception> _reportError;
     private readonly TimeSpan _scanInterval;
     private readonly Channel<string> _queue;
-    private readonly ConcurrentDictionary<string, byte> _queued = new(StringComparer.OrdinalIgnoreCase);
+    private readonly ConcurrentDictionary<string, byte> _queued = new(StringComparer.Ordinal);
     private readonly CancellationTokenSource _shutdown = new();
     private readonly FileSystemWatcher _watcher;
     private readonly Task _worker;

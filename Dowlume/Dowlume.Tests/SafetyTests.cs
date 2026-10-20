@@ -19,7 +19,7 @@ public sealed class SafetyTests
         using var workspace = new TemporaryWorkspace();
         string source = workspace.CreateFile("a.txt", "Source");
         string destination = workspace.CreateFile("b.txt", "Destination");
-        var mover = new SafeFileMover();
+        var mover = FixtureFileMover.Create(workspace);
         string hash = mover.Hash(source);
         using (var locked = new FileStream(source, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
         {
@@ -36,7 +36,7 @@ public sealed class SafetyTests
         using var workspace = new TemporaryWorkspace();
         string source = workspace.CreateFile("source.txt");
         string blockingFile = workspace.CreateFile("not-a-folder");
-        var mover = new SafeFileMover();
+        var mover = FixtureFileMover.Create(workspace);
         Assert.ThrowsAny<IOException>(() => mover.Move(source, Path.Combine(blockingFile, "file.txt"), mover.Hash(source)));
         Assert.True(File.Exists(source));
     }

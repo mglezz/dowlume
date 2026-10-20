@@ -1,0 +1,48 @@
+Dowlume — experimental platform preview / vista previa experimental
+
+ENGLISH
+
+I provide this package to test the platform foundation. This is not stable
+macOS/Linux support. I allow folder preview, settings, language selection,
+and history inspection. File moves, monitoring, review actions, undo, and
+automatic recovery are blocked at the application and file-operation layers.
+I use a separate Dowlume.Preview profile. Do not copy a Windows database into
+it: historical paths are specific to their original operating system.
+
+I target macOS 15 Apple Silicon and Ubuntu 24.04 x64 as experimental build
+baselines. Intel Macs are out of scope. The macOS application is only ad-hoc
+signed, not Developer ID signed or notarized. I do not ask you to disable
+system security. Linux needs a graphical X11/XWayland session and native
+libraries; see the platform documentation for the tested environment.
+
+Extract the complete archive, keeping all runtime files and the es directory.
+Use copies of disposable files in a local folder. Login startup and hiding to
+the tray are unavailable in this preview. On Linux, the file-manager action
+opens the containing folder; on macOS, it reveals the selected file in Finder.
+The runtime is included. Native desktop, permissions, signing and safety
+acceptance remain work for 0.4.0 (macOS) and 0.5.0 (Linux).
+
+ESPAÑOL
+
+Distribuyo este paquete para probar las bases de plataforma. No representa
+soporte estable de macOS/Linux. Permito vista previa de carpetas, ajustes,
+selección de idioma y consulta de historial. Bloqueo movimientos, supervisión,
+acciones de revisión, deshacer y recuperación automática en la aplicación
+y en las operaciones de archivos.
+Uso un perfil separado Dowlume.Preview. No copies una base de datos de Windows:
+las rutas históricas dependen de su sistema original.
+
+Utilizo macOS 15 Apple Silicon y Ubuntu 24.04 x64 como bases experimentales.
+Intel queda fuera de alcance. La aplicación macOS solo tiene firma ad hoc,
+sin Developer ID ni notarización. No pido desactivar la seguridad del sistema.
+Linux necesita sesión gráfica X11/XWayland y bibliotecas nativas.
+
+Extrae el archivo completo, conservando el runtime y el directorio es. Usa
+copias desechables en una carpeta local. El inicio de sesión automático y
+ocultar en bandeja no están disponibles. Linux abre la carpeta contenedora;
+macOS muestra el archivo seleccionado en Finder. Incluyo el runtime.
+La aceptación de escritorio, permisos, firma y seguridad nativa corresponde
+a 0.4.0 (macOS) y 0.5.0 (Linux).
+
+https://github.com/mglezz/dowlume/blob/main/docs/PLATFORM_SUPPORT.md
+https://github.com/mglezz/dowlume/blob/main/docs/es/PLATFORM_SUPPORT.md

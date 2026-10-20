@@ -11,6 +11,7 @@ public partial class MainWindow : Window
     private readonly DispatcherTimer _refreshTimer = new() { Interval = TimeSpan.FromSeconds(3) };
     private bool _closing;
     private bool _canClose;
+    private bool _canHideToTray;
 
     public MainWindow()
     {
@@ -33,7 +34,17 @@ public partial class MainWindow : Window
         Closing += OnClosing;
     }
 
-    private void OnHideToTray(object? sender, RoutedEventArgs args) => Hide();
+    public void ConfigureTray(bool available)
+    {
+        this.FindControl<Button>("HideToTrayButton")!.IsVisible = available;
+        _canHideToTray = available;
+    }
+
+    private void OnHideToTray(object? sender, RoutedEventArgs args)
+    {
+        if (_canHideToTray)
+            Hide();
+    }
 
     private async void OnClosing(object? sender, WindowClosingEventArgs args)
     {

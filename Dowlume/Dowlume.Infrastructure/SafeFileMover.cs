@@ -1,9 +1,12 @@
 using System.Security.Cryptography;
+using Dowlume.Core;
 
 namespace Dowlume.Infrastructure;
 
-public sealed class SafeFileMover
+public sealed class SafeFileMover : IFileMover
 {
+    public bool CanMove => OperatingSystem.IsWindows();
+
     public string Hash(string path)
     {
         PathSafety.RejectLinks(path);
@@ -13,21 +16,13 @@ public sealed class SafeFileMover
 
     public void Move(string source, string destination, string expectedHash)
     {
+        if (!OperatingSystem.IsWindows())
+        {
+            throw new PlatformNotSupportedException(DownloadOrganizer.ReadOnlyMessage);
+        }
         PathSafety.RejectLinks(source);
         PathSafety.RejectLinks(destination);
-        if (OperatingSystem.IsWindows())
-        {
-            MoveOnWindows(source, destination, expectedHash);
-            return;
-        }
-        using FileStream stream = OpenVerifiedRead(source, expectedHash);
-        Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-        PathSafety.RejectLinks(destination);
-        File.Move(source, destination, overwrite: false);
-        if (File.Exists(source) || !string.Equals(Hash(destination), expectedHash, StringComparison.Ordinal))
-        {
-            throw new IOException("The move could not be verified. Both paths were preserved for inspection.");
-        }
+        MoveOnWindows(source, destination, expectedHash);
     }
 
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]

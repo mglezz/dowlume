@@ -18,6 +18,7 @@ public partial class MainViewModel : ObservableObject
     private readonly IDesktopDialogs _dialogs;
     private readonly DiagnosticLog _log;
     private readonly IStartupRegistration? _startup;
+    private readonly string _suggestedDownloads;
     private readonly CancellationTokenSource _shutdown = new();
     private DownloadMonitor? _monitor;
     private AppSettings? _previewSettings;
@@ -62,7 +63,7 @@ public partial class MainViewModel : ObservableObject
         try
         {
             // Persist only the language, retaining saved rules and any unsaved edits in the form.
-            AppSettings saved = _store.LoadSettings() ?? new AppSettings { DownloadsPath = DownloadsFolder.Suggest() };
+            AppSettings saved = _store.LoadSettings() ?? new AppSettings { DownloadsPath = _suggestedDownloads };
             _store.SaveSettings(saved with
             {
                 Language = value.Code
@@ -91,6 +92,7 @@ public partial class MainViewModel : ObservableObject
         OnPropertyChanged(nameof(ErrorMessage));
         OnPropertyChanged(nameof(MonitoringLabel));
         OnPropertyChanged(nameof(RecyclingNotice));
+        OnPropertyChanged(nameof(PlatformNotice));
         OnPropertyChanged(nameof(ActivityPageLabel));
         OperationKind? kind = SelectedActivityKind.Value;
         OperationStatus? status = SelectedActivityStatus.Value;
@@ -105,14 +107,17 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty] private int _managedCount;
     [ObservableProperty] private int _reviewCount;
     [ObservableProperty] private int _attentionCount;
-    [ObservableProperty] private bool _startWithWindows;
+    [ObservableProperty] private bool _startAtLogin;
     [ObservableProperty, NotifyPropertyChangedFor(nameof(CanReviewSelectedFile))] private TrackedFile? _selectedReview;
     [ObservableProperty, NotifyPropertyChangedFor(nameof(CanUndoSelectedOperation))] private OperationRecord? _selectedOperation;
 
     public bool IsIdle => !IsBusy;
-    public bool SupportsWindowsStartup => _startup?.IsSupported == true;
-    public bool CanReviewSelectedFile => IsIdle && SelectedReview is not null;
-    public bool CanUndoSelectedOperation => IsIdle && SelectedOperation?.CanUndo == true;
+    public bool SupportsLoginStartup => _startup?.IsSupported == true;
+    public bool SupportsFileOperations => _organizer.CanMutateFiles;
+    public bool IsPreviewPlatform => !SupportsFileOperations;
+    public string PlatformNotice => Text.Translate(DownloadOrganizer.ReadOnlyMessage);
+    public bool CanReviewSelectedFile => SupportsFileOperations && IsIdle && SelectedReview is not null;
+    public bool CanUndoSelectedOperation => SupportsFileOperations && IsIdle && SelectedOperation?.CanUndo == true;
     public bool CanConfigure => !IsBusy && !IsMonitoring;
     public string MonitoringLabel => Text.Translate(IsMonitoring ? "Monitoring is on" : "Monitoring is paused");
     public ObservableCollection<CategoryRuleViewModel> Rules { get; } = [];
@@ -123,7 +128,7 @@ public partial class MainViewModel : ObservableObject
     public ObservableCollection<CategorySummary> Categories { get; } = [];
 
     public MainViewModel(IStateStore store, DownloadOrganizer organizer, IDesktopDialogs dialogs, DiagnosticLog log,
-        IStartupRegistration? startup = null, Localizer? localizer = null)
+        IStartupRegistration? startup = null, Localizer? localizer = null, string? suggestedDownloads = null)
     {
         Text = localizer ?? new Localizer();
         _store = store;
@@ -131,12 +136,13 @@ public partial class MainViewModel : ObservableObject
         _dialogs = dialogs;
         _log = log;
         _startup = startup;
+        _suggestedDownloads = suggestedDownloads ?? DesktopPlatform.Current.SuggestedDownloads;
         try
         {
-            StartWithWindows = startup?.IsEnabled == true;
+            StartAtLogin = startup?.IsEnabled == true;
         }
         catch (Exception error) { ShowError(error); }
-        AppSettings settings = store.LoadSettings() ?? new AppSettings { DownloadsPath = DownloadsFolder.Suggest() };
+        AppSettings settings = store.LoadSettings() ?? new AppSettings { DownloadsPath = _suggestedDownloads };
         Text.SetLanguage(settings.Language);
         _selectedLanguage = Languages.Single(language => language.Code == Text.Language);
         RefreshLanguage();
@@ -149,24 +155,24 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private Task ToggleWindowsStartupAsync() => RunAsync(() =>
+    private Task ToggleLoginStartupAsync() => RunAsync(() =>
     {
         if (_startup is null || !_startup.IsSupported)
         {
-            throw new InvalidOperationException("Windows startup is unavailable for this application host.");
+            throw new InvalidOperationException("Login startup is unavailable on this platform.");
         }
         try
         {
-            _startup.SetEnabled(!StartWithWindows);
-            StartWithWindows = _startup.IsEnabled;
-            StatusMessage = StartWithWindows
+            _startup.SetEnabled(!StartAtLogin);
+            StartAtLogin = _startup.IsEnabled;
+            StatusMessage = StartAtLogin
                 ? "Dowlume will open when you sign in. Monitoring will remain paused until you preview and start."
                 : "Dowlume will no longer start automatically from this location.";
         }
         finally
         {
-            // Restore the checkbox if Windows refused the requested change.
-            OnPropertyChanged(nameof(StartWithWindows));
+            // Restore the checkbox if the platform refused the requested change.
+            OnPropertyChanged(nameof(StartAtLogin));
         }
         return Task.CompletedTask;
     });
@@ -217,9 +223,10 @@ public partial class MainViewModel : ObservableObject
         SetStatus("{0} completed files are ready. Busy, recent, excluded, and already tracked files are skipped. Nothing has moved.", items.Count);
     });
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(SupportsFileOperations))]
     private Task StartAsync() => RunAsync(async () =>
     {
+        _organizer.RequireFileOperations();
         AppSettings settings = ReadSettings();
         if (_previewSettings is null || JsonSerializer.Serialize(settings) != JsonSerializer.Serialize(_previewSettings))
         {
@@ -294,7 +301,7 @@ public partial class MainViewModel : ObservableObject
         await RefreshAsync();
     });
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(SupportsFileOperations))]
     private Task RetryRecoveryAsync() => RunAsync(async () =>
     {
         await Task.Run(() => _organizer.RetryRecoveryAsync(_shutdown.Token));
