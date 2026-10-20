@@ -93,6 +93,7 @@ public partial class MainViewModel : ObservableObject
         OnPropertyChanged(nameof(MonitoringLabel));
         OnPropertyChanged(nameof(RecyclingNotice));
         OnPropertyChanged(nameof(PlatformNotice));
+        OnPropertyChanged(nameof(PrivacyNotice));
         OnPropertyChanged(nameof(ActivityPageLabel));
         OperationKind? kind = SelectedActivityKind.Value;
         OperationStatus? status = SelectedActivityStatus.Value;
@@ -116,6 +117,7 @@ public partial class MainViewModel : ObservableObject
     public bool SupportsFileOperations => _organizer.CanMutateFiles;
     public bool IsPreviewPlatform => !SupportsFileOperations;
     public string PlatformNotice => Text.Translate(DownloadOrganizer.ReadOnlyMessage);
+    public string PrivacyNotice => Text[IsPreviewPlatform ? "PreviewPrivacyNotice" : "LocalonlyNoaccountcloudsyncortelemetryClosing"];
     public bool CanReviewSelectedFile => SupportsFileOperations && IsIdle && SelectedReview is not null;
     public bool CanUndoSelectedOperation => SupportsFileOperations && IsIdle && SelectedOperation?.CanUndo == true;
     public bool CanConfigure => !IsBusy && !IsMonitoring;
@@ -133,6 +135,8 @@ public partial class MainViewModel : ObservableObject
         Text = localizer ?? new Localizer();
         _store = store;
         _organizer = organizer;
+        if (IsPreviewPlatform)
+            _statusMessage = "Choose a folder in Settings, then inspect its preview. File operations are unavailable on this platform.";
         _dialogs = dialogs;
         _log = log;
         _startup = startup;
@@ -207,7 +211,9 @@ public partial class MainViewModel : ObservableObject
     {
         _store.SaveSettings(ReadSettings());
         InvalidatePreview();
-        StatusMessage = "Settings saved. Preview the folder before starting monitoring.";
+        StatusMessage = IsPreviewPlatform
+            ? "Settings saved. You can inspect the folder in Preview. File operations remain unavailable."
+            : "Settings saved. Preview the folder before starting monitoring.";
         return Task.CompletedTask;
     });
 

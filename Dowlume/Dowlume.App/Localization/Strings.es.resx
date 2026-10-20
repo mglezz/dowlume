@@ -460,4 +460,13 @@ La ubicación original debe estar disponible y el archivo no debe haber cambiado
   <data name="StartDowlumeAtLogin" xml:space="preserve">
     <value>Iniciar Dowlume al iniciar sesión</value>
   </data>
+  <data name="PreviewPrivacyNotice" xml:space="preserve">
+    <value>Todo es local. Sin cuenta, sincronización ni telemetría. Cerrar la ventana sale de Dowlume.</value>
+  </data>
+  <data name="PreviewInitialStatus" xml:space="preserve">
+    <value>Elige una carpeta en Ajustes y consulta su vista previa. Las operaciones de archivos no están disponibles en esta plataforma.</value>
+  </data>
+  <data name="PreviewSettingsSaved" xml:space="preserve">
+    <value>Ajustes guardados. Puedes consultar la carpeta en Vista previa. Las operaciones de archivos siguen sin estar disponibles.</value>
+  </data>
 </root>
