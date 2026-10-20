@@ -18,6 +18,10 @@ I retain the existing Windows path policy and its accepted native implementation
 
 I require disposable native tests for competing writers, replacement races, links, mount changes, same/cross-volume collisions, Unicode/case aliases, permissions, full disks, interrupted copies, restart and recovery. Shared fixture movers exercise the journal and workflow only. The five explicit Windows-native tests and existing Windows acceptance remain separate evidence.
 
+## macOS implementation in progress
+
+I now use a Darwin read descriptor for preview hashing, reject symlinks during kernel path resolution, compare file identity and metadata around a read, and query the opened volume's case policy in native tests. These checks detect the tested changes but do not exclude writers, pin ancestor namespaces or grant a safe mutation lease. `PathSafety` containment remains unchanged. The [implementation record](MACOS_IMPLEMENTATION.md) separates this read-only work from the remaining native move/recovery requirements.
+
 ## Profiles and backups
 
 I keep schema 1 and the Windows profile location. Fixed 0.2.0 fixtures verify both languages, customized rules, tracked files and operation history without generating the fixture from the new serializer. I verify that a closed database backup opens with the same retained data.

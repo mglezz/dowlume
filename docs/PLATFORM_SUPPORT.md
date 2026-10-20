@@ -28,6 +28,10 @@ I expose no tray-hiding or login-startup action on the previews. If Windows tray
 
 `IFileMover` separates orchestration from mutation. `SafeFileMover` rejects non-Windows moves before creating directories. The organizer also rejects organization, monitoring reconciliation, review decisions, Undo and recovery before journaling or modifying files. Preview never replays pending operations on these hosts. Preferences and the isolated SQLite profile remain writable. The [file-operation contract](FILE_OPERATION_CONTRACT.md) records the native work still required.
 
+## macOS work toward 0.4.0
+
+I have started native read and identity validation on Apple Silicon, including APFS case-sensitive/insensitive fixtures. The current source uses these reads for preview hashes; published 0.3.0 binaries remain unchanged. File mutations remain disabled. I record the scope and pending distribution requirements in [macOS implementation](MACOS_IMPLEMENTATION.md).
+
 ## Evidence and test interpretation
 
 I run shared tests on native Windows x64, macOS ARM64 and Ubuntu x64 runners. Five Windows-only tests explicitly report skipped on other systems; the Linux case-distinct watcher regression explicitly reports skipped elsewhere. Shared orchestration tests use a disposable, test-assembly-only mover outside Windows. That mover is not shipped and is not evidence of native race protection. Production refusal has separate tests. Fixed schema-1 fixtures cover 0.2.0 English/Spanish settings, custom rules, history and closed-database backups.

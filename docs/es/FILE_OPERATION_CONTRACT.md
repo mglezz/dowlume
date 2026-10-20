@@ -18,6 +18,10 @@ Conservo en 0.3.0 la política de rutas e implementación nativa aceptada de Win
 
 Exijo pruebas nativas desechables de escritores, sustituciones, enlaces, cambios de montaje, colisiones en el mismo y distinto volumen, alias Unicode/mayúsculas, permisos, disco lleno, copias interrumpidas, reinicio y recuperación. Los adaptadores de pruebas compartidas solo ejercitan diario y flujo. Las cinco pruebas exclusivas de Windows y su aceptación previa constituyen evidencia separada.
 
+## Implementación macOS en desarrollo
+
+Ahora uso un descriptor Darwin para calcular el hash de la vista previa, rechazo enlaces durante la resolución de rutas del núcleo, comparo identidad y metadatos alrededor de la lectura y consulto la política de mayúsculas del volumen abierto en las pruebas nativas. Detecto los cambios probados, pero no excluyo escritores, inmovilizo directorios antecesores ni concedo una garantía para modificar archivos. La pertenencia de rutas de `PathSafety` sigue igual. El [registro de implementación](MACOS_IMPLEMENTATION.md) separa este trabajo de lectura de los requisitos pendientes de movimiento y recuperación.
+
 ## Perfiles y copias
 
 Conservo esquema 1 y ubicación del perfil Windows. Las muestras fijas de 0.2.0 comprueban ambos idiomas, reglas propias, archivos e historial sin producir la muestra con el serializador nuevo. Verifico que una copia de la base cerrada abre con los mismos datos.

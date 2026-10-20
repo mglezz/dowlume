@@ -28,6 +28,10 @@ No ofrezco ocultar en bandeja ni inicio automático en las vistas previas. Si fa
 
 `IFileMover` separa coordinación y modificación. `SafeFileMover` rechaza movimientos fuera de Windows antes de crear directorios. El organizador también bloquea organización, reconciliación, decisiones de revisión, Deshacer y recuperación antes de registrar operaciones o modificar archivos. La vista previa no reproduce operaciones pendientes en estos sistemas. Las preferencias y el perfil SQLite aislado sí se pueden guardar. El [contrato de operaciones](FILE_OPERATION_CONTRACT.md) recoge el trabajo nativo pendiente.
 
+## Trabajo macOS hacia 0.4.0
+
+He empezado la validación nativa de lectura e identidad en Apple Silicon, incluidas muestras APFS con y sin distinción de mayúsculas. El código actual usa estas lecturas para los hashes de vista previa; conservo los binarios publicados de 0.3.0. Las modificaciones siguen bloqueadas. Registro alcance y requisitos de distribución pendientes en [implementación macOS](MACOS_IMPLEMENTATION.md).
+
 ## Evidencia e interpretación de pruebas
 
 Ejecuto pruebas compartidas en máquinas nativas Windows x64, macOS ARM64 y Ubuntu x64. Cinco pruebas exclusivas de Windows figuran como omitidas fuera de Windows; la regresión Linux de nombres diferenciados por mayúsculas se omite explícitamente en otros sistemas. Fuera de Windows, las pruebas de coordinación utilizan un adaptador desechable exclusivo del ensamblado de pruebas: no lo distribuyo ni demuestra protección frente a carreras nativas. Pruebo por separado el rechazo del adaptador de producción. Las muestras fijas del esquema 1 comprueban ajustes inglés/español de 0.2.0, reglas propias, historial y copias de bases cerradas.
