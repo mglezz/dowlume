@@ -38,6 +38,8 @@ Activity now includes searchable history with action/status filters and paginati
 
 Windows x64 remains the supported target. The 0.3.0 source adds native CI, platform adapters and restricted previews for macOS 15 Apple Silicon and Ubuntu 24.04 x64. File mutations remain disabled on these previews. I plan accepted macOS support in 0.4.0, Linux in 0.5.0, and stabilization toward 1.0. These are gated milestones, not existing support or promised dates; see the [roadmap](ROADMAP.md#planned-releases-toward-10) and [platform scope](docs/PLATFORM_SUPPORT.md).
 
+I have integrated the 0.3.0 foundation and prepared its release draft. I keep final Windows human acceptance pending; see the [candidate evidence and hashes](docs/RELEASE_CANDIDATE_0.3.0.md).
+
 ## Languages
 
 I keep English as the default and provide Spanish in v0.2.0. In **Settings → Language**, select **English** or **Español**; the interface changes immediately and remembers the choice for that profile. Pause monitoring first. Folder names, files, rules, and journal records are preserved. The **0.2.0 installer and portable ZIP include the selector**. I retain the original English-only 0.1.0 assets unchanged. See the [0.2.0 release notes](docs/RELEASE_NOTES_0.2.0.md).

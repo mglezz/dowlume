@@ -20,6 +20,8 @@ Desactivé el envío nativo a la Papelera en v0.1.0 tras comprobar que las prueb
 
 **Próximos hitos:** el código de 0.3.0 incorpora CI nativa, adaptadores y vistas previas restringidas para macOS 15 Apple Silicon y Ubuntu 24.04 x64. Mantengo bloqueadas las modificaciones de archivos en estas vistas previas. Planifico soporte aceptado macOS en 0.4.0, Linux en 0.5.0 y estabilización hacia 1.0. Windows x64 sigue siendo la plataforma soportada. Son objetivos con criterios de aceptación, no soporte ya disponible ni fechas prometidas; consulta la [hoja de ruta](ROADMAP.md) y el [alcance por plataforma](PLATFORM_SUPPORT.md).
 
+He integrado las bases de 0.3.0 y preparado el borrador de release. Mantengo pendiente la aceptación humana final en Windows; registro [evidencia y hashes](RELEASE_CANDIDATE_0.3.0.md).
+
 ## Por qué lo desarrollo
 
 Las carpetas de descargas acumulan documentos útiles, instaladores de un solo uso y archivos fáciles de olvidar. Creé Dowlume para organizar lo que termina de descargarse, volver a mostrar los archivos antiguos y permitir una decisión consciente. Me centro en que las operaciones puedan reconciliarse cuando se interrumpe una descarga, un movimiento o la aplicación.

@@ -4,6 +4,8 @@
 
 I keep dated validation records here. A pending item in an older entry describes that revision and date; later entries record completion without changing the original evidence. Local artifact paths refer to retained private evidence and may be absent from a fresh clone.
 
+I integrated the final foundation at `6b8a33d` and passed the final-source native tests, security and package checks. The [candidate record](RELEASE_CANDIDATE_0.3.0.md) retains exact hashes and distinguishes completed automation from pending human acceptance.
+
 ## 2026-10-20: 0.3.0 foundation validation
 
 I added native capability selection, restricted preview hosts, fixed schema-1 profile regressions and native archive packaging. On local macOS ARM64, 79 tests passed and six native tests were explicitly skipped (five Windows, one Linux). Formatting and the acceptance harness build passed. The local macOS archive passed ad-hoc signature verification before and after extraction and native window launch/clean exit. This exploratory build had uncommitted changes and is not a release candidate.

@@ -6,6 +6,8 @@ Mantengo registros fechados y vinculados a revisiones. Un pendiente en una entra
 
 Esta página recoge en español la cronología y los límites de los resultados. Conservo las tablas originales, comandos exactos, identificadores de ejecuciones y rutas detalladas en el [registro inglés](../VALIDATION.md).
 
+Integré las bases finales en `6b8a33d` y superé pruebas nativas, seguridad y paquetes de ese código. El [registro del candidato](RELEASE_CANDIDATE_0.3.0.md) conserva hashes exactos y distingue automatización completada y aceptación humana pendiente.
+
 ## 2026-10-20: validación de las bases de 0.3.0
 
 Incorporo selección de capacidades, vistas previas restringidas, regresiones fijas de perfiles del esquema 1 y paquetes nativos. En macOS ARM64 local superé 79 pruebas y omití explícitamente seis nativas (cinco Windows y una Linux). Pasaron formato y compilación del arnés. El ZIP macOS local superó firma ad hoc antes/después de extraer y arranque/cierre de ventana nativa. Esta compilación exploratoria tenía cambios sin confirmar y no constituye un candidato.

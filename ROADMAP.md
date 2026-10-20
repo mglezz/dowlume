@@ -26,6 +26,8 @@ I prioritize safe cross-platform operation after 0.2.0. These versions describe 
 
 “Supported” means the documented feature set works on the named OS versions, architectures, filesystems, and desktop sessions. It does not mean every Linux distribution, every macOS version, or identical native UI conventions. In 0.3.0 I pin the initial matrix against the actual .NET/Avalonia dependencies and available native test environments; adding a target requires acceptance, not only a new runtime identifier. See [platform scope and evidence](docs/PLATFORM_SUPPORT.md).
 
+I integrated the 0.3.0 implementation and prepared its final-source candidate. Automated checks passed on all three targets; [final Windows human acceptance remains pending](docs/RELEASE_CANDIDATE_0.3.0.md).
+
 ### First implementation sequence: 0.3.0
 
 I have implemented native CI, capability adapters, production refusal on experimental hosts, fixed 0.2.0 profile regressions and native preview packaging in the 0.3.0 source. I define initial performance investigation thresholds in the [contract](docs/FILE_OPERATION_CONTRACT.md); measured stable-port baselines remain pending. Final package acceptance is separate from implementation.

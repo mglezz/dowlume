@@ -18,6 +18,8 @@ Después de 0.2.0 priorizo el funcionamiento seguro en varias plataformas. Estas
 
 «Soportado» significa que las funciones documentadas funcionan en las versiones, arquitecturas, sistemas de archivos y sesiones de escritorio indicados. No significa todas las distribuciones Linux, todas las versiones de macOS ni convenciones visuales nativas idénticas. En 0.3.0 fijo la matriz inicial según las dependencias .NET/Avalonia reales y los entornos de prueba disponibles; añadir un destino exige aceptación, no solo otro identificador de runtime. Detallo el [alcance y la evidencia por plataforma](PLATFORM_SUPPORT.md).
 
+Integré la implementación de 0.3.0 y preparé su candidato desde el código final. Superé los controles automáticos de los tres destinos; [sigue pendiente la aceptación humana final Windows](RELEASE_CANDIDATE_0.3.0.md).
+
 ### Primera secuencia de implementación: 0.3.0
 
 He implementado en el código de 0.3.0 CI nativa, adaptadores, rechazo de modificaciones experimentales, regresiones fijas de perfiles 0.2.0 y paquetes nativos de vista previa. Defino umbrales iniciales de rendimiento en el [contrato](FILE_OPERATION_CONTRACT.md); las bases medidas de las adaptaciones estables siguen pendientes. La aceptación final de paquetes es independiente de la implementación.
