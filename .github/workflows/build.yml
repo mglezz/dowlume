@@ -45,7 +45,7 @@ jobs:
       - run: dotnet build Dowlume/Dowlume.slnx -c Release --no-restore
       - name: Run shared and applicable native tests (unsupported native tests report skipped)
         run: dotnet test Dowlume/Dowlume.slnx -c Release --no-build --logger trx
-      - name: Verify native reads on disposable APFS volumes with both case policies
+      - name: Verify native file operations on disposable APFS volumes with both case policies
         if: runner.os == 'macOS'
         run: python3 scripts/Test-MacFileReads.py --output artifacts/mac-file-reads
       - run: dotnet format Dowlume/Dowlume.slnx --verify-no-changes --no-restore

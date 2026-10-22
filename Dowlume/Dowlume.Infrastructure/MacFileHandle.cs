@@ -54,13 +54,19 @@ internal static class MacFileHandle
 
     internal static Snapshot Capture(SafeFileHandle handle)
     {
+        Snapshot snapshot = Inspect(handle);
+        if ((snapshot.Mode & FileTypeMask) != RegularFile || (snapshot.Flags & Dataless) != 0)
+        {
+            throw new IOException("Native reads require a regular file with locally available content.");
+        }
+        return snapshot;
+    }
+
+    internal static Snapshot Inspect(SafeFileHandle handle)
+    {
         if (FStat(handle, out DarwinStat stat) != 0)
         {
             throw NativeError(Marshal.GetLastPInvokeError());
-        }
-        if ((stat.Mode & FileTypeMask) != RegularFile || (stat.Flags & Dataless) != 0)
-        {
-            throw new IOException("Native reads require a regular file with locally available content.");
         }
         return new Snapshot(stat.Device, stat.Inode, stat.LinkCount, stat.Mode, stat.Size,
             stat.ModifiedSeconds, stat.ModifiedNanoseconds, stat.ChangedSeconds, stat.ChangedNanoseconds,

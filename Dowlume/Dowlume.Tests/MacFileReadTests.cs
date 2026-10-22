@@ -8,6 +8,7 @@ using Dowlume.Infrastructure;
 namespace Dowlume.Tests;
 
 [SupportedOSPlatform("macos")]
+[Collection("Mac filesystem")]
 [Trait("Category", "MacNativeRead")]
 public sealed class MacFileReadTests
 {
@@ -32,7 +33,7 @@ public sealed class MacFileReadTests
         string expected = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes("Contenido de prueba")));
         Assert.Equal(expected, new SafeFileMover().Hash(path));
         MacFileHandle.VerifyUnchanged(path, stream.SafeFileHandle, snapshot);
-        Assert.False(new SafeFileMover().CanMove);
+        Assert.True(new SafeFileMover().CanMove);
     }
 
     [MacFact]

@@ -19,7 +19,9 @@ public sealed record OperationRecord(
     string SourcePath,
     string? DestinationPath,
     string? Error = null,
-    Guid? UndoesOperationId = null)
+    Guid? UndoesOperationId = null,
+    FileIdentity? SourceIdentity = null,
+    string? ObservedPath = null)
 {
     public string Description => $"{Kind}: {Path.GetFileName(SourcePath)}";
     public bool CanUndo => Status == OperationStatus.Completed && Kind is not (OperationKind.Recycle or OperationKind.Undo);
