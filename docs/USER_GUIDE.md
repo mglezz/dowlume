@@ -2,29 +2,29 @@
 
 [English](#) · [Español](es/USER_GUIDE.md)
 
-I designed Dowlume to organize downloads on the Windows desktop. [Version 0.2.0 for Windows x64 is available](https://github.com/mglezz/dowlume/releases/tag/v0.2.0) as an unsigned per-user installer or self-contained portable ZIP. Verify the release checksums. Start with a disposable folder containing copies of sample files before choosing your real Downloads folder.
+I designed Dowlume to organize downloads on Windows and macOS. I describe the new macOS 0.4.0 workflow below; its exact-package acceptance is separate from the published Windows release. [Version 0.3.0 for Windows x64 is available](https://github.com/mglezz/dowlume/releases/tag/v0.3.0) as an unsigned per-user installer or self-contained portable ZIP. Verify the release checksums. Start with a disposable folder containing copies of sample files before choosing your real Downloads folder.
 
 ## Install and start
 
-Download the installer or portable ZIP from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.2.0). Developers can also [build and run from source](../GETTING_STARTED.md).
+Download the installer or portable ZIP from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.3.0). Developers can also [build and run from source](../GETTING_STARTED.md).
 
-For a downloaded or locally built package, run the setup executable (for example, `Dowlume-0.2.0-win-x64-setup.exe`). Installation is per user and does not require administrator privileges. Alternatively, extract the complete portable ZIP and run `Dowlume.App.exe`; do not move the executable out of its accompanying files. The .NET runtime is included.
+For a downloaded or locally built package, run the setup executable (for example, `Dowlume-0.3.0-win-x64-setup.exe`). Installation is per user and does not require administrator privileges. Alternatively, extract the complete portable ZIP and run `Dowlume.App.exe`; do not move the executable out of its accompanying files. The .NET runtime is included.
 
-The v0.2.0 release packages are unsigned. Only use a package from a source you trust and compare its SHA-256 checksum with the accompanying `SHA256SUMS.txt`.
+The v0.3.0 release packages are unsigned. Only use a package from a source you trust and compare its SHA-256 checksum with the accompanying `SHA256SUMS.txt`.
 
 The package includes `START-HERE.txt`, which opens offline in a text editor. The installer adds a **Dowlume quick start** Start menu shortcut. Exit Dowlume, including any instance hidden in the tray, before upgrading or uninstalling; Setup refuses while the app is running. Installation and uninstall retain your files and local profile.
 
 ## Choose a language
 
-In version 0.2.0, pause monitoring and open **Settings → Language**. Choose **English** or **Español**. I apply the choice immediately and save it automatically for that profile, including when folder settings have unsaved edits. Those edits are not saved by changing language. Restarting retains the language; older profiles default to English.
+In version 0.3.0, pause monitoring and open **Settings → Language**. Choose **English** or **Español**. I apply the choice immediately and save it automatically for that profile, including when folder settings have unsaved edits. Those edits are not saved by changing language. Restarting retains the language; older profiles default to English.
 
-I translate tabs, buttons, confirmations, tray items, categories, states, dates, and known error messages. I preserve configured folder names, filenames, paths, and journal data. `Expiring Files` keeps its name in both languages. Unknown historical or operating-system messages retain their original wording. Native folder-picker controls follow Windows language settings.
+I translate tabs, buttons, confirmations, tray items, categories, states, dates, and known error messages. I preserve configured folder names, filenames, paths, and journal data. `Expiring Files` keeps its name in both languages. Unknown historical or operating-system messages retain their original wording. Native folder-picker controls follow the operating system language settings.
 
-The published 0.2.0 installer and portable ZIP include the selector. Older 0.1.0 packages remain English-only. [Guía en español](es/USER_GUIDE.md).
+The published 0.3.0 installer and portable ZIP include the selector. Older 0.1.0 packages remain English-only. [Guía en español](es/USER_GUIDE.md).
 
 ## First use
 
-1. Open **Settings** and choose an existing local Downloads folder. The suggested path comes from the Windows Downloads known folder.
+1. Open **Settings** and choose an existing local Downloads folder. I suggest the Windows Downloads known folder or `~/Downloads` on macOS; you can choose a different local folder.
 2. Adjust category folder names, extension mappings, excluded extensions, and review periods. Save settings.
 3. Open **Preview** and select **Refresh preview**. This step does not move files or create category folders.
 4. Review the proposed destinations, then select **Organize and monitor** and confirm. Consent covers previewed files, future arrivals, and unfinished files when they become ready.
@@ -40,15 +40,15 @@ The published 0.2.0 installer and portable ZIP include the selector. Older 0.1.0
 
 Only files directly inside the selected folder are discovered. Existing subfolders are not imported or rearranged. Category folders and `Expiring Files` are created when needed. Name collisions receive a numeric suffix; existing files are never overwritten.
 
-Monitoring starts paused on every launch. Preview and confirm again to resume. **Pause** stops the watcher and waits for an active operation. **Hide to tray** keeps the application running; use the tray menu to reopen it or exit. Closing the main window stops monitoring.
+Monitoring starts paused on every launch. Preview and confirm again to resume. **Pause** stops the watcher and waits for an active operation. On Windows, **Hide to tray** keeps the application running; use the tray menu to reopen it or exit. Closing the main window stops monitoring.
 
 The Dowlume icon appears in the Windows notification area, sometimes inside the **Show hidden icons** overflow. Click it to restore the window, or right-click for **Open Dowlume** and **Exit**. You can move the icon into the visible notification area using Windows taskbar settings.
 
-In **Settings**, enable **Start Dowlume when I sign in to Windows** to open this copy of the application at sign-in. The change applies immediately to your account and is off by default. Monitoring still starts paused. Disable the option before relocating a portable copy; enable it again from the new location. Windows Settings can independently disable startup applications. Uninstall removes the startup entry when it belongs to that installation.
+On Windows, in **Settings**, enable **Start Dowlume when I sign in** to open this copy of the application at sign-in. The change applies immediately to your account and is off by default. Monitoring still starts paused. Disable the option before relocating a portable copy; enable it again from the new location. Windows Settings can independently disable startup applications. Uninstall removes the startup entry when it belongs to that installation.
 
 ## Review files
 
-**Safety restriction retained in 0.2.0:** native recycling is disabled because Windows Recycle Bin did not reliably preserve files in [capacity testing](RECYCLE_CAPACITY_INVESTIGATION.md). Leave files in Review or use Keep, Snooze, or Move. A future recoverable quarantine is documented but is not implemented.
+**Safety restriction retained in 0.3.0:** native recycling is disabled because Windows Recycle Bin did not reliably preserve files in [capacity testing](RECYCLE_CAPACITY_INVESTIGATION.md). Leave files in Review or use Keep, Snooze, or Move. A future recoverable quarantine is documented but is not implemented.
 
 A file's age starts when Dowlume first organizes it, not from its downloaded or modified timestamp. When its category's review period expires, it moves to `Expiring Files`.
 
@@ -58,7 +58,7 @@ Select a file in **Review**:
 - **Snooze 7 days:** return it to its category and review it again after seven days.
 - **Move to:** choose a destination and confirm; Dowlume stops managing that file.
 - **Recycle:** remains disabled. The explanation appears above the review list; no shell deletion can be invoked through this action.
-- **Show in Explorer:** inspect the selected file without executing it.
+- **Show in Explorer / Finder:** inspect the selected file without executing it.
 
 Review is a holding area. There is no automatic deletion deadline.
 
@@ -87,10 +87,10 @@ The operation journal is committed before moving a file. After interruption, **R
 | Filesystem state | Recovery behavior |
 | --- | --- |
 | Original source remains and destination is absent | Mark failed; retry the original action. |
-| Source is absent and destination has matching content | Complete the interrupted journal entry. |
+| Source is absent and destination has matching content (and recorded native identity on macOS) | Complete the interrupted journal entry. |
 | Both paths exist, neither exists, or content differs | Mark NeedsAttention and leave files untouched. |
 
-For NeedsAttention, copy the paths from Activity, inspect them in Explorer, and preserve any content you need. For interrupted moves, once the filesystem has one unambiguous matching copy at the recorded source or destination, retry recovery. Historical Recycle records are never replayed or inferred complete: an unchanged source marks the attempt Failed and allows safe review decisions; missing or changed content stays NeedsAttention. If a recoverable copy actually exists, preserve it and restore it manually to the original path before checking recovery again. Retry does not restore missing content or guarantee Windows kept it.
+For NeedsAttention, copy the paths from Activity, inspect them in Explorer or Finder, and preserve any content you need. For interrupted moves, once the filesystem has one unambiguous matching copy at the recorded source or destination, retry recovery. Historical Recycle records are never replayed or inferred complete: an unchanged source marks the attempt Failed and allows safe review decisions; missing or changed content stays NeedsAttention. If a recoverable copy actually exists, preserve it and restore it manually to the original path before checking recovery again. Retry does not restore missing content or guarantee Windows kept it.
 
 If a tracked file was edited, automatic moves refuse to act on the old content hash. Move the edited file to a location outside the managed root if you want to manage it yourself. If you intentionally want to import it again, return it to the Downloads root under a new name and preview it. External renames are not followed automatically.
 
@@ -106,10 +106,24 @@ If a tracked file was edited, automatic moves refuse to act on the old content h
 
 ## Current limits
 
-Windows x64 is the release target. Network shares, drive roots, symbolic links, junctions, and cloud placeholder/reparse paths are rejected. Use a fully local folder. The application does not run as a service. Windows sign-in startup is optional and can be enabled in Settings.
+Windows x64 is the published stable target; I document the macOS 0.4.0 workflow below. Network shares, drive roots, symbolic links, junctions, and cloud placeholder/reparse paths are rejected. Use a fully local folder. The application does not run as a service. Windows sign-in startup is optional and can be enabled in Settings.
 
-Completion detection checks file age, two stable size/timestamp observations, and an exclusive-open probe. It is conservative but cannot prove that a program will never reopen a file later. Browser partial-download extensions are always excluded. Avoid downloading directly into managed category folders.
+On Windows, completion detection checks file age, two stable size/timestamp observations, and an exclusive-open probe. It is conservative but cannot prove that a program will never reopen a file later. Browser partial-download extensions are always excluded. Avoid downloading directly into managed category folders.
 
 Windows moves keep the verified source handle open to prevent concurrent writes or replacement. Cross-volume moves copy through Windows, verify the destination's main-stream hash while holding it open, and then remove the original through its verified handle. They are not atomic. An interruption can leave two copies requiring manual inspection; recovery never deletes either copy automatically. Large-file hashing and cross-volume moves may delay pause or exit while the current operation finishes.
 
 The app guards against ordinary filesystem changes, not a malicious process with the same user privileges deliberately replacing paths during operations. Keep backups of valuable files.
+
+## macOS 0.4.0
+
+I target Apple Silicon, macOS 15+ and ordinary local APFS folders outside synchronization services. I refuse cross-volume moves, links, network storage and known cloud-managed folders. A Move destination must be on the same APFS volume; a second volume on the same disk is still a different volume. I keep native recycling disabled.
+
+Quit the previous application, extract the ZIP and place the complete `Dowlume.app` in Applications before opening or enabling login startup. The runtime, Spanish resources and offline guides are inside the bundle. I use an ad-hoc signature without Developer ID or notarization. macOS may block first launch; if it offers **Open Anyway** under **System Settings → Privacy & Security**, use that only after verifying the source and checksum. I never ask you to disable Gatekeeper or remove quarantine. Where OS policy prevents launch, keep that installation limitation in the acceptance record.
+
+Allow access only to folders selected for organization. If access is denied, I display an error and preserve the files; use **System Settings → Privacy & Security → Files and Folders** to review access, then retry. I do not require Full Disk Access. The actual permission prompt depends on the chosen folder and prior system grants.
+
+**Command-comma** opens Settings. Native Hide and Dock reopen restore the same running application. Closing its window or **Quit** drains work and exits; there is no macOS tray mode. **Start at login** applies to an installed `.app` at the next login; monitoring remains paused and macOS Login Items can override it. Disable startup before relocating or uninstalling the app. To uninstall, quit and remove the app; I retain the profile and managed files.
+
+I store data in `~/Library/Application Support/Dowlume`. On first default launch I copy the closed `Dowlume.Preview` profile if the new profile is absent, preserve the original and keep its language/settings/history. Close the preview first. An existing new profile takes precedence; an incomplete destination or migration error requires inspection rather than an automatic merge. Back up the complete closed profile and managed files before updating. Custom `--data-directory` launches neither migrate the personal profile nor alter login startup.
+
+On a detected file/directory race I retain the objects and may report NeedsAttention. Activity includes the source, intended destination and, when available, the observed location of the original opened object. Preserve those files before retrying recovery. Matching bytes alone cannot complete a macOS interrupted operation: the recorded volume/file identity must also match. I cannot exclude arbitrary POSIX writers; keep actively edited or synchronized files outside the managed folder.

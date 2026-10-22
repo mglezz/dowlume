@@ -4,7 +4,7 @@
 
 **Tus descargas, bajo control.**
 
-Desarrollo Dowlume como una aplicación de escritorio para Windows que organiza las descargas completas, lleva los archivos antiguos a una zona de revisión y deja la decisión final en tus manos. Mantengo todos los datos en el equipo, sin cuentas, sincronización en la nube ni telemetría.
+Desarrollo Dowlume como una aplicación de escritorio para Windows y macOS que organiza las descargas completas, lleva los archivos antiguos a una zona de revisión y deja la decisión final en tus manos. Mantengo todos los datos en el equipo, sin cuentas, sincronización en la nube ni telemetría.
 
 **Estado:** publiqué [v0.3.0 para Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.3.0) el 20 de octubre de 2026. Puedes descargar el [instalador](https://github.com/mglezz/dowlume/releases/download/v0.3.0/Dowlume-0.3.0-win-x64-setup.exe) o el [ZIP portátil](https://github.com/mglezz/dowlume/releases/download/v0.3.0/Dowlume-0.3.0-win-x64.zip) y comprobar sus [sumas SHA-256](https://github.com/mglezz/dowlume/releases/download/v0.3.0/SHA256SUMS.txt). Estos paquetes incluyen .NET y no están firmados.
 
@@ -18,7 +18,7 @@ Desactivé el envío nativo a la Papelera en v0.1.0 tras comprobar que las prueb
 
 *Conservo esta captura de la interfaz inglesa de v0.1.0 con datos ficticios. Es anterior al selector de idioma. [Procedencia de las imágenes](images/README.md).*
 
-**Próximos hitos:** el código de 0.3.0 incorpora CI nativa, adaptadores y vistas previas restringidas para macOS 15 Apple Silicon y Ubuntu 24.04 x64. Mantengo bloqueadas las modificaciones de archivos en estas vistas previas. Planifico soporte aceptado macOS en 0.4.0, Linux en 0.5.0 y estabilización hacia 1.0. Windows x64 sigue siendo la plataforma soportada. Son objetivos con criterios de aceptación, no soporte ya disponible ni fechas prometidas; consulta la [hoja de ruta](ROADMAP.md) y el [alcance por plataforma](PLATFORM_SUPPORT.md).
+**0.4.0:** implemento el flujo macOS Apple Silicon: movimientos nativos APFS del mismo volumen, supervisión, revisión, Deshacer, recuperación, integración de escritorio y migración del perfil de vista previa. Linux sigue restringido para 0.5.0. La descarga estable actual sigue siendo 0.3.0; separo implementación y aceptación del paquete exacto. Consulta las [notas](RELEASE_NOTES_0.4.0.md), [aceptación](RELEASE_CANDIDATE_0.4.0.md) y [plataformas](PLATFORM_SUPPORT.md).
 
 Priorizo completar las funciones de macOS y Linux conservando la fiabilidad Windows. Difiero la firma de editor y la notarización macOS a la estabilización final multiplataforma; detallo las [prioridades actuales](PLATFORM_SUPPORT.md#prioridades-funcionales-y-firma-aplazada).
 
@@ -38,7 +38,7 @@ No elimino archivos automáticamente. La supervisión empieza en pausa en cada a
 
 Utilizo **C#, .NET 10, Avalonia con MVVM, SQLite y xUnit**. Separo la interfaz, las reglas, la supervisión y el acceso al sistema de archivos. Compruebo la estabilidad de las descargas, verifico contenido mediante SHA-256 y registro cada intención antes de mover. Si quedan copias ambiguas, las conservo para su inspección. Explico estas decisiones en [Arquitectura](ARCHITECTURE.md).
 
-Windows x64 es mi plataforma de distribución. Ofrezco bases experimentales para [macOS Apple Silicon y Linux](PLATFORM_SUPPORT.md); compilar y abrir la aplicación no equivale a validar sus operaciones nativas.
+Conservo Windows x64 e implemento macOS Apple Silicon para 0.4.0. Linux continúa como vista previa restringida. Detallo las garantías y los límites en [plataformas](PLATFORM_SUPPORT.md).
 
 ## Ejecutar desde el código
 
@@ -61,7 +61,7 @@ Empieza con una carpeta desechable y archivos de ejemplo. En [Preparación del e
 | [Modelo de dominio](requirements/DOMAIN_MODEL.md) | Conceptos, reglas y vistas UML compartidas |
 | [Arquitectura](ARCHITECTURE.md) | Componentes, procesamiento y límites de seguridad |
 | [Hoja de ruta](ROADMAP.md) y [plataformas](PLATFORM_SUPPORT.md) | Trabajo realizado y posibilidades futuras |
-| [Implementación macOS](MACOS_IMPLEMENTATION.md) | Desarrollo de 0.4.0, pruebas de lectura nativa y aceptación pendiente |
+| [Implementación macOS](MACOS_IMPLEMENTATION.md) | Flujos nativos, integración de escritorio y aceptación |
 | [Validación](VALIDATION.md) y [seguridad](SECURITY_REVIEW.md) | Resultados, procedencia y limitaciones |
 | [Notas de v0.3.0](RELEASE_NOTES_0.3.0.md) | Comportamiento de los binarios publicados |
 | [Aceptación de 0.3.0](RELEASE_CANDIDATE_0.3.0.md) y [registro histórico de 0.1.0](RELEASE_CHECKLIST.md) | Identidad de los artefactos y controles completados |

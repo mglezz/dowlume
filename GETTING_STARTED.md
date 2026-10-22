@@ -4,7 +4,7 @@
 
 ## Requirements
 
-- Windows x64 for the supported desktop application. Native recycling remains disabled.
+- Windows x64 or macOS 15+ Apple Silicon (Xcode command-line tools). I keep Linux as a restricted preview. Native recycling remains disabled.
 - .NET SDK from the **10.0.4xx family**: [`global.json`](global.json) sets `10.0.400` with `rollForward: latestPatch`. CI uses `10.0.401`, a compatible patch in the same feature band.
 - Inno Setup 6 only when building the installer.
 
@@ -23,9 +23,9 @@ All tests run without invoking native recycling. The previous native tests and c
 
 Use a disposable folder for initial UI testing. The real Downloads directory is never used by automated tests. To isolate application state as well, pass `-- --data-directory C:\path\to\test-profile` to `dotnet run`.
 
-## Experimental native development
+## Native development
 
-I also build on macOS 15 Apple Silicon and Ubuntu 24.04 x64. These hosts expose folder preview and preferences; production file operations, recovery, tray hiding and login startup are unavailable. Intel Macs are excluded. See [platform packages and dependencies](docs/PLATFORM_SUPPORT.md).
+I enable the macOS 0.4.0 workflow on local APFS within one volume. Native menus, Finder, migration and packaged login startup accompany the file adapter. Ubuntu 24.04 x64 remains a restricted preview. Intel Macs are excluded. See [platform packages and dependencies](docs/PLATFORM_SUPPORT.md).
 
 On macOS I use a real temporary directory inside the repository so safety checks do not traverse the system temporary-directory symlink:
 
@@ -34,7 +34,9 @@ mkdir -p artifacts/test-tmp
 TMPDIR="$PWD/artifacts/test-tmp" dotnet test Dowlume/Dowlume.slnx -c Release
 ```
 
-Shared tests use a fixture mover outside Windows; explicit native skips do not count as native acceptance. I preserve the accepted Windows profile location and use separate preview profiles. I document [backup and file-operation limits](docs/FILE_OPERATION_CONTRACT.md).
+Shared tests use a fixture mover outside Windows; explicit native skips do not count as native acceptance. I preserve the Windows profile location, migrate a closed macOS preview profile on default launch, and retain the separate Linux preview profile. I document [backup and file-operation limits](docs/FILE_OPERATION_CONTRACT.md).
+
+After the Release build, I run the disposable APFS matrix with `python3 scripts/Test-MacFileReads.py --output artifacts/mac-file-operations`. I build and exercise the extracted macOS archive with `python3 scripts/Build-PlatformPreview.py --runtime osx-arm64 --output artifacts/macos-package`. Output directories must be new. Custom profiles do not register login startup or migrate personal data.
 
 ## Next steps
 

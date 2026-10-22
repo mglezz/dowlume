@@ -4,7 +4,7 @@
 
 ## Requisitos
 
-Desarrollo y distribuyo la aplicación para Windows x64. Utilizo un SDK .NET **10.0.4xx**: [`global.json`](../../global.json) fija `10.0.400` con `rollForward: latestPatch`; CI utiliza `10.0.401`. Para generar el instalador también necesito Inno Setup 6.
+Desarrollo para Windows x64 y macOS 15+ Apple Silicon; para macOS necesito las herramientas de línea de comandos Xcode. Linux sigue como vista previa restringida. Utilizo un SDK .NET **10.0.4xx**: [`global.json`](../../global.json) fija `10.0.400` con `rollForward: latestPatch`; CI utiliza `10.0.401`. Para generar el instalador también necesito Inno Setup 6.
 
 Mantengo identificadores, comentarios, ramas y mensajes Conventional Commits en inglés. La interfaz y la documentación están disponibles en inglés y español. El instalador y ZIP portátil de 0.3.0 incluyen el selector de idioma introducido en 0.2.0.
 
@@ -29,16 +29,18 @@ dotnet run --project Dowlume/Dowlume.App -c Release -- --data-directory C:\Dowlu
 
 En macOS, la carpeta temporal del sistema puede atravesar enlaces simbólicos que el proyecto rechaza. Para ejecutar comprobaciones de desarrollo, utiliza una carpeta temporal real con `TMPDIR`; esto no convierte macOS en una plataforma de distribución aceptada.
 
-## Desarrollo nativo experimental
+## Desarrollo nativo
 
-También compilo en macOS 15 Apple Silicon y Ubuntu 24.04 x64. Estos sistemas ofrecen vista previa y preferencias; bloqueo modificaciones, recuperación, ocultar en bandeja e inicio automático. Excluyo los Mac Intel. Detallo [paquetes y dependencias](PLATFORM_SUPPORT.md).
+Habilito el flujo macOS 0.4.0 en APFS local del mismo volumen. Añado menús nativos, Finder, migración e inicio de sesión para la app empaquetada. Ubuntu 24.04 x64 sigue restringido. Excluyo Intel. Detallo [paquetes y dependencias](PLATFORM_SUPPORT.md).
 
 ```sh
 mkdir -p artifacts/test-tmp
 TMPDIR="$PWD/artifacts/test-tmp" dotnet test Dowlume/Dowlume.slnx -c Release
 ```
 
-Fuera de Windows, las pruebas compartidas usan un adaptador de muestras; las omisiones explícitas no cuentan como aceptación nativa. Conservo la ubicación del perfil Windows y separo los experimentales. Documento [copias y límites de operaciones](FILE_OPERATION_CONTRACT.md).
+Fuera de Windows, las pruebas compartidas usan un adaptador de muestras; las omisiones explícitas no cuentan como aceptación nativa. Conservo el perfil Windows, migro el perfil cerrado de vista previa macOS al iniciar sin ruta personalizada y separo el perfil Linux. Documento [copias y límites de operaciones](FILE_OPERATION_CONTRACT.md).
+
+Tras compilar Release, ejecuto APFS desechable con `python3 scripts/Test-MacFileReads.py --output artifacts/mac-file-operations`. Genero y pruebo el archivo macOS extraído con `python3 scripts/Build-PlatformPreview.py --runtime osx-arm64 --output artifacts/macos-package`. Las salidas deben ser nuevas. Los perfiles personalizados no registran inicio de sesión ni migran datos personales.
 
 ## Siguientes pasos
 

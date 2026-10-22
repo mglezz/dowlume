@@ -31,9 +31,9 @@ I integrated and published the 0.3.0 foundation after native automated checks an
 
 ### In progress: 0.4.0 for Apple Silicon
 
-I have started the macOS implementation with native read handles, file identity checks and disposable tests on both APFS case policies. I integrate these reads into preview hashing while keeping native mutations disabled. I record the implementation, reproducible checks and remaining gates in [macOS implementation](docs/MACOS_IMPLEMENTATION.md).
+I have implemented native same-volume APFS operations and recovery, the supported lifecycle and watcher, native menus/reopen/quit, optional login startup, profile migration, both languages and self-contained packaging. I verify races, collisions, permissions and full-volume behavior on both APFS case policies. The extracted package runs a native workflow test. I track evidence and exact-package manual checks in [0.4.0 acceptance](docs/RELEASE_CANDIDATE_0.4.0.md).
 
-My next blocks are safe native mutation and recovery, desktop integration, and exact-package acceptance. I prioritize functional completion on macOS and Linux while preserving Windows behavior. I defer Windows publisher signing, macOS Developer ID signing and notarization to final cross-platform stabilization; they are not prerequisites for completing or releasing the functional 0.4.0/0.5.0 milestones. I document the actual signing status and installation limitations of each package. Native file safety and acceptance of the exact binaries remain required. Intel remains outside the initial scope.
+My remaining release gate is acceptance of the exact candidate, including installation, real login and permission dialogs; I do not infer these from automated tests. I prioritize functional completion on macOS and Linux while preserving Windows behavior. I defer Windows publisher signing, macOS Developer ID signing and notarization to final cross-platform stabilization; they are not prerequisites for completing or releasing the functional 0.4.0/0.5.0 milestones. I document the actual signing status and installation limitations of each package. Native file safety and acceptance of the exact binaries remain required. Intel remains outside the initial scope.
 
 ### First implementation sequence: 0.3.0
 

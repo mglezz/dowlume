@@ -1,42 +1,42 @@
-# Implementación macOS hacia 0.4.0
+# Implementación de macOS para 0.4.0
 
-[English](../MACOS_IMPLEMENTATION.md) · [Índice en español](README.md)
+[English](../MACOS_IMPLEMENTATION.md) · [Español](#)
 
-Mi objetivo es macOS 15 en Apple Silicon. La versión publicada sigue siendo 0.3.0; este trabajo inicia el desarrollo de 0.4.0 y no activa modificaciones nativas de archivos ni constituye una nueva versión. Intel queda fuera del alcance.
+Dirijo esta versión a macOS 15+ en Apple Silicon, con carpetas APFS locales del mismo volumen. Implemento el flujo admitido completo: vista previa, organización, supervisión, envejecimiento/revisión, Conservar, Posponer, Mover, Deshacer elegible, historial, ajustes, ambos idiomas y recuperación. Conservo Windows y mantengo desactivadas las mutaciones en Linux. Excluyo Intel y papelera nativa.
 
-## Implementado: lectura e identidad nativas
+## Operaciones nativas
 
-Uso `MacFileHandle` en el cálculo del hash de vista previa y en la lectura verificada de producción. Abro una ruta absoluta con `O_NOFOLLOW_ANY`, `O_CLOEXEC` y `O_NONBLOCK` de Darwin y examino el descriptor mediante `fstat`. Así rechazo enlaces simbólicos en cualquier componente durante la propia apertura y archivos no regulares sin esperar a un escritor de FIFO. Rechazo el indicador dataless cuando lo observo; esto no acepta proveedores de nube ni garantiza evitar la descarga de contenido durante la apertura.
+Abro rutas con `O_NOFOLLOW_ANY`, `O_CLOEXEC` y `O_NONBLOCK` de Darwin, inspecciono `stat` ARM64 y rechazo enlaces, archivos no regulares, marcadores sin datos y destinos de mutación con enlaces duros. Compruebo APFS, montaje local, rutas conocidas de nube y atributos de proveedor. No puedo reconocer todos los sincronizadores; las carpetas admitidas deben estar fuera de estos servicios.
 
-Registro identidad de dispositivo/inodo, número de enlaces duros, modo, tamaño, fechas de modificación/cambio/creación e indicadores. Comparo metadatos tras leer y vuelvo a abrir la ruta para comprobar que describe el mismo objeto. Excluyo la fecha de acceso porque la lectura puede actualizarla. Consulto `_PC_CASE_SENSITIVE` en un descriptor abierto para las pruebas nativas por volumen; no normalizo nombres Unicode ni deduzco identidad comparando cadenas.
+Preparo el movimiento antes de escribir Pending: abro origen y carpetas padre existentes, exijo el mismo volumen APFS, verifico SHA-256 e identidad y adquiero un `flock` cooperativo. La identidad persistente combina UUID de volumen, inodo y fecha de nacimiento. Creo componentes de destino relativos a los descriptores retenidos y llamo a `renameatx_np` con `RENAME_EXCL`. Nunca sustituyo destinos existentes, incluidos alias APFS de mayúsculas/Unicode. Sincronizo las carpetas y verifico identidad, contenido y rutas padre. El renombrado conserva el objeto original y sus metadatos; no recurro a copiar/borrar.
 
-Restrinjo el adaptador a macOS 15+ ARM64. Uso la estructura `stat` Darwin ARM64 del SDK local y contrasto sus campos relevantes con la utilidad `stat` del sistema. Verifico los indicadores de apertura con las [definiciones Darwin de Apple](https://github.com/apple-oss-distributions/xnu/blob/main/bsd/sys/fcntl.h) y la estructura con [sys/stat.h](https://github.com/apple-oss-distributions/xnu/blob/main/bsd/sys/stat.h).
+Uso un pequeño adaptador C ARM64 para la llamada variádica `fcntl(F_GETPATH)`, compilado con el SDK de macOS e incluido en el paquete. Si una operación falla, registro la ruta observada del objeto abierto cuando está disponible para localizar archivos desde Actividad tras una sustitución de carpeta.
 
-## Comprobaciones nativas reproducibles
+Los bloqueos cooperativos no excluyen cualquier escritor POSIX. Una sustitución justo antes del renombrado puede mover el objeto sustituto al destino; la verificación detecta la discrepancia, conserva los objetos y registra NeedsAttention. Nunca borro ni revierto usando una ruta incierta. Excluyo del modelo admitido la mutación hostil por el mismo usuario y no prometo congelar el espacio de nombres. Detallo este límite en el [contrato](FILE_OPERATION_CONTRACT.md).
 
-Ejecuto diez pruebas `MacNativeRead`: hash de producción y metadatos nativos, enlaces finales/antecesores, directorios/FIFO, sustitución por contenido idéntico, sustitución de directorio antecesor, escritura concurrente restaurando longitud/mtime, alias por mayúsculas/Unicode, identidad de enlaces duros, permisos denegados y rutas inválidas/ausentes. Las demás plataformas omiten estas pruebas explícitamente.
+La recuperación nunca repite el movimiento. Solo completo el diario interrumpido si no existe origen y el destino coincide en identidad y contenido. Un origen intacto sin destino pasa a Failed y permite reintentar. Una identidad ausente o archivos ambiguos requieren atención; en macOS no doy por completados registros antiguos solo por sus bytes. Mantengo compatibilidad con esquema SQLite 1 mediante campos JSON opcionales.
 
-Después de compilar Release, ejecuto:
+## Escritorio y migración
+
+Uso selectores nativos y mostrar en Finder. El menú incluye Abrir y Ajustes (Comando-coma), junto a Ocultar/Servicios/Salir nativos; la reapertura desde Dock restaura la ventana. Cerrar o salir espera al trabajo, cierra confirmaciones y libera el bloqueo de perfil. No ofrezco ocultar en bandeja en macOS.
+
+Para una `.app` instalada, el inicio opcional crea un LaunchAgent por usuario con argumentos literales y marca de propiedad. No sustituyo ni elimino trabajos ajenos. Se aplica al siguiente inicio de sesión; los ajustes de macOS pueden desactivarlo. Las ejecuciones de desarrollo o con perfil personalizado no pueden cambiar el inicio de sesión personal.
+
+Guardo el perfil en `~/Library/Application Support/Dowlume`. Antes de crearlo por primera vez copio el perfil cerrado `Dowlume.Preview` mediante una carpeta temporal privada, verifico la base copiada y renombro la carpeta completa al destino. Conservo el original, rechazo origen abierto o enlaces y no fusiono con un destino existente. La supervisión comienza pausada.
+
+## Comprobaciones reproducibles
 
 ```sh
-dotnet build Dowlume/Dowlume.slnx -c Release
-python3 scripts/Test-MacFileReads.py --output artifacts/mac-file-reads
+mkdir -p artifacts/test-tmp
+TMPDIR="$PWD/artifacts/test-tmp" dotnet test Dowlume/Dowlume.slnx -c Release
+python3 scripts/Test-MacFileReads.py --output artifacts/mac-file-operations
+python3 scripts/Build-PlatformPreview.py --runtime osx-arm64 --output artifacts/macos-package
 ```
 
-El directorio de salida debe ser nuevo. Ejecuto como usuario normal en Apple Silicon, con las herramientas de línea de comandos de Xcode y el SDK del repositorio. El script crea dos imágenes dinámicas privadas de 256 MiB, una APFS y otra APFS sensible a mayúsculas, activa permisos de propietario y ejecuta las pruebas en ambas. Nunca recibe un volumen ni una carpeta Descargas del usuario. Solo desmonta sus propias imágenes y elimina sus directorios temporales; si falla el desmontaje, conserva la muestra y da la ejecución por fallida. No fuerza desmontajes.
+Los directorios de salida deben ser nuevos. El script crea dos imágenes privadas dispersas de 256 MiB, APFS y APFS sensible a mayúsculas, activa propiedad y ejecuta como usuario ordinario. Cubre lectura, identidad, enlaces/FIFO, alias, sustituciones, escritores, colisiones, permisos, ciclo completo/reinicio/recuperación, supervisión, rechazo entre volúmenes y un volumen desechable realmente lleno. Solo desmonta sus imágenes, no fuerza desmontajes y conserva la prueba si falla el desmontaje. No repite investigaciones retiradas de capacidad de papelera.
 
-Conservo resultados TRX por volumen y `ACCEPTANCE.mac-file-reads.json`, con commit, cambios locales, sistema, arquitectura y SDK. Las pruebas ausentes u omitidas hacen fallar la aceptación. El trabajo macOS de CI ejecuta el mismo script y adjunta sus informes junto con las regresiones completas. Las comprobaciones locales superaron las diez pruebas en ambas variantes APFS sobre macOS 26.6.2 ARM64 y SDK 10.0.401; el informe identifica esa ejecución como compilación de desarrollo con cambios locales. CI aporta evidencia independiente de macOS 15 para el cambio confirmado. Los resultados locales no amplían la matriz soportada.
+Conservo TRX y `ACCEPTANCE.mac-file-reads.json` con revisión, estado del árbol, sistema, arquitectura y SDK. CI ejecuta lo mismo en macOS 15. La evidencia local en macOS 26.6.2 complementa, sin sustituir, ese entorno base.
 
-## Límites pendientes
+El empaquetado verifica firma ad hoc antes y después de extraer el ZIP. La aplicación autocontenida extraída exige un perfil desechable nuevo, recorre las pestañas en inglés/español, verifica persistencia del idioma, ejecuta organización/revisión/Posponer/Conservar/Mover/Deshacer y reapertura del diario, inicia supervisión real y espera a su cierre. El informe vincula las pruebas al hash del archivo. No afirma aceptación humana de escritorio, inicio real de sesión ni máquina limpia; los registro en la [aceptación](RELEASE_CANDIDATE_0.4.0.md).
 
-Son comprobaciones de lectura, no una transacción ni un bloqueo contra escritores POSIX. Un escritor puede modificar el contenido tras verificarlo. No inmovilizo directorios antecesores, demuestro pertenencia ante cambios de montaje, valido almacenamiento de red/nube ni establezco todavía una operación segura de renombrado/borrado. Los enlaces duros son alias observables, no destinos aceptados para modificar. `PathSafety` mantiene su comparación según el sistema operativo. Conservo `CanMove` desactivado en macOS y bloqueo organización, cambios desde revisión, Deshacer y recuperación automática.
-
-Mi secuencia restante es:
-
-1. Definir y validar el protocolo de modificación nativo: pertenencia por volumen, protección frente a escritores/sustituciones, destinos atómicos sin sobrescritura, metadatos, interrupciones y recuperación del diario. Las operaciones entre volúmenes necesitan evidencia independiente o rechazo explícito.
-2. Completar la aceptación de escritorio: permisos y denegación, Finder/selección de carpetas, Dock/menús/reapertura/cierre, inicio de sesión opcional, ambos idiomas y migración del perfil.
-3. Medir rendimiento, generar la candidata exacta y aceptar instalación/actualización y todo el flujo soportado antes de publicar 0.4.0.
-
-Difiero la firma Developer ID y la notarización a la estabilización final multiplataforma, junto con la firma de editor Windows. Primero completo y valido los flujos de la aplicación en macOS y Linux conservando Windows. Este trabajo de distribución no bloquea el desarrollo funcional ni la aceptación de la versión 0.4.0. Conservo la firma ad hoc de los paquetes macOS de desarrollo y documento su estado real de firma y las limitaciones de instalación. Retomaré la [distribución Developer ID](https://developer.apple.com/developer-id/) en la fase final de distribución. No elimino cuarentena ni desactivo Gatekeeper en los scripts o instrucciones.
-
-Conservo la implementación Windows y los artefactos publicados. El reciclaje nativo sigue desactivado y mantengo intactas las evidencias históricas e investigaciones de capacidad.
+Aplazo Developer ID y notarización hasta estabilización final. Documento firma ad hoc y límites de instalación; los scripts no quitan cuarentena ni desactivan Gatekeeper. Conservo versiones históricas, evidencias e investigaciones retiradas.

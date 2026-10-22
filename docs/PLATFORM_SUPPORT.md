@@ -2,62 +2,40 @@
 
 [English](#) · [Español](es/PLATFORM_SUPPORT.md)
 
-I support Windows x64 in the published [0.3.0 release](RELEASE_CANDIDATE_0.3.0.md). The 0.3.0 source contains platform adapters, native CI, and experimental packages. I do not claim stable macOS/Linux support: their file operations remain disabled. See the [roadmap](../ROADMAP.md) and [0.3.0 notes](RELEASE_NOTES_0.3.0.md).
+I keep [0.3.0](RELEASE_CANDIDATE_0.3.0.md) as the published stable release until I accept and publish the 0.4.0 packages. The current 0.4.0 source enables the macOS workflow described below; older 0.3.0 macOS/Linux binaries remain restricted previews. See [0.4.0 notes](RELEASE_NOTES_0.4.0.md) and [acceptance](RELEASE_CANDIDATE_0.4.0.md).
 
-## Matrix
-
-| Target | 0.3.0 scope | Remaining release gate |
+| Target | Current implementation | Distribution and remaining acceptance |
 | --- | --- | --- |
-| Windows x64 | Existing file operations, profile location, Explorer, tray and login startup; installer and portable ZIP | 0.3.0 automation and overall functional confirmation completed; manual environment and new clean-machine evidence limits remain documented in the acceptance record. Repeat affected checks for future changes. |
-| macOS 15, Apple Silicon | Native ARM64 CI; self-contained `.app` in ZIP; folder preview, settings, both languages, history, Finder reveal; separate preview profile | 0.4.0: native file safety, APFS case-sensitive/insensitive and Unicode behavior, permissions, desktop lifecycle, installation and upgrade acceptance with the actual signing status documented. Newer macOS versions require their own evidence. |
-| macOS Intel | Excluded | No x64 implementation, CI job or package. I may reconsider it in a later release with separate acceptance. |
-| Ubuntu 24.04 x64 | Native CI; self-contained `.tar.gz`; preview capabilities; XDG Downloads discovery; containing-folder reveal; X11 launch under Xvfb | 0.5.0: ext4 file safety, GNOME desktop acceptance, permissions, autostart, package integration and upgrade; XWayland and native Wayland require separate testing. |
-| Other Linux targets | Excluded from the initial scope | Separate evidence for other distributions, desktops and architectures. |
+| Windows x64 | Organization, monitoring, review, eligible Undo, recovery, Explorer, tray and login startup | Installer and portable ZIP; I repeat automated upgrade checks from hash-pinned 0.3.0 and require exact-package manual confirmation. Previous acceptance does not approve changed binaries. |
+| macOS 15+ Apple Silicon | Complete supported workflow on local APFS within one volume; native dialogs/Finder, application/Dock menus, reopen/quit, optional login startup, both languages and preview-profile migration | Self-contained `.app` ZIP, ad-hoc signed. Native CI targets macOS 15; local development also runs on 26.6.2. Exact-package manual installation, permissions and actual-login checks remain separately recorded. |
+| macOS Intel | Excluded | No x64 package or support claim. |
+| Ubuntu 24.04 x64 | Restricted preview: folder preview, settings, history, both languages, XDG Downloads discovery and containing-folder reveal | Self-contained `.tar.gz`; X11 launch under Xvfb. Mutations, recovery, login startup and tray hiding remain disabled for the 0.5.0 milestone. Xvfb does not accept a real GNOME session, XWayland or native Wayland. |
+| Other Linux targets | Excluded from the initial scope | Separate native evidence is required for other distributions, desktops and architectures. |
 
-My macOS/Linux archives are development previews, not accepted installers. The macOS bundle has an ad-hoc signature, without Developer ID or notarization. I verify its signature before and after extracting the ZIP, then launch that extracted application with a disposable profile. The Linux launch uses Xvfb, which does not validate a real GNOME session, dialogs, file-manager interactions or accessibility. Both reports explicitly leave manual desktop and clean-machine acceptance false. I do not ask users to disable system security.
-
-The upstream [Avalonia matrix](https://docs.avaloniaui.net/docs/supported-platforms) and [Apple distribution requirements](https://developer.apple.com/documentation/security/notarizing-macos-software-before-distribution) inform future support; they do not prove Dowlume's native safety. I keep the narrower matrix above until I have direct evidence.
+Native recycling remains disabled on every platform. I preserve the historical evidence and do not repeat retired capacity probes. I do not import profiles across operating systems.
 
 ## Functional priorities and deferred signing
 
-I complete the supported workflows on Windows x64, macOS Apple Silicon and Linux x64 before addressing publisher signing and macOS notarization in final stabilization. I retain the sequence macOS 0.4.0, Linux 0.5.0, then cross-platform stabilization. Organization, monitoring, review, eligible Undo, history, settings, both languages and recovery need native acceptance on each supported target; platform-specific desktop integration needs its own tests.
+I complete application workflows on Windows, macOS Apple Silicon and Linux before publisher signing and macOS notarization in final stabilization. Signing is not a prerequisite for functional 0.4.0/0.5.0. I retain ad-hoc signing on macOS, report its actual status and verify it before/after extraction. I never remove quarantine or disable Gatekeeper. I record native safety, functional acceptance and installation constraints separately.
 
-Signing is not a prerequisite for the functional milestones. I report package signing status and installation limitations separately from functional support. I retain the existing ad-hoc signature used by macOS development packages. Native file safety, reproducible packages and installation/upgrade acceptance remain required; postponing signing does not enable unvalidated operations.
+## macOS scope
 
-## Implemented foundation
+I support ordinary local APFS folders outside synchronization services. Source and destination must be on the same volume. I reject cross-volume transfers, symbolic/hard links, nonregular files, known cloud-provider paths/attributes, network/non-APFS storage and unavailable volumes before preparing a move. A folder not recognized as cloud-managed is not certified safe for synchronization. I use persistent native identity for path containment, exclusive no-overwrite rename and identity plus SHA-256 for recovery. Cooperative locks cannot exclude arbitrary POSIX writers; detected races retain files and require attention. See [implementation](MACOS_IMPLEMENTATION.md) and [contract](FILE_OPERATION_CONTRACT.md).
 
-I select startup, file-manager, profile and tray capabilities in `DesktopPlatform`. Windows keeps `%LOCALAPPDATA%\Dowlume`; macOS uses `~/Library/Application Support/Dowlume.Preview`; Linux uses the .NET local application-data location, normally `$XDG_DATA_HOME/Dowlume.Preview` or `~/.local/share/Dowlume.Preview`. The previews never import Windows profiles automatically. Stored paths are specific to their original OS.
+I store Windows data in `%LOCALAPPDATA%\Dowlume`, macOS data in `~/Library/Application Support/Dowlume`, and Linux preview data in the .NET local application-data location, normally `$XDG_DATA_HOME/Dowlume.Preview` or `~/.local/share/Dowlume.Preview`. The first macOS launch copies a closed `Dowlume.Preview` profile only if the new profile does not exist; I preserve the source. Custom `--data-directory` launches bypass migration and login registration.
 
-I read Linux `user-dirs.dirs` as bounded data and expand only its supported `$HOME` form; I never source it as a shell script. Windows retains its known-folder API; macOS currently suggests `~/Downloads`, with explicit folder selection available. Native file-manager commands receive literal argument lists, without a shell. Linux opens the containing folder because portable file selection is unavailable.
+Closing the macOS window exits after draining work. Native Hide and Dock reopen remain available while the application runs. Optional login startup uses a per-user LaunchAgent for an installed app, with an ownership marker and literal executable arguments. It applies at the next login and can be overridden by system settings. Windows keeps its tray and registry startup behavior. Linux has neither tray hiding nor startup registration.
 
-I expose no tray-hiding or login-startup action on the previews. If Windows tray creation fails, I retain a visible window and record the error. Closing the window drains work and releases the profile lock.
+## Evidence and packages
 
-`IFileMover` separates orchestration from mutation. `SafeFileMover` rejects non-Windows moves before creating directories. The organizer also rejects organization, monitoring reconciliation, review decisions, Undo and recovery before journaling or modifying files. Preview never replays pending operations on these hosts. Preferences and the isolated SQLite profile remain writable. The [file-operation contract](FILE_OPERATION_CONTRACT.md) records the native work still required.
-
-## macOS work toward 0.4.0
-
-I have started native read and identity validation on Apple Silicon, including APFS case-sensitive/insensitive fixtures. The current source uses these reads for preview hashes; published 0.3.0 binaries remain unchanged. File mutations remain disabled. I record the scope and pending distribution requirements in [macOS implementation](MACOS_IMPLEMENTATION.md).
-
-## Evidence and test interpretation
-
-I run shared tests on native Windows x64, macOS ARM64 and Ubuntu x64 runners. Five Windows-only tests explicitly report skipped on other systems; the Linux case-distinct watcher regression explicitly reports skipped elsewhere. Shared orchestration tests use a disposable, test-assembly-only mover outside Windows. That mover is not shipped and is not evidence of native race protection. Production refusal has separate tests. Fixed schema-1 fixtures cover 0.2.0 English/Spanish settings, custom rules, history and closed-database backups.
-
-Each preview includes source revision, dirty-tree status, runtime, build environment, checksums and an archive launch report. Only clean, committed builds are release candidates. Native CI artifacts retain their SDK/environment and TRX reports. I repeat affected Windows package checks against the hash-pinned 0.2.0 installer. No prior manual acceptance approves changed binaries.
-
-## Build and system dependencies
-
-I build on the native target with the repository's .NET 10 SDK and Python 3.13:
+I run shared tests on Windows x64, macOS ARM64 and Ubuntu x64. Shared fixture movers are not native file-safety evidence. Separate macOS read/move tests run on disposable APFS images with both case policies, including full-volume and race cases. Windows-only tests explicitly skip elsewhere. Schema-1 fixtures preserve both languages, settings, tracked files and history.
 
 ```sh
-python3 scripts/Build-PlatformPreview.py --runtime osx-arm64 --output artifacts/macos-preview
-# On Ubuntu 24.04 x64 instead:
+python3 scripts/Build-PlatformPreview.py --runtime osx-arm64 --output artifacts/macos-package
+# On Ubuntu 24.04 x64:
 python3 scripts/Build-PlatformPreview.py --runtime linux-x64 --output artifacts/linux-preview
 ```
 
-The output directory must not exist. The script packages an isolated staging directory, extracts the archive and checks native launch/clean exit. macOS needs Xcode command-line tools for `codesign` and `ditto`. Linux CI installs `xvfb`, `xauth`, `libx11-6`, `libice6`, `libsm6`, `libfontconfig1`, `libgl1`, `libegl1`, `libxrandr2`, `libxi6`, `libxcursor1`, `libxrender1`, `libxext6`, and `libxfixes3`. Interactive reveal also requires `/usr/bin/xdg-open` (`xdg-utils`) and a functioning desktop file manager. Including .NET does not remove native library requirements.
+I build on each native target with .NET SDK 10.0.401 and Python 3.13 in CI. macOS requires Xcode command-line tools for the C adapter, icon conversion, signing and archiving. Linux CI installs `xvfb`, `xauth`, `libx11-6`, `libice6`, `libsm6`, `libfontconfig1`, `libgl1`, `libegl1`, `libxrandr2`, `libxi6`, `libxcursor1`, `libxrender1`, `libxext6`, and `libxfixes3`. Interactive Linux reveal also needs `/usr/bin/xdg-open` (`xdg-utils`) and a desktop file manager.
 
-## Gates for the ports
-
-Before enabling file operations, I validate identity by volume, Unicode/case collisions, no-overwrite moves, writers/replacements, links/mounts, metadata, denied permissions, low disk space and interrupted cross-volume recovery. Before stable distribution I accept both languages, dialogs, file-manager behavior, restart, shutdown, single-instance refusal, optional login startup, installation, upgrade and uninstall on the exact packages. I start Linux desktop acceptance with Ubuntu 24.04 GNOME; native Wayland is not accepted by an X11 smoke test.
-
-Native recycling remains disabled. I preserve historical evidence and checkpoints, and do not repeat retired capacity probes. Network shares, cloud placeholders, links and cross-OS profile import remain unsupported.
+The output directory must be new. Each archive includes runtime, language resources, offline guides, revision and build information. Reports include archive SHA-256, dirty-tree status and explicit manual/clean-machine acceptance fields. The extracted macOS binary exercises the native lifecycle, watcher, reopened journal and English/Spanish tabs in a new disposable profile. Only clean committed builds qualify as release candidates; automated workflow checks do not imply actual-login or clean-machine acceptance.

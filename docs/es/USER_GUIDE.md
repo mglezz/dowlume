@@ -2,23 +2,23 @@
 
 [English](../USER_GUIDE.md) · [Índice en español](README.md)
 
-Diseñé Dowlume para organizar descargas en Windows. Publiqué [v0.2.0 para Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.2.0) como instalador por usuario y ZIP portátil con .NET incluido. Empieza con copias de archivos de ejemplo en una carpeta desechable.
+Diseñé Dowlume para organizar descargas en Windows. Publiqué [v0.3.0 para Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.3.0) como instalador por usuario y ZIP portátil con .NET incluido. Empieza con copias de archivos de ejemplo en una carpeta desechable.
 
 ## Instalar y abrir
 
-Descarga el instalador o el ZIP desde la publicación de GitHub. Los paquetes de v0.2.0 no están firmados: utiliza una fuente de confianza y compara el SHA-256 con `SHA256SUMS.txt`.
+Descarga el instalador o el ZIP desde la publicación de GitHub. Los paquetes de v0.3.0 no están firmados: utiliza una fuente de confianza y compara el SHA-256 con `SHA256SUMS.txt`.
 
-Ejecuta `Dowlume-0.2.0-win-x64-setup.exe` sin permisos de administrador. Para la versión portátil, extrae todo el ZIP y ejecuta `Dowlume.App.exe` junto a sus archivos. No necesita una instalación separada de .NET.
+Ejecuta `Dowlume-0.3.0-win-x64-setup.exe` sin permisos de administrador. Para la versión portátil, extrae todo el ZIP y ejecuta `Dowlume.App.exe` junto a sus archivos. No necesita una instalación separada de .NET.
 
 Incluyo `START-HERE.txt` para consulta sin conexión y un acceso **Dowlume quick start** en el menú Inicio. Cierra también cualquier instancia oculta en la bandeja antes de actualizar o desinstalar; el instalador se niega a continuar mientras la aplicación está abierta. Conservo los archivos organizados y el perfil local al desinstalar.
 
 ## Elegir idioma
 
-En la versión 0.2.0, pausa la supervisión y abre **Settings → Language**. Selecciona **Español** o **English**. El cambio se aplica y se guarda inmediatamente para ese perfil. Al reiniciar se conserva; los perfiles antiguos empiezan en inglés.
+En la versión 0.3.0, pausa la supervisión y abre **Settings → Language**. Selecciona **Español** o **English**. El cambio se aplica y se guarda inmediatamente para ese perfil. Al reiniciar se conserva; los perfiles antiguos empiezan en inglés.
 
 Cambio pestañas, botones, confirmaciones, bandeja, categorías, estados, fechas y mensajes conocidos. Mantengo los nombres de archivos y carpetas, las rutas y los datos históricos. La carpeta `Expiring Files` conserva ese nombre. No guardo otros ajustes pendientes al cambiar de idioma. Los mensajes históricos desconocidos mantienen su texto original y los controles nativos del selector de carpetas siguen el idioma de Windows.
 
-**El instalador y el ZIP portátil publicados de 0.2.0 incluyen el selector.** Los paquetes anteriores de 0.1.0 siguen en inglés.
+**El instalador y el ZIP portátil publicados de 0.3.0 incluyen el selector.** Los paquetes anteriores de 0.1.0 siguen en inglés.
 
 ## Primer uso
 
@@ -77,10 +77,10 @@ Registro la intención antes de mover. **Reintentar operaciones interrumpidas** 
 | Estado observado | Resultado |
 | --- | --- |
 | Solo queda el origen y su contenido coincide | Registro Fallida; puedes reintentar la acción original. |
-| Solo queda el destino y su contenido coincide | Completo el registro interrumpido. |
+| Solo queda el destino y coincide su contenido (también identidad nativa registrada en macOS) | Completo el registro interrumpido. |
 | Existen ambos, ninguno, el contenido difiere o falla la inspección | Registro Requiere atención y conservo los archivos. |
 
-Copia las rutas desde Actividad y revísalas en el Explorador. Conserva el contenido que necesites. Para movimientos interrumpidos, reintenta cuando quede una copia inequívoca con el contenido esperado en una de las rutas registradas.
+Copia las rutas desde Actividad y revísalas en Explorador o Finder. Conserva el contenido que necesites. Para movimientos interrumpidos, reintenta cuando quede una copia inequívoca con el contenido esperado en una de las rutas registradas.
 
 No repito envíos históricos a la papelera ni deduzco su éxito por la ausencia del origen. Un origen intacto permite marcarlos como fallidos; el contenido ausente o cambiado sigue requiriendo atención. Reintentar no restaura contenido perdido ni garantiza que Windows lo guardase.
 
@@ -90,7 +90,7 @@ Si editas un archivo registrado, rechazo las operaciones basadas en su huella an
 
 - Aplico las reglas a futuras clasificaciones y a los plazos actuales. Cambiar un nombre de categoría en Ajustes no renombra la carpeta existente.
 - Superviso una carpeta a la vez. Conservo el historial de las anteriores y recupero sus registros en el Resumen al volver a elegirlas.
-- Guardo base de datos y diagnóstico en `%LOCALAPPDATA%\Dowlume`.
+- En Windows guardo base de datos y diagnóstico en `%LOCALAPPDATA%\Dowlume`.
 - La base de datos contiene rutas personales y huellas de contenido. El diagnóstico contiene eventos y tipos o códigos de error, sin rutas ni mensajes de excepción.
 - Para una copia de seguridad, cierra Dowlume y copia todo el directorio de datos, incluidos los archivos auxiliares de SQLite.
 - La desinstalación conserva archivos organizados y base de datos.
@@ -98,10 +98,24 @@ Si editas un archivo registrado, rechazo las operaciones basadas en su huella an
 
 ## Límites
 
-Distribuyo para Windows x64. Rechazo recursos de red, raíces de unidades, carpetas del sistema, enlaces simbólicos, junctions y marcadores de nube con reparse points. No ejecuto la aplicación como servicio.
+Windows x64 es el destino estable publicado; detallo el flujo macOS 0.4.0 más abajo. Rechazo recursos de red, raíces de unidades, carpetas del sistema, enlaces simbólicos, junctions y marcadores de nube con reparse points. No ejecuto la aplicación como servicio.
 
-Compruebo antigüedad de escritura, dos observaciones estables y apertura exclusiva antes de considerar una descarga lista. Es una comprobación conservadora, sin garantía de que otro programa no vuelva a escribir después. Excluyo descargas parciales conocidas. Evita descargar directamente en las carpetas de categoría.
+En Windows compruebo antigüedad de escritura, dos observaciones estables y apertura exclusiva antes de considerar una descarga lista. Es una comprobación conservadora, sin garantía de que otro programa no vuelva a escribir después. Excluyo descargas parciales conocidas. Evita descargar directamente en las carpetas de categoría.
 
 Los movimientos en Windows mantienen abierto el identificador del archivo verificado. Entre volúmenes, copio con Windows, verifico el flujo principal del destino y elimino el origen mediante su identificador verificado. No es una operación atómica: una interrupción puede dejar dos copias para inspección manual. Los archivos grandes pueden retrasar la pausa o la salida mientras termina la operación.
 
 Mis protecciones cubren cambios ordinarios del sistema de archivos, no un proceso malicioso con los mismos privilegios del usuario. Mantén copias de seguridad de los archivos valiosos.
+
+## macOS 0.4.0
+
+Dirijo esta versión a Apple Silicon, macOS 15+ y carpetas APFS locales ordinarias fuera de sincronizadores. Rechazo movimientos entre volúmenes, enlaces, red y carpetas conocidas de nube. El destino debe estar en el mismo volumen APFS; dos volúmenes del mismo disco siguen siendo distintos. Mantengo desactivada la papelera nativa.
+
+Cierra la aplicación anterior, extrae el ZIP y coloca `Dowlume.app` completa en Aplicaciones antes de abrirla o activar el inicio de sesión. Incluyo runtime, español y guías dentro del paquete. Uso firma ad hoc, sin Developer ID ni notarización. macOS puede bloquear la primera apertura; si ofrece **Abrir igualmente** en **Ajustes del Sistema → Privacidad y seguridad**, úsalo solo tras comprobar procedencia y hash. No pido desactivar Gatekeeper ni quitar cuarentena. Si la política del sistema impide abrir, registro esa limitación de instalación en la aceptación.
+
+Permite acceso solo a las carpetas seleccionadas para organizar. Si se deniega, muestro un error y conservo los archivos; revisa **Ajustes del Sistema → Privacidad y seguridad → Archivos y carpetas** y reintenta. No necesito acceso total al disco. El aviso depende de la carpeta y los permisos ya concedidos.
+
+**Comando-coma** abre Ajustes. Ocultar nativo y reabrir desde Dock recuperan la misma aplicación. Cerrar la ventana o **Salir** espera al trabajo y termina; no hay modo de bandeja macOS. El inicio automático se aplica a una `.app` instalada al siguiente inicio de sesión; la supervisión continúa pausada y los ajustes macOS pueden anularlo. Desactívalo antes de mover o desinstalar la app. Para desinstalar, sal y elimina la app; conservo perfil y archivos gestionados.
+
+Guardo datos en `~/Library/Application Support/Dowlume`. En la primera apertura predeterminada copio el perfil cerrado `Dowlume.Preview` si no existe el nuevo, conservo el original y retengo idioma/ajustes/historial. Cierra antes la vista previa. Un perfil nuevo existente tiene prioridad; un destino incompleto o error de migración exige inspección, sin fusión automática. Respalda el perfil completo cerrado y los archivos antes de actualizar. `--data-directory` no migra el perfil personal ni modifica el inicio de sesión.
+
+Si detecto una carrera de archivos/carpetas, conservo los objetos y puedo mostrar NeedsAttention. Actividad incluye origen, destino previsto y, cuando está disponible, ubicación observada del objeto abierto original. Conserva esos archivos antes de reintentar recuperación. Los bytes iguales no bastan para completar una operación macOS: debe coincidir también la identidad registrada de volumen/archivo. No puedo excluir cualquier escritor POSIX; mantén archivos editados activamente o sincronizados fuera de la carpeta gestionada.

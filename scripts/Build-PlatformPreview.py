@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build and smoke-test native, read-only previews; never publish a release."""
+"""Build native macOS packages and restricted Linux previews; never publish a release."""
 import argparse
 import hashlib
 import json
@@ -32,7 +32,7 @@ def build(runtime, output, staging):
     source = run("git", "rev-parse", "HEAD", capture_output=True, text=True).stdout.strip()
     dirty = bool(run("git", "status", "--porcelain", capture_output=True, text=True).stdout.strip())
     output.mkdir(parents=True)
-    package_name = f"Dowlume-{version}-{runtime}-preview"
+    package_name = f"Dowlume-{version}-{runtime}" + ("-preview" if runtime == "linux-x64" else "")
     # Keep the bundle outside synced workspaces whose providers can reapply Finder metadata.
     package = staging / package_name
     if runtime == "osx-arm64":
@@ -41,10 +41,22 @@ def build(runtime, output, staging):
         resources = bundle / "Resources"
         resources.mkdir(parents=True)
         with (bundle / "Info.plist").open("wb") as stream:
-            plistlib.dump({"CFBundleIdentifier": "com.mglezz.dowlume.preview", "CFBundleName": "Dowlume Preview",
+            plistlib.dump({"CFBundleIdentifier": "com.mglezz.dowlume", "CFBundleName": "Dowlume",
                           "CFBundleExecutable": "Dowlume.App", "CFBundlePackageType": "APPL",
                           "CFBundleShortVersionString": version, "CFBundleVersion": version,
-                          "LSMinimumSystemVersion": "15.0", "NSHighResolutionCapable": True}, stream)
+                          "LSMinimumSystemVersion": "15.0", "NSHighResolutionCapable": True,
+                          "CFBundleDisplayName": "Dowlume", "CFBundleIconFile": "Dowlume.icns",
+                          "NSDownloadsFolderUsageDescription": "Dowlume organizes completed downloads in the folder you select.",
+                          "NSDocumentsFolderUsageDescription": "Dowlume accesses only the organization or destination folder you select.",
+                          "NSDesktopFolderUsageDescription": "Dowlume accesses only the organization or destination folder you select."}, stream)
+        iconset = staging / "Dowlume.iconset"
+        iconset.mkdir()
+        for size in (16, 32, 128, 256, 512):
+            for scale in (1, 2):
+                name = f"icon_{size}x{size}" + ("@2x" if scale == 2 else "") + ".png"
+                run("sips", "-s", "format", "png", "-z", str(size * scale), str(size * scale),
+                    str(ROOT / "Dowlume/Dowlume.App/Assets/dowlume.ico"), "--out", str(iconset / name), capture_output=True)
+        run("iconutil", "-c", "icns", str(iconset), "-o", str(resources / "Dowlume.icns"))
     else:
         publish = package
         resources = package
@@ -57,10 +69,16 @@ def build(runtime, output, staging):
     executable = publish / "Dowlume.App"
     executable.chmod(executable.stat().st_mode | 0o111)
     shutil.copy2(ROOT / "LICENSE", resources / "LICENSE")
-    shutil.copy2(ROOT / "packaging/PLATFORM-PREVIEW.txt", resources / "START-HERE.txt")
+    instructions = "MACOS.txt" if runtime == "osx-arm64" else "PLATFORM-PREVIEW.txt"
+    shutil.copy2(ROOT / "packaging" / instructions, resources / "START-HERE.txt")
+    shutil.copytree(ROOT / "docs", resources / "docs")
+    for document in ("README.md", "GETTING_STARTED.md", "ROADMAP.md", "CONTRIBUTING.md"):
+        shutil.copy2(ROOT / document, resources / document)
+    if runtime == "osx-arm64" and not (publish / "libdowlume_native.dylib").is_file():
+        raise RuntimeError("The native file-operation adapter is missing.")
     info = {"Version": version, "SourceCommit": source, "DirtyWorkingTree": dirty,
             "RuntimeIdentifier": runtime, "SelfContained": True, "BuiltAtUtc": datetime.now(timezone.utc).isoformat(),
-            "Support": "Experimental preview only; file mutations and recovery disabled", "Signing": "Ad-hoc only; no Developer ID signature or notarization" if runtime == "osx-arm64" else "Unsigned",
+            "Support": "macOS 15+ Apple Silicon; local same-volume APFS operations" if runtime == "osx-arm64" else "Experimental preview only; file mutations and recovery disabled", "Signing": "Ad-hoc only; no Developer ID signature or notarization" if runtime == "osx-arm64" else "Unsigned",
             "OS": platform.platform(), "Architecture": platform.machine()}
     info_name = f"BUILD-INFO.{runtime}.json"
     (output / info_name).write_text(json.dumps(info, indent=2) + "\n", encoding="utf-8")
@@ -97,11 +115,16 @@ def build(runtime, output, staging):
     run(*command, timeout=60)
     if not (profile / "dowlume.db").is_file():
         raise RuntimeError("The extracted application did not initialize its isolated profile.")
+    workflow = None
+    if runtime == "osx-arm64":
+        workflow = json.loads((profile / "MACOS-WORKFLOW.json").read_text(encoding="utf-8"))
+        if workflow.get("Passed") is not True:
+            raise RuntimeError("The extracted macOS application did not pass its native workflow.")
     digest = hashlib.sha256(archive.read_bytes()).hexdigest()
     report = {"Passed": True, "ArchiveSha256": digest, "SourceCommit": source,
               "RuntimeIdentifier": runtime, "NativeWindowLaunchAndGracefulExit": True,
-              "FileMutationsEnabled": False, "ManualDesktopAcceptance": False,
-              "CleanMachineAcceptance": False, "Note": "Native launch smoke test on an SDK-equipped runner; not stable platform acceptance."}
+              "FileMutationsEnabled": runtime == "osx-arm64", "NativeWorkflow": workflow, "ManualDesktopAcceptance": False,
+              "CleanMachineAcceptance": False, "Note": "Extracted-package automation on an SDK-equipped runner; manual installation, permissions and actual login need separate acceptance."}
     report_name = f"ACCEPTANCE.{runtime}.json"
     (output / report_name).write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     files = [archive, output / info_name, output / report_name]

@@ -1,10 +1,16 @@
-name: Package native platform previews
+name: Package macOS and Linux preview
 on:
   workflow_dispatch:
   pull_request:
     paths:
       - 'Dowlume/**'
-      - 'packaging/PLATFORM-PREVIEW.txt'
+      - 'packaging/**'
+      - 'docs/USER_GUIDE.md'
+      - 'docs/es/USER_GUIDE.md'
+      - 'docs/PLATFORM_SUPPORT.md'
+      - 'docs/es/PLATFORM_SUPPORT.md'
+      - 'docs/RELEASE_NOTES_*.md'
+      - 'docs/es/RELEASE_NOTES_*.md'
       - 'scripts/Build-PlatformPreview.py'
       - '.github/workflows/platform-preview.yml'
 permissions:
