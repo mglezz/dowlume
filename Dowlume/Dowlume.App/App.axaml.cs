@@ -2,7 +2,6 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Avalonia.Threading;
 using Dowlume.App.Localization;
 using Dowlume.App.Services;
 using Dowlume.App.ViewModels;
@@ -16,6 +15,7 @@ public partial class App : Application
 {
     private FileStream? _instanceLock;
     private DesktopTray? _tray;
+    private MacDesktopIntegration? _macDesktop;
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -30,17 +30,21 @@ public partial class App : Application
             var text = new Localizer();
             try
             {
+                if (OperatingSystem.IsMacOS() && !Program.IsCustomDataDirectory)
+                    MacProfileMigration.ImportPreview(Path.Combine(Path.GetDirectoryName(dataDirectory)!, "Dowlume.Preview"), dataDirectory);
                 Directory.CreateDirectory(dataDirectory);
                 _instanceLock = new FileStream(Path.Combine(dataDirectory, "instance.lock"), FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
                 var store = new SqliteStateStore(Path.Combine(dataDirectory, "dowlume.db"));
-                var organizer = new DownloadOrganizer(store, new SafeFileMover(), new FileReadiness());
+                var organizer = new DownloadOrganizer(store, new SafeFileMover(), OperatingSystem.IsMacOS() ? new MacFileReadiness() : new FileReadiness());
                 var window = new MainWindow();
                 text.SetLanguage(store.LoadSettings()?.Language);
                 var platform = DesktopPlatform.Current;
                 var model = new MainViewModel(store, organizer, new DesktopDialogs(window, text, platform.FileManager), log,
-                    platform.Startup, text, platform.SuggestedDownloads);
+                    Program.IsCustomDataDirectory && platform.System == DesktopSystem.MacOS ? new UnavailableStartupRegistration() : platform.Startup, text, platform.SuggestedDownloads);
                 window.DataContext = model;
                 desktop.MainWindow = window;
+                if (platform.System == DesktopSystem.MacOS)
+                    _macDesktop = new MacDesktopIntegration(this, desktop, window, text);
                 if (platform.HasAcceptedTray)
                 {
                     try
@@ -54,7 +58,10 @@ public partial class App : Application
             }
             catch (Exception error)
             {
-                log.Write("startup_failed", error);
+                if (OperatingSystem.IsMacOS() && !Program.IsCustomDataDirectory && !File.Exists(Path.Combine(dataDirectory, "dowlume.db")))
+                    new DiagnosticLog(Path.Combine(Path.GetDirectoryName(dataDirectory)!, "Dowlume.migration.jsonl")).Write("startup_failed", error);
+                else
+                    log.Write("startup_failed", error);
                 if (Program.IsSmokeTest)
                     Environment.ExitCode = 1;
                 desktop.MainWindow = new Window
@@ -73,9 +80,25 @@ public partial class App : Application
             if (Program.IsSmokeTest)
             {
                 Window smokeWindow = desktop.MainWindow!;
-                smokeWindow.Opened += (_, _) => DispatcherTimer.RunOnce(smokeWindow.Close, TimeSpan.FromSeconds(1));
+                smokeWindow.Opened += async (_, _) =>
+                {
+                    try
+                    {
+                        if (OperatingSystem.IsMacOS() && smokeWindow is MainWindow main)
+                            await MacPackageAcceptance.RunAsync(main, dataDirectory);
+                        else
+                            await Task.Delay(1000);
+                    }
+                    catch (Exception error)
+                    {
+                        log.Write("package_acceptance_failed", error);
+                        Console.Error.WriteLine(error);
+                        Environment.ExitCode = 1;
+                    }
+                    finally { smokeWindow.Close(); }
+                };
             }
-            desktop.Exit += (_, _) => { _tray?.Dispose(); _instanceLock?.Dispose(); };
+            desktop.Exit += (_, _) => { _macDesktop?.Dispose(); _tray?.Dispose(); _instanceLock?.Dispose(); };
         }
 
         base.OnFrameworkInitializationCompleted();

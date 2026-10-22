@@ -469,4 +469,18 @@ La ubicación original debe estar disponible y el archivo no debe haber cambiado
   <data name="PreviewSettingsSaved" xml:space="preserve">
     <value>Ajustes guardados. Puedes consultar la carpeta en Vista previa. Las operaciones de archivos siguen sin estar disponibles.</value>
   </data>
+  <data name="ObservedFileLocation" xml:space="preserve"><value>Última ubicación observada del archivo (operación interrumpida)</value></data>
+  <data name="MacSameVolumeOnly" xml:space="preserve"><value>Las operaciones de macOS requieren carpetas APFS locales del mismo volumen. Elige otro destino.</value></data>
+  <data name="MacNoHardLinks" xml:space="preserve"><value>No se pueden organizar archivos con varios enlaces duros. Elige una copia independiente.</value></data>
+  <data name="MacNoCloudFolders" xml:space="preserve"><value>No se admiten carpetas gestionadas por servicios de nube. Elige una carpeta local.</value></data>
+  <data name="MacPackagedStartup" xml:space="preserve"><value>El inicio de sesión requiere la aplicación Dowlume instalada.</value></data>
+  <data name="InspectRecoveryFiles" xml:space="preserve"><value>Revisa el origen y el destino en el gestor de archivos y vuelve a intentar la recuperación. No se eliminará nada automáticamente.</value></data>
+  <data name="InspectBusyFiles" xml:space="preserve"><value>El archivo está ocupado, ha cambiado, falta o su destino no está disponible. Revísalo en el gestor de archivos e inténtalo de nuevo.</value></data>
+  <data name="InspectChangedFile" xml:space="preserve"><value>El archivo cambió después de registrarse. Revísalo antes de intentarlo de nuevo.</value></data>
+  <data name="MacFolderScope" xml:space="preserve"><value>macOS: elige carpetas APFS locales del mismo volumen, fuera de la sincronización en la nube. No se admiten enlaces ni movimientos entre volúmenes.</value></data>
+  <data name="MacServices" xml:space="preserve"><value>Servicios</value></data>
+  <data name="MacHide" xml:space="preserve"><value>Ocultar Dowlume</value></data>
+  <data name="MacHideOthers" xml:space="preserve"><value>Ocultar las demás</value></data>
+  <data name="MacShowAll" xml:space="preserve"><value>Mostrar todo</value></data>
+  <data name="MacQuit" xml:space="preserve"><value>Salir</value></data>
 </root>

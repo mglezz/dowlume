@@ -469,4 +469,18 @@ The original location must be available and the file must be unchanged. Undoing 
   <data name="PreviewSettingsSaved" xml:space="preserve">
     <value>Settings saved. You can inspect the folder in Preview. File operations remain unavailable.</value>
   </data>
+  <data name="ObservedFileLocation" xml:space="preserve"><value>Last observed file location (interrupted operation)</value></data>
+  <data name="MacSameVolumeOnly" xml:space="preserve"><value>macOS file operations require local APFS folders on the same volume. Choose another destination.</value></data>
+  <data name="MacNoHardLinks" xml:space="preserve"><value>Files with multiple hard links cannot be organized. Choose an independent copy.</value></data>
+  <data name="MacNoCloudFolders" xml:space="preserve"><value>Cloud-managed folders are not supported. Choose a local folder.</value></data>
+  <data name="MacPackagedStartup" xml:space="preserve"><value>Login startup requires the installed Dowlume application.</value></data>
+  <data name="InspectRecoveryFiles" xml:space="preserve"><value>Inspect the source and destination in your file manager, then retry recovery. Nothing will be removed automatically.</value></data>
+  <data name="InspectBusyFiles" xml:space="preserve"><value>The file is busy, changed, missing, or its destination is unavailable. Inspect it in your file manager and retry.</value></data>
+  <data name="InspectChangedFile" xml:space="preserve"><value>The file changed after it was tracked. Review it before retrying.</value></data>
+  <data name="MacFolderScope" xml:space="preserve"><value>macOS: choose local APFS folders on the same volume, outside cloud synchronization. Links and cross-volume moves are unavailable.</value></data>
+  <data name="MacServices" xml:space="preserve"><value>Services</value></data>
+  <data name="MacHide" xml:space="preserve"><value>Hide Dowlume</value></data>
+  <data name="MacHideOthers" xml:space="preserve"><value>Hide Others</value></data>
+  <data name="MacShowAll" xml:space="preserve"><value>Show All</value></data>
+  <data name="MacQuit" xml:space="preserve"><value>Quit</value></data>
 </root>

@@ -8,6 +8,11 @@ internal static class Program
 {
     internal static string DataDirectory { get; private set; } = DesktopPlatform.Current.DataDirectory;
 
+    internal static bool IsCustomDataDirectory
+    {
+        get; private set;
+    }
+
     internal static bool IsSmokeTest
     {
         get; private set;
@@ -24,6 +29,7 @@ internal static class Program
         }
         if (args is ["--smoke-test", "--data-directory", var smokeDirectory])
         {
+            IsCustomDataDirectory = true;
             DataDirectory = Path.GetFullPath(smokeDirectory);
             PathSafety.RejectLinks(DataDirectory);
             if (Path.Exists(DataDirectory))
@@ -32,6 +38,7 @@ internal static class Program
         }
         else if (args is ["--data-directory", var directory])
         {
+            IsCustomDataDirectory = true;
             DataDirectory = Path.GetFullPath(directory);
         }
         else if (args.Length != 0)

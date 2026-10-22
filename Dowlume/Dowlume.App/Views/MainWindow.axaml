@@ -1,4 +1,5 @@
-<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:vm="using:Dowlume.App.ViewModels" xmlns:core="using:Dowlume.Core" xmlns:loc="using:Dowlume.App.Localization" x:Class="Dowlume.App.Views.MainWindow" x:DataType="vm:MainViewModel" x:CompileBindings="True" Title="Dowlume" Icon="/Assets/dowlume.ico" Width="1120" Height="820" MinWidth="880" MinHeight="680" Background="#F5F6FA" RequestedThemeVariant="Light">
+<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ac="using:Avalonia.Data.Converters" xmlns:vm="using:Dowlume.App.ViewModels" xmlns:core="using:Dowlume.Core" xmlns:loc="using:Dowlume.App.Localization" x:Class="Dowlume.App.Views.MainWindow" x:DataType="vm:MainViewModel" x:CompileBindings="True" Title="Dowlume" Icon="/Assets/dowlume.ico" Width="1120" Height="820" MinWidth="880" MinHeight="680" Background="#F5F6FA" RequestedThemeVariant="Light">
   <Window.Resources>
     <loc:LocalizedValueConverter x:Key="LocalizedValue" />
   </Window.Resources>
@@ -49,7 +50,7 @@
     <Border Grid.Row="1" IsVisible="{Binding IsPreviewPlatform}" Background="#FFF3CD" Padding="12" Margin="0,0,0,12" CornerRadius="6">
       <TextBlock Text="{Binding PlatformNotice}" TextWrapping="Wrap" Foreground="#594300" />
     </Border>
-    <TabControl Grid.Row="2">
+    <TabControl x:Name="MainTabs" Grid.Row="2">
       <TabItem Header="{ReflectionBinding $parent[Window].DataContext.Text[Overview]}">
         <Grid RowDefinitions="Auto,Auto,*" Margin="0,20,0,0">
           <Grid ColumnDefinitions="*,*,*" ColumnSpacing="16">
@@ -263,6 +264,8 @@
             <StackPanel Spacing="4">
               <SelectableTextBlock Text="{Binding SelectedOperation.SourcePath}" TextWrapping="Wrap" />
               <SelectableTextBlock Text="{Binding SelectedOperation.DestinationPath}" TextWrapping="Wrap" />
+              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[ObservedFileLocation]}" Classes="muted" IsVisible="{Binding SelectedOperation.ObservedPath, Converter={x:Static ac:StringConverters.IsNotNullOrEmpty}}" />
+              <SelectableTextBlock Text="{Binding SelectedOperation.ObservedPath}" TextWrapping="Wrap" />
               <TextBlock TextWrapping="Wrap" Foreground="#9E361B" >
                     <TextBlock.Text>
                       <MultiBinding Converter="{StaticResource LocalizedValue}">
@@ -337,6 +340,7 @@
               <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[BrowserpartialdownloadsarealwaysexcludedUnrecognizedextensionsgo]}" Classes="muted" />
             </StackPanel>
             <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Savesettings]}" Command="{Binding SaveSettingsCommand}" Classes="primary" />
+            <TextBlock IsVisible="{Binding IsMacOS}" Text="{ReflectionBinding $parent[Window].DataContext.Text[MacFolderScope]}" TextWrapping="Wrap" Classes="muted" />
             <TextBlock Text="{Binding PrivacyNotice}" TextWrapping="Wrap" Classes="muted" />
           </StackPanel>
         </ScrollViewer>

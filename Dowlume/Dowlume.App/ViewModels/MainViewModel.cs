@@ -116,6 +116,7 @@ public partial class MainViewModel : ObservableObject
     public bool SupportsLoginStartup => _startup?.IsSupported == true;
     public bool SupportsFileOperations => _organizer.CanMutateFiles;
     public bool IsPreviewPlatform => !SupportsFileOperations;
+    public static bool IsMacOS => OperatingSystem.IsMacOS();
     public string PlatformNotice => Text.Translate(DownloadOrganizer.ReadOnlyMessage);
     public string PrivacyNotice => Text[IsPreviewPlatform ? "PreviewPrivacyNotice" : "LocalonlyNoaccountcloudsyncortelemetryClosing"];
     public bool CanReviewSelectedFile => SupportsFileOperations && IsIdle && SelectedReview is not null;
