@@ -9,7 +9,7 @@ I support Windows x64 in the published [0.3.0 release](RELEASE_CANDIDATE_0.3.0.m
 | Target | 0.3.0 scope | Remaining release gate |
 | --- | --- | --- |
 | Windows x64 | Existing file operations, profile location, Explorer, tray and login startup; installer and portable ZIP | 0.3.0 automation and overall functional confirmation completed; manual environment and new clean-machine evidence limits remain documented in the acceptance record. Repeat affected checks for future changes. |
-| macOS 15, Apple Silicon | Native ARM64 CI; self-contained `.app` in ZIP; folder preview, settings, both languages, history, Finder reveal; separate preview profile | 0.4.0: native file safety, APFS case-sensitive/insensitive and Unicode behavior, permissions, desktop lifecycle, signed/notarized distribution, installation and upgrade acceptance. Newer macOS versions require their own evidence. |
+| macOS 15, Apple Silicon | Native ARM64 CI; self-contained `.app` in ZIP; folder preview, settings, both languages, history, Finder reveal; separate preview profile | 0.4.0: native file safety, APFS case-sensitive/insensitive and Unicode behavior, permissions, desktop lifecycle, installation and upgrade acceptance with the actual signing status documented. Newer macOS versions require their own evidence. |
 | macOS Intel | Excluded | No x64 implementation, CI job or package. I may reconsider it in a later release with separate acceptance. |
 | Ubuntu 24.04 x64 | Native CI; self-contained `.tar.gz`; preview capabilities; XDG Downloads discovery; containing-folder reveal; X11 launch under Xvfb | 0.5.0: ext4 file safety, GNOME desktop acceptance, permissions, autostart, package integration and upgrade; XWayland and native Wayland require separate testing. |
 | Other Linux targets | Excluded from the initial scope | Separate evidence for other distributions, desktops and architectures. |
@@ -17,6 +17,12 @@ I support Windows x64 in the published [0.3.0 release](RELEASE_CANDIDATE_0.3.0.m
 My macOS/Linux archives are development previews, not accepted installers. The macOS bundle has an ad-hoc signature, without Developer ID or notarization. I verify its signature before and after extracting the ZIP, then launch that extracted application with a disposable profile. The Linux launch uses Xvfb, which does not validate a real GNOME session, dialogs, file-manager interactions or accessibility. Both reports explicitly leave manual desktop and clean-machine acceptance false. I do not ask users to disable system security.
 
 The upstream [Avalonia matrix](https://docs.avaloniaui.net/docs/supported-platforms) and [Apple distribution requirements](https://developer.apple.com/documentation/security/notarizing-macos-software-before-distribution) inform future support; they do not prove Dowlume's native safety. I keep the narrower matrix above until I have direct evidence.
+
+## Functional priorities and deferred signing
+
+I complete the supported workflows on Windows x64, macOS Apple Silicon and Linux x64 before addressing publisher signing and macOS notarization in final stabilization. I retain the sequence macOS 0.4.0, Linux 0.5.0, then cross-platform stabilization. Organization, monitoring, review, eligible Undo, history, settings, both languages and recovery need native acceptance on each supported target; platform-specific desktop integration needs its own tests.
+
+Signing is not a prerequisite for the functional milestones. I report package signing status and installation limitations separately from functional support. I retain the existing ad-hoc signature used by macOS development packages. Native file safety, reproducible packages and installation/upgrade acceptance remain required; postponing signing does not enable unvalidated operations.
 
 ## Implemented foundation
 
