@@ -20,6 +20,8 @@ Desactivé el envío nativo a la Papelera en v0.1.0 tras comprobar que las prueb
 
 **Próximos hitos:** el código de 0.3.0 incorpora CI nativa, adaptadores y vistas previas restringidas para macOS 15 Apple Silicon y Ubuntu 24.04 x64. Mantengo bloqueadas las modificaciones de archivos en estas vistas previas. Planifico soporte aceptado macOS en 0.4.0, Linux en 0.5.0 y estabilización hacia 1.0. Windows x64 sigue siendo la plataforma soportada. Son objetivos con criterios de aceptación, no soporte ya disponible ni fechas prometidas; consulta la [hoja de ruta](ROADMAP.md) y el [alcance por plataforma](PLATFORM_SUPPORT.md).
 
+Priorizo completar las funciones de macOS y Linux conservando la fiabilidad Windows. Difiero la firma de editor y la notarización macOS a la estabilización final multiplataforma; detallo las [prioridades actuales](PLATFORM_SUPPORT.md#prioridades-funcionales-y-firma-aplazada).
+
 He publicado las bases de 0.3.0 con archivos macOS/Linux claramente identificados como experimentales. Registro [aceptación y hashes](RELEASE_CANDIDATE_0.3.0.md) por separado de las declaraciones de soporte estable.
 
 ## Por qué lo desarrollo
