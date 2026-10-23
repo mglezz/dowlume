@@ -191,7 +191,7 @@ public sealed class DesktopWorkflowTests
                 Assert.NotNull(frame);
                 Assert.Equal(2, window.GetVisualDescendants().OfType<ComboBox>().Count(combo => combo.IsEffectivelyVisible));
             }
-            finally { window.Close(); }
+            finally { await DesktopWindowTest.CloseAsync(window); }
             return true;
         }, timeout.Token);
     }
@@ -269,7 +269,7 @@ public sealed class DesktopWorkflowTests
                     frame.Save(Path.Combine(captureDirectory, $"screen-{index}.png"), Avalonia.Media.Imaging.PngBitmapEncoderOptions.Default);
                 }
             }
-            window.Close();
+            await DesktopWindowTest.CloseAsync(window);
             return true;
         }, timeout.Token);
     }

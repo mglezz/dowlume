@@ -29,7 +29,7 @@ public partial class MainWindow : Window
             {
                 await model.RefreshAsync();
             }
-            _refreshTimer.Start();
+            if (!_closing) _refreshTimer.Start();
         };
         Closing += OnClosing;
     }
