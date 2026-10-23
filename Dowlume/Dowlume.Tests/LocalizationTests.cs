@@ -206,7 +206,7 @@ public sealed class LocalizationTests
             Assert.False(model.IsMonitoring);
             model.Rules[0].FolderName = "CON";
             await model.SaveSettingsCommand.ExecuteAsync(null);
-            Assert.Equal("Los nombres de las categorías deben ser nombres de carpeta válidos en Windows.", model.ErrorMessage);
+            Assert.Equal("Los nombres de categoría deben ser válidos entre plataformas.", model.ErrorMessage);
             window.Close();
             return true;
         }, timeout.Token);

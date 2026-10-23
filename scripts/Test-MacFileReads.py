@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run native read contracts on two newly created, disposable APFS images."""
+"""Run native read and move contracts on two newly created, disposable APFS images."""
 
 import argparse
 import json
@@ -42,17 +42,18 @@ def run_volume(filesystem, sensitive, output):
             raise RuntimeError("The disposable volume is not APFS.")
         environment = os.environ.copy()
         environment.update(TMPDIR=str(mount), TMP=str(mount), TEMP=str(mount),
-                           DOWLUME_TEST_CASE_SENSITIVE=str(sensitive).lower())
+                           DOWLUME_TEST_CASE_SENSITIVE=str(sensitive).lower(),
+                           DOWLUME_TEST_SECOND_VOLUME=str(output), DOWLUME_TEST_OWNED_VOLUME=str(mount))
         report_name = "apfs-sensitive" if sensitive else "apfs-insensitive"
         subprocess.run([
             "dotnet", "test", "Dowlume/Dowlume.Tests/Dowlume.Tests.csproj", "-c", "Release",
-            "--no-build", "--no-restore", "--filter", "Category=MacNativeRead",
+            "--no-build", "--no-restore", "--filter", "Category=MacNativeRead|Category=MacNativeMove",
             "--logger", f"trx;LogFileName={report_name}.trx", "--results-directory", str(output),
         ], check=True, cwd=ROOT, env=environment, timeout=180)
         counters = ET.parse(output / f"{report_name}.trx").find(
             ".//{http://microsoft.com/schemas/VisualStudio/TeamTest/2010}Counters")
-        if counters is None or int(counters.attrib["total"]) < 10 or counters.attrib["passed"] != counters.attrib["total"]:
-            raise RuntimeError("All native read tests must execute and pass; skipped tests are not acceptance.")
+        if counters is None or int(counters.attrib["total"]) < 25 or counters.attrib["passed"] != counters.attrib["total"]:
+            raise RuntimeError("All native filesystem tests must execute and pass; skipped tests are not acceptance.")
         return {
             "filesystem": info["FilesystemType"], "caseSensitive": sensitive,
             "testsPassed": int(counters.attrib["passed"]), "trx": f"{report_name}.trx",
@@ -82,7 +83,7 @@ def main():
         "dirtyWorkingTree": bool(capture("git", "status", "--porcelain").strip()),
         "macOS": platform.mac_ver()[0], "architecture": platform.machine(),
         "sdk": capture("dotnet", "--version").decode().strip(),
-        "scope": "Native read contracts only; file mutation and stable release acceptance remain pending.",
+        "scope": "Native same-volume APFS read/move contracts; desktop and exact-package acceptance are separate.",
         "passed": False, "volumes": [],
     }
     try:

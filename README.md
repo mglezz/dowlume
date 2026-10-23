@@ -6,7 +6,7 @@
 
 **Your downloads, under control.**
 
-I build Dowlume as a local-first Windows desktop application that organizes completed downloads, moves aging files into a review area, and leaves the final decision with you.
+I build Dowlume as a local-first desktop application for Windows and macOS that organizes completed downloads, moves aging files into a review area, and leaves the final decision with you.
 
 **Status:** [Dowlume v0.3.0 for Windows x64 is published](https://github.com/mglezz/dowlume/releases/tag/v0.3.0). Download the [installer](https://github.com/mglezz/dowlume/releases/download/v0.3.0/Dowlume-0.3.0-win-x64-setup.exe) or [portable ZIP](https://github.com/mglezz/dowlume/releases/download/v0.3.0/Dowlume-0.3.0-win-x64.zip), and verify the [SHA-256 checksums](https://github.com/mglezz/dowlume/releases/download/v0.3.0/SHA256SUMS.txt). These packages are unsigned. See [validation](docs/VALIDATION.md) and the [release checklist](docs/RELEASE_CHECKLIST.md).
 
@@ -36,9 +36,7 @@ There is no automatic permanent deletion, online account, cloud sync, or telemet
 
 Activity now includes searchable history with action/status filters and pagination, so older operations remain accessible. See [finding an earlier action](docs/USER_GUIDE.md#find-an-earlier-action).
 
-Windows x64 remains the supported target. The 0.3.0 source adds native CI, platform adapters and restricted previews for macOS 15 Apple Silicon and Ubuntu 24.04 x64. File mutations remain disabled on these previews. I plan accepted macOS support in 0.4.0, Linux in 0.5.0, and stabilization toward 1.0. These are gated milestones, not existing support or promised dates; see the [roadmap](ROADMAP.md#planned-releases-toward-10) and [platform scope](docs/PLATFORM_SUPPORT.md).
-
-I have published the 0.3.0 foundation, including clearly labeled experimental macOS/Linux archives. I record [acceptance evidence and hashes](docs/RELEASE_CANDIDATE_0.3.0.md) separately from the stable support claims.
+I implement the macOS Apple Silicon workflow in 0.4.0: native same-volume APFS moves, monitoring, review, Undo, recovery, desktop integration and migration from the preview profile. Linux remains a restricted preview for 0.5.0. The current stable download is still 0.3.0; I keep implementation and exact-package acceptance separate. See [0.4.0 notes](docs/RELEASE_NOTES_0.4.0.md), [candidate acceptance](docs/RELEASE_CANDIDATE_0.4.0.md) and the [platform matrix](docs/PLATFORM_SUPPORT.md).
 
 ## Languages
 
@@ -54,7 +52,7 @@ The desktop UI uses Avalonia; SQLite stores settings, tracked files, and the ope
 
 ## Engineering challenges
 
-- **Knowing when a download is ready:** watcher events trigger checks, not immediate moves. Stable size/timestamps, a write-age margin, and an exclusive-open probe work alongside periodic scans to handle unfinished downloads and missed events.
+- **Knowing when a download is ready:** watcher events trigger checks, not immediate moves. Stable size/timestamps, a write-age margin, and native readiness checks work alongside periodic scans to handle unfinished downloads and missed events.
 - **Protecting files during interruptions:** moves never overwrite a destination, content hashes detect unexpected changes, and ambiguous copies are left for inspection.
 - **Keeping SQLite and disk consistent:** a Pending journal entry precedes each move; tracked state and completion are then committed together. Recovery checks the actual files before deciding what completed.
 
@@ -62,7 +60,7 @@ See [Architecture](docs/ARCHITECTURE.md#engineering-challenges) for the design, 
 
 ## Run from source
 
-Install a **.NET SDK from the 10.0.4xx family** on Windows. [`global.json`](global.json) sets `10.0.400` with `rollForward: latestPatch`; CI currently uses `10.0.401` within that same feature band.
+Install a **.NET SDK from the 10.0.4xx family** on Windows or macOS Apple Silicon (with Xcode command-line tools). [`global.json`](global.json) sets `10.0.400` with `rollForward: latestPatch`; CI currently uses `10.0.401` within that same feature band.
 
 ```powershell
 dotnet restore Dowlume/Dowlume.slnx
@@ -82,7 +80,7 @@ Download the installer or portable ZIP from [GitHub Releases](https://github.com
 | [Domain model](docs/requirements/DOMAIN_MODEL.md) | Conceptual vocabulary, UML structure, file lifecycles, processes, and business rules |
 | [Architecture](docs/ARCHITECTURE.md) | Component diagram, processing flow, recovery, and safety boundaries |
 | [Roadmap](ROADMAP.md) | Completed MVP, remaining release gates, and future ideas |
-| [macOS implementation](docs/MACOS_IMPLEMENTATION.md) | Work toward 0.4.0, native read tests and remaining acceptance gates |
+| [macOS implementation](docs/MACOS_IMPLEMENTATION.md) | Native workflows, desktop integration and acceptance gates |
 | [Validation](docs/VALIDATION.md) | Dated evidence and outstanding acceptance checks |
 | [Contributing](CONTRIBUTING.md) | Contribution checks and [branch policy](docs/BRANCHES.md) |
 

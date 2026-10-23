@@ -3,9 +3,39 @@ using Dowlume.Core;
 
 namespace Dowlume.Infrastructure;
 
-public sealed class SafeFileMover : IFileMover
+public sealed class SafeFileMover : IFileMover, IPreparedFileMover
 {
-    public bool CanMove => OperatingSystem.IsWindows();
+    public bool CanMove => OperatingSystem.IsWindows() ||
+        (OperatingSystem.IsMacOSVersionAtLeast(15) && System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture == System.Runtime.InteropServices.Architecture.Arm64);
+
+    public IPreparedFileMove PrepareMove(string source, string destination, string expectedHash) => OperatingSystem.IsMacOS()
+        ? new MacFileMove(source, destination, expectedHash)
+        : new DeferredFileMove(() => Move(source, destination, expectedHash));
+
+    public FileIdentity? GetIdentity(string path)
+    {
+        if (!OperatingSystem.IsMacOS())
+            return null;
+        using FileStream stream = MacFileHandle.OpenRead(path);
+        MacFileSystem.RequireLocalApfs(stream.SafeFileHandle);
+        if (MacFileHandle.Capture(stream.SafeFileHandle).LinkCount != 1)
+            throw new IOException("The file identity changed.");
+        return MacFileSystem.Identity(stream.SafeFileHandle);
+    }
+
+    public bool MatchesRecoveryFile(string path, FileIdentity identity, string expectedHash)
+    {
+        if (!OperatingSystem.IsMacOS())
+            return false;
+        using FileStream stream = MacFileHandle.OpenRead(path);
+        MacFileSystem.RequireLocalApfs(stream.SafeFileHandle);
+        MacFileHandle.Snapshot before = MacFileHandle.Capture(stream.SafeFileHandle);
+        if (before.LinkCount != 1 || MacFileSystem.Identity(stream.SafeFileHandle) != identity)
+            return false;
+        bool matches = Convert.ToHexString(SHA256.HashData(stream)) == expectedHash;
+        MacFileHandle.VerifyUnchanged(path, stream.SafeFileHandle, before);
+        return matches;
+    }
 
     public string Hash(string path)
     {
@@ -24,6 +54,12 @@ public sealed class SafeFileMover : IFileMover
 
     public void Move(string source, string destination, string expectedHash)
     {
+        if (OperatingSystem.IsMacOS())
+        {
+            using IPreparedFileMove move = PrepareMove(source, destination, expectedHash);
+            move.Execute();
+            return;
+        }
         if (!OperatingSystem.IsWindows())
         {
             throw new PlatformNotSupportedException(DownloadOrganizer.ReadOnlyMessage);
@@ -55,7 +91,7 @@ public sealed class SafeFileMover : IFileMover
     {
         if (Convert.ToHexString(SHA256.HashData(stream)) != expectedHash)
         {
-            throw new IOException("The file changed after it was tracked. Review it in Explorer before retrying.");
+            throw new IOException("The file changed after it was tracked. Review it before retrying.");
         }
     }
 

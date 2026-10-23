@@ -2,25 +2,25 @@
 
 [English](../FILE_OPERATION_CONTRACT.md) · [Índice en español](README.md)
 
-Uso este contrato para decidir si un adaptador nativo puede declarar `CanMove`. En 0.3.0 solo lo permite la implementación existente de Windows. El adaptador de producción macOS/Linux rechaza las modificaciones; una llamada portátil a `File.Move` o las pruebas compartidas no bastan como evidencia.
+Uso este contrato para habilitar operaciones nativas. En 0.4.0 conservo Windows y habilito macOS Apple Silicon en APFS local del mismo volumen. Linux sigue restringido. Distingo exclusión nativa Windows de detección y conservación ante carreras POSIX en macOS; no equiparo ambas garantías.
 
 | Límite | Comportamiento exigido antes de activar una adaptación |
 | --- | --- |
 | Rutas e identidad | Resolver pertenencia mediante identidades verificadas de archivos/directorios y comportamiento por volumen. No deducir mayúsculas por el nombre del sistema ni normalizar Unicode a ciegas. Rechazar alias ambiguos, enlaces, montajes no admitidos, marcadores de nube y volúmenes ausentes. |
 | Destino | No sobrescribir archivos existentes, incluidos alias por mayúsculas/Unicode. Reservar o crear atómicamente; comprobar existencia antes no evita una sustitución posterior. |
-| Origen | Verificar contenido esperado e identidad. Proteger frente a escritores, sustituciones de rutas y directorios durante la operación. El modo de compartición administrado no garantiza exclusión portátil. |
+| Origen | Verificar contenido esperado e identidad. Declarar y probar garantías nativas ante escritores y sustituciones; la ambigüedad detectada debe conservar archivos para inspección. El modo de compartición administrado no garantiza exclusión portátil. |
 | Mismo volumen | Conservar identidad y metadatos admitidos y verificar el resultado. Documentar límites del sistema de archivos. |
 | Entre volúmenes | Copiar sin sobrescribir, vaciar buffers y verificar antes de borrar el original verificado. Conservar fechas, permisos y metadatos extendidos requeridos o rechazar la transferencia no soportada. |
 | Diario y recuperación | Guardar Pending antes de modificar. Confirmar estado e historial juntos. Tras una interrupción inspeccionar rutas e identidades; conservar copias ambiguas y solicitar atención en vez de borrar por suposición. |
 | Capacidades | Rechazar antes de crear directorios, modificar archivos o registrar operaciones. Desactivar botones no basta. La vista previa restringida tampoco reproduce recuperaciones. |
 
-Conservo en 0.3.0 la política de rutas e implementación nativa aceptada de Windows. `PathSafety` sigue comparando según el sistema operativo: es una limitación explícita, no una política por volumen terminada. Difiero el resolvedor por volumen y los adaptadores de producción a sus hitos, para probarlos juntos en variantes de APFS y ext4. La supervisión conserva avisos que difieren en mayúsculas; no decide identidad del sistema de archivos.
+## macOS 0.4.0
 
-Exijo pruebas nativas desechables de escritores, sustituciones, enlaces, cambios de montaje, colisiones en el mismo y distinto volumen, alias Unicode/mayúsculas, permisos, disco lleno, copias interrumpidas, reinicio y recuperación. Los adaptadores de pruebas compartidas solo ejercitan diario y flujo. Las cinco pruebas exclusivas de Windows y su aceptación previa constituyen evidencia separada.
+Resuelvo rutas existentes mediante UUID de volumen/inodo/nacimiento y comparo nombres ausentes de forma conservadora con la política de mayúsculas del volumen abierto. El renombrado exclusivo del núcleo decide las colisiones, no una comparación de cadenas. Retengo descriptores de origen/padres, verifico contenido antes y después y registro identidad antes de modificar. Rechazo transferencias entre volúmenes antes de Pending o de crear carpetas.
 
-## Implementación macOS en desarrollo
+`flock` es cooperativo. Un escritor POSIX arbitrario o una sustitución de rutas del mismo usuario puede competir con las últimas comprobaciones. Una sustitución de origen justo antes de renombrar puede mover el sustituto; lo detecto después y conservo ambos objetos, sin revertir ni borrar por ruta. Registro la ruta observada del objeto origen cuando está disponible. No prometo exclusión obligatoria de escritura, espacio de nombres inmóvil ni seguridad frente a modificaciones hostiles del mismo usuario. Rechazo rutas/atributos conocidos de nube, pero solo admito carpetas ordinarias fuera de cualquier sincronizador. Renombrar en el mismo volumen conserva metadatos del objeto original. La recuperación exige identidad nativa registrada y contenido, nunca solo hashes.
 
-Ahora uso un descriptor Darwin para calcular el hash de la vista previa, rechazo enlaces durante la resolución de rutas del núcleo, comparo identidad y metadatos alrededor de la lectura y consulto la política de mayúsculas del volumen abierto en las pruebas nativas. Detecto los cambios probados, pero no excluyo escritores, inmovilizo directorios antecesores ni concedo una garantía para modificar archivos. La pertenencia de rutas de `PathSafety` sigue igual. El [registro de implementación](MACOS_IMPLEMENTATION.md) separa este trabajo de lectura de los requisitos pendientes de movimiento y recuperación.
+Verifico lectura/movimiento en imágenes APFS normales y sensibles a mayúsculas, incluidas colisiones, escritores, sustituciones de origen/carpetas, permisos denegados, volumen lleno, rechazo entre volúmenes, supervisión y ciclo/recuperación con base reabierta. Detallo pruebas y paquetes en [implementación macOS](MACOS_IMPLEMENTATION.md). Los adaptadores de muestras y resultados históricos Windows son evidencia separada.
 
 ## Perfiles y copias
 

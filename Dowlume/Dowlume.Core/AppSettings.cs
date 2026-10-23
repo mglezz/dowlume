@@ -16,7 +16,7 @@ public sealed record AppSettings
         new(FileCategory.Images, "Images", [".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg", ".heic", ".bmp", ".tiff"], 60),
         new(FileCategory.Videos, "Videos", [".mp4", ".mkv", ".mov", ".avi", ".webm"], 30),
         new(FileCategory.Archives, "Archives", [".zip", ".7z", ".rar", ".tar", ".gz"], 14),
-        new(FileCategory.Installers, "Installers", [".exe", ".msi", ".msix", ".appx", ".iso"], 7),
+        new(FileCategory.Installers, "Installers", [".exe", ".msi", ".msix", ".appx", ".iso", ".dmg", ".pkg"], 7),
         new(FileCategory.Other, "Other", [], 30)
     ];
     public string[] ExcludedExtensions { get; init; } = [];
@@ -68,7 +68,7 @@ public sealed record AppSettings
             name.Any(char.IsControl) || name.EndsWith('.') || name.EndsWith(' ') ||
             reserved.Contains(stem, StringComparer.OrdinalIgnoreCase))
         {
-            throw new ArgumentException("Category names must be safe Windows folder names.");
+            throw new ArgumentException("Category names must be portable folder names.");
         }
     }
 

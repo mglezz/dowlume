@@ -64,7 +64,7 @@ public sealed class PlatformFoundationTests
         string source = workspace.CreateFile("original.txt");
         string destination = Path.Combine(workspace.Downloads, "new", "copy.txt");
         var mover = new SafeFileMover();
-        if (OperatingSystem.IsWindows())
+        if (OperatingSystem.IsWindows() || OperatingSystem.IsMacOS())
         {
             Assert.True(mover.CanMove);
             mover.Move(source, destination, mover.Hash(source));

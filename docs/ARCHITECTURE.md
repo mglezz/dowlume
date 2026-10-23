@@ -10,7 +10,7 @@ The [domain model](requirements/DOMAIN_MODEL.md) explains the conceptual vocabul
 | --- | --- |
 | Dowlume.Core | Immutable records, category validation, classification, lifecycle rules, service contracts. No UI or SQLite dependency. |
 | Dowlume.Monitoring | FileSystemWatcher, bounded channel, deduplication, readiness observations, periodic discovery. Depends only on Core. |
-| Dowlume.Infrastructure | SQLite persistence, path checks, verified moves, operation orchestration, Windows integration, diagnostics. Native recycling is disabled. |
+| Dowlume.Infrastructure | SQLite persistence, path checks, verified moves, operation orchestration, Windows/macOS integration, diagnostics. Native recycling is disabled. |
 | Dowlume.App | Avalonia views, view models, dialogs, tray behavior, constructor-based composition and shutdown. |
 | Dowlume.Tests | Unit, disposable-filesystem integration, disabled-recycle safety, and headless desktop workflow tests. |
 
@@ -42,13 +42,13 @@ This trades a small delay for conservative detection; it cannot prove that anoth
 
 ### Protecting files when operations fail
 
-Another file may already occupy a destination, or a source may change after preview. `SafeFileMover` verifies the expected SHA-256 under a read handle that denies new writers, uses no-overwrite moves, and verifies the result. The organizer selects numeric suffixes for name collisions and journals before acting. Cancellation is honored before journal creation; once journaled, the operation finishes or records its failure before shutdown completes.
+Another file may already occupy a destination, or a source may change after preview. On Windows, `SafeFileMover` verifies the expected SHA-256 under a read handle that denies new writers, uses no-overwrite moves, and verifies the result. The organizer selects numeric suffixes for name collisions and journals before acting. Cancellation is honored before journal creation; once journaled, the operation finishes or records its failure before shutdown completes.
 
-Cross-volume moves remain non-atomic. If an interruption leaves conflicting copies, recovery preserves them for inspection instead of choosing one to delete. [Safety tests](../Dowlume/Dowlume.Tests/SafetyTests.cs) and [organizer tests](../Dowlume/Dowlume.Tests/OrganizerTests.cs) cover collisions, changed content, cancellation, and interrupted operations; physical cross-volume acceptance remains a [release gate](RELEASE_CHECKLIST.md).
+Windows cross-volume moves remain non-atomic; macOS refuses them. If an interruption leaves conflicting copies, recovery preserves them for inspection instead of choosing one to delete. [Safety tests](../Dowlume/Dowlume.Tests/SafetyTests.cs) and [organizer tests](../Dowlume/Dowlume.Tests/OrganizerTests.cs) cover collisions, changed content, cancellation, and interrupted operations; physical cross-volume acceptance remains a [release gate](RELEASE_CHECKLIST.md).
 
 ### Reconciling SQLite with the filesystem
 
-A filesystem move and a SQLite commit cannot form one shared transaction. The organizer first persists a Pending operation with before/after snapshots and paths. After a verified move, `SqliteStateStore.CompleteOperation` commits the tracked record and Completed journal status together. Recovery compares the recorded paths and content hashes with disk before completing or failing an interrupted operation.
+A filesystem move and a SQLite commit cannot form one shared transaction. The organizer first persists a Pending operation with before/after snapshots and paths. After a verified move, `SqliteStateStore.CompleteOperation` commits the tracked record and Completed journal status together. Recovery compares recorded paths and content hashes with disk, also requiring native identity on macOS, before completing or failing an interrupted operation.
 
 For example, a crash after moving `report.pdf` but before the database commit leaves a Pending entry. If only the matching destination exists, recovery completes the database state; if both copies exist, it records NeedsAttention and blocks automatic actions on that file. [Recovery coverage](../Dowlume/Dowlume.Tests/OrganizerTests.cs) includes failures before and after the move and ambiguous copies. See [Operation journal and recovery](#operation-journal-and-recovery) for undo and recycle limits.
 
@@ -65,7 +65,7 @@ Watcher hints + startup/15-second scan
     -> transaction: tracked state + Completed journal entry
 ```
 
-Watcher events are hints. Queue overflow is recovered by later scans. Managed destinations are not watched recursively. The readiness policy requires a three-second write-age margin, stable length and last-write time across two observations, and a successful exclusive open. Cancellation is checked before journal creation. Once journaled, an operation finishes or records its failure before shutdown completes.
+Watcher events are hints. Queue overflow is recovered by later scans. Managed destinations are not watched recursively. Windows readiness uses a three-second write-age margin, two stable observations and an exclusive-open probe. macOS uses a native nonblocking regular-file descriptor, a three-second write-age margin and metadata verification; the mover separately verifies identity and content. Cancellation is checked before journal creation. Once journaled, an operation finishes or records its failure before shutdown completes.
 
 `DownloadOrganizer` serializes file mutations through one semaphore. This covers monitoring, lifecycle checks, user actions, recovery, and undo. SQLite connections are short-lived and use parameterized statements, WAL, full synchronization, and a busy timeout. Schema version 1 stores versioned settings, tracked records, and operations as JSON payloads in separate tables. A database created by a newer schema is refused.
 
@@ -87,7 +87,7 @@ First-seen time is preserved throughout decisions and undo. Keep and Snooze are 
 
 ## Operation journal and recovery
 
-Each entry contains an ID, kind, status, UTC timestamp, source/destination, before/after file snapshots, optional undo link, and a user-safe error. State and completion are committed in one SQLite transaction after the filesystem action. This is not a transaction across SQLite and NTFS: Pending entries bridge that gap.
+Each entry contains an ID, kind, status, UTC timestamp, source/destination, before/after file snapshots, optional undo link, and a user-safe error. State and completion are committed in one SQLite transaction after the filesystem action. This is not a transaction across SQLite and the filesystem: Pending entries bridge that gap.
 
 Recovery verifies SHA-256 before completing a move that reached its destination. Conflicting or missing copies remain NeedsAttention and block further automatic operations for that file/path. Historical Recycle is inspected before move recovery: a matching source marks the attempt Failed, while absent or changed content stays NeedsAttention, even if a destination is recorded. It is never replayed, inferred complete, or promised recoverable. Completed historical records remain unchanged. Failure handling continues reconciliation for unrelated files.
 
@@ -130,3 +130,9 @@ Primary API references used by the implementation:
 - [Handle-based rename and disposition](https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-setfileinformationbyhandle) and [Windows file copying](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-copyfilew).
 - Historical native investigation: [Windows file-operation flags](https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ifileoperation-setoperationflags), [pre-delete cancellation](https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/nf-shobjidl_core-ifileoperationprogresssink-predeleteitem), and [transfer flags](https://learn.microsoft.com/en-us/windows/win32/api/shobjidl_core/ne-shobjidl_core-_transfer_source_flags). These APIs are no longer used for recycling by Dowlume.
 - [Avalonia storage dialogs](https://docs.avaloniaui.net/docs/services/storage/storage-provider) and [headless rendering](https://docs.avaloniaui.net/docs/testing/setting-up-the-headless-platform).
+
+## macOS 0.4.0 adapter
+
+I prepare native moves before Pending, retaining the source and parent descriptors. I require local same-volume APFS, reject links/cloud locations, use exclusive atomic rename, flush directory changes and verify identity/content afterward. Volume UUID, inode and birth timestamp travel in optional schema-1 journal fields. Recovery verifies identity and SHA-256 on the same opened descriptor, then verifies the path still names that object.
+
+I use cooperative locks on macOS, which cannot exclude arbitrary POSIX writers. A race can move a replacement before verification detects it; I retain files and report NeedsAttention with an observed original-object path where available. I never delete or roll back ambiguous paths. See the [native contract](FILE_OPERATION_CONTRACT.md) and [implementation/tests](MACOS_IMPLEMENTATION.md).

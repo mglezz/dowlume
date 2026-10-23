@@ -4,8 +4,13 @@ public static class PathSafety
 {
     public static StringComparison Comparison => OperatingSystem.IsWindows() ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
 
-    public static bool IsWithin(string root, string path) =>
-        Path.GetFullPath(path).StartsWith(Path.TrimEndingDirectorySeparator(Path.GetFullPath(root)) + Path.DirectorySeparatorChar, Comparison);
+    public static bool IsWithin(string root, string path) => OperatingSystem.IsMacOS()
+        ? MacFileSystem.IsWithin(root, path)
+        : Path.GetFullPath(path).StartsWith(Path.TrimEndingDirectorySeparator(Path.GetFullPath(root)) + Path.DirectorySeparatorChar, Comparison);
+
+    public static bool AreSame(string first, string second) => OperatingSystem.IsMacOS()
+        ? MacFileSystem.SamePath(first, second)
+        : string.Equals(Path.TrimEndingDirectorySeparator(Path.GetFullPath(first)), Path.TrimEndingDirectorySeparator(Path.GetFullPath(second)), Comparison);
 
     public static void RequireWithin(string root, string path)
     {
@@ -34,9 +39,9 @@ public static class PathSafety
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
         ];
         // Disposable integration folders may live under the OS temporary directory.
-        bool isTemporary = IsWithin(Path.GetTempPath(), path);
+        bool isTemporary = !OperatingSystem.IsMacOS() && IsWithin(Path.GetTempPath(), path);
         if (!isTemporary && protectedFolders.Where(folder => folder.Length > 0).Any(folder =>
-                string.Equals(Path.TrimEndingDirectorySeparator(folder), Path.TrimEndingDirectorySeparator(path), Comparison) || IsWithin(folder, path)))
+                AreSame(folder, path) || IsWithin(folder, path)))
         {
             throw new ArgumentException("System and application-data folders cannot be monitored.");
         }

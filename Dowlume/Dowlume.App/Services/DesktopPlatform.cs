@@ -36,11 +36,16 @@ public sealed class DesktopPlatform
     private DesktopPlatform(DesktopSystem system)
     {
         System = system;
-        Startup = system == DesktopSystem.Windows ? new WindowsStartupRegistration() : new UnavailableStartupRegistration();
+        Startup = system switch
+        {
+            DesktopSystem.Windows => new WindowsStartupRegistration(),
+            DesktopSystem.MacOS => new MacStartupRegistration(),
+            _ => new UnavailableStartupRegistration()
+        };
         FileManager = new NativeFileManager(system);
         SuggestedDownloads = DownloadsFolder.Suggest();
-        // Retain existing profiles; ports use separate preview profiles until migration is accepted.
-        string name = system == DesktopSystem.Windows ? "Dowlume" : "Dowlume.Preview";
+        // macOS imports a closed preview profile on first launch; Linux remains isolated.
+        string name = system == DesktopSystem.Linux ? "Dowlume.Preview" : "Dowlume";
         DataDirectory = system == DesktopSystem.MacOS
             ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Library", "Application Support", name)
             : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), name);
@@ -52,7 +57,7 @@ public sealed class DesktopPlatform
     {
         if (OperatingSystem.IsWindows() && RuntimeInformation.ProcessArchitecture == Architecture.X64)
             return DesktopSystem.Windows;
-        if (OperatingSystem.IsMacOS() && RuntimeInformation.ProcessArchitecture == Architecture.Arm64)
+        if (OperatingSystem.IsMacOSVersionAtLeast(15) && RuntimeInformation.ProcessArchitecture == Architecture.Arm64)
             return DesktopSystem.MacOS;
         if (OperatingSystem.IsLinux() && RuntimeInformation.ProcessArchitecture == Architecture.X64)
             return DesktopSystem.Linux;

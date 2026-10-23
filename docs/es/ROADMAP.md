@@ -22,11 +22,11 @@ Después de 0.2.0 priorizo el funcionamiento seguro en varias plataformas. Estas
 
 Integré y publiqué las bases de 0.3.0 tras superar los controles nativos automáticos y [confirmar el funcionamiento final Windows](RELEASE_CANDIDATE_0.3.0.md). La aceptación estable de macOS/Linux sigue prevista para 0.4.0/0.5.0.
 
-### En desarrollo: 0.4.0 para Apple Silicon
+### En curso: 0.4.0 para Apple Silicon
 
-He empezado la implementación macOS con descriptores de lectura nativos, comprobación de identidad y pruebas desechables en ambas variantes de APFS. Integro estas lecturas en el cálculo del hash de la vista previa y mantengo bloqueadas las modificaciones nativas. Registro implementación, comprobaciones reproducibles y requisitos pendientes en [implementación macOS](MACOS_IMPLEMENTATION.md).
+He implementado operaciones APFS del mismo volumen y recuperación, ciclo completo y supervisión, menús nativos/reapertura/salida, inicio opcional, migración, ambos idiomas y empaquetado autocontenido. Verifico carreras, colisiones, permisos y volumen lleno con ambas políticas APFS. El paquete extraído ejecuta una prueba del flujo nativo. Registro evidencia y comprobaciones manuales del paquete exacto en [aceptación de 0.4.0](RELEASE_CANDIDATE_0.4.0.md).
 
-Los siguientes bloques son modificaciones y recuperación nativas seguras, integración de escritorio y aceptación de los paquetes exactos. Priorizo completar las funciones de macOS y Linux conservando el comportamiento Windows. Difiero la firma de editor Windows, la firma Developer ID de macOS y la notarización a la estabilización final multiplataforma; no son requisitos para completar ni publicar los hitos funcionales 0.4.0/0.5.0. Documento el estado real de firma y las limitaciones de instalación de cada paquete. Mantengo la seguridad nativa de archivos y la aceptación de los binarios exactos como requisitos. Intel sigue fuera del alcance inicial.
+La condición pendiente de publicación estable es aceptar el candidato exacto, incluida instalación, inicio real de sesión y diálogos de permisos; no los deduzco de pruebas automatizadas. Priorizo funcionalidad macOS/Linux conservando Windows y aplazo firma de editor, Developer ID y notarización hasta estabilización final. La firma no bloquea los hitos funcionales 0.4.0/0.5.0; documento su estado real. Intel queda fuera del alcance.
 
 ### Primera secuencia de implementación: 0.3.0
 

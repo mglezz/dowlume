@@ -34,6 +34,8 @@ public partial class MainWindow : Window
         Closing += OnClosing;
     }
 
+    internal bool IsShutdownComplete => _canClose;
+
     public void ConfigureTray(bool available)
     {
         this.FindControl<Button>("HideToTrayButton")!.IsVisible = available;

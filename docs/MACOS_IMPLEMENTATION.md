@@ -1,42 +1,42 @@
-# macOS implementation toward 0.4.0
+# macOS implementation for 0.4.0
 
 [English](#) · [Español](es/MACOS_IMPLEMENTATION.md)
 
-I target macOS 15 on Apple Silicon. Version 0.3.0 remains the published release; this work starts 0.4.0 development and does not enable native file mutations or constitute a new release. Intel remains outside the scope.
+I target macOS 15+ on Apple Silicon, with local APFS folders on a single volume. I implement the complete supported workflow: preview, organization, monitoring, aging/review, Keep, Snooze, Move, eligible Undo, history, settings, both languages and recovery. I retain Windows and leave Linux mutations disabled. Intel and native recycling are excluded.
 
-## Implemented: native reads and identity
+## Native file operations
 
-I use `MacFileHandle` in the production preview hash and verified-read paths. I open an absolute path with Darwin `O_NOFOLLOW_ANY`, `O_CLOEXEC` and `O_NONBLOCK`, then inspect the descriptor with `fstat`. This rejects symbolic links in any path component during the open itself and rejects nonregular files without waiting for a FIFO writer. I reject the dataless flag when observed; this is not cloud-provider acceptance or a guarantee against hydration during open.
+I open paths with Darwin `O_NOFOLLOW_ANY`, `O_CLOEXEC` and `O_NONBLOCK`, inspect the ARM64 `stat` structure and reject links, nonregular files, dataless placeholders and hard-linked mutation targets. I check APFS/local mount flags, known cloud paths and provider attributes. These checks cannot recognize every sync product; supported folders must be outside cloud/sync services.
 
-I capture the device/inode identity, hard-link count, mode, size, modification/change/birth timestamps and flags. I compare metadata after reading and reopen the path to check that it still describes the same object. I omit access time from the comparison because reading can update it. I query `_PC_CASE_SENSITIVE` on an opened descriptor for the native volume tests; I do not normalize Unicode names or infer their identity from strings.
+I prepare a move before writing Pending: open the source and both existing parent directories, require the same APFS volume, verify SHA-256 and identity, and acquire a cooperative `flock`. Persistent identity combines volume UUID, inode and birth timestamp. I create missing destination components relative to held directory descriptors, then call `renameatx_np` with `RENAME_EXCL`. Existing destinations, including APFS case/Unicode aliases, are never replaced. I flush directories and verify resulting identity, content and parent paths. Same-volume rename retains the original object and its metadata; there is no copy/delete fallback.
 
-I keep the adapter restricted to macOS 15+ ARM64. I use the Darwin ARM64 `stat` layout from the local SDK and test its meaningful fields against the system `stat` utility. I verify the open flags against Apple's [Darwin definitions](https://github.com/apple-oss-distributions/xnu/blob/main/bsd/sys/fcntl.h) and the layout against [sys/stat.h](https://github.com/apple-oss-distributions/xnu/blob/main/bsd/sys/stat.h).
+I use a small ARM64 C adapter for the variadic `fcntl(F_GETPATH)` call. I compile it with the macOS SDK and include it in the application bundle. I record the opened object's observed path on a failed operation when available, so Activity can help locate files after directory replacement.
 
-## Reproducible native checks
+Cooperative locks do not exclude arbitrary POSIX writers. A replacement immediately before rename can move the replacement into the destination; verification detects the mismatch, preserves the objects and records NeedsAttention. I never delete or roll back files by an uncertain pathname. The supported model excludes hostile same-user mutation and does not promise a frozen namespace. The [file-operation contract](FILE_OPERATION_CONTRACT.md) describes this boundary explicitly.
 
-I run ten `MacNativeRead` tests: production hashing/native metadata, final/ancestor symbolic links, directories/FIFOs, same-content replacement, ancestor replacement, concurrent writes with restored length/mtime, case/Unicode aliases, hard-link identity, permission denial, and invalid/missing paths. Other platforms explicitly skip these tests.
+Recovery never repeats the move. I complete an interrupted journal entry only when the source is absent and the destination has the recorded identity and content. An intact source with no destination becomes Failed/retryable. Missing identity or ambiguous files require attention; legacy records are not completed from matching bytes alone on macOS. SQLite schema 1 remains compatible through optional JSON fields.
 
-After a Release build, I run:
+## Desktop and migration
+
+I use native folder dialogs and Finder reveal. The app menu includes Open and Settings (Command-comma), alongside the native Hide/Services/Quit commands; Dock reopen restores the window. Closing the window or quitting drains work, closes confirmations and releases the profile lock. I do not offer tray hiding on macOS.
+
+For an installed `.app`, optional login startup writes a per-user LaunchAgent with literal arguments and an ownership marker. I do not replace or remove an unrelated job. It takes effect at the next login; macOS settings can disable it. Development/custom-profile launches cannot change the user's login configuration.
+
+I store the profile in `~/Library/Application Support/Dowlume`. Before its first creation I copy a closed `Dowlume.Preview` profile through a private staging directory, verify the copied database, then rename the complete directory into place. I retain the original, refuse a live source or links, and never merge into an existing destination. I keep monitoring paused after startup.
+
+## Reproducible checks
 
 ```sh
-dotnet build Dowlume/Dowlume.slnx -c Release
-python3 scripts/Test-MacFileReads.py --output artifacts/mac-file-reads
+mkdir -p artifacts/test-tmp
+TMPDIR="$PWD/artifacts/test-tmp" dotnet test Dowlume/Dowlume.slnx -c Release
+python3 scripts/Test-MacFileReads.py --output artifacts/mac-file-operations
+python3 scripts/Build-PlatformPreview.py --runtime osx-arm64 --output artifacts/macos-package
 ```
 
-The output directory must be new. I run as an ordinary user on Apple Silicon with Xcode command-line tools and the repository SDK. The script creates two private 256 MiB sparse images, one APFS and one case-sensitive APFS, enables ownership and runs the native tests on each. It never takes a user-supplied volume or Downloads folder. It detaches only its own images and removes only its own temporary directories; a detach failure preserves the fixture and fails the run. It does not force-unmount devices.
+Output directories must be new. The native filesystem script creates two private 256 MiB sparse images, APFS and case-sensitive APFS, enables ownership and runs as an ordinary user. It covers reads, identity, links/FIFOs, aliases, replacements, writers, destination collisions, permissions, same-volume lifecycle/restart/recovery, monitoring, cross-volume refusal and an actually full disposable volume. It detaches only its own images, never forces unmount, and preserves a fixture if detach fails. These tests do not revisit retired Recycle Bin capacity probes.
 
-I retain per-volume TRX results and `ACCEPTANCE.mac-file-reads.json`, including source commit, dirty-tree status, OS, architecture and SDK. Missing/skipped tests fail acceptance. The macOS CI job runs the same script and uploads its reports alongside the full regression results. Local development checks passed all ten tests on both APFS variants on macOS 26.6.2 ARM64, SDK 10.0.401; the report marks that run as a dirty development build. CI supplies separate macOS 15 evidence for the committed change. Local results do not extend the supported OS matrix.
+I retain TRX results and `ACCEPTANCE.mac-file-reads.json`, including revision, dirty-tree status, OS, architecture and SDK. CI runs the same tests on macOS 15. Local development evidence on macOS 26.6.2 is additional evidence, not a substitute for the baseline runner.
 
-## Remaining boundaries
+Packaging verifies the ad-hoc signature before and after ZIP extraction. The extracted self-contained application uses a newly required disposable profile, switches through all tabs in English and Spanish, verifies persisted language, exercises native organization/review/Snooze/Keep/Move/Undo and a reopened journal, starts a real watcher, and drains it before closing. The package report binds these checks to the archive hash. It does not claim human desktop, actual login or clean-machine acceptance; I track those in the [candidate record](RELEASE_CANDIDATE_0.4.0.md).
 
-These are read checks, not a transaction or a lock against POSIX writers. A writer can still modify content after verification. The checks do not pin ancestor directories, prove containment across mount changes, validate network/cloud storage, or establish a safe rename/delete operation. Hard links are observable aliases, not accepted mutation targets. `PathSafety` still has its existing OS-based comparison. I keep `CanMove` false on macOS and keep organization, review mutations, Undo and automatic recovery disabled.
-
-My remaining implementation sequence is:
-
-1. Define and validate the native mutation protocol: volume-aware containment, writer/replacement protection, atomic no-overwrite destinations, metadata, interrupted operations and journal recovery. Cross-volume operations need independent evidence or explicit refusal.
-2. Complete desktop acceptance: permissions and denial, Finder/folder selection, Dock/menu/reopen/quit behavior, optional login startup, both languages and profile migration.
-3. Measure performance, build the exact candidate, and accept installation/upgrade and the complete supported workflow before publishing 0.4.0.
-
-I defer Developer ID signing and notarization to final cross-platform stabilization, together with Windows publisher signing. I first complete and validate the application workflows on macOS and Linux while preserving Windows. This distribution work does not block functional 0.4.0 development or release acceptance. I retain ad-hoc signing for macOS development packages and document their actual signing status and installation limitations. I revisit [Developer ID distribution](https://developer.apple.com/developer-id/) in the final distribution phase. I do not remove quarantine or disable Gatekeeper in build scripts or instructions.
-
-I retain the existing Windows implementation and published artifacts. Native recycling remains disabled, and historical evidence and capacity investigations remain untouched.
+I defer Developer ID and notarization to final cross-platform stabilization. I document the ad-hoc signature and installation limits; scripts neither remove quarantine nor disable Gatekeeper. Historical releases, evidence and retired capacity investigations remain unchanged.

@@ -10,7 +10,7 @@ Separo las reglas del dominio, los mecanismos de supervisión, la persistencia y
 | --- | --- |
 | `Dowlume.Core` | Registros inmutables, categorías, validación, clasificación, ciclo de vida y contratos. Sin interfaz ni SQLite. |
 | `Dowlume.Monitoring` | `FileSystemWatcher`, canal limitado, eliminación de eventos duplicados, comprobaciones de disponibilidad y descubrimiento periódico. Solo depende de Core. |
-| `Dowlume.Infrastructure` | SQLite, validación de rutas, movimientos verificados, recuperación, integración con Windows y diagnóstico. Papelera nativa desactivada. |
+| `Dowlume.Infrastructure` | SQLite, validación de rutas, movimientos verificados, recuperación, integración Windows/macOS y diagnóstico. Papelera nativa desactivada. |
 | `Dowlume.App` | Vistas Avalonia, modelos de vista, diálogos, bandeja, composición por constructor y cierre. |
 | `Dowlume.Tests` | Pruebas de dominio, sistema de archivos desechable, seguridad y flujos de escritorio sin pantalla. |
 
@@ -97,3 +97,9 @@ Al cambiar de idioma guardo solo esa preferencia sobre los ajustes persistidos y
 Roto el registro de diagnóstico al alcanzar aproximadamente 1 MB. Excluyo mensajes de excepción y trazas porque podrían revelar rutas. El historial privado sí conserva rutas para recuperar operaciones.
 
 Mantengo las referencias primarias de Windows, SQLite y Avalonia y los enlaces a pruebas en la [versión inglesa](../ARCHITECTURE.md#diagnostics-and-references), junto al detalle de los límites de cada componente.
+
+## Adaptador macOS 0.4.0
+
+Preparo movimientos antes de Pending, reteniendo descriptores de origen y padres. Exijo APFS local del mismo volumen, rechazo enlaces/ubicaciones de nube, uso renombrado atómico exclusivo, sincronizo carpetas y verifico identidad/contenido después. Guardo UUID de volumen, inodo y nacimiento en campos opcionales del diario de esquema 1. La recuperación verifica identidad y SHA-256 en el mismo descriptor y comprueba que la ruta sigue nombrando ese objeto.
+
+Las garantías de exclusión y copia entre volúmenes descritas para Windows no se trasladan a macOS: rechazo transferencias entre volúmenes y uso bloqueos cooperativos, sin excluir cualquier escritor POSIX. Una carrera puede mover un sustituto antes de detectarla; conservo archivos y registro NeedsAttention con la ruta observada del objeto original cuando está disponible. Nunca borro ni revierto rutas ambiguas. Uso disponibilidad nativa no bloqueante y antigüedad de escritura, con verificación separada del adaptador. Consulta [contrato](FILE_OPERATION_CONTRACT.md) e [implementación/pruebas](MACOS_IMPLEMENTATION.md).

@@ -2,25 +2,25 @@
 
 [English](#) · [Español](es/FILE_OPERATION_CONTRACT.md)
 
-I use this contract to decide whether a native mover can advertise `CanMove`. In 0.3.0 only the existing Windows implementation can do so. The production macOS/Linux mover refuses all mutations; a portable `File.Move` call or passing shared orchestration tests is insufficient evidence.
+I use this contract to enable native operations. In 0.4.0 I retain Windows and enable macOS Apple Silicon on local same-volume APFS. Linux stays restricted. I distinguish Windows native exclusion from macOS POSIX race detection and preservation; these are different guarantees.
 
 | Boundary | Required behavior before enabling a port |
 | --- | --- |
 | Path and identity | Resolve containment using verified directory/file identities and volume behavior. Do not infer case sensitivity from the OS name or normalize Unicode blindly. Reject ambiguous aliases, links, unsupported mounts, cloud placeholders and unavailable volumes. |
 | Destination | Never overwrite an existing file, including case/Unicode aliases. Reserve or create destinations atomically; a prior existence check does not protect against replacement. |
-| Source | Verify expected content and identity. Protect against writers, path replacement and directory swaps throughout the operation. A managed share mode is not a portable exclusion guarantee. |
+| Source | Verify expected content and identity. State and test the native writer/replacement guarantees; detected ambiguity must retain files for inspection. A managed share mode is not a portable exclusion guarantee. |
 | Same-volume move | Preserve supported metadata and identity; verify the resulting object. Document filesystem-specific limitations. |
 | Cross-volume move | Copy without overwrite, flush and verify content before deleting the verified original. Preserve required timestamps, permissions and extended metadata, or refuse unsupported transfers. |
 | Journal and recovery | Persist Pending before mutation. Commit tracked state and completion together. On interruption inspect both paths and identities; preserve ambiguous copies and require attention rather than delete speculatively. |
 | Capabilities | Reject unsupported requests before journal entries, directory creation or file mutation. UI disabling alone is insufficient. Preview on a restricted host must not replay recovery. |
 
-I retain the existing Windows path policy and its accepted native implementation in 0.3.0. `PathSafety` still uses OS-based comparison; this is an explicit limitation, not a completed volume-aware implementation. I defer production volume-aware resolution and native movers to the respective port milestones, where I can test them together on APFS variants and ext4. Monitoring now retains case-distinct hints; it does not decide filesystem identity.
+## macOS 0.4.0
 
-I require disposable native tests for competing writers, replacement races, links, mount changes, same/cross-volume collisions, Unicode/case aliases, permissions, full disks, interrupted copies, restart and recovery. Shared fixture movers exercise the journal and workflow only. The five explicit Windows-native tests and existing Windows acceptance remain separate evidence.
+I resolve existing paths through volume UUID/inode/birth identity and compare missing names conservatively using the opened volume's case policy. The kernel exclusive rename, rather than a string comparison, decides collisions. I retain source/parent descriptors, verify content before and after moving, and journal identity before mutation. I refuse cross-volume transfers before Pending or directory creation.
 
-## macOS implementation in progress
+`flock` is cooperative. An arbitrary POSIX writer or same-user namespace replacement can race the final checks. A source replacement immediately before rename can move the replacement; I detect it afterward and retain both objects, without pathname rollback or deletion. I record the observed source-object path when available. I do not claim mandatory write exclusion, a frozen namespace or safety against hostile same-user modifications. Known cloud paths/attributes are rejected, but only ordinary folders outside all sync services are supported. Same-volume rename preserves the original object's metadata. Recovery requires recorded native identity and content, never hashes alone.
 
-I now use a Darwin read descriptor for preview hashing, reject symlinks during kernel path resolution, compare file identity and metadata around a read, and query the opened volume's case policy in native tests. These checks detect the tested changes but do not exclude writers, pin ancestor namespaces or grant a safe mutation lease. `PathSafety` containment remains unchanged. The [implementation record](MACOS_IMPLEMENTATION.md) separates this read-only work from the remaining native move/recovery requirements.
+I verify reads/moves on disposable APFS and case-sensitive APFS images, including collisions, writers, directory/source swaps, permission denial, a full volume, cross-volume refusal, native monitoring and lifecycle/recovery across a reopened database. Details and package checks are in [macOS implementation](MACOS_IMPLEMENTATION.md). Shared fixture movers and historical Windows results remain separate evidence.
 
 ## Profiles and backups
 

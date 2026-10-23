@@ -1,0 +1,55 @@
+Dowlume 0.4.0 — macOS Apple Silicon
+
+ENGLISH
+I target macOS 15+ on Apple Silicon and local APFS folders on one volume.
+I include .NET, English and Spanish. Intel is not included.
+
+Quit the previous version, extract the ZIP and move Dowlume.app to Applications
+before opening it or enabling login startup. Keep the complete .app bundle.
+I use an ad-hoc signature, without Developer ID or notarization. macOS may block
+first launch. If macOS offers Open Anyway in System Settings > Privacy & Security,
+use it only after verifying the downloaded archive and its published checksum.
+I do not ask you to remove quarantine or disable Gatekeeper.
+
+Start with disposable samples: Settings > folder > Preview > Organize and monitor.
+Monitoring starts paused. Closing the window or choosing Quit drains work and exits.
+Command-comma opens Settings. Finder reveals selected files. Login startup is optional
+for an installed .app and takes effect at the next login; macOS Login Items can override it.
+To uninstall, disable login startup, quit, then remove the app. Local data is retained.
+
+I store the profile in ~/Library/Application Support/Dowlume. On first launch I copy
+a closed Dowlume.Preview profile if the new profile does not exist, preserving the
+original. Back up the complete closed profile and managed files before upgrading.
+I never import a profile from a different operating system.
+
+I refuse cross-volume moves, hard links, symlinks, non-APFS/network/cloud locations.
+A concurrent writer can cause NeedsAttention; retain the files and inspect Activity.
+Recycling is disabled. See docs/USER_GUIDE.md and docs/PLATFORM_SUPPORT.md in Resources.
+
+ESPAÑOL
+Dirijo esta versión a macOS 15+ en Apple Silicon y carpetas APFS locales del mismo
+volumen. Incluyo .NET, inglés y español. No incluyo Intel.
+
+Cierra la versión anterior, extrae el ZIP y mueve Dowlume.app a Aplicaciones antes
+de abrirla o activar el inicio de sesión. Conserva el paquete .app completo.
+Uso firma ad hoc, sin Developer ID ni notarización. macOS puede bloquear la primera
+apertura. Si ofrece Abrir igualmente en Ajustes del Sistema > Privacidad y seguridad,
+úsalo solo tras verificar el archivo descargado y su suma publicada. No pido quitar
+la cuarentena ni desactivar Gatekeeper.
+
+Empieza con muestras desechables: Ajustes > carpeta > Vista previa > Organizar y
+supervisar. La supervisión comienza pausada. Cerrar la ventana o Salir espera al
+trabajo en curso y termina la aplicación. Comando-coma abre Ajustes. Finder muestra
+el archivo seleccionado. El inicio automático es opcional para una .app instalada,
+se aplica al siguiente inicio de sesión y puede ser anulado por los ajustes de macOS.
+Para desinstalar, desactívalo, sal y elimina la aplicación. Conservo los datos locales.
+
+Guardo el perfil en ~/Library/Application Support/Dowlume. En la primera apertura
+copio el perfil cerrado Dowlume.Preview si el nuevo no existe, conservando el original.
+Antes de actualizar, respalda el perfil completo cerrado y los archivos gestionados.
+No importo perfiles de otro sistema operativo.
+
+Rechazo movimientos entre volúmenes, enlaces duros o simbólicos y ubicaciones que no
+sean APFS local, incluidas red y nube. Una escritura concurrente puede requerir
+atención: conserva los archivos y consulta Actividad. La papelera está desactivada.
+Consulta docs/es/USER_GUIDE.md y docs/es/PLATFORM_SUPPORT.md dentro de Resources.
