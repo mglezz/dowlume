@@ -483,4 +483,6 @@ The original location must be available and the file must be unchanged. Undoing 
   <data name="MacHideOthers" xml:space="preserve"><value>Hide Others</value></data>
   <data name="MacShowAll" xml:space="preserve"><value>Show All</value></data>
   <data name="MacQuit" xml:space="preserve"><value>Quit</value></data>
+  <data name="MacPrivacyNotice" xml:space="preserve"><value>Local only. No account, cloud sync, or telemetry. Closing the window quits after finishing active work. Native Hide keeps monitoring running.</value></data>
+  <data name="PortableFolderNames" xml:space="preserve"><value>Category names must be portable folder names.</value></data>
 </root>

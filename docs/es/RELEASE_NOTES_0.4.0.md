@@ -13,6 +13,8 @@ Implemento el hito de macOS Apple Silicon. La 0.3.0 sigue siendo la versión est
 - Empaqueto adaptador nativo, icono, recursos inglés/español y guías sin conexión. Pruebo el binario macOS extraído, incluido el flujo nativo completo y las pestañas en ambos idiomas.
 - Conservo las funciones de Windows y pruebo la actualización desde el instalador publicado 0.3.0. Linux sigue como vista previa restringida para el hito 0.5.0.
 
+Clasifico `.dmg` y `.pkg` como Instaladores en perfiles nuevos. Conservo las reglas migradas; puedes añadir esas extensiones en Ajustes si faltaban. Los paquetes de aplicaciones son directorios y no se importan como descargas.
+
 ## Límites
 
 Rechazo movimientos entre volúmenes, enlaces duros o simbólicos, almacenamiento de red o que no sea APFS y ubicaciones conocidas gestionadas por la nube. La detección no certifica todos los proveedores de sincronización; solo admito carpetas locales ordinarias fuera de esos servicios. Los escritores POSIX no están obligados a respetar bloqueos cooperativos. Verifico tras renombrar y conservo los archivos si detecto una carrera; no prometo excluir cualquier escritor ni revertir automáticamente. Consulta el [contrato](FILE_OPERATION_CONTRACT.md).

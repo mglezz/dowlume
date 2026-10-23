@@ -52,7 +52,7 @@ def run_volume(filesystem, sensitive, output):
         ], check=True, cwd=ROOT, env=environment, timeout=180)
         counters = ET.parse(output / f"{report_name}.trx").find(
             ".//{http://microsoft.com/schemas/VisualStudio/TeamTest/2010}Counters")
-        if counters is None or int(counters.attrib["total"]) < 24 or counters.attrib["passed"] != counters.attrib["total"]:
+        if counters is None or int(counters.attrib["total"]) < 25 or counters.attrib["passed"] != counters.attrib["total"]:
             raise RuntimeError("All native filesystem tests must execute and pass; skipped tests are not acceptance.")
         return {
             "filesystem": info["FilesystemType"], "caseSensitive": sensitive,

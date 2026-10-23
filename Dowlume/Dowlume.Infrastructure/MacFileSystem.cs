@@ -50,7 +50,7 @@ internal static class MacFileSystem
         string type = Encoding.ASCII.GetString(data, 72, 16).TrimEnd('\0');
         if (type != "apfs" || (BitConverter.ToUInt32(data, 64) & 0x1000) == 0)
             throw new NotSupportedException(VolumeMessage);
-        string path = GetPath(handle);
+        string path = GetPath(handle).TrimEnd('/') + "/";
         if (path.Contains("/Library/CloudStorage/", StringComparison.OrdinalIgnoreCase) ||
             path.Contains("/Library/Mobile Documents/", StringComparison.OrdinalIgnoreCase))
             throw new NotSupportedException("Cloud-managed folders are not supported. Choose a local folder.");

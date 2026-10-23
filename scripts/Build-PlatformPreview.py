@@ -46,9 +46,21 @@ def build(runtime, output, staging):
                           "CFBundleShortVersionString": version, "CFBundleVersion": version,
                           "LSMinimumSystemVersion": "15.0", "NSHighResolutionCapable": True,
                           "CFBundleDisplayName": "Dowlume", "CFBundleIconFile": "Dowlume.icns",
+                          "CFBundleDevelopmentRegion": "en", "CFBundleLocalizations": ["en", "es"],
                           "NSDownloadsFolderUsageDescription": "Dowlume organizes completed downloads in the folder you select.",
                           "NSDocumentsFolderUsageDescription": "Dowlume accesses only the organization or destination folder you select.",
                           "NSDesktopFolderUsageDescription": "Dowlume accesses only the organization or destination folder you select."}, stream)
+        descriptions = {
+            "en": "Dowlume accesses the folder you select to organize or move completed downloads.",
+            "es": "Dowlume accede a la carpeta que eliges para organizar o mover descargas completas."
+        }
+        for language, description in descriptions.items():
+            localized = resources / f"{language}.lproj"
+            localized.mkdir()
+            (localized / "InfoPlist.strings").write_text("".join(
+                f'{key} = {json.dumps(description, ensure_ascii=False)};\n'
+                for key in ("NSDownloadsFolderUsageDescription", "NSDocumentsFolderUsageDescription", "NSDesktopFolderUsageDescription")
+            ), encoding="utf-8")
         iconset = staging / "Dowlume.iconset"
         iconset.mkdir()
         for size in (16, 32, 128, 256, 512):

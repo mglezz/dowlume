@@ -9,6 +9,8 @@ public sealed class CoreTests
     [InlineData("photo.jpg", FileCategory.Images)]
     [InlineData("unknown.xyz", FileCategory.Other)]
     [InlineData("setup.msi", FileCategory.Installers)]
+    [InlineData("download.DMG", FileCategory.Installers)]
+    [InlineData("setup.pkg", FileCategory.Installers)]
     public void ClassifiesExtensionsIgnoringCase(string path, FileCategory expected) =>
         Assert.Equal(expected, FileClassifier.Classify(path, new AppSettings()).Category);
 

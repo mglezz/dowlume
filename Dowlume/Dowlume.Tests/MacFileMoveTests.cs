@@ -114,6 +114,20 @@ public sealed class MacFileMoveTests
     }
 
     [MacFact]
+    public void CloudStorageRootIsRejectedBeforeCreatingDestinationFolders()
+    {
+        using var workspace = new TemporaryWorkspace();
+        var mover = new SafeFileMover();
+        string source = workspace.CreateFile("source.txt");
+        string cloud = Path.Combine(workspace.Root, "Library", "CloudStorage");
+        Directory.CreateDirectory(cloud);
+        Assert.Throws<NotSupportedException>(() => mover.PrepareMove(source,
+            Path.Combine(cloud, "new", "source.txt"), mover.Hash(source)));
+        Assert.Empty(Directory.EnumerateFileSystemEntries(cloud));
+        Assert.True(File.Exists(source));
+    }
+
+    [MacFact]
     public void CaseAndUnicodeCollisionsNeverOverwriteExistingObjects()
     {
         using var workspace = new TemporaryWorkspace();

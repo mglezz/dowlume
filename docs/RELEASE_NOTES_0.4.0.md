@@ -13,6 +13,8 @@ I implement the macOS Apple Silicon milestone. Version 0.3.0 remains the publish
 - I package the native adapter, icon, English/Spanish resources and offline guides. I exercise the actual extracted macOS binary, including the full native workflow and both language tabs.
 - I retain Windows functionality and test package upgrades from the published 0.3.0 installer. Linux stays a restricted preview for the 0.5.0 milestone.
 
+I classify `.dmg` and `.pkg` as Installers in new profiles. I preserve migrated category rules; these extensions can be added in Settings if they were absent. Application bundles are directories and are not imported as downloads.
+
 ## Boundaries
 
 I refuse cross-volume moves, hard links, symbolic links, network/non-APFS storage and known cloud-managed locations. Detection cannot certify every third-party sync provider; I support only ordinary local folders outside synchronization services. Concurrent POSIX writers do not have to honor cooperative locks. I verify after rename and retain files on a detected race; I do not promise exclusion of arbitrary writers or automatic rollback. See the [contract](FILE_OPERATION_CONTRACT.md).

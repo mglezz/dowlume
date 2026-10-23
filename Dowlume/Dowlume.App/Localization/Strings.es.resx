@@ -483,4 +483,6 @@ La ubicación original debe estar disponible y el archivo no debe haber cambiado
   <data name="MacHideOthers" xml:space="preserve"><value>Ocultar las demás</value></data>
   <data name="MacShowAll" xml:space="preserve"><value>Mostrar todo</value></data>
   <data name="MacQuit" xml:space="preserve"><value>Salir</value></data>
+  <data name="MacPrivacyNotice" xml:space="preserve"><value>Todo es local. Sin cuenta, sincronización ni telemetría. Cerrar la ventana termina tras completar el trabajo activo. Ocultar en macOS mantiene la supervisión.</value></data>
+  <data name="PortableFolderNames" xml:space="preserve"><value>Los nombres de categoría deben ser válidos entre plataformas.</value></data>
 </root>
