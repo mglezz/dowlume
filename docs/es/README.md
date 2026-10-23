@@ -6,11 +6,13 @@
 
 Desarrollo Dowlume como una aplicación de escritorio para Windows y macOS que organiza las descargas completas, lleva los archivos antiguos a una zona de revisión y deja la decisión final en tus manos. Mantengo todos los datos en el equipo, sin cuentas, sincronización en la nube ni telemetría.
 
-**Estado:** publiqué [v0.3.0 para Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.3.0) el 20 de octubre de 2026. Puedes descargar el [instalador](https://github.com/mglezz/dowlume/releases/download/v0.3.0/Dowlume-0.3.0-win-x64-setup.exe) o el [ZIP portátil](https://github.com/mglezz/dowlume/releases/download/v0.3.0/Dowlume-0.3.0-win-x64.zip) y comprobar sus [sumas SHA-256](https://github.com/mglezz/dowlume/releases/download/v0.3.0/SHA256SUMS.txt). Estos paquetes incluyen .NET y no están firmados.
+**Estado:** publiqué [v0.4.0 para macOS Apple Silicon y Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) el 23 de octubre de 2026. Descarga la [app macOS](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-osx-arm64.zip), el [instalador Windows](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64-setup.exe) o el [ZIP portátil Windows](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64.zip), y comprueba sus [sumas SHA-256](https://github.com/mglezz/dowlume/releases/download/v0.4.0/SHA256SUMS.all.txt). Incluyen .NET. macOS requiere versión 15+ y APFS local del mismo volumen; excluyo Intel. La app macOS tiene firma ad hoc, sin Developer ID/notarización; los paquetes Windows no tienen firma de editor.
 
-**Idiomas:** mantengo el inglés como idioma inicial y incluyo español en v0.2.0. En **Settings → Language**, selecciona **Español**; después encontrarás el selector en **Ajustes → Idioma**. Pausa primero la supervisión. El cambio es inmediato y se guarda para ese perfil. No cambia nombres de carpetas, archivos ni registros. **El instalador y ZIP portátil de 0.3.0 conservan el selector introducido en 0.2.0**. Conservo intactos los archivos originales de 0.1.0, que siguen en inglés. Consulta las [notas de 0.2.0](RELEASE_NOTES_0.2.0.md).
+**Idiomas:** mantengo el inglés como idioma inicial y incluyo español en v0.2.0. En **Settings → Language**, selecciona **Español**; después encontrarás el selector en **Ajustes → Idioma**. Pausa primero la supervisión. El cambio es inmediato y se guarda para ese perfil. No cambia nombres de carpetas, archivos ni registros. **Los paquetes 0.4.0 conservan el selector introducido en 0.2.0**. Conservo intactos los archivos originales de 0.1.0, que siguen en inglés. Consulta las [notas de 0.2.0](RELEASE_NOTES_0.2.0.md).
 
 Desactivé el envío nativo a la Papelera en v0.1.0 tras comprobar que las pruebas de capacidad no preservaban los archivos de forma fiable. Mantengo disponibles Conservar, Posponer, Mover a y las operaciones de Deshacer compatibles. Documento los fallos y la propuesta de cuarentena en la [investigación](RECYCLE_CAPACITY_INVESTIGATION.md).
+
+Confirmé rc.1 manualmente en macOS y Windows; después corregí una carrera de cierre y validé rc.2 con pruebas nativas de regresión y de paquetes. Publico los paquetes corregidos rc.2 sin recompilarlos; detallo la [aceptación](RELEASE_CANDIDATE_0.4.0.md). La firma de editor sigue aplazada.
 
 [Guía de uso](USER_GUIDE.md) · [Preparación del entorno](GETTING_STARTED.md) · [Hoja de ruta](ROADMAP.md) · [Contribuciones](CONTRIBUTING.md)
 
@@ -18,7 +20,7 @@ Desactivé el envío nativo a la Papelera en v0.1.0 tras comprobar que las prueb
 
 *Conservo esta captura de la interfaz inglesa de v0.1.0 con datos ficticios. Es anterior al selector de idioma. [Procedencia de las imágenes](images/README.md).*
 
-**0.4.0:** implemento el flujo macOS Apple Silicon: movimientos nativos APFS del mismo volumen, supervisión, revisión, Deshacer, recuperación, integración de escritorio y migración del perfil de vista previa. Linux sigue restringido para 0.5.0. La descarga estable actual sigue siendo 0.3.0; separo implementación y aceptación del paquete exacto. Consulta las [notas](RELEASE_NOTES_0.4.0.md), [aceptación](RELEASE_CANDIDATE_0.4.0.md) y [plataformas](PLATFORM_SUPPORT.md).
+**0.4.0:** implemento el flujo macOS Apple Silicon: movimientos nativos APFS del mismo volumen, supervisión, revisión, Deshacer, recuperación, integración de escritorio y migración del perfil de vista previa. Linux sigue restringido para 0.5.0. La versión 0.4.0 es la estable actual dentro del alcance documentado. Consulta las [notas](RELEASE_NOTES_0.4.0.md), [aceptación](RELEASE_CANDIDATE_0.4.0.md) y [plataformas](PLATFORM_SUPPORT.md).
 
 Priorizo completar las funciones de macOS y Linux conservando la fiabilidad Windows. Difiero la firma de editor y la notarización macOS a la estabilización final multiplataforma; detallo las [prioridades actuales](PLATFORM_SUPPORT.md#prioridades-funcionales-y-firma-aplazada).
 
@@ -63,8 +65,8 @@ Empieza con una carpeta desechable y archivos de ejemplo. En [Preparación del e
 | [Hoja de ruta](ROADMAP.md) y [plataformas](PLATFORM_SUPPORT.md) | Trabajo realizado y posibilidades futuras |
 | [Implementación macOS](MACOS_IMPLEMENTATION.md) | Flujos nativos, integración de escritorio y aceptación |
 | [Validación](VALIDATION.md) y [seguridad](SECURITY_REVIEW.md) | Resultados, procedencia y limitaciones |
-| [Notas de v0.3.0](RELEASE_NOTES_0.3.0.md) | Comportamiento de los binarios publicados |
-| [Aceptación de 0.3.0](RELEASE_CANDIDATE_0.3.0.md) y [registro histórico de 0.1.0](RELEASE_CHECKLIST.md) | Identidad de los artefactos y controles completados |
+| [Notas de v0.4.0](RELEASE_NOTES_0.4.0.md) | Comportamiento de los binarios publicados |
+| [Aceptación de 0.4.0](RELEASE_CANDIDATE_0.4.0.md) y [registro histórico de 0.1.0](RELEASE_CHECKLIST.md) | Identidad de los artefactos y controles completados |
 | [Aceptación en Windows](WINDOWS_ACCEPTANCE.md) y [Hyper-V](HYPER_V_ACCEPTANCE.md) | Preparación y comprobaciones de escritorio |
 | [Investigación de la papelera](RECYCLE_CAPACITY_INVESTIGATION.md) | Fallos preservados y cuarentena propuesta |
 | [Capturas](images/README.md), [diagramas](requirements/diagrams/domain-model/README.md) y [archivo histórico](archive/native-recycle/README.md) | Reproducción y procedencia de los materiales compartidos |

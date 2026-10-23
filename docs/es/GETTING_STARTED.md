@@ -6,7 +6,7 @@
 
 Desarrollo para Windows x64 y macOS 15+ Apple Silicon; para macOS necesito las herramientas de línea de comandos Xcode. Linux sigue como vista previa restringida. Utilizo un SDK .NET **10.0.4xx**: [`global.json`](../../global.json) fija `10.0.400` con `rollForward: latestPatch`; CI utiliza `10.0.401`. Para generar el instalador también necesito Inno Setup 6.
 
-Mantengo identificadores, comentarios, ramas y mensajes Conventional Commits en inglés. La interfaz y la documentación están disponibles en inglés y español. El instalador y ZIP portátil de 0.3.0 incluyen el selector de idioma introducido en 0.2.0.
+Mantengo identificadores, comentarios, ramas y mensajes Conventional Commits en inglés. La interfaz y la documentación están disponibles en inglés y español. Los paquetes publicados 0.4.0 incluyen el selector de idioma introducido en 0.2.0.
 
 ## Compilar y probar
 

@@ -8,9 +8,11 @@
 
 I build Dowlume as a local-first desktop application for Windows and macOS that organizes completed downloads, moves aging files into a review area, and leaves the final decision with you.
 
-**Status:** [Dowlume v0.3.0 for Windows x64 is published](https://github.com/mglezz/dowlume/releases/tag/v0.3.0). Download the [installer](https://github.com/mglezz/dowlume/releases/download/v0.3.0/Dowlume-0.3.0-win-x64-setup.exe) or [portable ZIP](https://github.com/mglezz/dowlume/releases/download/v0.3.0/Dowlume-0.3.0-win-x64.zip), and verify the [SHA-256 checksums](https://github.com/mglezz/dowlume/releases/download/v0.3.0/SHA256SUMS.txt). These packages are unsigned. See [validation](docs/VALIDATION.md) and the [release checklist](docs/RELEASE_CHECKLIST.md).
+**Status:** I published [Dowlume v0.4.0 for macOS Apple Silicon and Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) on 2026-10-23. Download the [macOS app](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-osx-arm64.zip), [Windows installer](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64-setup.exe) or [Windows portable ZIP](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64.zip), and verify the [SHA-256 checksums](https://github.com/mglezz/dowlume/releases/download/v0.4.0/SHA256SUMS.all.txt). macOS requires version 15+ and local same-volume APFS; Intel is excluded. The macOS app is ad-hoc signed, without Developer ID/notarization; Windows packages are unsigned.
 
 I prioritize completing macOS and Linux functionality while preserving Windows reliability. I defer publisher signing and macOS notarization to final cross-platform stabilization; see the [current priorities](docs/PLATFORM_SUPPORT.md#functional-priorities-and-deferred-signing). **Native recycling remains disabled**, including internal execution, after Recycle Bin capacity tests failed to preserve files. Keep, Snooze, Move, and eligible Undo remain available. The [investigation and future quarantine design](docs/RECYCLE_CAPACITY_INVESTIGATION.md) retain the failed evidence. I published 0.3.0 after automated checks passed and I confirmed that the final Windows candidate worked correctly on 2026-10-20. See the [release acceptance record](docs/RELEASE_CANDIDATE_0.3.0.md).
+
+I confirmed rc.1 manually on macOS and Windows, then corrected a shutdown race and validated rc.2 through native regression and package checks. I publish the corrected rc.2 application packages without rebuilding them; see the [acceptance record](docs/RELEASE_CANDIDATE_0.4.0.md). Publisher signing remains deferred.
 
 [Español](docs/es/README.md) · [User guide](docs/USER_GUIDE.md) · [Developer setup](GETTING_STARTED.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
 
@@ -36,11 +38,11 @@ There is no automatic permanent deletion, online account, cloud sync, or telemet
 
 Activity now includes searchable history with action/status filters and pagination, so older operations remain accessible. See [finding an earlier action](docs/USER_GUIDE.md#find-an-earlier-action).
 
-I implement the macOS Apple Silicon workflow in 0.4.0: native same-volume APFS moves, monitoring, review, Undo, recovery, desktop integration and migration from the preview profile. Linux remains a restricted preview for 0.5.0. The current stable download is still 0.3.0; I keep implementation and exact-package acceptance separate. See [0.4.0 notes](docs/RELEASE_NOTES_0.4.0.md), [candidate acceptance](docs/RELEASE_CANDIDATE_0.4.0.md) and the [platform matrix](docs/PLATFORM_SUPPORT.md).
+I implement the macOS Apple Silicon workflow in 0.4.0: native same-volume APFS moves, monitoring, review, Undo, recovery, desktop integration and migration from the preview profile. Linux remains a restricted preview for 0.5.0. Version 0.4.0 is the current stable release within the documented platform scope. See [0.4.0 notes](docs/RELEASE_NOTES_0.4.0.md), [candidate acceptance](docs/RELEASE_CANDIDATE_0.4.0.md) and the [platform matrix](docs/PLATFORM_SUPPORT.md).
 
 ## Languages
 
-I keep English as the default and provide Spanish in v0.2.0. In **Settings → Language**, select **English** or **Español**; the interface changes immediately and remembers the choice for that profile. Pause monitoring first. Folder names, files, rules, and journal records are preserved. The **0.3.0 installer and portable ZIP retain the selector introduced in 0.2.0**. I retain the original English-only 0.1.0 assets unchanged. See the [0.2.0 release notes](docs/RELEASE_NOTES_0.2.0.md).
+I keep English as the default and provide Spanish in v0.2.0. In **Settings → Language**, select **English** or **Español**; the interface changes immediately and remembers the choice for that profile. Pause monitoring first. Folder names, files, rules, and journal records are preserved. The **0.4.0 packages retain the selector introduced in 0.2.0**. I retain the original English-only 0.1.0 assets unchanged. See the [0.2.0 release notes](docs/RELEASE_NOTES_0.2.0.md).
 
 I maintain the [Spanish documentation](docs/es/README.md) alongside these English pages. Screenshots and historical evidence identify the revision they document.
 
@@ -71,7 +73,7 @@ Choose a disposable sample folder in Settings first, then use Preview. See [deve
 
 ## Packages
 
-Download the installer or portable ZIP from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.3.0). Both include the runtime; no separate .NET installation is required. To build from source or prepare future packages, see [packaging instructions](docs/RELEASE_CHECKLIST.md). Local packages in `artifacts/` remain distinct from the published, verified release assets.
+Download the macOS app or Windows installer/portable ZIP from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.4.0). These packages include the runtime; no separate .NET installation is required. To build from source or prepare future packages, see [packaging instructions](docs/RELEASE_CHECKLIST.md). Local packages in `artifacts/` remain distinct from the published, verified release assets.
 
 ## Explore the project
 

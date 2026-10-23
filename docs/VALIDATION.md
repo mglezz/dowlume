@@ -6,6 +6,10 @@ I keep dated validation records here. A pending item in an older entry describes
 
 I integrated the final foundation at `6b8a33d` and passed the final-source native tests, security and package checks. I then confirmed the final Windows candidate worked correctly and published the same 15 files as v0.3.0. The [publication record](RELEASE_CANDIDATE_0.3.0.md) retains exact hashes and the limits of the recorded acceptance.
 
+## 2026-10-23: 0.4.0 macOS candidate
+
+I completed the macOS implementation and packaged clean source `26a9087` as [0.4.0-rc.2](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.2). After manual functional confirmation of rc.1 on macOS and Windows and automated regression/package acceptance of the rc.2 shutdown correction, I published the corrected rc.2 application packages as [0.4.0 stable](https://github.com/mglezz/dowlume/releases/tag/v0.4.0). The [acceptance record](RELEASE_CANDIDATE_0.4.0.md) identifies CI, exact hashes, the shutdown correction, the extracted-archive check on macOS 26.6.2 and the limits of the manual confirmation. Publisher signing remains deferred.
+
 ## 2026-10-20: 0.3.0 foundation validation
 
 I added native capability selection, restricted preview hosts, fixed schema-1 profile regressions and native archive packaging. On local macOS ARM64, 79 tests passed and six native tests were explicitly skipped (five Windows, one Linux). Formatting and the acceptance harness build passed. The local macOS archive passed ad-hoc signature verification before and after extraction and native window launch/clean exit. This exploratory build had uncommitted changes and is not a release candidate.

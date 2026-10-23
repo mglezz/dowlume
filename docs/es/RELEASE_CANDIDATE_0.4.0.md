@@ -2,7 +2,7 @@
 
 [English](../RELEASE_CANDIDATE_0.4.0.md) · [Español](#)
 
-Implemento 0.4.0 para macOS Apple Silicon y conservo Windows. Mantengo 0.3.0 como estable hasta aceptar los binarios nuevos. La firma está aplazada y no bloquea el hito funcional. Distingo implementación, automatización y comprobaciones pendientes del paquete exacto.
+Publiqué [0.4.0](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) para macOS Apple Silicon y Windows el 23 de octubre de 2026 tras confirmar manualmente rc.1 en ambas plataformas y aceptar mediante regresiones y paquetes automáticos la corrección de cierre de rc.2. La firma sigue aplazada. Distingo a continuación evidencia automática y confirmación funcional manual final.
 
 ## Alcance
 
@@ -16,13 +16,48 @@ Las pruebas locales en macOS 26.6.2 ARM64, SDK 10.0.401, superaron el flujo admi
 
 El script macOS firma ad hoc, extrae el ZIP, vuelve a verificarlo y prueba su ejecutable real con un perfil desechable nuevo obligatorio. El informe cubre pestañas en ambos idiomas, persistencia, ciclo nativo y Deshacer, base reabierta y cierre del supervisor. No afirma instalación manual, inicio real de sesión ni máquina limpia.
 
+## Entrega de la candidata — 2026-10-23
+
+Publiqué [v0.4.0-rc.2](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.2) como versión preliminar. Genero todos los paquetes desde la revisión limpia [`26a9087e03a05075162ff34f5c824f05d8cc496e`](https://github.com/mglezz/dowlume/commit/26a9087e03a05075162ff34f5c824f05d8cc496e), tras integrar [implementación macOS #33](https://github.com/mglezz/dowlume/pull/33), [corrección del cierre #34](https://github.com/mglezz/dowlume/pull/34) y [cierre del supervisor #36](https://github.com/mglezz/dowlume/pull/36). Los commits posteriores de documentación no modifican estos binarios. Después promocioné los paquetes de aplicación aceptados a 0.4.0 sin recompilarlos.
+
+| Comprobación de la revisión final | Resultado |
+| --- | --- |
+| [Compilación, pruebas y formato](https://github.com/mglezz/dowlume/actions/runs/39955341878) | macOS: 108 superadas / 8 omitidas; Windows: 87 / 29; Linux: 83 / 33. Ningún fallo. Las omisiones corresponden a otras plataformas. |
+| Matriz APFS nativa, misma ejecución | 25/25 superadas con cada política de mayúsculas; macOS 15.7.9 ARM64. |
+| [Seguridad](https://github.com/mglezz/dowlume/actions/runs/39955342141) | Superada. |
+| [Paquetes nativos](https://github.com/mglezz/dowlume/actions/runs/39955348143) | Superados el flujo macOS extraído y el arranque de la vista previa restringida Linux. |
+| [Paquete Windows](https://github.com/mglezz/dowlume/actions/runs/39955344254) | Superados actualización desde el instalador aceptado 0.3.0, idiomas, arranque portátil, protección con app abierta y desinstalación. |
+
+Descarté el intento anterior desde `032df79`: una prueba de escritorio eliminaba su perfil temporal antes de que el cierre asíncrono liberara SQLite. Corregí la limpieza para esperar al cierre real e impedí que una actualización inicial tardía reactivara el temporizador durante la salida. La ejecución final indicada supera las pruebas con esa corrección.
+
+Adjunto información de compilación, informes de aceptación, `Dowlume-0.4.0-validation.zip` y `SHA256SUMS.all.txt` a la publicación. El informe local del archivo extraído es `ACCEPTANCE.osx-arm64-local.json`; separo su resultado automático de la instalación manual y del inicio real de sesión.
+
+Conservé [rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.1), generada desde `e51f593`, como evidencia histórica. Tras su confirmación manual global satisfactoria, una [ejecución CI de documentación](https://github.com/mglezz/dowlume/actions/runs/39953895140) detectó una carrera intermitente al liberar el observador durante el cierre. Retuve la publicación estable, reproduje el fallo con una prueba coordinada y corregí el orden de liberación en #36. La prueba nueva falla con el código anterior y pasa con la corrección. Reconstruí rc.2 desde `26a9087`; no reutilizo hashes de rc.1 ni afirmo que los binarios anteriores incluyan esta corrección.
+
+### SHA-256 de los paquetes
+
+| Archivo / File | SHA-256 |
+| --- | --- |
+| `Dowlume-0.4.0-osx-arm64.zip` | `2d3798a97f11c53361c0431f2a7c4d9546e54caad3c82cc45e2ea3560e0c169b` |
+| `Dowlume-0.4.0-win-x64-setup.exe` | `9b756f253114d5909e3e01c78d46938a8c87bd4bf81bf1c3011a3dae9364bd97` |
+| `Dowlume-0.4.0-win-x64.zip` | `2c8b6063d795226a5bedf150f261e6924e27b15676a896513c4de0e37f11027d` |
+| `Dowlume-0.4.0-linux-x64-preview.tar.gz` | `8118bb3197e22fefc516599eccc9d26275e66f3103e6463ba3f1cb7b90026aa1` |
+
 ## Lista del paquete exacto
 
-Antes de publicar estable registro el hash del candidato y estos resultados sobre ese mismo archivo:
+Solicité comprobar el candidato identificado por hash con esta lista. Registro debajo la confirmación global; no invento mediciones ni evidencias separadas para cada punto:
 
 - macOS: extraer e instalar `.app` completa, revisar avisos Gatekeeper/permisos con la firma ad hoc real y verificar acceso ordinario/denegado con muestras desechables.
 - macOS: actualizar un perfil cerrado de vista previa 0.3.0 conservando ajustes, idioma e historial; verificar reinicio, selector/Finder, Comando-coma, Ocultar/reabrir desde Dock, rechazo de segunda instancia, cancelar confirmaciones y Salir supervisando.
 - macOS: activar inicio automático desde la app instalada, cerrar/iniciar sesión, confirmar apertura pausada, desactivarlo y verificar retirada del registro propio. Desinstalar conserva perfil y archivos.
 - Windows: repetir actualización desde 0.3.0, idiomas tras reiniciar, organización/revisión/Deshacer, bandeja y cierre con el paquete nuevo. Separo automatización alojada y confirmación manual.
 
-No traslado la confirmación de 0.3.0 a los binarios 0.4.0. Publico un candidato identificado mientras faltan estas comprobaciones y promociono únicamente los artefactos aceptados, sin recompilarlos.
+No reutilizo la confirmación de 0.3.0. El 23 de octubre de 2026 confirmé que rc.1 funcionaba correctamente en macOS y Windows. Después acepté la corrección acotada de cierre de rc.2 mediante la regresión determinista, la matriz nativa completa y los controles del paquete final.
+
+## Aceptación y publicación estable — 2026-10-23
+
+Tras recibir la lista de rc.1, confirmé las pruebas satisfactorias en Mac y Windows y autoricé continuar la publicación. Es una confirmación funcional global, no un resultado registrado por separado para cada punto. No aporté nuevas versiones detalladas del sistema, evidencia de máquina limpia, capturas ni registros por paso; no deduzco esos datos. Los JSON automáticos conservan sus campos originales `ManualDesktopAcceptance: false` porque describen automatización, no esta confirmación posterior.
+
+No afirmo una segunda prueba manual de rc.2. Su único cambio de producto respecto a rc.1 es el orden de liberación del observador durante el cierre. Acepto ese cambio con una regresión que falla en el código anterior, la batería completa en tres plataformas, ambas matrices APFS, actualización/instalación Windows y flujos del paquete extraído en macOS 15 y 26. Cierro el hito funcional con la evidencia indicada; no atribuyo pruebas adicionales de máquina limpia ni registros manuales por paso.
+
+Publico [v0.4.0](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) desde la misma revisión `26a9087` y conservo idénticos el instalador, archivos de aplicación, kit de aceptación, información de compilación y evidencia automática. Solo finalizo las notas independientes y sus manifiestos de hashes afectados tras la aceptación. La documentación dentro de los paquetes aceptados describe el estado previo a publicar; este registro y las notas independientes recogen el estado final. Conservo la candidata como evidencia histórica y marco 0.4.0 como última estable.

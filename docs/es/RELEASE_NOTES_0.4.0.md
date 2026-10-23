@@ -2,10 +2,11 @@
 
 [English](../RELEASE_NOTES_0.4.0.md) · [Español](#)
 
-Implemento el hito de macOS Apple Silicon. La 0.3.0 sigue siendo la versión estable publicada hasta aceptar y publicar los nuevos paquetes. Registro el candidato exacto y las comprobaciones manuales pendientes en la [aceptación de 0.4.0](RELEASE_CANDIDATE_0.4.0.md).
+Publiqué el hito macOS Apple Silicon como [v0.4.0](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) el 23 de octubre de 2026 tras confirmar manualmente rc.1 en macOS y Windows y aceptar mediante regresiones y pruebas automáticas de paquetes la corrección de cierre de rc.2. Promocioné los paquetes corregidos rc.2 sin recompilarlos. Registro revisión, hashes, controles automáticos y confirmación manual en la [aceptación de 0.4.0](RELEASE_CANDIDATE_0.4.0.md).
 
 ## Cambios
 
+- Espero al cierre de las tareas de supervisión antes de liberar el observador para evitar un error intermitente al salir.
 - Habilito organización, supervisión, envejecimiento/revisión, Conservar, Posponer, Mover, Deshacer elegible y recuperación del diario en macOS 15+ ARM64, para carpetas APFS locales del mismo volumen.
 - Uso renombrado atómico exclusivo, descriptores verificados de archivos/carpetas e identidad persistente de volumen/archivo. Conservo los archivos ambiguos y muestro su ubicación observada en Actividad cuando está disponible.
 - Añado menús nativos de aplicación/Dock, Comando-coma para Ajustes, reapertura y salida ordenada. Cerrar la ventana termina tras esperar al trabajo en curso; no hay modo de bandeja en macOS.

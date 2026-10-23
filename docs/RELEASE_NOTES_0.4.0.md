@@ -2,10 +2,11 @@
 
 [English](#) · [Español](es/RELEASE_NOTES_0.4.0.md)
 
-I implement the macOS Apple Silicon milestone. Version 0.3.0 remains the published stable release until I accept and publish the new packages. I record the exact candidate and outstanding manual checks in [0.4.0 acceptance](RELEASE_CANDIDATE_0.4.0.md).
+I published the macOS Apple Silicon milestone as [v0.4.0](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) on 2026-10-23 after manual functional confirmation of rc.1 on macOS and Windows, followed by automated regression and package acceptance of the shutdown correction in rc.2. I promoted the corrected rc.2 application packages without rebuilding them. I record source, hashes, automated checks and manual confirmation in [0.4.0 acceptance](RELEASE_CANDIDATE_0.4.0.md).
 
 ## Changes
 
+- I drain monitoring tasks before disposing their watcher, preventing an intermittent shutdown error.
 - I enable native organization, monitoring, aging/review, Keep, Snooze, Move, eligible Undo and journal recovery on macOS 15+ ARM64, for local APFS folders on the same volume.
 - I use exclusive atomic rename, verified file/directory descriptors and persistent volume/file identity. I retain ambiguous files and show the observed location in Activity when available.
 - I add native application/Dock menus, Command-comma for Settings, reopen handling and graceful Quit. Closing the window exits after draining work; there is no macOS tray mode.

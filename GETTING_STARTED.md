@@ -8,7 +8,7 @@
 - .NET SDK from the **10.0.4xx family**: [`global.json`](global.json) sets `10.0.400` with `rollForward: latestPatch`. CI uses `10.0.401`, a compatible patch in the same feature band.
 - Inno Setup 6 only when building the installer.
 
-I use C#, Avalonia MVVM, SQLite, System.Threading.Channels, and xUnit. I keep code identifiers, comments, branch names, and Conventional Commits in English. I maintain English and Spanish UI resources and a [Spanish documentation section](docs/es/README.md). The published 0.3.0 installer and portable ZIP include the language selector introduced in 0.2.0.
+I use C#, Avalonia MVVM, SQLite, System.Threading.Channels, and xUnit. I keep code identifiers, comments, branch names, and Conventional Commits in English. I maintain English and Spanish UI resources and a [Spanish documentation section](docs/es/README.md). The published 0.4.0 packages include the language selector introduced in 0.2.0.
 
 ## Build and test
 

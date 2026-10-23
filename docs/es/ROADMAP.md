@@ -2,7 +2,7 @@
 
 [English](../../ROADMAP.md) · [Índice en español](README.md)
 
-**Estado actual:** publiqué [v0.3.0 para Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.3.0) el 20 de octubre de 2026 tras los controles automáticos y mi confirmación funcional final. Incluyo vistas previas restringidas de macOS Apple Silicon y Linux como bases de las adaptaciones. Registro la [aceptación de 0.3.0](RELEASE_CANDIDATE_0.3.0.md).
+**Estado actual:** publiqué [v0.4.0 para macOS Apple Silicon y Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) el 23 de octubre de 2026 tras confirmar manualmente rc.1 en ambas plataformas y aceptar mediante regresiones y pruebas de paquetes la corrección de cierre de rc.2. Linux sigue como vista previa restringida para 0.5.0. Registro la [aceptación de 0.4.0](RELEASE_CANDIDATE_0.4.0.md).
 
 Publiqué [v0.1.0 para Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.1.0) el 18 de octubre de 2026 tras completar aceptación automatizada, confirmar pruebas humanas y revisión independiente, y autorizar su publicación. Mantengo las evidencias en [Validación](VALIDATION.md).
 
@@ -20,13 +20,13 @@ Después de 0.2.0 priorizo el funcionamiento seguro en varias plataformas. Estas
 
 «Soportado» significa que las funciones documentadas funcionan en las versiones, arquitecturas, sistemas de archivos y sesiones de escritorio indicados. No significa todas las distribuciones Linux, todas las versiones de macOS ni convenciones visuales nativas idénticas. En 0.3.0 fijo la matriz inicial según las dependencias .NET/Avalonia reales y los entornos de prueba disponibles; añadir un destino exige aceptación, no solo otro identificador de runtime. Detallo el [alcance y la evidencia por plataforma](PLATFORM_SUPPORT.md).
 
-Integré y publiqué las bases de 0.3.0 tras superar los controles nativos automáticos y [confirmar el funcionamiento final Windows](RELEASE_CANDIDATE_0.3.0.md). La aceptación estable de macOS/Linux sigue prevista para 0.4.0/0.5.0.
+Integré y publiqué las bases de 0.3.0 tras superar los controles nativos automáticos y [confirmar el funcionamiento final Windows](RELEASE_CANDIDATE_0.3.0.md). Completé la aceptación macOS en 0.4.0; la de Linux queda para 0.5.0.
 
-### En curso: 0.4.0 para Apple Silicon
+### Publicada: 0.4.0 para Apple Silicon
 
-He implementado operaciones APFS del mismo volumen y recuperación, ciclo completo y supervisión, menús nativos/reapertura/salida, inicio opcional, migración, ambos idiomas y empaquetado autocontenido. Verifico carreras, colisiones, permisos y volumen lleno con ambas políticas APFS. El paquete extraído ejecuta una prueba del flujo nativo. Registro evidencia y comprobaciones manuales del paquete exacto en [aceptación de 0.4.0](RELEASE_CANDIDATE_0.4.0.md).
+Acepté la corrección de cierre de [0.4.0-rc.2](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.2) mediante controles automáticos tras confirmar manualmente rc.1 en macOS y Windows, y publiqué los paquetes corregidos como 0.4.0. He implementado operaciones APFS del mismo volumen y recuperación, ciclo completo y supervisión, menús nativos/reapertura/salida, inicio opcional, migración, ambos idiomas y empaquetado autocontenido. Verifico carreras, colisiones, permisos y volumen lleno con ambas políticas APFS. El paquete extraído ejecuta una prueba del flujo nativo. Registro evidencia y comprobaciones manuales del paquete exacto en [aceptación de 0.4.0](RELEASE_CANDIDATE_0.4.0.md).
 
-La condición pendiente de publicación estable es aceptar el candidato exacto, incluida instalación, inicio real de sesión y diálogos de permisos; no los deduzco de pruebas automatizadas. Priorizo funcionalidad macOS/Linux conservando Windows y aplazo firma de editor, Developer ID y notarización hasta estabilización final. La firma no bloquea los hitos funcionales 0.4.0/0.5.0; documento su estado real. Intel queda fuera del alcance.
+Registré la confirmación funcional final por separado de la automatización; conservo su alcance y límites de evidencia en el registro de aceptación. Priorizo funcionalidad macOS/Linux conservando Windows y aplazo firma de editor, Developer ID y notarización hasta estabilización final. La firma no bloquea los hitos funcionales 0.4.0/0.5.0; documento su estado real. Intel queda fuera del alcance.
 
 ### Primera secuencia de implementación: 0.3.0
 
