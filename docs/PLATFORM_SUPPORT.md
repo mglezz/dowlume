@@ -2,11 +2,11 @@
 
 [English](#) · [Español](es/PLATFORM_SUPPORT.md)
 
-I publish [0.4.0](RELEASE_CANDIDATE_0.4.0.md) as the stable macOS Apple Silicon and Windows release within the scope below. I accepted the exact packages on both platforms. Older 0.3.0 macOS/Linux binaries remain restricted previews, and Linux 0.4.0 remains restricted for the 0.5.0 milestone. See [0.4.0 notes](RELEASE_NOTES_0.4.0.md).
+I publish [0.4.0](RELEASE_CANDIDATE_0.4.0.md) as the stable macOS Apple Silicon and Windows release within the scope below. I confirmed rc.1 manually on both platforms and accepted the rc.2 shutdown correction through native regression and final-package automation. Older 0.3.0 macOS/Linux binaries remain restricted previews, and Linux 0.4.0 remains restricted for the 0.5.0 milestone. See [0.4.0 notes](RELEASE_NOTES_0.4.0.md).
 
 | Target | Current implementation | Distribution and acceptance |
 | --- | --- | --- |
-| Windows x64 | Organization, monitoring, review, eligible Undo, recovery, Explorer, tray and login startup | Installer and portable ZIP; automated upgrade checks from hash-pinned 0.3.0 passed, followed by final functional confirmation on the exact candidate. |
+| Windows x64 | Organization, monitoring, review, eligible Undo, recovery, Explorer, tray and login startup | Installer and portable ZIP; automated upgrade checks from hash-pinned 0.3.0 passed, with manual functional confirmation on rc.1 and automated regression/package acceptance of the rc.2 shutdown correction. |
 | macOS 15+ Apple Silicon | Complete supported workflow on local APFS within one volume; native dialogs/Finder, application/Dock menus, reopen/quit, optional login startup, both languages and preview-profile migration | Self-contained `.app` ZIP, ad-hoc signed. Native CI targets macOS 15; local development also runs on 26.6.2. I record final functional confirmation and its evidence limits separately from package automation. |
 | macOS Intel | Excluded | No x64 package or support claim. |
 | Ubuntu 24.04 x64 | Restricted preview: folder preview, settings, history, both languages, XDG Downloads discovery and containing-folder reveal | Self-contained `.tar.gz`; X11 launch under Xvfb. Mutations, recovery, login startup and tray hiding remain disabled for the 0.5.0 milestone. Xvfb does not accept a real GNOME session, XWayland or native Wayland. |

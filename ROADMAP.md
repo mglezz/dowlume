@@ -2,7 +2,7 @@
 
 [English](#) · [Español](docs/es/ROADMAP.md)
 
-**Latest stable release:** I published [v0.4.0 for macOS Apple Silicon and Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) on 2026-10-23 after automated checks and final functional confirmation on both platforms. Linux remains a restricted preview for 0.5.0. See the [0.4.0 acceptance record](docs/RELEASE_CANDIDATE_0.4.0.md).
+**Latest stable release:** I published [v0.4.0 for macOS Apple Silicon and Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) on 2026-10-23 after manual functional confirmation of rc.1 on both platforms and automated regression/package acceptance of the shutdown correction in rc.2. Linux remains a restricted preview for 0.5.0. See the [0.4.0 acceptance record](docs/RELEASE_CANDIDATE_0.4.0.md).
 
 | Stage | Status | Details |
 | --- | --- | --- |
@@ -32,7 +32,7 @@ I integrated and published the 0.3.0 foundation after native automated checks an
 
 ### Published: 0.4.0 for Apple Silicon
 
-I accepted [0.4.0-rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.1) on macOS and Windows and published the same packages as 0.4.0. I have implemented native same-volume APFS operations and recovery, the supported lifecycle and watcher, native menus/reopen/quit, optional login startup, profile migration, both languages and self-contained packaging. I verify races, collisions, permissions and full-volume behavior on both APFS case policies. The extracted package runs a native workflow test. I track evidence and exact-package manual checks in [0.4.0 acceptance](docs/RELEASE_CANDIDATE_0.4.0.md).
+I accepted the shutdown correction in [0.4.0-rc.2](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.2) through automated checks following manual confirmation of rc.1 on macOS and Windows, and published the corrected packages as 0.4.0. I have implemented native same-volume APFS operations and recovery, the supported lifecycle and watcher, native menus/reopen/quit, optional login startup, profile migration, both languages and self-contained packaging. I verify races, collisions, permissions and full-volume behavior on both APFS case policies. The extracted package runs a native workflow test. I track evidence and exact-package manual checks in [0.4.0 acceptance](docs/RELEASE_CANDIDATE_0.4.0.md).
 
 I recorded final functional confirmation separately from automation; I retain its scope and evidence limits in the acceptance record. I prioritize functional completion on macOS and Linux while preserving Windows behavior. I defer Windows publisher signing, macOS Developer ID signing and notarization to final cross-platform stabilization; they are not prerequisites for completing or releasing the functional 0.4.0/0.5.0 milestones. I document the actual signing status and installation limitations of each package. Native file safety and acceptance of the exact binaries remain required. Intel remains outside the initial scope.
 

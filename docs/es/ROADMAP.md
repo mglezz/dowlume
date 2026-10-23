@@ -2,7 +2,7 @@
 
 [English](../../ROADMAP.md) · [Índice en español](README.md)
 
-**Estado actual:** publiqué [v0.4.0 para macOS Apple Silicon y Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) el 23 de octubre de 2026 tras controles automáticos y confirmación funcional final en ambas plataformas. Linux sigue como vista previa restringida para 0.5.0. Registro la [aceptación de 0.4.0](RELEASE_CANDIDATE_0.4.0.md).
+**Estado actual:** publiqué [v0.4.0 para macOS Apple Silicon y Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) el 23 de octubre de 2026 tras confirmar manualmente rc.1 en ambas plataformas y aceptar mediante regresiones y pruebas de paquetes la corrección de cierre de rc.2. Linux sigue como vista previa restringida para 0.5.0. Registro la [aceptación de 0.4.0](RELEASE_CANDIDATE_0.4.0.md).
 
 Publiqué [v0.1.0 para Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.1.0) el 18 de octubre de 2026 tras completar aceptación automatizada, confirmar pruebas humanas y revisión independiente, y autorizar su publicación. Mantengo las evidencias en [Validación](VALIDATION.md).
 
@@ -24,7 +24,7 @@ Integré y publiqué las bases de 0.3.0 tras superar los controles nativos autom
 
 ### Publicada: 0.4.0 para Apple Silicon
 
-Acepté [0.4.0-rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.1) en macOS y Windows y publiqué los mismos paquetes como 0.4.0. He implementado operaciones APFS del mismo volumen y recuperación, ciclo completo y supervisión, menús nativos/reapertura/salida, inicio opcional, migración, ambos idiomas y empaquetado autocontenido. Verifico carreras, colisiones, permisos y volumen lleno con ambas políticas APFS. El paquete extraído ejecuta una prueba del flujo nativo. Registro evidencia y comprobaciones manuales del paquete exacto en [aceptación de 0.4.0](RELEASE_CANDIDATE_0.4.0.md).
+Acepté la corrección de cierre de [0.4.0-rc.2](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.2) mediante controles automáticos tras confirmar manualmente rc.1 en macOS y Windows, y publiqué los paquetes corregidos como 0.4.0. He implementado operaciones APFS del mismo volumen y recuperación, ciclo completo y supervisión, menús nativos/reapertura/salida, inicio opcional, migración, ambos idiomas y empaquetado autocontenido. Verifico carreras, colisiones, permisos y volumen lleno con ambas políticas APFS. El paquete extraído ejecuta una prueba del flujo nativo. Registro evidencia y comprobaciones manuales del paquete exacto en [aceptación de 0.4.0](RELEASE_CANDIDATE_0.4.0.md).
 
 Registré la confirmación funcional final por separado de la automatización; conservo su alcance y límites de evidencia en el registro de aceptación. Priorizo funcionalidad macOS/Linux conservando Windows y aplazo firma de editor, Developer ID y notarización hasta estabilización final. La firma no bloquea los hitos funcionales 0.4.0/0.5.0; documento su estado real. Intel queda fuera del alcance.
 

@@ -2,11 +2,11 @@
 
 [English](../PLATFORM_SUPPORT.md) · [Español](#)
 
-Publico [0.4.0](RELEASE_CANDIDATE_0.4.0.md) como estable para macOS Apple Silicon y Windows dentro del alcance siguiente. Acepté los paquetes exactos en ambas plataformas. Los binarios macOS/Linux 0.3.0 siguen siendo vistas previas restringidas y Linux 0.4.0 continúa restringido para el hito 0.5.0. Consulta las [notas](RELEASE_NOTES_0.4.0.md).
+Publico [0.4.0](RELEASE_CANDIDATE_0.4.0.md) como estable para macOS Apple Silicon y Windows dentro del alcance siguiente. Confirmé rc.1 manualmente en ambas plataformas y acepté la corrección de cierre de rc.2 mediante regresiones nativas y automatización del paquete final. Los binarios macOS/Linux 0.3.0 siguen siendo vistas previas restringidas y Linux 0.4.0 continúa restringido para el hito 0.5.0. Consulta las [notas](RELEASE_NOTES_0.4.0.md).
 
 | Plataforma | Implementación actual | Distribución y aceptación |
 | --- | --- | --- |
-| Windows x64 | Organización, supervisión, revisión, Deshacer elegible, recuperación, Explorador, bandeja e inicio de sesión | Instalador y ZIP portátil; superé actualización automatizada desde 0.3.0 fijada por hash y después confirmé el funcionamiento final del candidato exacto. |
+| Windows x64 | Organización, supervisión, revisión, Deshacer elegible, recuperación, Explorador, bandeja e inicio de sesión | Instalador y ZIP portátil; superé actualización automatizada desde 0.3.0 fijada por hash con confirmación funcional manual de rc.1 y aceptación automática de regresiones y paquetes de la corrección de cierre de rc.2. |
 | macOS 15+ Apple Silicon | Flujo admitido completo en APFS local del mismo volumen; diálogos/Finder, menús de aplicación/Dock, reapertura/salida, inicio opcional, ambos idiomas y migración de perfil de vista previa | `.app` autocontenida en ZIP con firma ad hoc. CI nativa usa macOS 15; también pruebo localmente en 26.6.2. Registro la confirmación funcional final y sus límites de evidencia por separado de la automatización. |
 | macOS Intel | Excluido | Sin paquete x64 ni declaración de soporte. |
 | Ubuntu 24.04 x64 | Vista previa restringida: carpetas, ajustes, historial, idiomas, Descargas XDG y mostrar carpeta contenedora | `.tar.gz` autocontenido; arranque X11 con Xvfb. Mutaciones, recuperación, inicio de sesión y bandeja siguen desactivados para el hito 0.5.0. Xvfb no acepta una sesión GNOME real, XWayland ni Wayland nativo. |
