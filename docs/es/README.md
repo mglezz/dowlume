@@ -12,6 +12,8 @@ Desarrollo Dowlume como una aplicación de escritorio para Windows y macOS que o
 
 Desactivé el envío nativo a la Papelera en v0.1.0 tras comprobar que las pruebas de capacidad no preservaban los archivos de forma fiable. Mantengo disponibles Conservar, Posponer, Mover a y las operaciones de Deshacer compatibles. Documento los fallos y la propuesta de cuarentena en la [investigación](RECYCLE_CAPACITY_INVESTIGATION.md).
 
+**Candidata 0.4.0:** distribuyo [v0.4.0-rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.1) para probar el flujo macOS Apple Silicon implementado y los paquetes de regresión Windows. No es estable; detallo [artefactos y comprobaciones pendientes](RELEASE_CANDIDATE_0.4.0.md). La firma de editor sigue aplazada.
+
 [Guía de uso](USER_GUIDE.md) · [Preparación del entorno](GETTING_STARTED.md) · [Hoja de ruta](ROADMAP.md) · [Contribuciones](CONTRIBUTING.md)
 
 ![Resumen de Dowlume con seis archivos de ejemplo](../images/overview.png)

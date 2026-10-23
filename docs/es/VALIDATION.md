@@ -8,6 +8,10 @@ Esta página recoge en español la cronología y los límites de los resultados.
 
 Integré las bases finales en `6b8a33d` y superé pruebas nativas, seguridad y paquetes de ese código. Después confirmé el funcionamiento final Windows y publiqué los mismos 15 archivos como v0.3.0. El [registro de publicación](RELEASE_CANDIDATE_0.3.0.md) conserva los hashes y los límites de la aceptación registrada.
 
+## 2026-10-23: candidata macOS 0.4.0
+
+Completé la implementación macOS y empaqueté la revisión limpia `e51f593` como [0.4.0-rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.1). El [registro de la candidata](RELEASE_CANDIDATE_0.4.0.md) identifica CI de la revisión final, hashes exactos, corrección de la regresión de cierre y comprobación del archivo extraído en macOS 26.6.2. Mantengo pendientes instalación manual, permisos, migración e inicio real de sesión; 0.3.0 sigue como última estable. La firma de editor permanece aplazada.
+
 ## 2026-10-20: validación de las bases de 0.3.0
 
 Incorporo selección de capacidades, vistas previas restringidas, regresiones fijas de perfiles del esquema 1 y paquetes nativos. En macOS ARM64 local superé 79 pruebas y omití explícitamente seis nativas (cinco Windows y una Linux). Pasaron formato y compilación del arnés. El ZIP macOS local superó firma ad hoc antes/después de extraer y arranque/cierre de ventana nativa. Esta compilación exploratoria tenía cambios sin confirmar y no constituye un candidato.

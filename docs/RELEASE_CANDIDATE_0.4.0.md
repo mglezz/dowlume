@@ -16,6 +16,31 @@ Local development on macOS 26.6.2 ARM64, SDK 10.0.401, passed the supported work
 
 The macOS package script signs ad hoc, extracts the ZIP, verifies it again, and exercises its actual executable with a newly required disposable profile. The workflow report covers all tabs in both languages, persisted language, native lifecycle and Undo, reopened database and watcher shutdown. It explicitly leaves manual installation, actual login and clean-machine acceptance unclaimed.
 
+## Candidate delivery — 2026-10-23
+
+I publish [v0.4.0-rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.1) as a prerelease. I build all packages from clean source [`e51f59356612a77c87a5ada69300b523264415a4`](https://github.com/mglezz/dowlume/commit/e51f59356612a77c87a5ada69300b523264415a4), after integrating [macOS implementation #33](https://github.com/mglezz/dowlume/pull/33) and [desktop shutdown correction #34](https://github.com/mglezz/dowlume/pull/34). Later documentation commits do not change these binaries. I retain 0.3.0 as the latest stable release.
+
+| Final-source check | Result |
+| --- | --- |
+| [Build, tests and formatting](https://github.com/mglezz/dowlume/actions/runs/39914334936) | macOS: 107 passed / 8 skipped; Windows: 86 / 29; Linux: 82 / 33. No failures. Platform-specific skips are expected. |
+| Native APFS matrix, same run | 25/25 passed on each case policy; macOS 15.7.9 ARM64. |
+| [Security checks](https://github.com/mglezz/dowlume/actions/runs/39914334926) | Passed. |
+| [Native packages](https://github.com/mglezz/dowlume/actions/runs/39953171400) | Extracted macOS workflow and restricted Linux desktop launch passed. |
+| [Windows package](https://github.com/mglezz/dowlume/actions/runs/39953167507) | Upgrade from the accepted 0.3.0 installer, languages, portable launch, running-app guards and uninstall passed. |
+
+I rejected the earlier packaging attempt from `032df79`: a desktop test removed its temporary profile before asynchronous shutdown released SQLite. I corrected teardown to await the actual close event and prevented a late initial refresh from restarting the timer during shutdown. The final-source package run above passes with that correction.
+
+I attach build information, acceptance reports, `Dowlume-0.4.0-validation.zip` and `SHA256SUMS.all.txt` to the release. The local extracted-archive report is `ACCEPTANCE.osx-arm64-local.json`; I keep its automated result separate from manual installation and actual login.
+
+### Package SHA-256
+
+| Archivo / File | SHA-256 |
+| --- | --- |
+| `Dowlume-0.4.0-osx-arm64.zip` | `27cb13f73fdd034164c5aafa5b428e957912658ce9abfb1ef903febb7300de71` |
+| `Dowlume-0.4.0-win-x64-setup.exe` | `24e13f5773b5e07010bf31afdc6a9041635c9f89e999f4fd978857d33ea47732` |
+| `Dowlume-0.4.0-win-x64.zip` | `f31c9a3cab722c1e630b4688426ae32b0d1710780cca15e711af03dd7b2e86f0` |
+| `Dowlume-0.4.0-linux-x64-preview.tar.gz` | `1e21bdb6795c2d27549c51a9cb1c504821d5334d050b97959d31ff980a7a1d21` |
+
 ## Exact-package checklist
 
 Before stable publication I record the candidate archive hash and these results against that same archive:

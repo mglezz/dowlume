@@ -2,7 +2,7 @@
 
 [English](#) · [Español](docs/es/ROADMAP.md)
 
-**Current state:** I published [v0.3.0 for Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.3.0) on 2026-10-20 after automated checks and my final functional confirmation. I include restricted macOS Apple Silicon/Linux previews as the porting foundation. See the [0.3.0 acceptance record](docs/RELEASE_CANDIDATE_0.3.0.md).
+**Latest stable release:** I published [v0.3.0 for Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.3.0) on 2026-10-20 after automated checks and my final functional confirmation. I include restricted macOS Apple Silicon/Linux previews as the porting foundation. See the [0.3.0 acceptance record](docs/RELEASE_CANDIDATE_0.3.0.md).
 
 | Stage | Status | Details |
 | --- | --- | --- |
@@ -10,7 +10,8 @@
 | Public 0.1.0 release | Published 2026-10-18 | [Completed release gates](#completed-public-010-gates) |
 | Public 0.2.0 release | Published 2026-10-20 | [Accepted artifacts](docs/RELEASE_CANDIDATE_0.2.0.md) |
 | Public 0.3.0 foundation | Published 2026-10-20 | [Accepted files and preview limits](docs/RELEASE_CANDIDATE_0.3.0.md) |
-| Cross-platform releases | Planned 0.4.0 → 0.5.0 → stabilization → 1.0.0 | [Release criteria](#planned-releases-toward-10) |
+| macOS 0.4.0 | Implemented; [0.4.0-rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.1) awaiting exact-package acceptance | [Candidate record](docs/RELEASE_CANDIDATE_0.4.0.md) |
+| Cross-platform releases | Linux 0.5.0 → stabilization → 1.0.0 | [Release criteria](#planned-releases-toward-10) |
 | Additional product ideas | Unscheduled | [Future work](#future-work) |
 
 ## Planned releases toward 1.0
@@ -29,9 +30,9 @@ I prioritize safe cross-platform operation after 0.2.0. These versions describe 
 
 I integrated and published the 0.3.0 foundation after native automated checks and [final Windows functional confirmation](docs/RELEASE_CANDIDATE_0.3.0.md). Stable macOS/Linux acceptance remains work for 0.4.0/0.5.0.
 
-### In progress: 0.4.0 for Apple Silicon
+### Candidate: 0.4.0 for Apple Silicon
 
-I have implemented native same-volume APFS operations and recovery, the supported lifecycle and watcher, native menus/reopen/quit, optional login startup, profile migration, both languages and self-contained packaging. I verify races, collisions, permissions and full-volume behavior on both APFS case policies. The extracted package runs a native workflow test. I track evidence and exact-package manual checks in [0.4.0 acceptance](docs/RELEASE_CANDIDATE_0.4.0.md).
+I have prepared [0.4.0-rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.1) for exact-package acceptance. I have implemented native same-volume APFS operations and recovery, the supported lifecycle and watcher, native menus/reopen/quit, optional login startup, profile migration, both languages and self-contained packaging. I verify races, collisions, permissions and full-volume behavior on both APFS case policies. The extracted package runs a native workflow test. I track evidence and exact-package manual checks in [0.4.0 acceptance](docs/RELEASE_CANDIDATE_0.4.0.md).
 
 My remaining release gate is acceptance of the exact candidate, including installation, real login and permission dialogs; I do not infer these from automated tests. I prioritize functional completion on macOS and Linux while preserving Windows behavior. I defer Windows publisher signing, macOS Developer ID signing and notarization to final cross-platform stabilization; they are not prerequisites for completing or releasing the functional 0.4.0/0.5.0 milestones. I document the actual signing status and installation limitations of each package. Native file safety and acceptance of the exact binaries remain required. Intel remains outside the initial scope.
 

@@ -22,9 +22,9 @@ Después de 0.2.0 priorizo el funcionamiento seguro en varias plataformas. Estas
 
 Integré y publiqué las bases de 0.3.0 tras superar los controles nativos automáticos y [confirmar el funcionamiento final Windows](RELEASE_CANDIDATE_0.3.0.md). La aceptación estable de macOS/Linux sigue prevista para 0.4.0/0.5.0.
 
-### En curso: 0.4.0 para Apple Silicon
+### Candidata: 0.4.0 para Apple Silicon
 
-He implementado operaciones APFS del mismo volumen y recuperación, ciclo completo y supervisión, menús nativos/reapertura/salida, inicio opcional, migración, ambos idiomas y empaquetado autocontenido. Verifico carreras, colisiones, permisos y volumen lleno con ambas políticas APFS. El paquete extraído ejecuta una prueba del flujo nativo. Registro evidencia y comprobaciones manuales del paquete exacto en [aceptación de 0.4.0](RELEASE_CANDIDATE_0.4.0.md).
+He preparado [0.4.0-rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.1) para aceptación del paquete exacto. He implementado operaciones APFS del mismo volumen y recuperación, ciclo completo y supervisión, menús nativos/reapertura/salida, inicio opcional, migración, ambos idiomas y empaquetado autocontenido. Verifico carreras, colisiones, permisos y volumen lleno con ambas políticas APFS. El paquete extraído ejecuta una prueba del flujo nativo. Registro evidencia y comprobaciones manuales del paquete exacto en [aceptación de 0.4.0](RELEASE_CANDIDATE_0.4.0.md).
 
 La condición pendiente de publicación estable es aceptar el candidato exacto, incluida instalación, inicio real de sesión y diálogos de permisos; no los deduzco de pruebas automatizadas. Priorizo funcionalidad macOS/Linux conservando Windows y aplazo firma de editor, Developer ID y notarización hasta estabilización final. La firma no bloquea los hitos funcionales 0.4.0/0.5.0; documento su estado real. Intel queda fuera del alcance.
 

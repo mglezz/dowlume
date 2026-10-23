@@ -12,6 +12,8 @@ I build Dowlume as a local-first desktop application for Windows and macOS that 
 
 I prioritize completing macOS and Linux functionality while preserving Windows reliability. I defer publisher signing and macOS notarization to final cross-platform stabilization; see the [current priorities](docs/PLATFORM_SUPPORT.md#functional-priorities-and-deferred-signing). **Native recycling remains disabled**, including internal execution, after Recycle Bin capacity tests failed to preserve files. Keep, Snooze, Move, and eligible Undo remain available. The [investigation and future quarantine design](docs/RECYCLE_CAPACITY_INVESTIGATION.md) retain the failed evidence. I published 0.3.0 after automated checks passed and I confirmed that the final Windows candidate worked correctly on 2026-10-20. See the [release acceptance record](docs/RELEASE_CANDIDATE_0.3.0.md).
 
+**0.4.0 candidate:** I provide [v0.4.0-rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.1) for testing the completed macOS Apple Silicon workflow and Windows regression packages. It is a prerelease; see the [exact artifacts and remaining checks](docs/RELEASE_CANDIDATE_0.4.0.md). Publisher signing remains deferred.
+
 [Español](docs/es/README.md) · [User guide](docs/USER_GUIDE.md) · [Developer setup](GETTING_STARTED.md) · [Roadmap](ROADMAP.md) · [Contributing](CONTRIBUTING.md)
 
 ![Dowlume Overview showing six managed files, category counts, and two files awaiting review](docs/images/overview.png)
