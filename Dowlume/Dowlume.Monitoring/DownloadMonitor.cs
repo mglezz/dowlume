@@ -116,10 +116,12 @@ public sealed class DownloadMonitor : IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
-        _watcher.Dispose();
         await _shutdown.CancelAsync();
         _queue.Writer.TryComplete();
         await Task.WhenAll(_worker, _scanner);
+        // The scanner can still be returning from reconciliation during cancellation.
+        // Keep its watcher alive until both background tasks have stopped.
+        _watcher.Dispose();
         _shutdown.Dispose();
     }
 }
