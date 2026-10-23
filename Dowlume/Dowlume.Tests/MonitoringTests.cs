@@ -63,6 +63,40 @@ public sealed class MonitoringTests
     }
 
     [Fact]
+    public async Task ShutdownWaitsForReconciliationBeforeDisposingWatcher()
+    {
+        using var workspace = new TemporaryWorkspace();
+        var errors = new ConcurrentQueue<Exception>();
+        var entered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var canceled = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var settings = new AppSettings { DownloadsPath = workspace.Downloads };
+        var monitor = new DownloadMonitor(settings, (_, _) => Task.CompletedTask, async token =>
+        {
+            using var registration = token.Register(() => canceled.TrySetResult());
+            entered.TrySetResult();
+            // A reconciliation may finish normally after cancellation was requested.
+            await release.Task;
+        }, errors.Enqueue, TimeSpan.FromMinutes(1));
+        Task? closing = null;
+        try
+        {
+            await entered.Task.WaitAsync(TimeSpan.FromSeconds(10));
+            closing = monitor.DisposeAsync().AsTask();
+            await canceled.Task.WaitAsync(TimeSpan.FromSeconds(10));
+            Assert.False(closing.IsCompleted);
+            release.TrySetResult();
+            await closing.WaitAsync(TimeSpan.FromSeconds(10));
+            Assert.Empty(errors);
+        }
+        finally
+        {
+            release.TrySetResult();
+            await (closing ?? monitor.DisposeAsync().AsTask());
+        }
+    }
+
+    [Fact]
     public async Task RenameAndRestartRecoverDownloads()
     {
         using var workspace = new TemporaryWorkspace();
