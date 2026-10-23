@@ -2,7 +2,7 @@
 
 [English](../RELEASE_NOTES_0.4.0.md) · [Español](#)
 
-Implemento el hito de macOS Apple Silicon. La 0.3.0 sigue siendo la versión estable publicada hasta aceptar y publicar los nuevos paquetes. Registro el candidato exacto y las comprobaciones manuales pendientes en la [aceptación de 0.4.0](RELEASE_CANDIDATE_0.4.0.md).
+Publiqué el hito macOS Apple Silicon como [v0.4.0](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) el 23 de octubre de 2026 tras confirmar el funcionamiento final en macOS y Windows. Promocioné los paquetes de aplicación exactos probados, sin recompilarlos. Registro revisión, hashes, controles automáticos y confirmación manual en la [aceptación de 0.4.0](RELEASE_CANDIDATE_0.4.0.md).
 
 ## Cambios
 

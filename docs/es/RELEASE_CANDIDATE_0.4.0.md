@@ -2,7 +2,7 @@
 
 [English](../RELEASE_CANDIDATE_0.4.0.md) · [Español](#)
 
-Implemento 0.4.0 para macOS Apple Silicon y conservo Windows. Mantengo 0.3.0 como estable hasta aceptar los binarios nuevos. La firma está aplazada y no bloquea el hito funcional. Distingo implementación, automatización y comprobaciones pendientes del paquete exacto.
+Publiqué [0.4.0](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) para macOS Apple Silicon y Windows el 23 de octubre de 2026 tras aceptar el candidato exacto en ambas plataformas. La firma sigue aplazada. Distingo a continuación evidencia automática y confirmación funcional manual final.
 
 ## Alcance
 
@@ -18,7 +18,7 @@ El script macOS firma ad hoc, extrae el ZIP, vuelve a verificarlo y prueba su ej
 
 ## Entrega de la candidata — 2026-10-23
 
-Publico [v0.4.0-rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.1) como versión preliminar. Genero todos los paquetes desde la revisión limpia [`e51f59356612a77c87a5ada69300b523264415a4`](https://github.com/mglezz/dowlume/commit/e51f59356612a77c87a5ada69300b523264415a4), tras integrar [implementación macOS #33](https://github.com/mglezz/dowlume/pull/33) y [corrección del cierre #34](https://github.com/mglezz/dowlume/pull/34). Los commits posteriores de documentación no modifican estos binarios. Mantengo 0.3.0 como última versión estable.
+Publiqué primero [v0.4.0-rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.1) como versión preliminar. Genero todos los paquetes desde la revisión limpia [`e51f59356612a77c87a5ada69300b523264415a4`](https://github.com/mglezz/dowlume/commit/e51f59356612a77c87a5ada69300b523264415a4), tras integrar [implementación macOS #33](https://github.com/mglezz/dowlume/pull/33) y [corrección del cierre #34](https://github.com/mglezz/dowlume/pull/34). Los commits posteriores de documentación no modifican estos binarios. Después promocioné los paquetes de aplicación aceptados a 0.4.0 sin recompilarlos.
 
 | Comprobación de la revisión final | Resultado |
 | --- | --- |
@@ -43,11 +43,17 @@ Adjunto información de compilación, informes de aceptación, `Dowlume-0.4.0-va
 
 ## Lista del paquete exacto
 
-Antes de publicar estable registro el hash del candidato y estos resultados sobre ese mismo archivo:
+Solicité comprobar el candidato identificado por hash con esta lista. Registro debajo la confirmación global; no invento mediciones ni evidencias separadas para cada punto:
 
 - macOS: extraer e instalar `.app` completa, revisar avisos Gatekeeper/permisos con la firma ad hoc real y verificar acceso ordinario/denegado con muestras desechables.
 - macOS: actualizar un perfil cerrado de vista previa 0.3.0 conservando ajustes, idioma e historial; verificar reinicio, selector/Finder, Comando-coma, Ocultar/reabrir desde Dock, rechazo de segunda instancia, cancelar confirmaciones y Salir supervisando.
 - macOS: activar inicio automático desde la app instalada, cerrar/iniciar sesión, confirmar apertura pausada, desactivarlo y verificar retirada del registro propio. Desinstalar conserva perfil y archivos.
 - Windows: repetir actualización desde 0.3.0, idiomas tras reiniciar, organización/revisión/Deshacer, bandeja y cierre con el paquete nuevo. Separo automatización alojada y confirmación manual.
 
-No traslado la confirmación de 0.3.0 a los binarios 0.4.0. Publico un candidato identificado mientras faltan estas comprobaciones y promociono únicamente los artefactos aceptados, sin recompilarlos.
+No reutilizo la confirmación de 0.3.0. El 23 de octubre de 2026 confirmé que el nuevo candidato funcionaba correctamente en macOS y Windows y continué con la publicación estable.
+
+## Aceptación y publicación estable — 2026-10-23
+
+Tras recibir la lista del candidato exacto, confirmé las pruebas satisfactorias en Mac y Windows y autoricé continuar la publicación. Es una confirmación funcional global, no un resultado registrado por separado para cada punto. No aporté nuevas versiones detalladas del sistema, evidencia de máquina limpia, capturas ni registros por paso; no deduzco esos datos. Los JSON automáticos conservan sus campos originales `ManualDesktopAcceptance: false` porque describen automatización, no esta confirmación posterior.
+
+Publico [v0.4.0](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) desde la misma revisión `e51f593` y conservo idénticos el instalador, archivos de aplicación, kit de aceptación, información de compilación y evidencia automática. Solo finalizo las notas independientes y sus manifiestos de hashes afectados tras la aceptación. La documentación dentro de los paquetes aceptados describe el estado previo a publicar; este registro y las notas independientes recogen el estado final. Conservo la candidata como evidencia histórica y marco 0.4.0 como última estable.

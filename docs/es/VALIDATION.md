@@ -10,7 +10,7 @@ Integré las bases finales en `6b8a33d` y superé pruebas nativas, seguridad y p
 
 ## 2026-10-23: candidata macOS 0.4.0
 
-Completé la implementación macOS y empaqueté la revisión limpia `e51f593` como [0.4.0-rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.1). El [registro de la candidata](RELEASE_CANDIDATE_0.4.0.md) identifica CI de la revisión final, hashes exactos, corrección de la regresión de cierre y comprobación del archivo extraído en macOS 26.6.2. Mantengo pendientes instalación manual, permisos, migración e inicio real de sesión; 0.3.0 sigue como última estable. La firma de editor permanece aplazada.
+Completé la implementación macOS y empaqueté la revisión limpia `e51f593` como [0.4.0-rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.1). Tras confirmar el funcionamiento final en macOS y Windows, publiqué los mismos paquetes de aplicación como [0.4.0 estable](https://github.com/mglezz/dowlume/releases/tag/v0.4.0). El [registro de aceptación](RELEASE_CANDIDATE_0.4.0.md) identifica CI, hashes exactos, corrección del cierre, comprobación del archivo extraído en macOS 26.6.2 y límites de la confirmación manual. La firma de editor sigue aplazada.
 
 ## 2026-10-20: validación de las bases de 0.3.0
 

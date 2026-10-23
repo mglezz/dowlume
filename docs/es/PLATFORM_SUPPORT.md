@@ -2,12 +2,12 @@
 
 [English](../PLATFORM_SUPPORT.md) · [Español](#)
 
-Mantengo [0.3.0](RELEASE_CANDIDATE_0.3.0.md) como estable publicada hasta aceptar y publicar los paquetes 0.4.0. El código actual 0.4.0 habilita el flujo macOS descrito aquí; los binarios macOS/Linux 0.3.0 siguen siendo vistas previas restringidas. Consulta las [notas](RELEASE_NOTES_0.4.0.md) y la [aceptación](RELEASE_CANDIDATE_0.4.0.md).
+Publico [0.4.0](RELEASE_CANDIDATE_0.4.0.md) como estable para macOS Apple Silicon y Windows dentro del alcance siguiente. Acepté los paquetes exactos en ambas plataformas. Los binarios macOS/Linux 0.3.0 siguen siendo vistas previas restringidas y Linux 0.4.0 continúa restringido para el hito 0.5.0. Consulta las [notas](RELEASE_NOTES_0.4.0.md).
 
-| Plataforma | Implementación actual | Distribución y aceptación pendiente |
+| Plataforma | Implementación actual | Distribución y aceptación |
 | --- | --- | --- |
-| Windows x64 | Organización, supervisión, revisión, Deshacer elegible, recuperación, Explorador, bandeja e inicio de sesión | Instalador y ZIP portátil; repito actualización automatizada desde 0.3.0 fijada por hash y exijo confirmación manual del paquete exacto. La aceptación anterior no aprueba binarios nuevos. |
-| macOS 15+ Apple Silicon | Flujo admitido completo en APFS local del mismo volumen; diálogos/Finder, menús de aplicación/Dock, reapertura/salida, inicio opcional, ambos idiomas y migración de perfil de vista previa | `.app` autocontenida en ZIP con firma ad hoc. CI nativa usa macOS 15; también pruebo localmente en 26.6.2. Registro aparte instalación manual del paquete exacto, permisos e inicio real de sesión. |
+| Windows x64 | Organización, supervisión, revisión, Deshacer elegible, recuperación, Explorador, bandeja e inicio de sesión | Instalador y ZIP portátil; superé actualización automatizada desde 0.3.0 fijada por hash y después confirmé el funcionamiento final del candidato exacto. |
+| macOS 15+ Apple Silicon | Flujo admitido completo en APFS local del mismo volumen; diálogos/Finder, menús de aplicación/Dock, reapertura/salida, inicio opcional, ambos idiomas y migración de perfil de vista previa | `.app` autocontenida en ZIP con firma ad hoc. CI nativa usa macOS 15; también pruebo localmente en 26.6.2. Registro la confirmación funcional final y sus límites de evidencia por separado de la automatización. |
 | macOS Intel | Excluido | Sin paquete x64 ni declaración de soporte. |
 | Ubuntu 24.04 x64 | Vista previa restringida: carpetas, ajustes, historial, idiomas, Descargas XDG y mostrar carpeta contenedora | `.tar.gz` autocontenido; arranque X11 con Xvfb. Mutaciones, recuperación, inicio de sesión y bandeja siguen desactivados para el hito 0.5.0. Xvfb no acepta una sesión GNOME real, XWayland ni Wayland nativo. |
 | Otros Linux | Fuera del alcance inicial | Necesito evidencia nativa separada para otras distribuciones, escritorios y arquitecturas. |

@@ -2,7 +2,7 @@
 
 [English](#) · [Español](es/RELEASE_NOTES_0.4.0.md)
 
-I implement the macOS Apple Silicon milestone. Version 0.3.0 remains the published stable release until I accept and publish the new packages. I record the exact candidate and outstanding manual checks in [0.4.0 acceptance](RELEASE_CANDIDATE_0.4.0.md).
+I published the macOS Apple Silicon milestone as [v0.4.0](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) on 2026-10-23 after final functional confirmation on macOS and Windows. I promoted the exact tested application packages without rebuilding them. I record source, hashes, automated checks and manual confirmation in [0.4.0 acceptance](RELEASE_CANDIDATE_0.4.0.md).
 
 ## Changes
 

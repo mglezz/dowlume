@@ -8,7 +8,7 @@ I integrated the final foundation at `6b8a33d` and passed the final-source nativ
 
 ## 2026-10-23: 0.4.0 macOS candidate
 
-I completed the macOS implementation and packaged clean source `e51f593` as [0.4.0-rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.1). The [candidate record](RELEASE_CANDIDATE_0.4.0.md) identifies final-source CI, exact archive hashes, the shutdown regression correction and the extracted-archive check on macOS 26.6.2. I keep manual installation, permissions, migration and actual login acceptance pending; 0.3.0 remains the latest stable release. Publisher signing remains deferred.
+I completed the macOS implementation and packaged clean source `e51f593` as [0.4.0-rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.1). After final functional confirmation on macOS and Windows, I published the same application packages as [0.4.0 stable](https://github.com/mglezz/dowlume/releases/tag/v0.4.0). The [acceptance record](RELEASE_CANDIDATE_0.4.0.md) identifies CI, exact hashes, the shutdown correction, the extracted-archive check on macOS 26.6.2 and the limits of the manual confirmation. Publisher signing remains deferred.
 
 ## 2026-10-20: 0.3.0 foundation validation
 

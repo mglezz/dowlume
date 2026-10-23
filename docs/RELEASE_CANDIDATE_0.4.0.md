@@ -2,7 +2,7 @@
 
 [English](#) · [Español](es/RELEASE_CANDIDATE_0.4.0.md)
 
-I implement 0.4.0 for macOS Apple Silicon and preserve Windows. I keep 0.3.0 as the latest stable release until I accept the new binaries. Signing is deferred; it is not a functional milestone gate. This record distinguishes implementation, automation and remaining exact-package checks.
+I published [0.4.0](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) for macOS Apple Silicon and Windows on 2026-10-23 after accepting the exact candidate on both platforms. Signing remains deferred. I distinguish automated evidence from final manual functional confirmation below.
 
 ## Scope
 
@@ -18,7 +18,7 @@ The macOS package script signs ad hoc, extracts the ZIP, verifies it again, and 
 
 ## Candidate delivery — 2026-10-23
 
-I publish [v0.4.0-rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.1) as a prerelease. I build all packages from clean source [`e51f59356612a77c87a5ada69300b523264415a4`](https://github.com/mglezz/dowlume/commit/e51f59356612a77c87a5ada69300b523264415a4), after integrating [macOS implementation #33](https://github.com/mglezz/dowlume/pull/33) and [desktop shutdown correction #34](https://github.com/mglezz/dowlume/pull/34). Later documentation commits do not change these binaries. I retain 0.3.0 as the latest stable release.
+I first published [v0.4.0-rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.4.0-rc.1) as a prerelease. I build all packages from clean source [`e51f59356612a77c87a5ada69300b523264415a4`](https://github.com/mglezz/dowlume/commit/e51f59356612a77c87a5ada69300b523264415a4), after integrating [macOS implementation #33](https://github.com/mglezz/dowlume/pull/33) and [desktop shutdown correction #34](https://github.com/mglezz/dowlume/pull/34). Later documentation commits do not change these binaries. I subsequently promoted the accepted application packages to 0.4.0 without rebuilding them.
 
 | Final-source check | Result |
 | --- | --- |
@@ -43,11 +43,17 @@ I attach build information, acceptance reports, `Dowlume-0.4.0-validation.zip` a
 
 ## Exact-package checklist
 
-Before stable publication I record the candidate archive hash and these results against that same archive:
+I requested final checks against the hashed candidate using the following checklist. I record the overall confirmation below; I do not invent separate measurements or evidence for every item:
 
 - macOS: extract and install the full `.app`, review any Gatekeeper/permission prompt under the actual ad-hoc signing status, and verify ordinary-user access and denied access with disposable sample files.
 - macOS: upgrade a closed 0.3.0 preview profile, preserving settings, language and history; verify restart, native folder selection/Finder, Command-comma, Hide/Dock reopen, single-instance refusal, confirmation cancellation and Quit while monitoring.
 - macOS: enable login startup from the installed app, sign out/in, confirm launch with monitoring paused, then disable it and verify the owned registration is removed. Uninstall retains profile and managed files.
 - Windows: repeat upgrade from 0.3.0, both languages after restart, organization/review/Undo, tray and closing on the new package. Hosted automation is recorded separately from manual confirmation.
 
-I do not treat old 0.3.0 user confirmation as approval of 0.4.0 binaries. I publish a clearly labeled candidate while the exact-package checks remain pending, and promote only the accepted artifacts without rebuilding them.
+I do not reuse the old 0.3.0 confirmation. On 2026-10-23 I confirmed that the new candidate worked correctly on both macOS and Windows and proceeded with stable publication.
+
+## Stable acceptance and publication — 2026-10-23
+
+After receiving the exact-candidate checklist, I confirmed successful testing on Mac and Windows and approved continuing publication. This is an overall functional confirmation, not a separate recorded result for every checklist item. I did not supply additional OS build numbers, clean-machine evidence, screenshots or per-step logs; I do not infer those details. The automated JSON reports retain their original `ManualDesktopAcceptance: false` fields because they describe automation, not this later confirmation.
+
+I publish [v0.4.0](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) from the same `e51f593` source and preserve the installer, application archives, acceptance kit, build information and automated evidence byte-for-byte. Only standalone release notes and the affected checksum manifests are finalized after acceptance. Offline documentation inside the accepted packages describes the pre-publication state; this record and the standalone notes provide the final status. I retain the prerelease as historical evidence and make 0.4.0 the latest stable release.
