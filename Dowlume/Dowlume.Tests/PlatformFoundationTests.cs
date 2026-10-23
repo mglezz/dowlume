@@ -110,10 +110,7 @@ public sealed class PlatformFoundationTests
             Assert.False(hide.IsVisible);
             hide.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             Assert.True(window.IsVisible);
-            var closed = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
-            window.Closed += (_, _) => closed.TrySetResult();
-            window.Close();
-            await closed.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            await DesktopWindowTest.CloseAsync(window);
             return true;
         }, timeout.Token);
     }
