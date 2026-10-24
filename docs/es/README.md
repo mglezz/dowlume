@@ -1,78 +1,54 @@
+<div align="center">
+
 # Dowlume
 
-[English](../../README.md) · [Español](README.md)
+**Un poco de orden para tu carpeta de Descargas.**
 
-**Tus descargas, bajo control.**
+Encuentra lo que necesitas. Revisa lo que olvidaste. Decide qué conservar.
 
-Desarrollo Dowlume como una aplicación de escritorio para Windows y macOS que organiza las descargas completas, lleva los archivos antiguos a una zona de revisión y deja la decisión final en tus manos. Mantengo todos los datos en el equipo, sin cuentas, sincronización en la nube ni telemetría.
+[Descargar Dowlume](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) · [Guía de uso](user/guide.md) · [English](../../README.md)
 
-**Estado:** publiqué [v0.4.0 para macOS Apple Silicon y Windows x64](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) el 23 de octubre de 2026. Descarga la [app macOS](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-osx-arm64.zip), el [instalador Windows](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64-setup.exe) o el [ZIP portátil Windows](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64.zip), y comprueba sus [sumas SHA-256](https://github.com/mglezz/dowlume/releases/download/v0.4.0/SHA256SUMS.all.txt). Incluyen .NET. macOS requiere versión 15+ y APFS local del mismo volumen; excluyo Intel. La app macOS tiene firma ad hoc, sin Developer ID/notarización; los paquetes Windows no tienen firma de editor.
+</div>
 
-**Idiomas:** mantengo el inglés como idioma inicial y incluyo español en v0.2.0. En **Settings → Language**, selecciona **Español**; después encontrarás el selector en **Ajustes → Idioma**. Pausa primero la supervisión. El cambio es inmediato y se guarda para ese perfil. No cambia nombres de carpetas, archivos ni registros. **Los paquetes 0.4.0 conservan el selector introducido en 0.2.0**. Conservo intactos los archivos originales de 0.1.0, que siguen en inglés. Consulta las [notas de 0.2.0](RELEASE_NOTES_0.2.0.md).
+Las descargas se acumulan: un recibo, una foto, un instalador que necesitaste una vez. Dowlume les da un sitio y te ayuda a volver a los archivos que quizá habías olvidado.
 
-Desactivé el envío nativo a la Papelera en v0.1.0 tras comprobar que las pruebas de capacidad no preservaban los archivos de forma fiable. Mantengo disponibles Conservar, Posponer, Mover a y las operaciones de Deshacer compatibles. Documento los fallos y la propuesta de cuarentena en la [investigación](RECYCLE_CAPACITY_INVESTIGATION.md).
+Organiza las descargas completas en carpetas y lleva los archivos antiguos a una zona de revisión. Tú decides cuáles conservar y cuáles mover a otro lugar. Todo funciona en tu equipo, sin cuentas, sincronización en la nube ni telemetría.
 
-Confirmé rc.1 manualmente en macOS y Windows; después corregí una carrera de cierre y validé rc.2 con pruebas nativas de regresión y de paquetes. Publico los paquetes corregidos rc.2 sin recompilarlos; detallo la [aceptación](RELEASE_CANDIDATE_0.4.0.md). La firma de editor sigue aplazada.
+![Dowlume con descargas organizadas y archivos pendientes de revisión](../images/overview.png)
 
-[Guía de uso](USER_GUIDE.md) · [Preparación del entorno](GETTING_STARTED.md) · [Hoja de ruta](ROADMAP.md) · [Contribuciones](CONTRIBUTING.md)
+*Interfaz inglesa con archivos ficticios. [Procedencia de las capturas](images/README.md).*
 
-![Resumen de Dowlume con seis archivos de ejemplo](../images/overview.png)
+## Una rutina sencilla
 
-*Conservo esta captura de la interfaz inglesa de v0.1.0 con datos ficticios. Es anterior al selector de idioma. [Procedencia de las imágenes](images/README.md).*
+| Comprueba los destinos | Deja que se organice | Decide a tu ritmo |
+| --- | --- | --- |
+| La vista previa muestra dónde irá cada archivo antes de empezar. | Las descargas completas se ordenan en seis categorías con reglas configurables. | Los archivos antiguos aparecen en **Expiring Files**. Puedes conservarlos, posponer la revisión o moverlos. |
 
-**0.4.0:** implemento el flujo macOS Apple Silicon: movimientos nativos APFS del mismo volumen, supervisión, revisión, Deshacer, recuperación, integración de escritorio y migración del perfil de vista previa. Linux sigue restringido para 0.5.0. La versión 0.4.0 es la estable actual dentro del alcance documentado. Consulta las [notas](RELEASE_NOTES_0.4.0.md), [aceptación](RELEASE_CANDIDATE_0.4.0.md) y [plataformas](PLATFORM_SUPPORT.md).
+Tú decides cuándo empieza la supervisión. Dowlume respeta las subcarpetas existentes, guarda un historial y permite deshacer los movimientos compatibles. No hay una fecha límite de borrado automático. El envío a la papelera está desactivado.
 
-Priorizo completar las funciones de macOS y Linux conservando la fiabilidad Windows. Difiero la firma de editor y la notarización macOS a la estabilización final multiplataforma; detallo las [prioridades actuales](PLATFORM_SUPPORT.md#prioridades-funcionales-y-firma-aplazada).
+## Descargar
 
-He publicado las bases de 0.3.0 con archivos macOS/Linux claramente identificados como experimentales. Registro [aceptación y hashes](RELEASE_CANDIDATE_0.3.0.md) por separado de las declaraciones de soporte estable.
+Los paquetes de **Dowlume 0.4.0** incluyen el runtime; no necesitas instalar .NET por separado.
 
-## Por qué lo desarrollo
+| Plataforma | Descarga |
+| --- | --- |
+| macOS 15+ · Apple Silicon | [Portable](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-osx-arm64-portable.zip) |
+| Windows · x64 | [Instalador (recomendado)](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64-setup.exe) · [Portable](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64-portable.zip) |
 
-Las carpetas de descargas acumulan documentos útiles, instaladores de un solo uso y archivos fáciles de olvidar. Creé Dowlume para organizar lo que termina de descargarse, volver a mostrar los archivos antiguos y permitir una decisión consciente. Me centro en que las operaciones puedan reconciliarse cuando se interrumpe una descarga, un movimiento o la aplicación.
+Empieza con copias de unos pocos archivos en una carpeta local y consulta la vista previa. La interfaz empieza en inglés; puedes seleccionar español en **Settings → Language**.
 
-| Vista previa | Organización | Revisión | Recuperación |
-| --- | --- | --- | --- |
-| Comprueba los destinos antes de confirmar. | Clasifica en seis categorías configurables. | Conserva, pospone o mueve desde `Expiring Files`. | Consulta el historial, deshaz acciones compatibles y revisa interrupciones. |
-
-No elimino archivos automáticamente. La supervisión empieza en pausa en cada arranque y no importo las subcarpetas existentes. En Actividad incluyo búsqueda por nombre o ruta, filtros y paginación para consultar operaciones antiguas.
-
-## Tecnologías y decisiones
-
-Utilizo **C#, .NET 10, Avalonia con MVVM, SQLite y xUnit**. Separo la interfaz, las reglas, la supervisión y el acceso al sistema de archivos. Compruebo la estabilidad de las descargas, verifico contenido mediante SHA-256 y registro cada intención antes de mover. Si quedan copias ambiguas, las conservo para su inspección. Explico estas decisiones en [Arquitectura](ARCHITECTURE.md).
-
-Conservo Windows x64 e implemento macOS Apple Silicon para 0.4.0. Linux continúa como vista previa restringida. Detallo las garantías y los límites en [plataformas](PLATFORM_SUPPORT.md).
-
-## Ejecutar desde el código
-
-Instala un SDK de .NET de la familia **10.0.4xx**. `global.json` fija `10.0.400` y permite el último parche de esa familia; CI usa `10.0.401`.
-
-```powershell
-dotnet restore Dowlume/Dowlume.slnx
-dotnet run --project Dowlume/Dowlume.App -c Release
-```
-
-Empieza con una carpeta desechable y archivos de ejemplo. En [Preparación del entorno](GETTING_STARTED.md) detallo las pruebas; en [Publicación](RELEASE_CHECKLIST.md), la generación y aceptación de paquetes.
+macOS utiliza firma ad hoc sin notarización; los paquetes Windows no tienen firma de editor. Consulta la [instalación](user/guide.md#instalar-y-abrir) y comprueba las [sumas SHA-256](releases/0.4.0.md#sumas-de-comprobación). Los movimientos en macOS requieren APFS local en el mismo volumen. Linux sigue como vista previa restringida. La [matriz de plataformas](user/platform-support.md) detalla el alcance.
 
 ## Documentación en español
 
-| Documento | Contenido |
-| --- | --- |
-| [Guía de uso](USER_GUIDE.md) | Instalación, idioma, organización, revisión, historial y recuperación |
-| [Preparación del entorno](GETTING_STARTED.md) | SDK, compilación y pruebas |
-| [Contribuciones](CONTRIBUTING.md) y [ramas](BRANCHES.md) | Convenciones, revisión y commits |
-| [Modelo de dominio](requirements/DOMAIN_MODEL.md) | Conceptos, reglas y vistas UML compartidas |
-| [Arquitectura](ARCHITECTURE.md) | Componentes, procesamiento y límites de seguridad |
-| [Hoja de ruta](ROADMAP.md) y [plataformas](PLATFORM_SUPPORT.md) | Trabajo realizado y posibilidades futuras |
-| [Implementación macOS](MACOS_IMPLEMENTATION.md) | Flujos nativos, integración de escritorio y aceptación |
-| [Validación](VALIDATION.md) y [seguridad](SECURITY_REVIEW.md) | Resultados, procedencia y limitaciones |
-| [Notas de v0.4.0](RELEASE_NOTES_0.4.0.md) | Comportamiento de los binarios publicados |
-| [Aceptación de 0.4.0](RELEASE_CANDIDATE_0.4.0.md) y [registro histórico de 0.1.0](RELEASE_CHECKLIST.md) | Identidad de los artefactos y controles completados |
-| [Aceptación en Windows](WINDOWS_ACCEPTANCE.md) y [Hyper-V](HYPER_V_ACCEPTANCE.md) | Preparación y comprobaciones de escritorio |
-| [Investigación de la papelera](RECYCLE_CAPACITY_INVESTIGATION.md) | Fallos preservados y cuarentena propuesta |
-| [Capturas](images/README.md), [diagramas](requirements/diagrams/domain-model/README.md) y [archivo histórico](archive/native-recycle/README.md) | Reproducción y procedencia de los materiales compartidos |
+- [Guía de uso](user/guide.md): instalación, organización, revisión y recuperación.
+- [Notas de 0.4.0](releases/0.4.0.md): cambios de la versión y su [aceptación](releases/acceptance/0.4.0.md).
+- [Preparación del entorno](development/getting-started.md), [contribuciones](development/contributing.md) y [ramas](development/branches.md).
+- [Arquitectura](architecture/overview.md), [contrato de archivos](architecture/file-operations.md) e [implementación macOS](architecture/macos.md).
+- [Modelo de dominio](requirements/domain-model.md) y [hoja de ruta](development/roadmap.md).
+- [Publicación](development/releasing.md), [aceptación Windows](development/windows-acceptance.md) y [preparación Hyper-V](development/hyper-v-acceptance.md).
+- Registros históricos: [validación](archive/validation.md), [seguridad](archive/security-review.md) e [investigación de la papelera](archive/recycle-capacity-investigation.md).
 
-Mantengo esta sección junto a la inglesa. Comparto las imágenes, diagramas, código archivado y evidencias originales para no duplicar ni alterar sus bytes. En las páginas históricas explico los resultados en español y enlazo el registro original con sus tablas y detalles completos.
+El inglés es el idioma principal del proyecto. El [índice completo](../README.md) reúne también las convenciones del repositorio y el historial de versiones.
 
-## Licencia
-
-Distribuyo el proyecto bajo [MIT](../../LICENSE). Conservo las licencias y atribuciones de las dependencias.
+Dowlume es código abierto bajo la [licencia MIT](../../LICENSE).

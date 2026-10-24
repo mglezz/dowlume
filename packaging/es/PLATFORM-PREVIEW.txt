@@ -1,0 +1,23 @@
+Dowlume — vista previa experimental de Linux
+
+Distribuyo este paquete para probar las bases de plataforma. No representa
+soporte estable de Linux. Permito vista previa de carpetas, ajustes,
+selección de idioma y consulta de historial. Bloqueo movimientos, supervisión,
+acciones de revisión, deshacer y recuperación automática en la aplicación
+y en las operaciones de archivos.
+Uso un perfil separado Dowlume.Preview. No copies una base de datos de Windows:
+las rutas históricas dependen de su sistema original.
+
+Esta vista previa se dirige a Ubuntu 24.04 x64.
+Intel queda fuera de alcance. No pido desactivar la seguridad del sistema.
+Linux necesita sesión gráfica X11/XWayland y bibliotecas nativas.
+
+Extrae el archivo completo, conservando el runtime y el directorio es. Usa
+copias desechables en una carpeta local. El inicio de sesión automático y
+ocultar en bandeja no están disponibles. El gestor de archivos abre la carpeta contenedora. Incluyo el runtime.
+La aceptación de escritorio, permisos y seguridad nativa corresponde
+a 0.5.0 (Linux).
+
+https://github.com/mglezz/dowlume/blob/main/docs/es/user/platform-support.md
+
+English instructions: START-HERE.txt

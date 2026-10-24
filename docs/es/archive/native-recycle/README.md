@@ -11,4 +11,4 @@ Proceden del árbol limpio con base `2dcc06967adb7cf815d9378fc8845c2c8045bb7e`. 
 - [Test-WindowsRecycleAcceptance.ps1.txt](../../../archive/native-recycle/Test-WindowsRecycleAcceptance.ps1.txt): arnés de políticas y capacidad retirado.
 - [RecycleProbe.cs.txt](../../../archive/native-recycle/RecycleProbe.cs.txt): worker y momentos de registro.
 
-La [investigación](../../RECYCLE_CAPACITY_INVESTIGATION.md) relaciona candidatos, hashes, ejecuciones, checkpoints y hallazgos. Este archivo de fuentes no reemplaza binarios, muestras o informes originales. Los puntos de entrada actuales y el adaptador rechazan la ejecución.
+La [investigación](../recycle-capacity-investigation.md) relaciona candidatos, hashes, ejecuciones, checkpoints y hallazgos. Este archivo de fuentes no reemplaza binarios, muestras o informes originales. Los puntos de entrada actuales y el adaptador rechazan la ejecución.

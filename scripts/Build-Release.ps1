@@ -8,8 +8,9 @@ param(
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 $repositoryRoot = Split-Path $PSScriptRoot -Parent
-$solution = Join-Path $repositoryRoot 'Dowlume/Dowlume.slnx'
-$project = Join-Path $repositoryRoot 'Dowlume/Dowlume.App/Dowlume.App.csproj'
+. (Join-Path $PSScriptRoot 'Resolve-DocumentationLinks.ps1')
+$solution = Join-Path $repositoryRoot 'Dowlume.slnx'
+$project = Join-Path $repositoryRoot 'src/Dowlume.App/Dowlume.App.csproj'
 [xml]$projectXml = Get-Content -LiteralPath $project -Raw
 $version = [string]$projectXml.Project.PropertyGroup.Version
 $sourceCommit = git -C $repositoryRoot rev-parse HEAD
@@ -66,14 +67,15 @@ $buildInfo = [ordered]@{
 $buildInfoPath = Join-Path $artifactDirectory 'BUILD-INFO.json'
 $buildInfo | ConvertTo-Json | Set-Content -LiteralPath $buildInfoPath -Encoding utf8
 Copy-Item -LiteralPath $buildInfoPath -Destination $publishDirectory
-$archive = Join-Path $artifactDirectory "$packageName.zip"
+$archive = Join-Path $artifactDirectory "$packageName-portable.zip"
 Compress-Archive -Path (Join-Path $publishDirectory '*') -DestinationPath $archive
 $releaseFiles = @($archive, $buildInfoPath)
 foreach ($language in @('en', 'es')) {
     $notesName = if ($language -eq 'en') { "RELEASE_NOTES_$version.md" } else { "RELEASE_NOTES_$version.es.md" }
-    $notesSource = if ($language -eq 'en') { "docs/RELEASE_NOTES_$version.md" } else { "docs/es/RELEASE_NOTES_$version.md" }
+    $notesSource = if ($language -eq 'en') { "docs/releases/$version.md" } else { "docs/es/releases/$version.md" }
     $releaseNotes = Join-Path $artifactDirectory $notesName
-    Copy-Item -LiteralPath (Join-Path $repositoryRoot $notesSource) -Destination $releaseNotes
+    $notes = Resolve-DocumentationLinks -SourcePath (Join-Path $repositoryRoot $notesSource) -RepositoryRoot $repositoryRoot -SourceCommit $sourceCommit
+    [IO.File]::WriteAllText($releaseNotes, $notes)
     $releaseFiles += $releaseNotes
 }
 $acceptanceDirectory = Join-Path $artifactDirectory 'acceptance-kit'
@@ -82,8 +84,7 @@ Copy-Item -LiteralPath (Join-Path $repositoryRoot 'scripts/Test-WindowsPackage.p
 Copy-Item -LiteralPath (Join-Path $repositoryRoot 'scripts/Test-WindowsTray.ps1') -Destination $acceptanceDirectory
 Copy-Item -LiteralPath (Join-Path $repositoryRoot 'scripts/Test-WindowsLocalization.ps1') -Destination $acceptanceDirectory
 # The standalone kit has no repository-relative docs tree. Resolve its guide links to the source revision.
-$guide = [IO.File]::ReadAllText((Join-Path $repositoryRoot 'docs/WINDOWS_ACCEPTANCE.md'))
-$guide = [regex]::Replace($guide, '\]\(((?:es/)?[A-Za-z0-9_.-]+\.md)(#[^)]*)?\)', ('](https://github.com/mglezz/dowlume/blob/{0}/docs/$1$2)' -f $sourceCommit))
+$guide = Resolve-DocumentationLinks -SourcePath (Join-Path $repositoryRoot 'docs/development/windows-acceptance.md') -RepositoryRoot $repositoryRoot -SourceCommit $sourceCommit
 [IO.File]::WriteAllText((Join-Path $acceptanceDirectory 'WINDOWS_ACCEPTANCE.md'), $guide)
 $acceptanceArchive = Join-Path $artifactDirectory "Dowlume-$version-windows-acceptance.zip"
 Compress-Archive -Path (Join-Path $acceptanceDirectory '*') -DestinationPath $acceptanceArchive

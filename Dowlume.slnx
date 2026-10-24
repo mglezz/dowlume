@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Dowlume.App/Dowlume.App.csproj" />
+    <Project Path="src/Dowlume.Core/Dowlume.Core.csproj" />
+    <Project Path="src/Dowlume.Infrastructure/Dowlume.Infrastructure.csproj" />
+    <Project Path="src/Dowlume.Monitoring/Dowlume.Monitoring.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Dowlume.Tests/Dowlume.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/DocumentationScreenshots/DocumentationScreenshots.csproj" />
+    <Project Path="tools/FileOperationAcceptance/FileOperationAcceptance.csproj" />
+  </Folder>
+</Solution>

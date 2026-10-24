@@ -9,7 +9,7 @@ if (-not $OutputDirectory) {
 $output = [IO.Path]::GetFullPath($OutputDirectory)
 if (Test-Path -LiteralPath $output) { throw 'Choose a new security report directory.' }
 New-Item -ItemType Directory -Path $output | Out-Null
-$solution = Join-Path $repositoryRoot 'Dowlume/Dowlume.slnx'
+$solution = Join-Path $repositoryRoot 'Dowlume.slnx'
 
 dotnet restore $solution --force-evaluate
 if ($LASTEXITCODE -ne 0) { throw 'Dependency restore/audit failed.' }
@@ -36,11 +36,6 @@ foreach ($project in $audit.projects) {
 
 dotnet build $solution -c Release --no-restore --no-incremental "-p:SecurityScanDirectory=$output"
 if ($LASTEXITCODE -ne 0) { throw 'Code analysis failed; inspect the SARIF reports.' }
-foreach ($helper in @('FileOperationAcceptance', 'DocumentationScreenshots')) {
-    dotnet build (Join-Path $repositoryRoot "scripts/$helper") -c Release "-p:SecurityScanDirectory=$output"
-    if ($LASTEXITCODE -ne 0) { throw "Code analysis failed for $helper." }
-}
-
 $version = '8.30.1'
 $archive = Join-Path $output 'gitleaks.zip'
 Invoke-WebRequest -UseBasicParsing -Uri "https://github.com/gitleaks/gitleaks/releases/download/v$version/gitleaks_$($version)_windows_x64.zip" -OutFile $archive

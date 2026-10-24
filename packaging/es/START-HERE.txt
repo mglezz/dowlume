@@ -43,7 +43,7 @@ copiar el directorio completo para respaldarlo. No uso cuentas, nube ni telemetr
 
 AYUDA
 
-Guía: https://github.com/mglezz/dowlume/blob/main/docs/es/USER_GUIDE.md
+Guía: https://github.com/mglezz/dowlume/blob/main/docs/es/user/guide.md
 Incidencias: https://github.com/mglezz/dowlume/issues
 Incluye versiones de Windows y Dowlume, pasos y resultado esperado y observado.
 No adjuntes descargas personales, bases de datos ni rutas privadas sin ocultar.
