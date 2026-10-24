@@ -4,7 +4,7 @@
 
 I keep one set of English UML sources and diagrams shared by both documentation languages. The Spanish domain guide provides the corresponding vocabulary and rules.
 
-The [domain model](../../DOMAIN_MODEL.md) explains these ten UML views. `src/` contains their PlantUML sources and the shared `style.iuml`; `svg/` contains generated vector images embedded directly in Markdown. Edit the sources, then regenerate the SVGs. Do not edit generated SVGs by hand.
+The [domain model](../../domain-model.md) explains these ten UML views. `src/` contains their PlantUML sources and the shared `style.iuml`; `svg/` contains generated vector images embedded directly in Markdown. Edit the sources, then regenerate the SVGs. Do not edit generated SVGs by hand.
 
 ## Reproduce the images
 
@@ -28,9 +28,9 @@ Compare the reported hash with the value above. If Java is not on `PATH`, pass `
 ## Review before committing
 
 1. Inspect every image at full size and at Markdown reading width. Follow the diagram and check labels, arrowheads, multiplicities, branches, and clipped or overlapping text. Use the full SVG link for larger views.
-2. Check each diagram against the vocabulary and rules in `DOMAIN_MODEL.md`. Syntax validation cannot prove domain correctness.
+2. Check each diagram against the vocabulary and rules in [domain-model.md](../../domain-model.md). Syntax validation cannot prove domain correctness.
 3. Confirm that the object snapshot satisfies the class model's constraints; omitted objects must be declared as omissions.
 4. Confirm that alternative sequence/activity outcomes agree with both state machines, including failed and unresolved attempts.
 5. Check local Markdown image/source links and `git diff --check`. Commit the matching `.puml`, `.iuml`, and `.svg` changes together.
 
-The scope is analysis documentation. The rendering tool does not build or run Dowlume and does not alter application data. Tool binaries and preview PNGs are not committed. Dated evidence belongs in [Validation](../../../VALIDATION.md).
+The scope is analysis documentation. The rendering tool does not build or run Dowlume and does not alter application data. Tool binaries and preview PNGs are not committed. Dated evidence belongs in [Validation](../../../archive/validation.md).

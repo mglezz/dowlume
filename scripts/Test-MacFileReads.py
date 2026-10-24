@@ -46,7 +46,7 @@ def run_volume(filesystem, sensitive, output):
                            DOWLUME_TEST_SECOND_VOLUME=str(output), DOWLUME_TEST_OWNED_VOLUME=str(mount))
         report_name = "apfs-sensitive" if sensitive else "apfs-insensitive"
         subprocess.run([
-            "dotnet", "test", "Dowlume/Dowlume.Tests/Dowlume.Tests.csproj", "-c", "Release",
+            "dotnet", "test", "tests/Dowlume.Tests/Dowlume.Tests.csproj", "-c", "Release",
             "--no-build", "--no-restore", "--filter", "Category=MacNativeRead|Category=MacNativeMove",
             "--logger", f"trx;LogFileName={report_name}.trx", "--results-directory", str(output),
         ], check=True, cwd=ROOT, env=environment, timeout=180)

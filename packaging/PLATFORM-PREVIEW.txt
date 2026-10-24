@@ -1,46 +1,20 @@
-Dowlume — experimental platform preview / vista previa experimental
+Dowlume — experimental Linux preview
 
-ENGLISH
+This package tests the platform foundation on Ubuntu 24.04 x64. It provides
+folder preview, settings, language selection, history inspection, and folder
+reveal. File moves, monitoring, review actions, Undo, and automatic recovery are
+disabled. It is not a supported Linux release.
 
-I provide this package to test the platform foundation. This is not stable
-Linux support. I allow folder preview, settings, language selection,
-and history inspection. File moves, monitoring, review actions, undo, and
-automatic recovery are blocked at the application and file-operation layers.
-I use a separate Dowlume.Preview profile. Do not copy a Windows database into
-it: historical paths are specific to their original operating system.
+Extract the complete archive, retaining the runtime files and the es directory.
+The runtime is included. Use disposable copies in a local folder. A graphical
+X11/XWayland session and native libraries are required; see the platform guide
+for the tested environment. Login startup and hiding to the tray are unavailable.
+The file-manager action opens the containing folder.
 
-I target Ubuntu 24.04 x64 as experimental build
-baselines. Intel Macs are out of scope. I do not ask you to disable
-system security. Linux needs a graphical X11/XWayland session and native
-libraries; see the platform documentation for the tested environment.
+The preview uses a separate Dowlume.Preview profile. Do not import a database
+from another operating system: historical paths are specific to their source OS.
+Native desktop, permission, and file-safety acceptance remain work for 0.5.0.
 
-Extract the complete archive, keeping all runtime files and the es directory.
-Use copies of disposable files in a local folder. Login startup and hiding to
-the tray are unavailable in this preview. On Linux, the file-manager action
-opens the containing folder; on macOS, it reveals the selected file in Finder.
-The runtime is included. Native desktop, permissions and safety
-acceptance remain work for 0.5.0 (Linux).
-
-ESPAÑOL
-
-Distribuyo este paquete para probar las bases de plataforma. No representa
-soporte estable de Linux. Permito vista previa de carpetas, ajustes,
-selección de idioma y consulta de historial. Bloqueo movimientos, supervisión,
-acciones de revisión, deshacer y recuperación automática en la aplicación
-y en las operaciones de archivos.
-Uso un perfil separado Dowlume.Preview. No copies una base de datos de Windows:
-las rutas históricas dependen de su sistema original.
-
-Utilizo Ubuntu 24.04 x64 como bases experimentales.
-Intel queda fuera de alcance. No pido desactivar la seguridad del sistema.
-Linux necesita sesión gráfica X11/XWayland y bibliotecas nativas.
-
-Extrae el archivo completo, conservando el runtime y el directorio es. Usa
-copias desechables en una carpeta local. El inicio de sesión automático y
-ocultar en bandeja no están disponibles. Linux abre la carpeta contenedora;
-macOS muestra el archivo seleccionado en Finder. Incluyo el runtime.
-La aceptación de escritorio, permisos y seguridad nativa corresponde
-a 0.5.0 (Linux).
-
-https://github.com/mglezz/dowlume/blob/main/docs/PLATFORM_SUPPORT.md
-https://github.com/mglezz/dowlume/blob/main/docs/es/PLATFORM_SUPPORT.md
+Offline user guide: docs/user/guide.md
+Platform support: docs/user/platform-support.md
+Spanish instructions: START-HERE.es.txt

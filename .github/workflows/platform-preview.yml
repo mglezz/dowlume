@@ -3,15 +3,18 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
-      - 'Dowlume/**'
+      - 'src/**'
+      - 'tests/**'
+      - 'tools/**'
       - 'packaging/**'
-      - 'docs/USER_GUIDE.md'
-      - 'docs/es/USER_GUIDE.md'
-      - 'docs/PLATFORM_SUPPORT.md'
-      - 'docs/es/PLATFORM_SUPPORT.md'
-      - 'docs/RELEASE_NOTES_*.md'
-      - 'docs/es/RELEASE_NOTES_*.md'
-      - 'scripts/Build-PlatformPreview.py'
+      - 'scripts/**'
+      - 'docs/**'
+      - 'README.md'
+      - 'CONTRIBUTING.md'
+      - 'LICENSE'
+      - 'Dowlume.slnx'
+      - 'Directory.Build.props'
+      - 'global.json'
       - '.github/workflows/platform-preview.yml'
 permissions:
   contents: read

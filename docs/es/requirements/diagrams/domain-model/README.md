@@ -1,6 +1,6 @@
 # Diagramas del modelo de dominio
 
-[English](../../../../requirements/diagrams/domain-model/README.md) · [Modelo en español](../../DOMAIN_MODEL.md)
+[English](../../../../requirements/diagrams/domain-model/README.md) · [Modelo en español](../../domain-model.md)
 
 Mantengo una única colección de diez vistas UML en inglés, compartida por ambas documentaciones. Explico su vocabulario y reglas en el modelo español. Las fuentes `.puml` y `style.iuml` están en `docs/requirements/diagrams/domain-model/src/`; los SVG derivados, en `svg/`. Edito las fuentes y regenero, sin modificar SVG a mano.
 
@@ -27,4 +27,4 @@ Si Java no está en `PATH`, uso `-JavaPath "C:\ruta\java.exe"`. El script compru
 
 Inspecciono cada imagen a tamaño completo y al ancho de lectura: etiquetas, flechas, multiplicidades y recortes. Contrasto escenarios y estados con las reglas, compruebo enlaces y `git diff --check`, y guardo fuentes e imágenes correspondientes juntas. La sintaxis válida no demuestra corrección conceptual.
 
-El proceso no ejecuta Dowlume ni modifica sus datos. Registro las comprobaciones en [Validación](../../../VALIDATION.md) y mantengo [las referencias del renderizador](../../../../requirements/diagrams/domain-model/README.md) junto a las fuentes originales.
+El proceso no ejecuta Dowlume ni modifica sus datos. Registro las comprobaciones en [Validación](../../../archive/validation.md) y mantengo [las referencias del renderizador](../../../../requirements/diagrams/domain-model/README.md) junto a las fuentes originales.

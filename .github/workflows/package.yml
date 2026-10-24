@@ -3,14 +3,18 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
-      - 'Dowlume/**'
+      - 'src/**'
+      - 'tests/**'
+      - 'tools/**'
       - 'packaging/**'
-      - 'scripts/Build-Release.ps1'
-      - 'scripts/Test-Windows*.ps1'
-      - 'scripts/Start-WindowsGuestAcceptance.ps1'
-      - 'docs/RELEASE_NOTES_*.md'
-      - 'docs/es/RELEASE_NOTES_*.md'
-      - 'docs/WINDOWS_ACCEPTANCE.md'
+      - 'scripts/**'
+      - 'docs/**'
+      - 'README.md'
+      - 'CONTRIBUTING.md'
+      - 'LICENSE'
+      - 'Dowlume.slnx'
+      - 'Directory.Build.props'
+      - 'global.json'
       - '.github/workflows/package.yml'
 permissions:
   contents: read
@@ -27,7 +31,7 @@ jobs:
         id: version
         shell: pwsh
         run: |
-          [xml]$project = Get-Content Dowlume/Dowlume.App/Dowlume.App.csproj
+          [xml]$project = Get-Content src/Dowlume.App/Dowlume.App.csproj
           $version = [string]$project.Project.PropertyGroup.Version
           if ($version -notmatch '^\d+\.\d+\.\d+$') { throw 'Invalid release version.' }
           "value=$version" >> $env:GITHUB_OUTPUT

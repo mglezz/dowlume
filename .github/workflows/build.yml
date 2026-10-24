@@ -27,6 +27,13 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 10.0.401
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Check repository links, layout, and packaged documentation
+        run: |
+          python scripts/check_repository.py
+          python -m unittest discover -s tests/packaging
       - name: Record native environment and prepare isolated test directories
         shell: pwsh
         env:
@@ -41,16 +48,17 @@ jobs:
           "TMP=$temporary" >> $env:GITHUB_ENV
           "TEMP=$temporary" >> $env:GITHUB_ENV
           dotnet --info | Tee-Object -FilePath artifacts/dotnet-info.txt
-      - run: dotnet restore Dowlume/Dowlume.slnx
-      - run: dotnet build Dowlume/Dowlume.slnx -c Release --no-restore
+      - run: dotnet restore Dowlume.slnx
+      - run: dotnet build Dowlume.slnx -c Release --no-restore
       - name: Run shared and applicable native tests (unsupported native tests report skipped)
-        run: dotnet test Dowlume/Dowlume.slnx -c Release --no-build --logger trx
+        run: dotnet test Dowlume.slnx -c Release --no-build --logger trx
       - name: Verify native file operations on disposable APFS volumes with both case policies
         if: runner.os == 'macOS'
         run: python3 scripts/Test-MacFileReads.py --output artifacts/mac-file-reads
-      - run: dotnet format Dowlume/Dowlume.slnx --verify-no-changes --no-restore
-      - run: dotnet build scripts/FileOperationAcceptance -c Release
-      - run: dotnet format scripts/FileOperationAcceptance/FileOperationAcceptance.csproj --verify-no-changes --no-restore
+      - run: dotnet format Dowlume.slnx --verify-no-changes --no-restore
+      - name: Check standalone Windows documentation links
+        shell: pwsh
+        run: ./scripts/Test-DocumentationLinks.ps1
       - name: Test read-only Recycle Bin evidence inventory
         if: runner.os == 'Windows'
         shell: powershell

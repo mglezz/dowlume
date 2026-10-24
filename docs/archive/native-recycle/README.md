@@ -13,4 +13,4 @@ The source was copied from the clean working tree at base commit `2dcc06967adb7c
 - [Test-WindowsRecycleAcceptance.ps1.txt](Test-WindowsRecycleAcceptance.ps1.txt): original capacity/policy harness.
 - [RecycleProbe.cs.txt](RecycleProbe.cs.txt): original worker and immediate report timing.
 
-The [investigation](../../RECYCLE_CAPACITY_INVESTIGATION.md) records the candidate commit, assembly hashes, both runs, VM checkpoints, forensic findings, and limitations. Original binaries, fixtures, reports, exports, and checkpoints remain separate evidence and have not been replaced by this archive. Current script/worker entry points refuse execution; the application adapter also always refuses.
+The [investigation](../recycle-capacity-investigation.md) records the candidate commit, assembly hashes, both runs, VM checkpoints, forensic findings, and limitations. Original binaries, fixtures, reports, exports, and checkpoints remain separate evidence and have not been replaced by this archive. Current script/worker entry points refuse execution; the application adapter also always refuses.

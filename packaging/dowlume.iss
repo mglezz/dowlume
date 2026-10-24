@@ -32,7 +32,7 @@ SetupMutex=Local\Dowlume.Setup
 CloseApplications=no
 RestartApplications=no
 LicenseFile=..\LICENSE
-SetupIconFile=..\Dowlume\Dowlume.App\Assets\dowlume.ico
+SetupIconFile=..\src\Dowlume.App\Assets\dowlume.ico
 
 [Files]
 Source: "{#PublishDirectory}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs

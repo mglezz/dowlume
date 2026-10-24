@@ -2,7 +2,7 @@
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Drawing
 $repositoryRoot = Split-Path $PSScriptRoot -Parent
-$iconPath = Join-Path $repositoryRoot 'Dowlume/Dowlume.App/Assets/dowlume.ico'
+$iconPath = Join-Path $repositoryRoot 'src/Dowlume.App/Assets/dowlume.ico'
 $bitmap = New-Object System.Drawing.Bitmap(64, 64)
 $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
 $graphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias

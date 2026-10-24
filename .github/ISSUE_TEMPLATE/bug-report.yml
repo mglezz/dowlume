@@ -9,28 +9,28 @@ body:
     id: version
     attributes:
       label: Dowlume version and package
-      placeholder: "0.1.0, installer or portable ZIP"
+      placeholder: "0.4.0, macOS app / Windows installer / portable ZIP / Linux preview"
     validations:
       required: true
   - type: input
-    id: windows
+    id: platform
     attributes:
-      label: Windows version and build
-      description: "Open Settings > System > About to find this information."
+      label: Operating system, version, and architecture
+      description: "For example: Windows 11 x64, macOS 15 Apple Silicon, or Ubuntu 24.04 x64. For Linux, include the desktop and display session."
     validations:
       required: true
   - type: textarea
     id: steps
     attributes:
       label: Steps to reproduce
-      description: "Include the action, file extension, and whether the folder is on another disk. Use fictional filenames."
+      description: "Include the action, file extension, filesystem, and whether source and destination are on different volumes. Use fictional filenames."
     validations:
       required: true
   - type: textarea
     id: outcome
     attributes:
       label: Expected and actual result
-      description: "Include any visible error and whether the sample file remains at its source, destination, or in Recycle Bin."
+      description: "Include any visible error and whether the sample file remains at its source, destination, or review folder."
     validations:
       required: true
   - type: textarea

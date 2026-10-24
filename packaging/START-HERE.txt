@@ -48,7 +48,7 @@ up that entire folder. No account, cloud synchronization, or telemetry is used.
 
 HELP AND FEEDBACK
 
-Full guide: https://github.com/mglezz/dowlume/blob/main/docs/USER_GUIDE.md
+Full guide: https://github.com/mglezz/dowlume/blob/main/docs/user/guide.md
 Report an issue: https://github.com/mglezz/dowlume/issues
 Include your Windows version, Dowlume version, steps, and expected/actual result.
 Do not attach personal downloads, the database, or unredacted private paths.

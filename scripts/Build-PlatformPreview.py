@@ -14,6 +14,8 @@ import uuid
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 
+from package_docs import copy_user_documentation
+
 ROOT = Path(__file__).resolve().parent.parent
 
 
@@ -27,7 +29,7 @@ def build(runtime, output, staging):
         raise RuntimeError("Build and test on the declared native OS and architecture.")
     if output.exists():
         raise RuntimeError("Choose a new output directory; existing artifacts are never replaced.")
-    project = ROOT / "Dowlume/Dowlume.App/Dowlume.App.csproj"
+    project = ROOT / "src/Dowlume.App/Dowlume.App.csproj"
     version = ET.parse(project).findtext("./PropertyGroup/Version")
     source = run("git", "rev-parse", "HEAD", capture_output=True, text=True).stdout.strip()
     dirty = bool(run("git", "status", "--porcelain", capture_output=True, text=True).stdout.strip())
@@ -67,7 +69,7 @@ def build(runtime, output, staging):
             for scale in (1, 2):
                 name = f"icon_{size}x{size}" + ("@2x" if scale == 2 else "") + ".png"
                 run("sips", "-s", "format", "png", "-z", str(size * scale), str(size * scale),
-                    str(ROOT / "Dowlume/Dowlume.App/Assets/dowlume.ico"), "--out", str(iconset / name), capture_output=True)
+                    str(ROOT / "src/Dowlume.App/Assets/dowlume.ico"), "--out", str(iconset / name), capture_output=True)
         run("iconutil", "-c", "icns", str(iconset), "-o", str(resources / "Dowlume.icns"))
     else:
         publish = package
@@ -83,9 +85,8 @@ def build(runtime, output, staging):
     shutil.copy2(ROOT / "LICENSE", resources / "LICENSE")
     instructions = "MACOS.txt" if runtime == "osx-arm64" else "PLATFORM-PREVIEW.txt"
     shutil.copy2(ROOT / "packaging" / instructions, resources / "START-HERE.txt")
-    shutil.copytree(ROOT / "docs", resources / "docs")
-    for document in ("README.md", "GETTING_STARTED.md", "ROADMAP.md", "CONTRIBUTING.md"):
-        shutil.copy2(ROOT / document, resources / document)
+    shutil.copy2(ROOT / "packaging/es" / instructions, resources / "START-HERE.es.txt")
+    copy_user_documentation(ROOT, resources, source)
     if runtime == "osx-arm64" and not (publish / "libdowlume_native.dylib").is_file():
         raise RuntimeError("The native file-operation adapter is missing.")
     info = {"Version": version, "SourceCommit": source, "DirtyWorkingTree": dirty,
