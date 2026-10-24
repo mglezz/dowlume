@@ -67,7 +67,7 @@ $buildInfo = [ordered]@{
 $buildInfoPath = Join-Path $artifactDirectory 'BUILD-INFO.json'
 $buildInfo | ConvertTo-Json | Set-Content -LiteralPath $buildInfoPath -Encoding utf8
 Copy-Item -LiteralPath $buildInfoPath -Destination $publishDirectory
-$archive = Join-Path $artifactDirectory "$packageName.zip"
+$archive = Join-Path $artifactDirectory "$packageName-portable.zip"
 Compress-Archive -Path (Join-Path $publishDirectory '*') -DestinationPath $archive
 $releaseFiles = @($archive, $buildInfoPath)
 foreach ($language in @('en', 'es')) {

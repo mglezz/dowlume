@@ -22,7 +22,11 @@ $manifest = Get-Content -LiteralPath (Join-Path $KitDirectory 'KIT-VERIFICATION.
 $build = Get-Content -LiteralPath (Join-Path $KitDirectory 'BUILD-INFO.json') -Raw | ConvertFrom-Json
 if ($build.Version -notmatch '^\d+\.\d+\.\d+$') { throw 'Invalid candidate version.' }
 $installerName = "Dowlume-$($build.Version)-win-x64-setup.exe"
-$archiveName = "Dowlume-$($build.Version)-win-x64.zip"
+$archiveName = "Dowlume-$($build.Version)-win-x64-portable.zip"
+# Historical candidates used the shorter archive name; their verified kits remain usable.
+if (-not (Test-Path -LiteralPath (Join-Path $KitDirectory $archiveName) -PathType Leaf)) {
+    $archiveName = "Dowlume-$($build.Version)-win-x64.zip"
+}
 $requiredFiles = @('BUILD-INFO.json', $installerName, $archiveName,
     'Dowlume-previous-setup.exe', 'Test-WindowsPackage.ps1', 'Test-WindowsTray.ps1', 'Test-WindowsLocalization.ps1')
 foreach ($fileName in $requiredFiles) {

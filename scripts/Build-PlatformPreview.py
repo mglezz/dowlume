@@ -104,7 +104,7 @@ def build(runtime, output, staging):
             run("/usr/bin/xattr", "-dr", attribute, str(app_bundle))
         run("codesign", "--force", "--deep", "--sign", "-", str(app_bundle))
         run("codesign", "--verify", "--deep", "--strict", str(app_bundle))
-        archive = output / f"{package_name}.zip"
+        archive = output / f"{package_name}-portable.zip"
         run("ditto", "-c", "-k", "--sequesterRsrc", "--keepParent", str(package / "Dowlume.app"), str(archive))
     else:
         archive = output / f"{package_name}.tar.gz"

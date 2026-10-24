@@ -32,12 +32,12 @@ Los paquetes de **Dowlume 0.4.0** incluyen el runtime; no necesitas instalar .NE
 
 | Plataforma | Descarga |
 | --- | --- |
-| macOS 15+ · Apple Silicon | [Aplicación macOS](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-osx-arm64.zip) |
-| Windows · x64 | [Instalador](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64-setup.exe) · [ZIP portátil](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64.zip) |
+| macOS 15+ · Apple Silicon | [Portable](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-osx-arm64-portable.zip) |
+| Windows · x64 | [Instalador (recomendado)](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64-setup.exe) · [Portable](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64-portable.zip) |
 
 Empieza con copias de unos pocos archivos en una carpeta local y consulta la vista previa. La interfaz empieza en inglés; puedes seleccionar español en **Settings → Language**.
 
-macOS utiliza firma ad hoc sin notarización; los paquetes Windows no tienen firma de editor. Consulta la [instalación](user/guide.md#instalar-y-abrir) y comprueba las [sumas SHA-256](https://github.com/mglezz/dowlume/releases/download/v0.4.0/SHA256SUMS.all.txt). Los movimientos en macOS requieren APFS local en el mismo volumen. Linux sigue como vista previa restringida. La [matriz de plataformas](user/platform-support.md) detalla el alcance.
+macOS utiliza firma ad hoc sin notarización; los paquetes Windows no tienen firma de editor. Consulta la [instalación](user/guide.md#instalar-y-abrir) y comprueba las [sumas SHA-256](releases/0.4.0.md#sumas-de-comprobación). Los movimientos en macOS requieren APFS local en el mismo volumen. Linux sigue como vista previa restringida. La [matriz de plataformas](user/platform-support.md) detalla el alcance.
 
 ## Documentación en español
 

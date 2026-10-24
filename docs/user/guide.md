@@ -6,11 +6,11 @@ Dowlume organizes completed downloads on Windows x64 and macOS Apple Silicon. Ve
 
 ## Install and start
 
-Download the package for your computer from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.4.0). For macOS installation, permissions, and startup, follow the [macOS instructions](#macos-040) below. Developers can also [build and run from source](../development/getting-started.md).
+Choose the Windows installer for a regular installation, or a **Portable** download for the complete application in a ZIP. Download the package for your computer from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.4.0). For macOS installation, permissions, and startup, follow the [macOS instructions](#macos-040) below. Developers can also [build and run from source](../development/getting-started.md).
 
 For a downloaded or locally built package, run the setup executable (for example, `Dowlume-0.4.0-win-x64-setup.exe`). Installation is per user and does not require administrator privileges. Alternatively, extract the complete portable ZIP and run `Dowlume.App.exe`; do not move the executable out of its accompanying files. The .NET runtime is included.
 
-The Windows packages are unsigned. The macOS app uses an ad-hoc signature without Developer ID or notarization. Only use a package from a source you trust and compare its SHA-256 checksum with the published `SHA256SUMS.all.txt` (or the platform-specific checksum file).
+The Windows packages are unsigned. The macOS app uses an ad-hoc signature without Developer ID or notarization. Only use a package from a source you trust and compare its SHA-256 checksum with the [download checksums](../releases/0.4.0.md#download-checksums).
 
 The package includes `START-HERE.txt`, which opens offline in a text editor. The installer adds a **Dowlume quick start** Start menu shortcut. Exit Dowlume, including any instance hidden in the tray, before upgrading or uninstalling; Setup refuses while the app is running. Installation and uninstall retain your files and local profile.
 

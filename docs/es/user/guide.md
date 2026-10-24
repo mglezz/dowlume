@@ -6,7 +6,7 @@ Dowlume organiza descargas completas en Windows x64 y macOS Apple Silicon. La [v
 
 ## Instalar y abrir
 
-Descarga el instalador o el ZIP desde la publicación de GitHub. Los paquetes Windows de v0.4.0 no tienen firma de editor: utiliza una fuente de confianza y compara el SHA-256 con `SHA256SUMS.all.txt`.
+Elige el instalador Windows para una instalación habitual, o **Portable** para descargar la aplicación completa en un ZIP desde la publicación de GitHub. Los paquetes Windows de v0.4.0 no tienen firma de editor: utiliza una fuente de confianza y compara el SHA-256 con las [sumas de comprobación](../releases/0.4.0.md#sumas-de-comprobación).
 
 Ejecuta `Dowlume-0.4.0-win-x64-setup.exe` sin permisos de administrador. Para la versión portátil, extrae todo el ZIP y ejecuta `Dowlume.App.exe` junto a sus archivos. No necesita una instalación separada de .NET.
 

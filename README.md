@@ -38,18 +38,18 @@ You can check the proposed destinations before choosing **Organize and monitor**
 
 </details>
 
-## Make room for what matters
+## Download
 
 Download **Dowlume 0.4.0** for your computer. The runtime is included.
 
 | Platform | Download |
 | --- | --- |
-| macOS 15+ · Apple Silicon | [macOS app](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-osx-arm64.zip) |
-| Windows · x64 | [Installer](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64-setup.exe) · [Portable ZIP](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64.zip) |
+| macOS 15+ · Apple Silicon | [Portable](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-osx-arm64-portable.zip) |
+| Windows · x64 | [Installer (recommended)](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64-setup.exe) · [Portable](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64-portable.zip) |
 
 Start with a few sample files in a local folder, open **Preview**, and see whether the setup feels right. The interface starts in English; Spanish is available in Settings.
 
-The macOS app uses an ad-hoc signature and is not notarized; Windows packages are unsigned. Read the [installation guide](docs/user/guide.md#install-and-start) and check the [download checksums](https://github.com/mglezz/dowlume/releases/download/v0.4.0/SHA256SUMS.all.txt). macOS file moves require local APFS folders on the same volume. Linux remains a restricted preview. See [supported platforms](docs/user/platform-support.md) for the full scope.
+The macOS app uses an ad-hoc signature and is not notarized; Windows packages are unsigned. Read the [installation guide](docs/user/guide.md#install-and-start) and check the [download checksums](docs/releases/0.4.0.md#download-checksums). macOS file moves require local APFS folders on the same volume. Linux remains a restricted preview. See [supported platforms](docs/user/platform-support.md) for the full scope.
 
 ## A closer look at Dowlume
 

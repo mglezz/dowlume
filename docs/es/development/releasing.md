@@ -41,4 +41,4 @@ Verifica idiomas, vista previa, organización, revisión, Deshacer, recuperació
 
 ## Tras publicar
 
-Etiqueta la revisión aceptada, adjunta sus archivos y verifica los hashes de las descargas públicas. Actualiza los enlaces del README, el índice de versiones, la guía y la hoja de ruta. No conviertas resultados fallidos o pendientes en aprobaciones.
+Etiqueta la revisión aceptada y adjunta únicamente el instalador Windows y los ZIP de aplicación Windows/macOS, nombrados `-portable.zip`. Los informes, kits de aceptación y metadatos permanecen en los artefactos de CI o en el registro del candidato. Publica los hashes en las notas enlazadas y verifica las descargas públicas. Las vistas previas Linux siguen en las versiones preliminares. Renombrar un ZIP no debe modificar sus bytes ni su hash; actualiza los enlaces actuales y conserva los nombres originales en los registros históricos. GitHub añade sus propios enlaces al código fuente. Actualiza los enlaces del README, el índice de versiones, la guía y la hoja de ruta. No conviertas resultados fallidos o pendientes en aprobaciones.

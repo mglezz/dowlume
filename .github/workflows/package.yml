@@ -54,7 +54,7 @@ jobs:
         run: |
           ./scripts/Test-WindowsPackage.ps1 `
             -Installer "artifacts/release-candidate/Dowlume-$($env:DOWLUME_PACKAGE_VERSION)-win-x64-setup.exe" `
-            -Archive "artifacts/release-candidate/Dowlume-$($env:DOWLUME_PACKAGE_VERSION)-win-x64.zip" `
+            -Archive "artifacts/release-candidate/Dowlume-$($env:DOWLUME_PACKAGE_VERSION)-win-x64-portable.zip" `
             -PreviousInstaller artifacts/upgrade-baseline/Dowlume-0.3.0-win-x64-setup.exe `
             -ReportPath artifacts/acceptance/package.json -RequireLocalization
       - uses: actions/upload-artifact@v4
