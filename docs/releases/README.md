@@ -2,7 +2,9 @@
 
 [Documentation](../README.md)
 
-Release notes describe shipped behavior. Acceptance records retain the source revisions, package hashes, test scope, and manual confirmation for each release.
+The [0.5.0 Linux draft](0.5.0.md) is unreleased; [native acceptance](../development/linux-acceptance.md) is pending.
+
+The records below describe shipped behavior. Acceptance records retain the source revisions, package hashes, test scope, and manual confirmation for each release.
 
 | Version | Release notes | Acceptance record |
 | --- | --- | --- |

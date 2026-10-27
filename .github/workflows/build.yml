@@ -51,7 +51,11 @@ jobs:
       - run: dotnet restore Dowlume.slnx
       - run: dotnet build Dowlume.slnx -c Release --no-restore
       - name: Run shared and applicable native tests (unsupported native tests report skipped)
+        if: runner.os != 'Linux'
         run: dotnet test Dowlume.slnx -c Release --no-build --logger trx
+      - name: Run Linux tests on a disposable local ext4 volume
+        if: runner.os == 'Linux'
+        run: python3 scripts/Test-Linux.py --output artifacts/linux-native
       - name: Verify native file operations on disposable APFS volumes with both case policies
         if: runner.os == 'macOS'
         run: python3 scripts/Test-MacFileReads.py --output artifacts/mac-file-reads
@@ -75,3 +79,4 @@ jobs:
             **/TestResults/*.trx
             artifacts/dotnet-info.txt
             artifacts/mac-file-reads/
+            artifacts/linux-native/

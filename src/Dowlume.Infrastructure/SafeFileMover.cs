@@ -6,14 +6,23 @@ namespace Dowlume.Infrastructure;
 public sealed class SafeFileMover : IFileMover, IPreparedFileMover
 {
     public bool CanMove => OperatingSystem.IsWindows() ||
+        (OperatingSystem.IsLinux() && System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture == System.Runtime.InteropServices.Architecture.X64) ||
         (OperatingSystem.IsMacOSVersionAtLeast(15) && System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture == System.Runtime.InteropServices.Architecture.Arm64);
 
     public IPreparedFileMove PrepareMove(string source, string destination, string expectedHash) => OperatingSystem.IsMacOS()
         ? new MacFileMove(source, destination, expectedHash)
+        : OperatingSystem.IsLinux() ? new LinuxFileMove(source, destination, expectedHash)
         : new DeferredFileMove(() => Move(source, destination, expectedHash));
 
     public FileIdentity? GetIdentity(string path)
     {
+        if (OperatingSystem.IsLinux())
+        {
+            using FileStream native = LinuxFileSystem.OpenRead(path);
+            if (LinuxFileSystem.Capture(native.SafeFileHandle).LinkCount != 1)
+                throw new IOException("The file identity changed.");
+            return LinuxFileSystem.Identity(native.SafeFileHandle);
+        }
         if (!OperatingSystem.IsMacOS())
             return null;
         using FileStream stream = MacFileHandle.OpenRead(path);
@@ -25,6 +34,16 @@ public sealed class SafeFileMover : IFileMover, IPreparedFileMover
 
     public bool MatchesRecoveryFile(string path, FileIdentity identity, string expectedHash)
     {
+        if (OperatingSystem.IsLinux())
+        {
+            using FileStream native = LinuxFileSystem.OpenRead(path);
+            LinuxFileSystem.Snapshot snapshot = LinuxFileSystem.Capture(native.SafeFileHandle);
+            if (snapshot.LinkCount != 1 || LinuxFileSystem.Identity(native.SafeFileHandle) != identity)
+                return false;
+            bool match = Convert.ToHexString(SHA256.HashData(native)) == expectedHash;
+            LinuxFileSystem.VerifyUnchanged(path, native.SafeFileHandle, snapshot);
+            return match;
+        }
         if (!OperatingSystem.IsMacOS())
             return false;
         using FileStream stream = MacFileHandle.OpenRead(path);
@@ -39,6 +58,8 @@ public sealed class SafeFileMover : IFileMover, IPreparedFileMover
 
     public string Hash(string path)
     {
+        if (OperatingSystem.IsLinux())
+            return LinuxFileSystem.Hash(path);
         if (OperatingSystem.IsMacOS())
         {
             using FileStream native = MacFileHandle.OpenRead(path);
@@ -54,7 +75,7 @@ public sealed class SafeFileMover : IFileMover, IPreparedFileMover
 
     public void Move(string source, string destination, string expectedHash)
     {
-        if (OperatingSystem.IsMacOS())
+        if (OperatingSystem.IsMacOS() || OperatingSystem.IsLinux())
         {
             using IPreparedFileMove move = PrepareMove(source, destination, expectedHash);
             move.Execute();
@@ -97,6 +118,18 @@ public sealed class SafeFileMover : IFileMover, IPreparedFileMover
 
     public FileStream OpenVerifiedRead(string path, string expectedHash)
     {
+        if (OperatingSystem.IsLinux())
+        {
+            FileStream native = LinuxFileSystem.OpenRead(path);
+            try
+            {
+                LinuxFileSystem.Snapshot before = LinuxFileSystem.Capture(native.SafeFileHandle);
+                VerifyHash(native, expectedHash);
+                LinuxFileSystem.VerifyUnchanged(path, native.SafeFileHandle, before);
+                return native;
+            }
+            catch { native.Dispose(); throw; }
+        }
         if (OperatingSystem.IsMacOS())
         {
             FileStream native = MacFileHandle.OpenRead(path);

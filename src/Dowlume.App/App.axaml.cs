@@ -35,12 +35,12 @@ public partial class App : Application
                 Directory.CreateDirectory(dataDirectory);
                 _instanceLock = new FileStream(Path.Combine(dataDirectory, "instance.lock"), FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
                 var store = new SqliteStateStore(Path.Combine(dataDirectory, "dowlume.db"));
-                var organizer = new DownloadOrganizer(store, new SafeFileMover(), OperatingSystem.IsMacOS() ? new MacFileReadiness() : new FileReadiness());
+                var organizer = new DownloadOrganizer(store, new SafeFileMover(), OperatingSystem.IsMacOS() ? new MacFileReadiness() : OperatingSystem.IsLinux() ? new LinuxFileReadiness() : new FileReadiness());
                 var window = new MainWindow();
                 text.SetLanguage(store.LoadSettings()?.Language);
                 var platform = DesktopPlatform.Current;
                 var model = new MainViewModel(store, organizer, new DesktopDialogs(window, text, platform.FileManager), log,
-                    Program.IsCustomDataDirectory && platform.System == DesktopSystem.MacOS ? new UnavailableStartupRegistration() : platform.Startup, text, platform.SuggestedDownloads);
+                    Program.IsCustomDataDirectory && platform.System != DesktopSystem.Windows ? new UnavailableStartupRegistration() : platform.Startup, text, platform.SuggestedDownloads);
                 window.DataContext = model;
                 desktop.MainWindow = window;
                 if (platform.System == DesktopSystem.MacOS)
@@ -86,6 +86,8 @@ public partial class App : Application
                     {
                         if (OperatingSystem.IsMacOS() && smokeWindow is MainWindow main)
                             await MacPackageAcceptance.RunAsync(main, dataDirectory);
+                        else if (OperatingSystem.IsLinux() && smokeWindow is MainWindow linuxMain)
+                            await LinuxPackageAcceptance.RunAsync(linuxMain, dataDirectory);
                         else
                             await Task.Delay(1000);
                     }

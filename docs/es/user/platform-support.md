@@ -2,15 +2,15 @@
 
 [English](../../user/platform-support.md) · [Español](#)
 
-Publico [0.4.0](../releases/acceptance/0.4.0.md) como estable para macOS Apple Silicon y Windows dentro del alcance siguiente. Confirmé rc.1 manualmente en ambas plataformas y acepté la corrección de cierre de rc.2 mediante regresiones nativas y automatización del paquete final. Los binarios macOS/Linux 0.3.0 siguen siendo vistas previas restringidas y Linux 0.4.0 continúa restringido para el hito 0.5.0. Consulta las [notas](../releases/0.4.0.md).
+Publico [0.4.0](../releases/acceptance/0.4.0.md) como estable para macOS Apple Silicon y Windows dentro del alcance siguiente. Confirmé rc.1 manualmente en ambas plataformas y acepté la corrección de cierre de rc.2 mediante regresiones nativas y automatización del paquete final. Los binarios macOS/Linux 0.3.0 siguen siendo vistas previas restringidas y Linux 0.4.0 publicado continúa restringido. El código de 0.5.0 activa las operaciones Linux dentro del alcance candidato siguiente; su aceptación nativa está pendiente. Consulta las [notas](../releases/0.4.0.md).
 
 | Plataforma | Implementación actual | Distribución y aceptación |
 | --- | --- | --- |
 | Windows x64 | Organización, supervisión, revisión, Deshacer elegible, recuperación, Explorador, bandeja e inicio de sesión | Instalador y ZIP portátil; superé actualización automatizada desde 0.3.0 fijada por hash con confirmación funcional manual de rc.1 y aceptación automática de regresiones y paquetes de la corrección de cierre de rc.2. |
 | macOS 15+ Apple Silicon | Flujo admitido completo en APFS local del mismo volumen; diálogos/Finder, menús de aplicación/Dock, reapertura/salida, inicio opcional, ambos idiomas y migración de perfil de vista previa | `.app` autocontenida en ZIP con firma ad hoc. CI nativa usa macOS 15; también pruebo localmente en 26.6.2. Registro la confirmación funcional final y sus límites de evidencia por separado de la automatización. |
 | macOS Intel | Excluido | Sin paquete x64 ni declaración de soporte. |
-| Ubuntu 24.04 x64 | Vista previa restringida: carpetas, ajustes, historial, idiomas, Descargas XDG y mostrar carpeta contenedora | `.tar.gz` autocontenido; arranque X11 con Xvfb. Mutaciones, recuperación, inicio de sesión y bandeja siguen desactivados para el hito 0.5.0. Xvfb no acepta una sesión GNOME real, XWayland ni Wayland nativo. |
-| Otros Linux | Fuera del alcance inicial | Necesito evidencia nativa separada para otras distribuciones, escritorios y arquitecturas. |
+| Ubuntu 24.04 x64 (candidato 0.5.0) | Flujo nativo en ext4 local del mismo montaje, recuperación por identidad, Descargas XDG, inicio opcional y gestor de archivos; sin bandeja | Preparados `.deb` y `.tar.gz` autocontenidos. Pendientes ejecución nativa, instalación/actualización y aceptación GNOME X11/Wayland. Consulta la [aceptación Linux](../../development/linux-acceptance.md). |
+| Fedora / Arch x64 | Mismo portable glibc y restricciones ext4, sin lista cerrada de distribuciones | Sin validar; todavía sin RPM/AUR. Se rechazan Btrfs/XFS y otros sistemas de archivos. Se necesita evidencia separada antes de ampliar el soporte oficial. |
 
 Mantengo la papelera nativa desactivada en todos los sistemas. Conservo evidencia histórica y no repito pruebas retiradas de capacidad. No importo perfiles entre sistemas operativos.
 
@@ -22,9 +22,9 @@ Completo los flujos Windows, macOS Apple Silicon y Linux antes de la firma de ed
 
 Admito carpetas APFS locales ordinarias fuera de servicios de sincronización. Origen y destino deben estar en el mismo volumen. Rechazo transferencias entre volúmenes, enlaces simbólicos/duros, archivos no regulares, rutas/atributos conocidos de nube, almacenamiento de red/no APFS y volúmenes ausentes antes de preparar el movimiento. No reconocer una carpeta como nube no certifica su uso con sincronización. Uso identidad nativa persistente para pertenencia, renombrado exclusivo sin sobrescribir e identidad más SHA-256 para recuperación. Los bloqueos cooperativos no excluyen cualquier escritor POSIX; las carreras detectadas conservan archivos y requieren atención. Consulta [implementación](../architecture/macos.md) y [contrato](../architecture/file-operations.md).
 
-Guardo datos Windows en `%LOCALAPPDATA%\Dowlume`, macOS en `~/Library/Application Support/Dowlume` y la vista previa Linux en datos locales .NET, normalmente `$XDG_DATA_HOME/Dowlume.Preview` o `~/.local/share/Dowlume.Preview`. La primera apertura macOS copia un perfil cerrado `Dowlume.Preview` solo si no existe el nuevo; conservo el origen. `--data-directory` evita migración y registro de inicio de sesión.
+Guardo datos Windows en `%LOCALAPPDATA%\Dowlume`, macOS en `~/Library/Application Support/Dowlume` y Linux 0.5.0 en `$XDG_DATA_HOME/Dowlume` o `~/.local/share/Dowlume`. El perfil Linux anterior `Dowlume.Preview` permanece intacto sin migración automática. La primera apertura macOS copia un perfil cerrado `Dowlume.Preview` solo si no existe el nuevo; conservo el origen. `--data-directory` evita migración y registro de inicio de sesión.
 
-Cerrar la ventana macOS termina tras esperar al trabajo. Ocultar nativo y reabrir desde Dock funcionan mientras está abierta. El inicio opcional usa un LaunchAgent por usuario para una app instalada, con marca de propiedad y argumentos literales. Se aplica al siguiente inicio de sesión y los ajustes del sistema pueden anularlo. Windows conserva bandeja e inicio por registro. Linux no tiene ocultar en bandeja ni registro automático.
+Cerrar la ventana macOS termina tras esperar al trabajo. Ocultar nativo y reabrir desde Dock funcionan mientras está abierta. El inicio opcional usa un LaunchAgent por usuario para una app instalada, con marca de propiedad y argumentos literales. Se aplica al siguiente inicio de sesión y los ajustes del sistema pueden anularlo. Windows conserva bandeja e inicio por registro. Linux cierra tras completar el trabajo activo y no tiene bandeja. El inicio opcional usa `$XDG_CONFIG_HOME/autostart/com.mglezz.dowlume.desktop` (por defecto `~/.config/autostart`) y la supervisión empieza en pausa. Consulta la [implementación y límites Linux](../../architecture/linux.md).
 
 ## Evidencias y paquetes
 
@@ -33,7 +33,8 @@ Ejecuto pruebas compartidas en Windows x64, macOS ARM64 y Ubuntu x64. Los adapta
 ```sh
 python3 scripts/Build-PlatformPreview.py --runtime osx-arm64 --output artifacts/macos-package
 # En Ubuntu 24.04 x64:
-python3 scripts/Build-PlatformPreview.py --runtime linux-x64 --output artifacts/linux-preview
+python3 scripts/Build-Linux.py --output artifacts/linux-candidate
+python3 scripts/Test-Linux.py --output artifacts/linux-native --archive artifacts/linux-candidate/Dowlume-0.5.0-linux-x64.tar.gz
 ```
 
 Compilo en cada plataforma nativa con SDK .NET 10.0.401 y Python 3.13 en CI. macOS requiere herramientas de línea de comandos Xcode para adaptador C, icono, firma y archivo. Linux CI instala `xvfb`, `xauth`, `libx11-6`, `libice6`, `libsm6`, `libfontconfig1`, `libgl1`, `libegl1`, `libxrandr2`, `libxi6`, `libxcursor1`, `libxrender1`, `libxext6` y `libxfixes3`. Mostrar carpetas en Linux también requiere `/usr/bin/xdg-open` (`xdg-utils`) y gestor de archivos.

@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eu
+for process in /proc/[0-9]*/exe; do
+    executable=$(readlink "$process" 2>/dev/null || true)
+    case "$executable" in
+        /opt/dowlume/Dowlume.App|'/opt/dowlume/Dowlume.App (deleted)')
+            echo 'Close Dowlume before installing, upgrading, or removing it.' >&2
+            exit 1
+            ;;
+    esac
+done
+exit 0
