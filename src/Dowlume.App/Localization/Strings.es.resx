@@ -485,4 +485,10 @@ La ubicación original debe estar disponible y el archivo no debe haber cambiado
   <data name="MacQuit" xml:space="preserve"><value>Salir</value></data>
   <data name="MacPrivacyNotice" xml:space="preserve"><value>Todo es local. Sin cuenta, sincronización ni telemetría. Cerrar la ventana termina tras completar el trabajo activo. Ocultar en macOS mantiene la supervisión.</value></data>
   <data name="PortableFolderNames" xml:space="preserve"><value>Los nombres de categoría deben ser válidos entre plataformas.</value></data>
+  <data name="LoginStartupExplanation" xml:space="preserve"><value>Se aplica inmediatamente a tu cuenta. La supervisión empieza en pausa. Los ajustes del escritorio también pueden desactivar el inicio de sesión.</value></data>
+  <data name="LinuxPrivacyNotice" xml:space="preserve"><value>Todo es local. Sin cuenta, sincronización ni telemetría. Cerrar la ventana termina tras completar el trabajo activo.</value></data>
+  <data name="LinuxFolderScope" xml:space="preserve"><value>Linux: elige carpetas ext4 locales del mismo montaje, fuera de la sincronización en la nube. No se admiten enlaces ni movimientos entre volúmenes.</value></data>
+  <data name="LinuxSameVolumeOnly" xml:space="preserve"><value>Las operaciones en Linux requieren carpetas ext4 locales del mismo montaje, con UUID del sistema de archivos y fecha de creación verificables. Elige otro destino.</value></data>
+  <data name="LinuxDesktopPath" xml:space="preserve"><value>La ruta de la aplicación no puede representarse de forma segura en una entrada del escritorio.</value></data>
+  <data name="LinuxX64Only" xml:space="preserve"><value>Las operaciones nativas de archivos requieren Linux x64.</value></data>
 </root>

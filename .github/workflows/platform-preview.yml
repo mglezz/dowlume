@@ -1,4 +1,4 @@
-name: Package macOS and Linux preview
+name: Package macOS and Linux candidates
 on:
   workflow_dispatch:
   pull_request:
@@ -43,15 +43,27 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb xauth libx11-6 libice6 libsm6 libfontconfig1 libgl1 libegl1 libxrandr2 libxi6 libxcursor1 libxrender1 libxext6 libxfixes3
-      - name: Build native archive and launch its extracted application
-        run: python scripts/Build-PlatformPreview.py --runtime ${{ matrix.runtime }} --output artifacts/platform-preview
+          sudo apt-get install -y desktop-file-utils xdg-utils e2fsprogs xvfb xauth libx11-6 libice6 libsm6 libfontconfig1 libgl1 libegl1 libxrandr2 libxi6 libxcursor1 libxrender1 libxext6 libxfixes3
+      - name: Build macOS archive and launch its extracted application
+        if: runner.os == 'macOS'
+        run: python scripts/Build-PlatformPreview.py --runtime osx-arm64 --output artifacts/platform-preview
+      - name: Build Linux package candidates
+        if: runner.os == 'Linux'
+        run: |
+          dotnet build Dowlume.slnx -c Release
+          python scripts/Build-Linux.py --output artifacts/platform-preview
+      - name: Verify extracted Linux package on disposable ext4
+        if: runner.os == 'Linux'
+        shell: bash
+        run: python scripts/Test-Linux.py --output artifacts/linux-package-acceptance --archive artifacts/platform-preview/Dowlume-*-linux-x64.tar.gz
       - uses: actions/upload-artifact@v4
         with:
           name: platform-preview-${{ matrix.runtime }}
           path: |
             artifacts/platform-preview/*.zip
             artifacts/platform-preview/*.tar.gz
+            artifacts/platform-preview/*.deb
+            artifacts/linux-package-acceptance/
             artifacts/platform-preview/BUILD-INFO.*.json
             artifacts/platform-preview/ACCEPTANCE.*.json
             artifacts/platform-preview/SHA256SUMS.*.txt
@@ -62,3 +74,4 @@ jobs:
           path: |
             artifacts/platform-preview/BUILD-INFO.*.json
             artifacts/platform-preview/smoke-profile-*/diagnostics.jsonl
+            artifacts/linux-package-acceptance/

@@ -485,4 +485,10 @@ The original location must be available and the file must be unchanged. Undoing 
   <data name="MacQuit" xml:space="preserve"><value>Quit</value></data>
   <data name="MacPrivacyNotice" xml:space="preserve"><value>Local only. No account, cloud sync, or telemetry. Closing the window quits after finishing active work. Native Hide keeps monitoring running.</value></data>
   <data name="PortableFolderNames" xml:space="preserve"><value>Category names must be portable folder names.</value></data>
+  <data name="LoginStartupExplanation" xml:space="preserve"><value>Applied immediately for your account. Monitoring starts paused. Your desktop settings may also disable login startup.</value></data>
+  <data name="LinuxPrivacyNotice" xml:space="preserve"><value>Local only. No account, cloud sync, or telemetry. Closing the window quits after finishing active work.</value></data>
+  <data name="LinuxFolderScope" xml:space="preserve"><value>Linux: choose local ext4 folders on the same mount, outside cloud synchronization. Links and cross-volume moves are unavailable.</value></data>
+  <data name="LinuxSameVolumeOnly" xml:space="preserve"><value>Linux file operations require local ext4 folders on the same mount, with a verifiable filesystem UUID and creation time. Choose another destination.</value></data>
+  <data name="LinuxDesktopPath" xml:space="preserve"><value>The application path cannot be represented safely in a desktop entry.</value></data>
+  <data name="LinuxX64Only" xml:space="preserve"><value>Native Linux file operations require Linux x64.</value></data>
 </root>

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build native macOS packages and restricted Linux previews; never publish a release."""
+"""Build native macOS packages; route Linux builds to the 0.5.0 candidate packager."""
 import argparse
 import hashlib
 import json
@@ -24,6 +24,10 @@ def run(*args, **kwargs):
 
 
 def build(runtime, output, staging):
+    if runtime == "linux-x64":
+        import sys
+        run(sys.executable, str(ROOT / "scripts/Build-Linux.py"), "--output", str(output))
+        return
     expected = {"osx-arm64": ("Darwin", "arm64"), "linux-x64": ("Linux", "x86_64")}[runtime]
     if (platform.system(), platform.machine()) != expected:
         raise RuntimeError("Build and test on the declared native OS and architecture.")

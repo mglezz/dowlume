@@ -1,0 +1,38 @@
+Dowlume 0.5.0 — Candidato Linux x64, aceptación nativa pendiente
+
+Objetivo: Ubuntu 24.04 LTS, GNOME y ext4 local. Antes de publicar se requiere
+aceptación en X11 y Wayland; una sesión Wayland puede utilizar XWayland.
+Fedora y Arch pueden usar el archivo portable glibc x64, sin validación oficial
+todavía. Se rechazan Btrfs, XFS, sistemas de red/FUSE/overlay, directorios casefold,
+enlaces simbólicos, archivos con enlaces duros y movimientos entre montajes.
+Se requieren UUID en /dev/disk/by-uuid y fecha de creación mediante statx.
+Elige carpetas locales fuera de sincronización en la nube; los clientes sobre
+ext4 no pueden detectarse de forma fiable. Evita modificarlas con otras herramientas.
+
+Ubuntu: cierra Dowlume y ejecuta sudo apt install ./dowlume_*_amd64.deb
+Actualización: cierra la aplicación, respalda el perfil e instala el nuevo .deb.
+Desinstalación: sudo apt remove dowlume. Conserva los archivos personales y el perfil.
+Desactiva antes el inicio de sesión desde Dowlume. Es opcional y la instalación
+no lo activa. La supervisión empieza en pausa en cada inicio.
+
+Portable: extrae en una carpeta permanente de tu usuario y ejecuta ./Dowlume.App.
+Menú de aplicaciones opcional: python3 register-menu.py
+Quitar la entrada: python3 register-menu.py --remove
+Para actualizar, cierra la app, extrae en otra carpeta, verifica la nueva copia,
+registra su entrada y vuelve a activar el inicio de sesión desde esa copia.
+Conserva la versión anterior hasta verificarla. No sobrescribas binarios en ejecución.
+
+Incluye .NET; requiere bibliotecas nativas glibc, libgcc, libstdc++, OpenSSL 3,
+ICU, zlib, fontconfig, X11 (X11, ICE, SM, Xrandr, Xi, Xcursor, Xrender, Xext,
+Xfixes), GL/EGL, D-Bus y xdg-utils. El .deb declara las dependencias de Ubuntu.
+Los nombres de paquetes en Fedora/Arch difieren. No admite musl/Alpine.
+
+Perfil: $XDG_DATA_HOME/Dowlume (por defecto ~/.local/share/Dowlume).
+El perfil Dowlume.Preview anterior permanece intacto y no se importa automáticamente.
+Inicio: $XDG_CONFIG_HOME/autostart/com.mglezz.dowlume.desktop
+(por defecto ~/.config/autostart). Cerrar la ventana completa el trabajo activo y sale.
+El gestor de archivos abre la carpeta contenedora mediante xdg-open.
+
+Tras una interrupción, abre Actividad y reintenta la recuperación. Solo se confirma
+con UUID, inodo, fecha de creación y SHA-256 coincidentes. Las situaciones ambiguas
+requieren revisión. No se sobrescriben destinos ni se eliminan copias inciertas.

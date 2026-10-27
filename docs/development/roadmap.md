@@ -2,7 +2,7 @@
 
 [Documentation](../README.md) · [Español](../es/development/roadmap.md)
 
-Version 0.4.0 provides the Windows x64 and macOS Apple Silicon workflows within the [published platform scope](../user/platform-support.md). Linux is a restricted preview. The next milestone is native Linux support, followed by cross-platform stabilization.
+Version 0.4.0 provides the Windows x64 and macOS Apple Silicon workflows within the [published platform scope](../user/platform-support.md). Published Linux builds remain restricted previews. Native Linux support is implemented in the 0.5.0 candidate source; [native acceptance and package validation](linux-acceptance.md) remain pending, followed by cross-platform stabilization.
 
 These milestones describe intended scope, not release dates. Additional 0.x releases may be needed before 1.0. Support expands only after native acceptance; a successful build alone is insufficient.
 

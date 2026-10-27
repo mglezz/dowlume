@@ -1,0 +1,38 @@
+Dowlume 0.5.0 — Linux x64 candidate, native acceptance pending
+
+Target: Ubuntu 24.04 LTS, GNOME, local ext4. X11 and Wayland desktop
+acceptance is required before publication; a Wayland session may use XWayland.
+Other glibc x64 distributions (including Fedora and Arch) may use the portable
+archive, but are not yet validated. Btrfs, XFS, network/FUSE/overlay filesystems,
+casefold directories, symlinks, hard-linked files and cross-mount moves are refused.
+A filesystem UUID in /dev/disk/by-uuid and statx creation times are required.
+Use local folders outside cloud synchronization; cloud clients on ext4 cannot
+be identified reliably. Do not organize folders concurrently modified by other tools.
+
+Ubuntu installation: close Dowlume, then sudo apt install ./dowlume_*_amd64.deb
+Upgrade: close Dowlume, back up your profile, then install the newer .deb in the
+same way. Removal: sudo apt remove dowlume. Personal files and profiles remain.
+Disable login startup in Dowlume before uninstalling. It is opt-in, never enabled
+by installation, and monitoring starts paused after every launch.
+
+Portable: extract to a permanent, user-owned directory and run ./Dowlume.App.
+Optional application-menu registration: python3 register-menu.py
+Remove the registration: python3 register-menu.py --remove
+For upgrades, close the app and extract the new version into a separate directory;
+verify it, register its menu entry, and re-enable login startup from the new copy.
+Keep the previous copy until acceptance; never extract over running binaries.
+
+The .NET runtime is included. Native libraries are not: glibc, libgcc, libstdc++,
+OpenSSL 3, ICU, zlib, fontconfig, X11 (X11, ICE, SM, Xrandr, Xi, Xcursor, Xrender,
+Xext, Xfixes), GL/EGL, D-Bus and xdg-utils must be available. Fedora/Arch package
+names differ; the .deb declares the Ubuntu dependencies. musl/Alpine is unsupported.
+
+Data: $XDG_DATA_HOME/Dowlume (default ~/.local/share/Dowlume).
+The old Dowlume.Preview profile remains untouched and is not automatically imported.
+Login startup: $XDG_CONFIG_HOME/autostart/com.mglezz.dowlume.desktop
+(default ~/.config/autostart). Closing the window completes active work and exits.
+File-manager integration opens the containing folder with xdg-open.
+
+On interruption, reopen Activity and retry recovery. Only matching UUID, inode,
+creation time and SHA-256 allow completion; ambiguous files remain for inspection.
+No operation overwrites an existing destination or deletes an uncertain copy.

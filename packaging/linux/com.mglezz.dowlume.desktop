@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Dowlume
+Comment=Organize downloads locally with review and recovery
+Comment[es]=Organiza descargas localmente con revisión y recuperación
+Exec=/opt/dowlume/Dowlume.App
+Icon=com.mglezz.dowlume
+Terminal=false
+Categories=Utility;FileTools;
+StartupNotify=true

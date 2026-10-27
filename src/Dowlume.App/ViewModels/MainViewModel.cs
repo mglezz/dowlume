@@ -117,8 +117,9 @@ public partial class MainViewModel : ObservableObject
     public bool SupportsFileOperations => _organizer.CanMutateFiles;
     public bool IsPreviewPlatform => !SupportsFileOperations;
     public static bool IsMacOS => OperatingSystem.IsMacOS();
+    public static bool IsLinux => OperatingSystem.IsLinux();
     public string PlatformNotice => Text.Translate(DownloadOrganizer.ReadOnlyMessage);
-    public string PrivacyNotice => Text[IsPreviewPlatform ? "PreviewPrivacyNotice" : IsMacOS ? "MacPrivacyNotice" : "LocalonlyNoaccountcloudsyncortelemetryClosing"];
+    public string PrivacyNotice => Text[IsPreviewPlatform ? "PreviewPrivacyNotice" : IsMacOS ? "MacPrivacyNotice" : IsLinux ? "LinuxPrivacyNotice" : "LocalonlyNoaccountcloudsyncortelemetryClosing"];
     public bool CanReviewSelectedFile => SupportsFileOperations && IsIdle && SelectedReview is not null;
     public bool CanUndoSelectedOperation => SupportsFileOperations && IsIdle && SelectedOperation?.CanUndo == true;
     public bool CanConfigure => !IsBusy && !IsMonitoring;

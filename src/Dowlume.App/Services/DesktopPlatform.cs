@@ -40,12 +40,13 @@ public sealed class DesktopPlatform
         {
             DesktopSystem.Windows => new WindowsStartupRegistration(),
             DesktopSystem.MacOS => new MacStartupRegistration(),
+            DesktopSystem.Linux => new LinuxStartupRegistration(),
             _ => new UnavailableStartupRegistration()
         };
         FileManager = new NativeFileManager(system);
         SuggestedDownloads = DownloadsFolder.Suggest();
-        // macOS imports a closed preview profile on first launch; Linux remains isolated.
-        string name = system == DesktopSystem.Linux ? "Dowlume.Preview" : "Dowlume";
+        // Linux starts a stable profile; the old read-only preview remains untouched.
+        const string name = "Dowlume";
         DataDirectory = system == DesktopSystem.MacOS
             ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Library", "Application Support", name)
             : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), name);

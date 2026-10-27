@@ -363,7 +363,7 @@ public sealed class DownloadOrganizer(
     private bool MatchesRecoveryFile(OperationRecord operation, string path)
     {
         if (operation.SourceIdentity is null)
-            return !(OperatingSystem.IsMacOS() && mover is SafeFileMover) && mover.Hash(path) == operation.After.ContentHash;
+            return !((OperatingSystem.IsMacOS() || OperatingSystem.IsLinux()) && mover is SafeFileMover) && mover.Hash(path) == operation.After.ContentHash;
         return mover is IPreparedFileMover native && native.MatchesRecoveryFile(path, operation.SourceIdentity, operation.After.ContentHash);
     }
 

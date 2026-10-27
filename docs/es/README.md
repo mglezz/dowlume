@@ -37,7 +37,7 @@ Los paquetes de **Dowlume 0.4.0** incluyen el runtime; no necesitas instalar .NE
 
 Empieza con copias de unos pocos archivos en una carpeta local y consulta la vista previa. La interfaz empieza en inglés; puedes seleccionar español en **Settings → Language**.
 
-macOS utiliza firma ad hoc sin notarización; los paquetes Windows no tienen firma de editor. Consulta la [instalación](user/guide.md#instalar-y-abrir) y comprueba las [sumas SHA-256](releases/0.4.0.md#sumas-de-comprobación). Los movimientos en macOS requieren APFS local en el mismo volumen. Linux sigue como vista previa restringida. La [matriz de plataformas](user/platform-support.md) detalla el alcance.
+macOS utiliza firma ad hoc sin notarización; los paquetes Windows no tienen firma de editor. Consulta la [instalación](user/guide.md#instalar-y-abrir) y comprueba las [sumas SHA-256](releases/0.4.0.md#sumas-de-comprobación). Los movimientos en macOS requieren APFS local en el mismo volumen. Los binarios Linux publicados siguen como vista previa restringida. El código de 0.5.0 incorpora el flujo nativo Linux y paquetes Ubuntu/portable; la [aceptación Linux](../development/linux-acceptance.md) queda pendiente antes de publicar. La [matriz de plataformas](user/platform-support.md) detalla el alcance.
 
 ## Documentación en español
 

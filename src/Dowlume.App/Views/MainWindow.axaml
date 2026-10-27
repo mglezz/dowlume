@@ -294,7 +294,7 @@
             </StackPanel>
             <StackPanel Spacing="6" IsVisible="{Binding SupportsLoginStartup}">
               <CheckBox Content="{ReflectionBinding $parent[Window].DataContext.Text[StartDowlumeAtLogin]}" IsChecked="{Binding StartAtLogin, Mode=OneWay}" Command="{Binding ToggleLoginStartupCommand}" />
-              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[AppliedimmediatelyforyourWindowsaccountMonitoringstartspaused]}" TextWrapping="Wrap" Classes="muted" />
+              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[LoginStartupExplanation]}" TextWrapping="Wrap" Classes="muted" />
             </StackPanel>
             <TextBlock IsVisible="{Binding SupportsFileOperations}" Text="{ReflectionBinding $parent[Window].DataContext.Text[PausemonitoringtochangethesesettingsSavedrulesapply]}" TextWrapping="Wrap" Classes="muted" />
             <StackPanel Spacing="8">
@@ -341,6 +341,7 @@
             </StackPanel>
             <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Savesettings]}" Command="{Binding SaveSettingsCommand}" Classes="primary" />
             <TextBlock IsVisible="{Binding IsMacOS}" Text="{ReflectionBinding $parent[Window].DataContext.Text[MacFolderScope]}" TextWrapping="Wrap" Classes="muted" />
+            <TextBlock IsVisible="{Binding IsLinux}" Text="{ReflectionBinding $parent[Window].DataContext.Text[LinuxFolderScope]}" TextWrapping="Wrap" Classes="muted" />
             <TextBlock Text="{Binding PrivacyNotice}" TextWrapping="Wrap" Classes="muted" />
           </StackPanel>
         </ScrollViewer>
