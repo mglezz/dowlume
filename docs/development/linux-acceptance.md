@@ -1,8 +1,9 @@
 # Linux 0.5.0 acceptance
 
-Status: **pending native execution**. No Linux VM is available in the current development
-session. Compiling on macOS and shared tests are not Linux acceptance. Do not publish
-0.5.0 as stable until the matrix below has evidence for the exact final artifact hash.
+Status: **automated native and extracted-package checks passed; manual acceptance pending**.
+The [0.5.0-rc.1 record](../releases/acceptance/0.5.0.md) identifies the exact source,
+packages and CI evidence. No local Linux VM was used. Do not publish 0.5.0 as stable
+until the matrix below has evidence for the exact final artifact hash.
 
 Local development checks on macOS (2026-10-27): Release compilation passed; the
 regression suite passed 114 tests with 25 platform/environment skips; four Python

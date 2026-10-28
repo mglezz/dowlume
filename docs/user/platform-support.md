@@ -2,14 +2,14 @@
 
 [English](#) · [Español](../es/user/platform-support.md)
 
-[Version 0.4.0](../releases/acceptance/0.4.0.md) is the stable macOS Apple Silicon and Windows release within the scope below. Manual confirmation covered rc.1 on both platforms; native regression and final-package automation covered the rc.2 shutdown correction. Older 0.3.0 macOS/Linux binaries remain restricted previews, and published Linux 0.4.0 remains restricted. The 0.5.0 source enables Linux operations within the candidate scope below; it has not passed native acceptance. See [0.4.0 notes](../releases/0.4.0.md).
+[Version 0.4.0](../releases/acceptance/0.4.0.md) is the stable macOS Apple Silicon and Windows release within the scope below. Manual confirmation covered rc.1 on both platforms; native regression and final-package automation covered the rc.2 shutdown correction. Older 0.3.0 macOS/Linux binaries remain restricted previews, and published Linux 0.4.0 remains restricted. The 0.5.0 source enables Linux operations within the candidate scope below; its native CI and package automation passed, while final manual acceptance remains pending. See [0.4.0 notes](../releases/0.4.0.md).
 
 | Target | Current implementation | Distribution and acceptance |
 | --- | --- | --- |
 | Windows x64 | Organization, monitoring, review, eligible Undo, recovery, Explorer, tray and login startup | Installer and portable ZIP; automated upgrade checks from hash-pinned 0.3.0 passed, with manual functional confirmation on rc.1 and automated regression/package acceptance of the rc.2 shutdown correction. |
 | macOS 15+ Apple Silicon | Complete supported workflow on local APFS within one volume; native dialogs/Finder, application/Dock menus, reopen/quit, optional login startup, both languages and preview-profile migration | Self-contained `.app` ZIP, ad-hoc signed. Native CI targets macOS 15; local development also runs on 26.6.2. Manual functional confirmation and its evidence limits are recorded separately from package automation. |
 | macOS Intel | Excluded | No x64 package or support claim. |
-| Ubuntu 24.04 x64 (0.5.0 candidate) | Native same-mount local ext4 workflow, identity-based recovery, XDG Downloads and optional autostart, file-manager reveal; no tray | Self-contained `.deb` and `.tar.gz` packaging prepared. Native execution, installation/update, GNOME X11 and Wayland acceptance are pending. See [Linux acceptance](../development/linux-acceptance.md). |
+| Ubuntu 24.04 x64 (0.5.0 candidate) | Native same-mount local ext4 workflow, identity-based recovery, XDG Downloads and optional autostart, file-manager reveal; no tray | Self-contained `.deb` and `.tar.gz` packaging prepared. Native execution and the extracted portable workflow passed in CI; installation/update and real GNOME X11/Wayland acceptance are pending. See [Linux acceptance](../development/linux-acceptance.md). |
 | Fedora / Arch x64 | Same portable glibc build and ext4 restrictions; no distribution allowlist | Unverified; no RPM/AUR package yet. Btrfs/XFS and other filesystems are rejected. Separate evidence is required before widening official support. |
 
 Native recycling remains disabled on every platform. Historical evidence is retained; retired capacity probes must not run. Profiles cannot be imported across operating systems.

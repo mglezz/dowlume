@@ -4,7 +4,7 @@
 
 ## Requisitos
 
-Desarrollo para Windows x64 y macOS 15+ Apple Silicon; para macOS necesito las herramientas de línea de comandos Xcode. Linux sigue como vista previa restringida. Utilizo un SDK .NET **10.0.4xx**: [`global.json`](../../../global.json) fija `10.0.400` con `rollForward: latestPatch`; CI utiliza `10.0.401`. Para generar el instalador también se necesita Inno Setup 6. Las comprobaciones del repositorio requieren Python 3.10+; CI utiliza Python 3.13 para los scripts de empaquetado.
+Desarrollo para Windows x64 y macOS 15+ Apple Silicon; para macOS necesito las herramientas de línea de comandos Xcode. Linux 0.5.0 es una candidata nativa para Ubuntu 24.04 LTS x64 y ext4 local. Utilizo un SDK .NET **10.0.4xx**: [`global.json`](../../../global.json) fija `10.0.400` con `rollForward: latestPatch`; CI utiliza `10.0.401`. Para generar el instalador también se necesita Inno Setup 6. Las comprobaciones del repositorio requieren Python 3.10+; CI utiliza Python 3.13 para los scripts de empaquetado.
 
 Mantengo identificadores, comentarios, ramas y mensajes Conventional Commits en inglés. La interfaz y la documentación están disponibles en inglés y español. Los paquetes publicados 0.4.0 incluyen el selector de idioma introducido en 0.2.0.
 
@@ -34,7 +34,7 @@ En macOS, la carpeta temporal del sistema puede atravesar enlaces simbólicos qu
 
 ## Desarrollo nativo
 
-Habilito el flujo macOS 0.4.0 en APFS local del mismo volumen. Añado menús nativos, Finder, migración e inicio de sesión para la app empaquetada. Ubuntu 24.04 x64 sigue restringido. Excluyo Intel. Detallo [paquetes y dependencias](../user/platform-support.md).
+Habilito el flujo macOS 0.4.0 en APFS local del mismo volumen. Añado menús nativos, Finder, migración e inicio de sesión para la app empaquetada. Ubuntu 24.04 x64 incorpora el flujo nativo ext4 candidato; queda pendiente la aceptación manual de escritorio. Excluyo Intel. Detallo [paquetes y dependencias](../user/platform-support.md).
 
 ```sh
 mkdir -p artifacts/test-tmp
@@ -50,3 +50,5 @@ Tras compilar Release, ejecuto APFS desechable con `python3 scripts/Test-MacFile
 Explico el flujo completo en la [guía de uso](../user/guide.md), los conceptos en el [modelo de dominio](../requirements/domain-model.md) y los límites de las operaciones en [Arquitectura](../architecture/overview.md).
 
 Trabajo con una sola rama permanente, `main`, ramas temporales, Conventional Commits y revisión con CI antes de integrar. Documento el proceso en [Contribuciones](contributing.md) y [Ramas](branches.md). Generar un paquete local no equivale a publicarlo ni sustituye la [aceptación](releasing.md).
+
+En Linux, compila Release y ejecuta `python3 scripts/Test-Linux.py --output artifacts/linux-native` como usuario normal con sudo. Se crea una imagen ext4 desechable para las pruebas. Consulta el [plan Linux](../../development/linux-acceptance.md) para dependencias y aceptación del paquete.

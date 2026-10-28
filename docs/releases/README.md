@@ -2,7 +2,7 @@
 
 [Documentation](../README.md)
 
-The [0.5.0 Linux draft](0.5.0.md) is unreleased; [native acceptance](../development/linux-acceptance.md) is pending.
+The [0.5.0-rc.1 Linux prerelease](0.5.0.md) is available for testing. Its [automated acceptance record](acceptance/0.5.0.md) retains pending manual gates; 0.4.0 remains latest stable.
 
 The records below describe shipped behavior. Acceptance records retain the source revisions, package hashes, test scope, and manual confirmation for each release.
 

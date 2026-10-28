@@ -98,7 +98,7 @@ Si editas un archivo registrado, rechazo las operaciones basadas en su huella an
 
 ## Límites
 
-Windows x64 es el destino estable publicado; detallo el flujo macOS 0.4.0 más abajo. Rechazo recursos de red, raíces de unidades, carpetas del sistema, enlaces simbólicos, junctions y marcadores de nube con reparse points. No ejecuto la aplicación como servicio.
+Windows x64 y macOS Apple Silicon son los destinos estables publicados. La [candidata Linux 0.5.0](#linux-050-preliminar) activa el flujo nativo en ext4 local, con aceptación manual pendiente. Rechazo recursos de red, raíces de unidades, carpetas del sistema, enlaces simbólicos, junctions y marcadores de nube con reparse points. No ejecuto la aplicación como servicio.
 
 En Windows compruebo antigüedad de escritura, dos observaciones estables y apertura exclusiva antes de considerar una descarga lista. Es una comprobación conservadora, sin garantía de que otro programa no vuelva a escribir después. Excluyo descargas parciales conocidas. Evita descargar directamente en las carpetas de categoría.
 
@@ -119,3 +119,39 @@ Permite acceso solo a las carpetas seleccionadas para organizar. Si se deniega, 
 Guardo datos en `~/Library/Application Support/Dowlume`. En la primera apertura predeterminada copio el perfil cerrado `Dowlume.Preview` si no existe el nuevo, conservo el original y retengo idioma/ajustes/historial. Cierra antes la vista previa. Un perfil nuevo existente tiene prioridad; un destino incompleto o error de migración exige inspección, sin fusión automática. Respalda el perfil completo cerrado y los archivos antes de actualizar. `--data-directory` no migra el perfil personal ni modifica el inicio de sesión.
 
 Si detecto una carrera de archivos/carpetas, conservo los objetos y puedo mostrar NeedsAttention. Actividad incluye origen, destino previsto y, cuando está disponible, ubicación observada del objeto abierto original. Conserva esos archivos antes de reintentar recuperación. Los bytes iguales no bastan para completar una operación macOS: debe coincidir también la identidad registrada de volumen/archivo. No puedo excluir cualquier escritor POSIX; mantén archivos editados activamente o sincronizados fuera de la carpeta gestionada.
+
+## Linux 0.5.0 preliminar
+
+La [prerelease 0.5.0-rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.5.0-rc.1)
+es para pruebas, inicialmente en Ubuntu 24.04 LTS x64 / GNOME con ext4 local.
+Comprueba las [sumas de los paquetes](../releases/0.5.0.md#sumas-de-comprobación)
+y empieza con archivos desechables.
+
+Cierra Dowlume antes de instalar o actualizar. En Ubuntu ejecuta
+`sudo apt install ./dowlume_0.5.0_amd64.deb`; instala la aplicación y declara sus
+dependencias nativas. Abre Dowlume desde el menú de aplicaciones. Las actualizaciones
+conservan el perfil y los archivos gestionados; respalda antes el perfil. Para quitar
+el paquete, desactiva el inicio de sesión en Ajustes, cierra la app y ejecuta
+`sudo apt remove dowlume`. El perfil y los archivos permanecen. La aceptación de
+instalación limpia, actualización y desinstalación sigue pendiente.
+
+Para Portable, extrae todo el `.tar.gz` en una carpeta permanente de tu usuario y
+arranca `./Dowlume.App`. `python3 register-menu.py` registra opcionalmente el menú;
+`python3 register-menu.py --remove` elimina esa entrada. Para actualizar, cierra la app,
+extrae la nueva versión en otra carpeta, compruébala y registra su entrada.
+Vuelve a activar el inicio de sesión desde la copia nueva si lo utilizas. No sobrescribas
+binarios en ejecución. `START-HERE.es.txt` incluye las dependencias nativas; .NET va incluido.
+
+El perfil usa `$XDG_DATA_HOME/Dowlume`, normalmente `~/.local/share/Dowlume`.
+El perfil anterior `Dowlume.Preview` se conserva sin migración automática. El inicio
+opcional se activa en Ajustes y utiliza XDG Autostart en `$XDG_CONFIG_HOME/autostart`
+(normalmente `~/.config/autostart`). La supervisión empieza en pausa. Cerrar la ventana
+completa el trabajo activo y sale; no hay bandeja. Mostrar abre la carpeta contenedora.
+
+Los movimientos requieren ext4 local del mismo montaje, con UUID y fecha de creación
+verificables. Se rechazan enlaces, Btrfs/XFS, red/FUSE/overlay y movimientos entre montajes.
+Elige carpetas fuera de sincronización y escrituras externas simultáneas. El mismo
+portable puede funcionar en Fedora/Arch con glibc, bibliotecas nativas y ext4 compatibles;
+siguen sin validación oficial. Consulta el [registro de aceptación](../releases/acceptance/0.5.0.md)
+para separar automatización de pruebas pendientes GNOME X11/Wayland, inicio de sesión,
+instalación e interrupción/reinicio.
