@@ -28,7 +28,8 @@ En cada sistema nativo, con Python 3.13 y las dependencias indicadas en [platafo
 ```sh
 python3 scripts/Build-PlatformPreview.py --runtime osx-arm64 --output artifacts/macos-candidate
 # En Ubuntu x64:
-python3 scripts/Build-PlatformPreview.py --runtime linux-x64 --output artifacts/linux-candidate
+python3 scripts/Build-Linux.py --output artifacts/linux-candidate
+python3 scripts/Test-Linux.py --output artifacts/linux-native --archive artifacts/linux-candidate/Dowlume-0.5.0-linux-x64.tar.gz
 ```
 
 macOS necesita las herramientas Xcode. El script comprueba la aplicación extraída con un perfil desechable. Incluye guías de usuario seleccionadas y traducciones separadas; excluye archivos históricos y herramientas de desarrollo. No publica la versión.
@@ -41,4 +42,4 @@ Verifica idiomas, vista previa, organización, revisión, Deshacer, recuperació
 
 ## Tras publicar
 
-Etiqueta la revisión aceptada y adjunta únicamente el instalador Windows y los ZIP de aplicación Windows/macOS, nombrados `-portable.zip`. Los informes, kits de aceptación y metadatos permanecen en los artefactos de CI o en el registro del candidato. Publica los hashes en las notas enlazadas y verifica las descargas públicas. Las vistas previas Linux siguen en las versiones preliminares. Renombrar un ZIP no debe modificar sus bytes ni su hash; actualiza los enlaces actuales y conserva los nombres originales en los registros históricos. GitHub añade sus propios enlaces al código fuente. Actualiza los enlaces del README, el índice de versiones, la guía y la hoja de ruta. No conviertas resultados fallidos o pendientes en aprobaciones.
+Etiqueta la revisión aceptada y adjunta únicamente el instalador Windows y los ZIP de aplicación Windows/macOS, nombrados `-portable.zip`. Los informes, kits de aceptación y metadatos permanecen en los artefactos de CI o en el registro del candidato. Publica los hashes en las notas enlazadas y verifica las descargas públicas. Las candidatas Linux 0.5.0 siguen en prerelease hasta completar la [matriz Linux](../../development/linux-acceptance.md); pueden incluir `.deb`, `.tar.gz`, sumas y evidencia técnica. No se marcan como última versión estable. Renombrar un ZIP no debe modificar sus bytes ni su hash; actualiza los enlaces actuales y conserva los nombres originales en los registros históricos. GitHub añade sus propios enlaces al código fuente. Actualiza los enlaces del README, el índice de versiones, la guía y la hoja de ruta. No conviertas resultados fallidos o pendientes en aprobaciones.

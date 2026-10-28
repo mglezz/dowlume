@@ -106,7 +106,7 @@ If a tracked file was edited, automatic moves refuse to act on the old content h
 
 ## Current limits
 
-Windows x64 and macOS Apple Silicon are supported within the [platform matrix](platform-support.md). Linux remains a restricted preview with file mutations disabled. Network shares, drive roots, symbolic links, junctions, and cloud placeholder/reparse paths are rejected. Use a fully local folder. The application does not run as a service. Windows sign-in startup is optional and can be enabled in Settings.
+Windows x64 and macOS Apple Silicon are supported within the [platform matrix](platform-support.md). The [0.5.0 Linux candidate](#linux-050-prerelease) enables the native workflow on local ext4; manual acceptance remains pending. Published 0.4.0 Linux binaries remain read-only. Network shares, drive roots, symbolic links, junctions, and cloud placeholder/reparse paths are rejected. Use a fully local folder. The application does not run as a service. Windows sign-in startup is optional and can be enabled in Settings.
 
 On Windows, completion detection checks file age, two stable size/timestamp observations, and an exclusive-open probe. It is conservative but cannot prove that a program will never reopen a file later. Browser partial-download extensions are always excluded. Avoid downloading directly into managed category folders.
 
@@ -127,3 +127,38 @@ Allow access only to folders selected for organization. If access is denied, Dow
 Dowlume stores data in `~/Library/Application Support/Dowlume`. On first default launch it copies the closed `Dowlume.Preview` profile if the new profile is absent, preserves the original, and retains its language, settings, and history. Close the preview first. An existing new profile takes precedence; an incomplete destination or migration error requires inspection rather than an automatic merge. Back up the complete closed profile and managed files before updating. Custom `--data-directory` launches neither migrate the personal profile nor alter login startup.
 
 When a file or directory race is detected, Dowlume retains the objects and may report NeedsAttention. Activity includes the source, intended destination and, when available, the observed location of the original opened object. Preserve those files before retrying recovery. Matching bytes alone cannot complete a macOS interrupted operation: the recorded volume/file identity must also match. Cooperative locks cannot exclude arbitrary POSIX writers; keep actively edited or synchronized files outside the managed folder.
+
+## Linux 0.5.0 prerelease
+
+The [0.5.0-rc.1 prerelease](https://github.com/mglezz/dowlume/releases/tag/v0.5.0-rc.1)
+is for testing, initially on Ubuntu 24.04 LTS x64 / GNOME with local ext4. Compare the
+[package checksums](../releases/0.5.0.md#download-checksums) and begin with disposable samples.
+
+Close Dowlume before installing or updating. On Ubuntu, use
+`sudo apt install ./dowlume_0.5.0_amd64.deb`; this installs the application and declares
+its native dependencies. Launch Dowlume from the applications menu. Updates retain
+your profile and managed files; back up the profile first. To remove the package,
+disable login startup in Settings, close Dowlume, and use `sudo apt remove dowlume`.
+The profile and managed files remain. Clean install/update/remove acceptance is pending.
+
+For Portable, extract the complete `.tar.gz` into a permanent user-owned folder and
+run `./Dowlume.App`. Optionally run `python3 register-menu.py` to add a menu entry;
+`python3 register-menu.py --remove` removes that entry. To update, close the app,
+extract the new version into a separate folder, verify it and register the new entry.
+Re-enable login startup from the new copy if used. Do not overwrite running binaries.
+Native dependencies are listed in the included `START-HERE.txt`; .NET is bundled.
+
+Linux data uses `$XDG_DATA_HOME/Dowlume`, normally `~/.local/share/Dowlume`. The old
+restricted `Dowlume.Preview` profile is preserved without automatic migration.
+Startup is opt-in in Settings, through an XDG Autostart entry in
+`$XDG_CONFIG_HOME/autostart` (normally `~/.config/autostart`). Monitoring starts paused.
+Closing the window completes active work and exits; there is no tray. Reveal opens
+the containing folder through the desktop's file manager.
+
+File moves require local ext4 on the same mount with a verifiable filesystem UUID and
+creation time. Links, Btrfs/XFS, network/FUSE/overlay storage and cross-mount moves are
+refused. Use folders outside synchronization services and concurrent external writers.
+The same portable build may run on Fedora and Arch with compatible glibc/native
+libraries and ext4; those distributions remain unverified. See the
+[acceptance record](../releases/acceptance/0.5.0.md) for automated evidence and the
+remaining GNOME X11/Wayland, login, installation and crash/reboot checks.

@@ -2,7 +2,7 @@
 
 [English](../../development/roadmap.md) · [Índice en español](../README.md)
 
-La versión 0.4.0 ofrece los flujos Windows x64 y macOS Apple Silicon dentro del [alcance publicado](../user/platform-support.md). Linux sigue como vista previa restringida. El siguiente hito es el soporte nativo Linux y, después, la estabilización multiplataforma.
+La versión 0.4.0 ofrece los flujos Windows x64 y macOS Apple Silicon dentro del [alcance publicado](../user/platform-support.md). Los binarios Linux 0.4.0 siguen restringidos. La candidata 0.5.0 incorpora el flujo nativo ext4; la [aceptación final Linux](../../development/linux-acceptance.md) sigue pendiente antes de pasar a estabilización multiplataforma.
 
 Los hitos definen alcance previsto, no fechas. Pueden hacer falta más versiones 0.x antes de 1.0. Compilar en una plataforma no basta para declararla compatible: requiere aceptación nativa.
 

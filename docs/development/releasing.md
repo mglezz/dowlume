@@ -27,14 +27,15 @@ Use `-InnoCompiler "C:\path\ISCC.exe"` for a custom compiler location and `-Outp
 
 Outputs include the self-contained portable ZIP, installer, acceptance kit, English and Spanish release notes, build metadata, and SHA-256 checksums. Standalone Markdown links point to the source revision. Package filenames retain the published `RELEASE_NOTES_<version>.md` convention; repository notes use `docs/releases/<version>.md`.
 
-### macOS Apple Silicon and Linux preview
+### macOS Apple Silicon and Linux candidates
 
 Run on the named native OS and architecture with Python 3.13 and the required SDK:
 
 ```sh
 python3 scripts/Build-PlatformPreview.py --runtime osx-arm64 --output artifacts/macos-candidate
 # On Ubuntu x64:
-python3 scripts/Build-PlatformPreview.py --runtime linux-x64 --output artifacts/linux-candidate
+python3 scripts/Build-Linux.py --output artifacts/linux-candidate
+python3 scripts/Test-Linux.py --output artifacts/linux-native --archive artifacts/linux-candidate/Dowlume-0.5.0-linux-x64.tar.gz
 ```
 
 The macOS build also needs Xcode command-line tools. See [platform dependencies](../user/platform-support.md#evidence-and-packages) for Linux. The script signs macOS bundles ad hoc, archives them, and tests the extracted application with a new disposable profile. It does not publish a release.
@@ -58,7 +59,7 @@ Tag the accepted source revision. For a stable release, attach only the supporte
 - `Dowlume-<version>-win-x64-portable.zip` — Windows portable application.
 - `Dowlume-<version>-osx-arm64-portable.zip` — macOS portable application bundle.
 
-Use **Installer** and **Portable** as the download labels. Keep build information, JSON reports, validation archives, acceptance kits, and standalone notes/checksum manifests in CI artifacts or the candidate evidence record. Publish application SHA-256 values in the linked release notes. Restricted Linux previews belong in prereleases until native Linux acceptance is complete. Never rename a validation or acceptance archive to imply that it is a portable application.
+Use **Installer** and **Portable** as the download labels. Keep build information, JSON reports, validation archives, acceptance kits, and standalone notes/checksum manifests in CI artifacts or the candidate evidence record. Publish application SHA-256 values in the linked release notes. Linux 0.5.0 candidates belong in prereleases until the [Linux acceptance matrix](linux-acceptance.md) is complete. Prereleases may attach the Ubuntu `.deb`, portable `.tar.gz`, checksums and technical evidence alongside the Windows/macOS candidates. Do not mark a prerelease as latest stable. Never rename a validation or acceptance archive to imply that it is a portable application.
 
 Renaming a published application archive must preserve its bytes and accepted hash. Update current download links and document the filename change; historical acceptance tables retain their original names. GitHub also supplies its own source-code archive links.
  Use an English release body that explains the changes, platform scope, and installation requirements, with a link to the Spanish notes. Download the public assets and verify that their hashes match the accepted artifacts.

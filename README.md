@@ -49,7 +49,7 @@ Download **Dowlume 0.4.0** for your computer. The runtime is included.
 
 Start with a few sample files in a local folder, open **Preview**, and see whether the setup feels right. The interface starts in English; Spanish is available in Settings.
 
-The macOS app uses an ad-hoc signature and is not notarized; Windows packages are unsigned. Read the [installation guide](docs/user/guide.md#install-and-start) and check the [download checksums](docs/releases/0.4.0.md#download-checksums). macOS file moves require local APFS folders on the same volume. Published Linux binaries remain restricted previews. The 0.5.0 source now includes the native Linux workflow and Ubuntu/portable packaging; [Linux acceptance](docs/development/linux-acceptance.md) is pending before release. See [supported platforms](docs/user/platform-support.md) for the full scope.
+The macOS app uses an ad-hoc signature and is not notarized; Windows packages are unsigned. Read the [installation guide](docs/user/guide.md#install-and-start) and check the [download checksums](docs/releases/0.4.0.md#download-checksums). macOS file moves require local APFS folders on the same volume. Try the [0.5.0-rc.1 prerelease](https://github.com/mglezz/dowlume/releases/tag/v0.5.0-rc.1) for the native Linux workflow, Ubuntu installer and portable packages. Automated native/package checks passed; [manual Linux acceptance](docs/development/linux-acceptance.md) remains pending before stable release. See [supported platforms](docs/user/platform-support.md) for the full scope.
 
 ## A closer look at Dowlume
 

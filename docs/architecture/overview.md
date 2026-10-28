@@ -10,7 +10,7 @@ The [domain model](../requirements/domain-model.md) explains the conceptual voca
 | --- | --- |
 | Dowlume.Core | Immutable records, category validation, classification, lifecycle rules, service contracts. No UI or SQLite dependency. |
 | Dowlume.Monitoring | FileSystemWatcher, bounded channel, deduplication, readiness observations, periodic discovery. Depends only on Core. |
-| Dowlume.Infrastructure | SQLite persistence, path checks, verified moves, operation orchestration, Windows/macOS integration, diagnostics. Native recycling is disabled. |
+| Dowlume.Infrastructure | SQLite persistence, path checks, verified moves, operation orchestration, Windows/macOS/Linux integration, diagnostics. Native recycling is disabled. |
 | Dowlume.App | Avalonia views, view models, dialogs, tray behavior, constructor-based composition and shutdown. |
 | Dowlume.Tests | Unit, disposable-filesystem integration, disabled-recycle safety, and headless desktop workflow tests. |
 
@@ -44,11 +44,11 @@ This trades a small delay for conservative detection; it cannot prove that anoth
 
 Another file may already occupy a destination, or a source may change after preview. On Windows, `SafeFileMover` verifies the expected SHA-256 under a read handle that denies new writers, uses no-overwrite moves, and verifies the result. The organizer selects numeric suffixes for name collisions and journals before acting. Cancellation is honored before journal creation; once journaled, the operation finishes or records its failure before shutdown completes.
 
-Windows cross-volume moves remain non-atomic; macOS refuses them. If an interruption leaves conflicting copies, recovery preserves them for inspection instead of choosing one to delete. [Safety tests](../../tests/Dowlume.Tests/SafetyTests.cs) and [organizer tests](../../tests/Dowlume.Tests/OrganizerTests.cs) cover collisions, changed content, cancellation, and interrupted operations; physical cross-volume acceptance remains a [release gate](../development/releasing.md).
+Windows cross-volume moves remain non-atomic; macOS and Linux refuse them. If an interruption leaves conflicting copies, recovery preserves them for inspection instead of choosing one to delete. [Safety tests](../../tests/Dowlume.Tests/SafetyTests.cs) and [organizer tests](../../tests/Dowlume.Tests/OrganizerTests.cs) cover collisions, changed content, cancellation, and interrupted operations; physical cross-volume acceptance remains a [release gate](../development/releasing.md).
 
 ### Reconciling SQLite with the filesystem
 
-A filesystem move and a SQLite commit cannot form one shared transaction. The organizer first persists a Pending operation with before/after snapshots and paths. After a verified move, `SqliteStateStore.CompleteOperation` commits the tracked record and Completed journal status together. Recovery compares recorded paths and content hashes with disk, also requiring native identity on macOS, before completing or failing an interrupted operation.
+A filesystem move and a SQLite commit cannot form one shared transaction. The organizer first persists a Pending operation with before/after snapshots and paths. After a verified move, `SqliteStateStore.CompleteOperation` commits the tracked record and Completed journal status together. Recovery compares recorded paths and content hashes with disk, also requiring native identity on macOS and Linux, before completing or failing an interrupted operation.
 
 For example, a crash after moving `report.pdf` but before the database commit leaves a Pending entry. If only the matching destination exists, recovery completes the database state; if both copies exist, it records NeedsAttention and blocks automatic actions on that file. [Recovery coverage](../../tests/Dowlume.Tests/OrganizerTests.cs) includes failures before and after the move and ambiguous copies. See [Operation journal and recovery](#operation-journal-and-recovery) for undo and recycle limits.
 
@@ -136,3 +136,7 @@ Primary API references used by the implementation:
 The macOS adapter prepares native moves before Pending, retaining the source and parent descriptors. It requires local same-volume APFS, rejects links and known cloud locations, uses exclusive atomic rename, flushes directory changes, and verifies identity and content afterward. Volume UUID, inode and birth timestamp travel in optional schema-1 journal fields. Recovery verifies identity and SHA-256 on the same opened descriptor, then verifies the path still names that object.
 
 macOS uses cooperative locks, which cannot exclude arbitrary POSIX writers. A race can move a replacement before verification detects it; the adapter retains files and reports NeedsAttention with an observed original-object path where available. Ambiguous paths are never deleted or rolled back. See the [native contract](file-operations.md) and [implementation/tests](macos.md).
+
+## Linux 0.5.0 adapter
+
+The Linux candidate uses no-overwrite same-mount ext4 moves with descriptor checks, persistent UUID/inode/birth identity and SHA-256 recovery. Optional XDG Autostart and no-tray graceful close accompany the shared organizer. See the [native implementation](linux.md) and [candidate acceptance](../releases/acceptance/0.5.0.md) for verified automation and remaining manual tests.

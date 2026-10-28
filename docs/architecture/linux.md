@@ -1,6 +1,6 @@
 # Linux file operations in 0.5.0
 
-Implementation candidate; native acceptance is pending. The intended first supported
+Implementation candidate; automated native/package checks passed and final manual acceptance is pending. The intended first supported
 configuration is Ubuntu 24.04 LTS x64, GNOME and ordinary local ext4. No distribution
 name is hardcoded in the runtime adapter. Fedora and Arch can use the portable build
 when they satisfy the same native requirements; this is not an acceptance claim.
