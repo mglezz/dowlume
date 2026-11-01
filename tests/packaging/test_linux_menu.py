@@ -1,5 +1,6 @@
 """Portable registration tests use disposable paths, never the user's XDG directories."""
 import importlib.util
+import os
 from pathlib import Path
 import tempfile
 import unittest
@@ -78,3 +79,18 @@ class LinuxMenuTests(unittest.TestCase):
                     menu.register(root, root)
             self.assertEqual(modified, entry.read_text(encoding='utf-8'))
             self.assertEqual([entry], list(entry.parent.iterdir()))
+
+    @unittest.skipUnless(os.name == 'posix', 'POSIX symbolic-link fixture')
+    def test_linked_executable_cannot_replace_an_existing_registration(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            (root / 'Dowlume.App').touch()
+            menu.register(root, root)
+            entry = root / 'applications/com.mglezz.dowlume.portable.desktop'
+            original = entry.read_bytes()
+            linked = root / 'linked'
+            linked.mkdir()
+            (linked / 'Dowlume.App').symlink_to(root / 'Dowlume.App')
+            with self.assertRaises(RuntimeError):
+                menu.register(linked, root)
+            self.assertEqual(original, entry.read_bytes())
