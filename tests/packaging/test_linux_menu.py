@@ -3,6 +3,7 @@ import importlib.util
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
 SPEC = importlib.util.spec_from_file_location('linux_menu', ROOT / 'packaging/linux/register-menu.py')
@@ -27,6 +28,10 @@ class LinuxMenuTests(unittest.TestCase):
             (second / 'Dowlume.App').touch()
             menu.register(second, data)
             self.assertIn(menu.quote_exec(second / 'Dowlume.App'), entry.read_text())
+            updated = entry.read_bytes()
+            with self.assertRaises(RuntimeError):
+                menu.register(package, data, remove=True)
+            self.assertEqual(updated, entry.read_bytes())
             menu.register(second, data, remove=True)
             self.assertFalse(entry.exists())
 
@@ -43,3 +48,33 @@ class LinuxMenuTests(unittest.TestCase):
                 self.assertEqual(original, entry.read_text())
             with self.assertRaises(ValueError):
                 menu.quote_exec(root / '%f' / 'Dowlume.App')
+
+    def test_modified_entries_are_preserved(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            (root / 'Dowlume.App').touch()
+            menu.register(root, root)
+            entry = root / 'applications/com.mglezz.dowlume.portable.desktop'
+            valid = entry.read_text(encoding='utf-8')
+            for modified in (valid + 'Exec=other\n', valid + 'Unknown=value\n',
+                             valid.replace('Name=Dowlume', 'Name=Other'),
+                             '[Other]\n' + valid, '# X-Dowlume-Portable=1\n'):
+                entry.write_text(modified, encoding='utf-8')
+                original = entry.read_bytes()
+                for remove in (False, True):
+                    with self.assertRaises(RuntimeError):
+                        menu.register(root, root, remove=remove)
+                    self.assertEqual(original, entry.read_bytes())
+
+    def test_concurrent_edit_is_preserved_and_temporary_file_is_removed(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            (root / 'Dowlume.App').touch()
+            menu.register(root, root)
+            entry = root / 'applications/com.mglezz.dowlume.portable.desktop'
+            modified = entry.read_text(encoding='utf-8').replace('Name=Dowlume', 'Name=Edited')
+            with patch.object(menu.os, 'fsync', side_effect=lambda _: entry.write_text(modified, encoding='utf-8')):
+                with self.assertRaises(RuntimeError):
+                    menu.register(root, root)
+            self.assertEqual(modified, entry.read_text(encoding='utf-8'))
+            self.assertEqual([entry], list(entry.parent.iterdir()))

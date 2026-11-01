@@ -39,10 +39,10 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory artifacts/upgrade-baseline | Out-Null
-          $installer = 'artifacts/upgrade-baseline/Dowlume-0.3.0-win-x64-setup.exe'
-          Invoke-WebRequest 'https://github.com/mglezz/dowlume/releases/download/v0.3.0/Dowlume-0.3.0-win-x64-setup.exe' -OutFile $installer
-          if ((Get-FileHash $installer -Algorithm SHA256).Hash -ne '1E72330B1ED1C662CDBAB9FA93511626F736488067D261F07683443A08826CD3') {
-            throw 'The published v0.3.0 upgrade baseline does not match its accepted hash.'
+          $installer = 'artifacts/upgrade-baseline/Dowlume-0.4.0-win-x64-setup.exe'
+          Invoke-WebRequest 'https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64-setup.exe' -OutFile $installer
+          if ((Get-FileHash $installer -Algorithm SHA256).Hash -ne '9B756F253114D5909E3E01C78D46938A8C87BD4BF81BF1C3011A3DAE9364BD97') {
+            throw 'The published v0.4.0 upgrade baseline does not match its accepted hash.'
           }
       - name: Build tested release packages
         shell: pwsh
@@ -55,7 +55,7 @@ jobs:
           ./scripts/Test-WindowsPackage.ps1 `
             -Installer "artifacts/release-candidate/Dowlume-$($env:DOWLUME_PACKAGE_VERSION)-win-x64-setup.exe" `
             -Archive "artifacts/release-candidate/Dowlume-$($env:DOWLUME_PACKAGE_VERSION)-win-x64-portable.zip" `
-            -PreviousInstaller artifacts/upgrade-baseline/Dowlume-0.3.0-win-x64-setup.exe `
+            -PreviousInstaller artifacts/upgrade-baseline/Dowlume-0.4.0-win-x64-setup.exe `
             -ReportPath artifacts/acceptance/package.json -RequireLocalization
       - uses: actions/upload-artifact@v4
         with:
