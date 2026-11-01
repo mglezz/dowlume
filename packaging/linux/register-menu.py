@@ -20,22 +20,49 @@ def reject_links(path):
             raise RuntimeError("Symbolic links are not supported for menu registration.")
 
 
+def read_owned(target):
+    reject_links(target)
+    if not target.exists():
+        return None
+    if not target.is_file() or target.stat().st_size > 65536:
+        raise RuntimeError("The existing menu entry is not managed by Dowlume.")
+    values = {}
+    group = False
+    for line in target.read_text(encoding='utf-8').splitlines():
+        if not line or line.startswith('#'):
+            continue
+        if line == '[Desktop Entry]' and not group:
+            group = True
+            continue
+        key, separator, value = line.partition('=')
+        if not group or not separator or not key or key in values:
+            raise RuntimeError("The existing menu entry is not managed by Dowlume.")
+        values[key] = value
+    expected = {'Type': 'Application', 'Name': 'Dowlume', 'Terminal': 'false',
+                'Categories': 'Utility;FileTools;', 'X-Dowlume-Portable': '1'}
+    if (set(values) != set(expected) | {'Exec', 'Icon'} or
+            any(values.get(key) != value for key, value in expected.items())):
+        raise RuntimeError("The existing menu entry is not managed by Dowlume.")
+    return values
+
+
 def register(package, data_home, remove=False):
     target = data_home / 'applications/com.mglezz.dowlume.portable.desktop'
-    reject_links(target)
-    if target.exists() and (target.stat().st_size > 65536 or
-                            'X-Dowlume-Portable=1\n' not in target.read_text()):
-        raise RuntimeError("The existing menu entry is not managed by Dowlume.")
+    original = read_owned(target)
+    executable = package / 'Dowlume.App'
+    command = quote_exec(executable)
     if remove:
+        if original is not None and original['Exec'] != command:
+            raise RuntimeError("The menu entry belongs to another portable copy of Dowlume.")
         target.unlink(missing_ok=True)
         return
-    executable = package / 'Dowlume.App'
+    reject_links(executable)
     if not executable.is_file():
         raise RuntimeError("Run this script from an extracted Dowlume package.")
     icon = str(package / 'dowlume.png')
     if any(ord(c) < 32 for c in icon):
         raise ValueError("Invalid icon path.")
-    content = ('[Desktop Entry]\nType=Application\nName=Dowlume\nExec=' + quote_exec(executable) +
+    content = ('[Desktop Entry]\nType=Application\nName=Dowlume\nExec=' + command +
                '\nIcon=' + icon.replace('\\', '\\\\') +
                '\nTerminal=false\nCategories=Utility;FileTools;\nX-Dowlume-Portable=1\n')
     target.parent.mkdir(parents=True, exist_ok=True)
@@ -47,7 +74,8 @@ def register(package, data_home, remove=False):
             stream.flush()
             os.fsync(stream.fileno())
         temporary.chmod(0o644)
-        reject_links(target)
+        if read_owned(target) != original:
+            raise RuntimeError("The menu entry changed during registration; retry after inspecting it.")
         os.replace(temporary, target)
     finally:
         if temporary is not None:
