@@ -2,7 +2,7 @@
 
 [Documentation](../README.md) · [Español](../es/development/roadmap.md)
 
-Version 0.4.0 provides the Windows x64 and macOS Apple Silicon workflows within the [published platform scope](../user/platform-support.md). Published Linux builds remain restricted previews. Native Linux support is implemented in the 0.5.0 candidate source; [final manual acceptance](linux-acceptance.md) remains pending after successful native CI and extracted-package checks, followed by cross-platform stabilization.
+Version 0.5.0 provides the Windows x64, macOS Apple Silicon and Ubuntu 24.04 LTS x64 GNOME/ext4 workflows within the [published platform scope](../user/platform-support.md). Cross-platform stabilization is next. The [0.5.0 record](../releases/acceptance/0.5.0.md) retains the manual confirmation and limits of automated evidence.
 
 These milestones describe intended scope, not release dates. Additional 0.x releases may be needed before 1.0. Support expands only after native acceptance; a successful build alone is insufficient.
 
@@ -10,7 +10,6 @@ These milestones describe intended scope, not release dates. Additional 0.x rele
 
 | Milestone | Intended outcome | Acceptance criteria |
 | --- | --- | --- |
-| 0.5.0 · Linux | A supported Linux workflow | One named Ubuntu LTS release, x64, and GNOME initially; explicit X11/Wayland coverage; Downloads discovery, permissions, file-manager integration, optional autostart, no-tray fallback, native file-safety checks, and an accepted package with documented dependencies. |
 | 0.6.x–0.9.x · Stabilization, if needed | Close gaps across supported platforms | Profile migration, usability and accessibility, performance regressions, recovery scope, Windows publisher signing, and macOS Developer ID signing and notarization. |
 | 1.0.0 | A dependable product within its support contract | No known unresolved data-loss, overwrite, unsafe-recovery, or critical security defects; accepted platform matrix, upgrades, backup/recovery guidance, accessibility, both languages, measured performance budgets, supported dependencies, distribution provenance, and exact-package acceptance on every supported target. |
 
@@ -33,6 +32,7 @@ Native recycling stays disabled. Before 1.0, either a separately designed and ac
 | 0.1.0 | Windows organization, review, journaling, recovery, desktop UI, and packaging; native recycling disabled | [Release notes](../releases/0.1.0.md) · [Acceptance](../releases/acceptance/0.1.0.md) |
 | 0.2.0 | English/Spanish interface selection and translated documentation | [Release notes](../releases/0.2.0.md) · [Acceptance](../releases/acceptance/0.2.0.md) |
 | 0.3.0 | Platform services, native CI, compatibility checks, and restricted macOS/Linux previews | [Release notes](../releases/0.3.0.md) · [Acceptance](../releases/acceptance/0.3.0.md) |
+| 0.5.0 | Linux ext4 workflow, XDG integration, Ubuntu installer and portable application, preserved menu ownership during upgrades | [Release notes](../releases/0.5.0.md) · [Acceptance](../releases/acceptance/0.5.0.md) |
 | 0.4.0 | Native same-volume APFS workflow, macOS desktop integration, login startup, preview-profile migration, and self-contained app packaging | [Release notes](../releases/0.4.0.md) · [Acceptance](../releases/acceptance/0.4.0.md) |
 
 The application also includes searchable, filtered, paginated operation history. Dated validation and earlier release gates remain in the [archive](../archive/README.md); they do not approve changed binaries.

@@ -4,7 +4,7 @@
 
 Apply this procedure to each new Windows candidate. The [0.4.0 acceptance record](../releases/acceptance/0.4.0.md) records the results for that release; earlier evidence does not approve changed binaries. Record the package SHA-256 values, source commit from `BUILD-INFO.json`, Windows build, tester, date, and observed results. An unchecked item is not a pass. Use disposable samples in a separate acceptance environment.
 
-The commands below use 0.4.0 as the candidate and the published 0.3.0 installer as the upgrade baseline. Update both deliberately for a future release.
+The commands below use 0.5.0 as the candidate and the published 0.4.0 installer as the upgrade baseline. Update both deliberately for a future release.
 
 ## Prepare a clean environment
 
@@ -21,12 +21,12 @@ Download the proposed installer, portable ZIP, `BUILD-INFO.json`, and `SHA256SUM
 The acceptance kit contains `Test-WindowsPackage.ps1`, which runs on Windows PowerShell without installing .NET. From the directory containing the downloaded artifacts:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\Test-WindowsPackage.ps1 -Installer .\Dowlume-0.4.0-win-x64-setup.exe -Archive .\Dowlume-0.4.0-win-x64-portable.zip -PreviousInstaller .\Dowlume-0.3.0-win-x64-setup.exe -ReportPath .\package-result.json -RequireNoSharedDotNet -RequireLocalization
+powershell -NoProfile -ExecutionPolicy Bypass -File .\Test-WindowsPackage.ps1 -Installer .\Dowlume-0.5.0-win-x64-setup.exe -Archive .\Dowlume-0.5.0-win-x64-portable.zip -PreviousInstaller .\Dowlume-0.4.0-win-x64-setup.exe -ReportPath .\package-result.json -RequireNoSharedDotNet -RequireLocalization
 ```
 
 The kit includes `Test-WindowsTray.ps1` and `Test-WindowsLocalization.ps1`; keep both beside the package script. With `-RequireLocalization`, I verify both guides and Spanish resources, switch English → Español → English in the installed app, and restart after each switch to check persistence. The script refuses an existing registered Dowlume installation or startup entry. It creates a unique temporary installation, application profile, and sample file; checks portable launch/exit, install/reinstall, duplicate-instance refusal, running-app upgrade/uninstall refusal, native tray registration/reopening, startup-entry retention/removal, and profile/file retention after uninstall. Tray reopening uses Windows UI Automation and a native tray-click message; it does not replace testing the overflow menu with a person. Reports and fixtures remain in the printed temporary directory for inspection. It records detected runtimes but does not independently prove that the OS image was clean.
 
-I use the published 0.3.0 installer as the upgrade baseline. To choose another baseline, use `-PreviousInstaller <path-to-previous-installer>`. Without that argument, the upgrade check is a reinstall of the same package. Preserve both installer hashes in the report. If a check fails, inspect its retained logs before rerunning; the script intentionally refuses to overwrite a registered installation left by a failed test.
+I use the published 0.4.0 installer as the upgrade baseline. To choose another baseline, use `-PreviousInstaller <path-to-previous-installer>`. Without that argument, the upgrade check is a reinstall of the same package. Preserve both installer hashes in the report. If a check fails, inspect its retained logs before rerunning; the script intentionally refuses to overwrite a registered installation left by a failed test.
 
 ## First use with a person
 

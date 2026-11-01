@@ -6,7 +6,7 @@
 
 Find what you need. Revisit what you forgot. Decide what stays.
 
-[Download Dowlume](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) · [User guide](docs/user/guide.md) · [Documentation](docs/README.md) · [Español](docs/es/README.md)
+[Download Dowlume](https://github.com/mglezz/dowlume/releases/tag/v0.5.0) · [User guide](docs/user/guide.md) · [Documentation](docs/README.md) · [Español](docs/es/README.md)
 
 [![Build and test](https://github.com/mglezz/dowlume/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/mglezz/dowlume/actions/workflows/build.yml?query=branch%3Amain)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -40,21 +40,22 @@ You can check the proposed destinations before choosing **Organize and monitor**
 
 ## Download
 
-Download **Dowlume 0.4.0** for your computer. The runtime is included.
+Download **Dowlume 0.5.0** for your computer. The runtime is included.
 
 | Platform | Download |
 | --- | --- |
-| macOS 15+ · Apple Silicon | [Portable](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-osx-arm64-portable.zip) |
-| Windows · x64 | [Installer (recommended)](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64-setup.exe) · [Portable](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64-portable.zip) |
+| Ubuntu 24.04 LTS · x64 · GNOME | [Installer](https://github.com/mglezz/dowlume/releases/download/v0.5.0/dowlume_0.5.0_amd64.deb) · [Portable](https://github.com/mglezz/dowlume/releases/download/v0.5.0/Dowlume-0.5.0-linux-x64.tar.gz) |
+| macOS 15+ · Apple Silicon | [Portable](https://github.com/mglezz/dowlume/releases/download/v0.5.0/Dowlume-0.5.0-osx-arm64-portable.zip) |
+| Windows · x64 | [Installer (recommended)](https://github.com/mglezz/dowlume/releases/download/v0.5.0/Dowlume-0.5.0-win-x64-setup.exe) · [Portable](https://github.com/mglezz/dowlume/releases/download/v0.5.0/Dowlume-0.5.0-win-x64-portable.zip) |
 
 Start with a few sample files in a local folder, open **Preview**, and see whether the setup feels right. The interface starts in English; Spanish is available in Settings.
 
-The macOS app uses an ad-hoc signature and is not notarized; Windows packages are unsigned. Read the [installation guide](docs/user/guide.md#install-and-start) and check the [download checksums](docs/releases/0.4.0.md#download-checksums). macOS file moves require local APFS folders on the same volume. Try the [0.5.0-rc.1 prerelease](https://github.com/mglezz/dowlume/releases/tag/v0.5.0-rc.1) for the native Linux workflow, Ubuntu installer and portable packages. Automated native/package checks passed; [manual Linux acceptance](docs/development/linux-acceptance.md) remains pending before stable release. See [supported platforms](docs/user/platform-support.md) for the full scope.
+The macOS app uses an ad-hoc signature and is not notarized; Windows and Linux packages are unsigned. Read the [installation guide](docs/user/guide.md#install-and-start) and check the [download checksums](docs/releases/0.5.0.md#download-checksums). macOS requires local APFS folders on the same volume; Linux requires local ext4 folders on the same mount. See [supported platforms](docs/user/platform-support.md) for the full scope and limitations.
 
 ## A closer look at Dowlume
 
 - [Using Dowlume](docs/user/guide.md) — setup, everyday use, and recovery.
-- [What's new](docs/releases/0.4.0.md) — changes in this release.
+- [What's new](docs/releases/0.5.0.md) — changes in this release.
 - [What's next](docs/development/roadmap.md) — the direction of the project.
 - [Build and contribute](CONTRIBUTING.md) — work on the C# and Avalonia application.
 - [Engineering documentation](docs/README.md#engineering) — architecture, file operations, and validation.

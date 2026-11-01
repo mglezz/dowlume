@@ -2,7 +2,7 @@
 
 [English](../../development/roadmap.md) · [Índice en español](../README.md)
 
-La versión 0.4.0 ofrece los flujos Windows x64 y macOS Apple Silicon dentro del [alcance publicado](../user/platform-support.md). Los binarios Linux 0.4.0 siguen restringidos. La candidata 0.5.0 incorpora el flujo nativo ext4; la [aceptación final Linux](../../development/linux-acceptance.md) sigue pendiente antes de pasar a estabilización multiplataforma.
+La versión 0.5.0 ofrece los flujos Windows x64, macOS Apple Silicon y Ubuntu 24.04 LTS x64 con GNOME y ext4 dentro del [alcance publicado](../user/platform-support.md). La siguiente etapa es la estabilización multiplataforma. El [registro 0.5.0](../releases/acceptance/0.5.0.md) conserva la confirmación manual y los límites de la automatización.
 
 Los hitos definen alcance previsto, no fechas. Pueden hacer falta más versiones 0.x antes de 1.0. Compilar en una plataforma no basta para declararla compatible: requiere aceptación nativa.
 
@@ -10,7 +10,6 @@ Los hitos definen alcance previsto, no fechas. Pueden hacer falta más versiones
 
 | Hito | Resultado | Criterios de aceptación |
 | --- | --- | --- |
-| 0.5.0 · Linux | Flujo Linux compatible | Una versión Ubuntu LTS identificada, x64 y GNOME inicialmente; cobertura X11/Wayland explícita; Descargas, permisos, gestor de archivos, inicio opcional, alternativa sin bandeja, seguridad nativa y paquete aceptado con dependencias documentadas. |
 | 0.6.x–0.9.x · Estabilización, si hace falta | Cerrar diferencias entre plataformas | Migraciones, usabilidad, accesibilidad, rendimiento, alcance de recuperación, firma Windows y firma Developer ID y notarización macOS. |
 | 1.0.0 | Producto fiable dentro del contrato publicado | Sin defectos conocidos pendientes de pérdida de datos, sobrescritura, recuperación insegura o seguridad crítica; plataformas, actualizaciones, copias de seguridad, accesibilidad, idiomas, presupuestos medidos, dependencias y paquetes aceptados. |
 
@@ -31,6 +30,7 @@ La papelera nativa continúa desactivada. Antes de 1.0 debe existir una cuarente
 | 0.1.0 | Organización, revisión, historial, recuperación y escritorio Windows; papelera desactivada | [Notas](../releases/0.1.0.md) · [Aceptación](../releases/acceptance/0.1.0.md) |
 | 0.2.0 | Interfaz y documentación en inglés y español | [Notas](../releases/0.2.0.md) · [Aceptación](../releases/acceptance/0.2.0.md) |
 | 0.3.0 | Servicios de plataforma, CI nativa, compatibilidad y vistas previas restringidas | [Notas](../releases/0.3.0.md) · [Aceptación](../releases/acceptance/0.3.0.md) |
+| 0.5.0 | Flujo Linux ext4, integración XDG, instalador Ubuntu y portable, conservación del menú al actualizar | [Notas](../releases/0.5.0.md) · [Aceptación](../releases/acceptance/0.5.0.md) |
 | 0.4.0 | Flujo APFS, escritorio macOS, inicio opcional, migración y paquete autocontenido | [Notas](../releases/0.4.0.md) · [Aceptación](../releases/acceptance/0.4.0.md) |
 
 También está implementado el historial con búsqueda, filtros y paginación. La [validación histórica](../archive/validation.md) no aprueba binarios nuevos.

@@ -106,4 +106,4 @@ Las garantías de exclusión y copia entre volúmenes descritas para Windows no 
 
 ## Adaptador Linux 0.5.0
 
-La candidata Linux utiliza movimientos ext4 del mismo montaje sin sobrescritura, comprobaciones por descriptor e identidad persistente UUID/inodo/nacimiento más SHA-256 para recuperación. Incluye inicio XDG opcional y cierre ordenado sin bandeja junto al organizador compartido. Consulta la [implementación](../../architecture/linux.md) y la [aceptación de la candidata](../releases/acceptance/0.5.0.md) para separar automatización y pruebas manuales pendientes.
+El adaptador Linux utiliza movimientos ext4 del mismo montaje sin sobrescritura, comprobaciones por descriptor e identidad persistente UUID/inodo/nacimiento más SHA-256 para recuperación. Incluye inicio XDG opcional y cierre ordenado sin bandeja junto al organizador compartido. Consulta la [implementación](../../architecture/linux.md) y la [aceptación de la versión](../releases/acceptance/0.5.0.md) para distinguir confirmación manual, automatización y límites de evidencia.
