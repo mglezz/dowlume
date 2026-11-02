@@ -115,11 +115,19 @@ public sealed class SqliteStateStore : IStateStore
     private SqliteConnection Open()
     {
         var connection = new SqliteConnection(_connectionString);
-        connection.Open();
-        using SqliteCommand command = connection.CreateCommand();
-        command.CommandText = "PRAGMA synchronous=FULL; PRAGMA busy_timeout=5000;";
-        command.ExecuteNonQuery();
-        return connection;
+        try
+        {
+            connection.Open();
+            using SqliteCommand command = connection.CreateCommand();
+            command.CommandText = "PRAGMA synchronous=FULL; PRAGMA busy_timeout=5000;";
+            command.ExecuteNonQuery();
+            return connection;
+        }
+        catch
+        {
+            connection.Dispose();
+            throw;
+        }
     }
 
     private List<T> ReadAll<T>(StateTable table)

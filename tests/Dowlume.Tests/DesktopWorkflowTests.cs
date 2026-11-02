@@ -220,6 +220,15 @@ public sealed class DesktopWorkflowTests
             Assert.True(File.Exists(source));
             Assert.False(model.IsMonitoring);
 
+            int previewedReviewDays = model.Rules[0].ReviewAfterDays;
+            model.Rules[0].ReviewAfterDays++;
+            await model.StartCommand.ExecuteAsync(null);
+            Assert.Contains("Preview the current settings", model.ErrorMessage);
+            Assert.Equal(0, dialogs.ConfirmationCount);
+            Assert.True(File.Exists(source));
+            Assert.Empty(store.GetOperations());
+            model.Rules[0].ReviewAfterDays = previewedReviewDays;
+
             await model.StartCommand.ExecuteAsync(null);
             Assert.False(model.IsMonitoring);
             Assert.True(File.Exists(source));

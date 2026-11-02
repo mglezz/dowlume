@@ -84,10 +84,8 @@ public partial class App : Application
                 {
                     try
                     {
-                        if (OperatingSystem.IsMacOS() && smokeWindow is MainWindow main)
-                            await MacPackageAcceptance.RunAsync(main, dataDirectory);
-                        else if (OperatingSystem.IsLinux() && smokeWindow is MainWindow linuxMain)
-                            await LinuxPackageAcceptance.RunAsync(linuxMain, dataDirectory);
+                        if ((OperatingSystem.IsMacOS() || OperatingSystem.IsLinux()) && smokeWindow is MainWindow main)
+                            await NativePackageAcceptance.RunAsync(main, dataDirectory);
                         else
                             await Task.Delay(1000);
                     }
