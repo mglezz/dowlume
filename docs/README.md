@@ -16,6 +16,7 @@ English is the source language for the project. Spanish translations are availab
 | --- | --- |
 | Local development | [Getting started](development/getting-started.md) |
 | Repository layout and conventions | [Repository guide](development/repository.md) |
+| Code quality and design tradeoffs | [2026-11-02 review](development/code-quality-review.md) |
 | Components, persistence, and recovery | [Architecture](architecture/overview.md) |
 | Native file-operation guarantees | [File-operation contract](architecture/file-operations.md) |
 | macOS adapter and desktop integration | [macOS implementation](architecture/macos.md) |
