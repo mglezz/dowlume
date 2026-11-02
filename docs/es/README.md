@@ -6,7 +6,7 @@
 
 Encuentra lo que necesitas. Revisa lo que olvidaste. Decide qué conservar.
 
-[Descargar Dowlume](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) · [Guía de uso](user/guide.md) · [English](../../README.md)
+[Descargar Dowlume](https://github.com/mglezz/dowlume/releases/tag/v0.5.0) · [Guía de uso](user/guide.md) · [English](../../README.md)
 
 </div>
 
@@ -28,21 +28,22 @@ Tú decides cuándo empieza la supervisión. Dowlume respeta las subcarpetas exi
 
 ## Descargar
 
-Los paquetes de **Dowlume 0.4.0** incluyen el runtime; no necesitas instalar .NET por separado.
+Los paquetes de **Dowlume 0.5.0** incluyen el runtime; no necesitas instalar .NET por separado.
 
 | Plataforma | Descarga |
 | --- | --- |
-| macOS 15+ · Apple Silicon | [Portable](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-osx-arm64-portable.zip) |
-| Windows · x64 | [Instalador (recomendado)](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64-setup.exe) · [Portable](https://github.com/mglezz/dowlume/releases/download/v0.4.0/Dowlume-0.4.0-win-x64-portable.zip) |
+| Ubuntu 24.04 LTS · x64 · GNOME | [Instalador](https://github.com/mglezz/dowlume/releases/download/v0.5.0/dowlume_0.5.0_amd64.deb) · [Portable](https://github.com/mglezz/dowlume/releases/download/v0.5.0/Dowlume-0.5.0-linux-x64.tar.gz) |
+| macOS 15+ · Apple Silicon | [Portable](https://github.com/mglezz/dowlume/releases/download/v0.5.0/Dowlume-0.5.0-osx-arm64-portable.zip) |
+| Windows · x64 | [Instalador (recomendado)](https://github.com/mglezz/dowlume/releases/download/v0.5.0/Dowlume-0.5.0-win-x64-setup.exe) · [Portable](https://github.com/mglezz/dowlume/releases/download/v0.5.0/Dowlume-0.5.0-win-x64-portable.zip) |
 
 Empieza con copias de unos pocos archivos en una carpeta local y consulta la vista previa. La interfaz empieza en inglés; puedes seleccionar español en **Settings → Language**.
 
-macOS utiliza firma ad hoc sin notarización; los paquetes Windows no tienen firma de editor. Consulta la [instalación](user/guide.md#instalar-y-abrir) y comprueba las [sumas SHA-256](releases/0.4.0.md#sumas-de-comprobación). Los movimientos en macOS requieren APFS local en el mismo volumen. La [prerelease 0.5.0-rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.5.0-rc.1) permite probar el flujo Linux, instalador Ubuntu y paquetes portables. Supera automatización nativa y de paquetes; la [aceptación manual Linux](../development/linux-acceptance.md) sigue pendiente antes de publicar estable. La [matriz de plataformas](user/platform-support.md) detalla el alcance.
+macOS utiliza firma ad hoc sin notarización; los paquetes Windows y Linux no tienen firma de editor. Consulta la [instalación](user/guide.md#instalar-y-abrir) y comprueba las [sumas SHA-256](releases/0.5.0.md#sumas-de-comprobación). macOS requiere APFS local del mismo volumen; Linux requiere ext4 local del mismo montaje. La [matriz de plataformas](user/platform-support.md) detalla el alcance y los límites.
 
 ## Documentación en español
 
 - [Guía de uso](user/guide.md): instalación, organización, revisión y recuperación.
-- [Notas de 0.4.0](releases/0.4.0.md): cambios de la versión y su [aceptación](releases/acceptance/0.4.0.md).
+- [Notas de 0.5.0](releases/0.5.0.md): cambios de la versión y su [aceptación](releases/acceptance/0.5.0.md).
 - [Preparación del entorno](development/getting-started.md), [contribuciones](development/contributing.md) y [ramas](development/branches.md).
 - [Arquitectura](architecture/overview.md), [contrato de archivos](architecture/file-operations.md) e [implementación macOS](architecture/macos.md).
 - [Modelo de dominio](requirements/domain-model.md) y [hoja de ruta](development/roadmap.md).

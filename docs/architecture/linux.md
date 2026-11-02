@@ -1,9 +1,8 @@
 # Linux file operations in 0.5.0
 
-Implementation candidate; automated native/package checks passed and final manual acceptance is pending. The intended first supported
-configuration is Ubuntu 24.04 LTS x64, GNOME and ordinary local ext4. No distribution
+The supported configuration is Ubuntu 24.04 LTS x64, GNOME and ordinary local ext4. No distribution
 name is hardcoded in the runtime adapter. Fedora and Arch can use the portable build
-when they satisfy the same native requirements; this is not an acceptance claim.
+when they satisfy the same native requirements; those distributions remain unverified. See the [acceptance record](../releases/acceptance/0.5.0.md) for maintainer confirmation, automated checks and evidence limitations.
 
 ## Native boundary
 

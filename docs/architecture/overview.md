@@ -139,4 +139,4 @@ macOS uses cooperative locks, which cannot exclude arbitrary POSIX writers. A ra
 
 ## Linux 0.5.0 adapter
 
-The Linux candidate uses no-overwrite same-mount ext4 moves with descriptor checks, persistent UUID/inode/birth identity and SHA-256 recovery. Optional XDG Autostart and no-tray graceful close accompany the shared organizer. See the [native implementation](linux.md) and [candidate acceptance](../releases/acceptance/0.5.0.md) for verified automation and remaining manual tests.
+The Linux adapter uses no-overwrite same-mount ext4 moves with descriptor checks, persistent UUID/inode/birth identity and SHA-256 recovery. Optional XDG Autostart and no-tray graceful close accompany the shared organizer. See the [native implementation](linux.md) and [release acceptance](../releases/acceptance/0.5.0.md) for maintainer confirmation, verified automation and evidence limitations.

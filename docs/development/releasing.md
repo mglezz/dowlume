@@ -58,8 +58,10 @@ Tag the accepted source revision. For a stable release, attach only the supporte
 - `Dowlume-<version>-win-x64-setup.exe` — Windows installer.
 - `Dowlume-<version>-win-x64-portable.zip` — Windows portable application.
 - `Dowlume-<version>-osx-arm64-portable.zip` — macOS portable application bundle.
+- `dowlume_<version>_amd64.deb` — Ubuntu installer.
+- `Dowlume-<version>-linux-x64.tar.gz` — Linux portable application.
 
-Use **Installer** and **Portable** as the download labels. Keep build information, JSON reports, validation archives, acceptance kits, and standalone notes/checksum manifests in CI artifacts or the candidate evidence record. Publish application SHA-256 values in the linked release notes. Linux 0.5.0 candidates belong in prereleases until the [Linux acceptance matrix](linux-acceptance.md) is complete. Prereleases may attach the Ubuntu `.deb`, portable `.tar.gz`, checksums and technical evidence alongside the Windows/macOS candidates. Do not mark a prerelease as latest stable. Never rename a validation or acceptance archive to imply that it is a portable application.
+Use **Installer** and **Portable** as the download labels. Keep build information, JSON reports, validation archives, acceptance kits, and standalone notes/checksum manifests in CI artifacts or the candidate evidence record. Publish application SHA-256 values in the linked release notes. Linux releases follow the [Linux acceptance matrix](linux-acceptance.md); record maintainer-reported confirmation separately from automated and independently measured evidence. Unaccepted candidates belong in prereleases. Prereleases may attach the Ubuntu `.deb`, portable `.tar.gz`, checksums and technical evidence alongside the Windows/macOS candidates. Do not mark a prerelease as latest stable. Never rename a validation or acceptance archive to imply that it is a portable application.
 
 Renaming a published application archive must preserve its bytes and accepted hash. Update current download links and document the filename change; historical acceptance tables retain their original names. GitHub also supplies its own source-code archive links.
  Use an English release body that explains the changes, platform scope, and installation requirements, with a link to the Spanish notes. Download the public assets and verify that their hashes match the accepted artifacts.

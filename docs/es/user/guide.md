@@ -2,13 +2,13 @@
 
 [English](../../user/guide.md) · [Índice en español](../README.md)
 
-Dowlume organiza descargas completas en Windows x64 y macOS Apple Silicon. La [versión 0.4.0](https://github.com/mglezz/dowlume/releases/tag/v0.4.0) incluye la aplicación para macOS, un instalador por usuario y un ZIP portátil para Windows, con .NET incluido. Consulta las [instrucciones de macOS](#macos-040) para instalar la aplicación en ese sistema. Empieza con copias de archivos de ejemplo en una carpeta desechable.
+Dowlume organiza descargas completas en Windows x64, macOS Apple Silicon y Ubuntu 24.04 LTS x64 con GNOME. La [versión 0.5.0](https://github.com/mglezz/dowlume/releases/tag/v0.5.0) incluye instaladores Windows/Ubuntu y paquetes portables con .NET incluido. Consulta las [instrucciones macOS](#macos-040), las [instrucciones Linux](#linux-050) y la [matriz de plataformas](platform-support.md). Empieza con copias de archivos de ejemplo en una carpeta desechable.
 
 ## Instalar y abrir
 
-Elige el instalador Windows para una instalación habitual, o **Portable** para descargar la aplicación completa en un ZIP desde la publicación de GitHub. Los paquetes Windows de v0.4.0 no tienen firma de editor: utiliza una fuente de confianza y compara el SHA-256 con las [sumas de comprobación](../releases/0.4.0.md#sumas-de-comprobación).
+Elige el instalador Windows para una instalación habitual, o **Portable** para descargar la aplicación completa en un ZIP desde la publicación de GitHub. Los paquetes Windows de v0.5.0 no tienen firma de editor: utiliza una fuente de confianza y compara el SHA-256 con las [sumas de comprobación](../releases/0.5.0.md#sumas-de-comprobación).
 
-Ejecuta `Dowlume-0.4.0-win-x64-setup.exe` sin permisos de administrador. Para la versión portátil, extrae todo el ZIP y ejecuta `Dowlume.App.exe` junto a sus archivos. No necesita una instalación separada de .NET.
+Ejecuta `Dowlume-0.5.0-win-x64-setup.exe` sin permisos de administrador. Para la versión portátil, extrae todo el ZIP y ejecuta `Dowlume.App.exe` junto a sus archivos. No necesita una instalación separada de .NET.
 
 Incluyo `START-HERE.txt` para consulta sin conexión y un acceso **Dowlume quick start** en el menú Inicio. Cierra también cualquier instancia oculta en la bandeja antes de actualizar o desinstalar; el instalador se niega a continuar mientras la aplicación está abierta. Conservo los archivos organizados y el perfil local al desinstalar.
 
@@ -18,7 +18,7 @@ Pausa la supervisión y abre **Settings → Language**. Selecciona **Español** 
 
 Cambio pestañas, botones, confirmaciones, bandeja, categorías, estados, fechas y mensajes conocidos. Mantengo los nombres de archivos y carpetas, las rutas y los datos históricos. La carpeta `Expiring Files` conserva ese nombre. No guardo otros ajustes pendientes al cambiar de idioma. Los mensajes históricos desconocidos mantienen su texto original y los controles nativos del selector de carpetas siguen el idioma de Windows.
 
-**El instalador y el ZIP portátil publicados de 0.4.0 incluyen el selector.** Los paquetes anteriores de 0.1.0 siguen en inglés.
+**El instalador y el ZIP portátil publicados de 0.5.0 incluyen el selector.** Los paquetes anteriores de 0.1.0 siguen en inglés.
 
 ## Primer uso
 
@@ -98,7 +98,7 @@ Si editas un archivo registrado, rechazo las operaciones basadas en su huella an
 
 ## Límites
 
-Windows x64 y macOS Apple Silicon son los destinos estables publicados. La [candidata Linux 0.5.0](#linux-050-preliminar) activa el flujo nativo en ext4 local, con aceptación manual pendiente. Rechazo recursos de red, raíces de unidades, carpetas del sistema, enlaces simbólicos, junctions y marcadores de nube con reparse points. No ejecuto la aplicación como servicio.
+Windows x64, macOS Apple Silicon y Ubuntu 24.04 LTS x64 con GNOME son los destinos estables publicados. El [flujo Linux](#linux-050) requiere ext4 local del mismo montaje. Rechazo recursos de red, raíces de unidades, carpetas del sistema, enlaces simbólicos, junctions y marcadores de nube con reparse points. No ejecuto la aplicación como servicio.
 
 En Windows compruebo antigüedad de escritura, dos observaciones estables y apertura exclusiva antes de considerar una descarga lista. Es una comprobación conservadora, sin garantía de que otro programa no vuelva a escribir después. Excluyo descargas parciales conocidas. Evita descargar directamente en las carpetas de categoría.
 
@@ -120,10 +120,10 @@ Guardo datos en `~/Library/Application Support/Dowlume`. En la primera apertura 
 
 Si detecto una carrera de archivos/carpetas, conservo los objetos y puedo mostrar NeedsAttention. Actividad incluye origen, destino previsto y, cuando está disponible, ubicación observada del objeto abierto original. Conserva esos archivos antes de reintentar recuperación. Los bytes iguales no bastan para completar una operación macOS: debe coincidir también la identidad registrada de volumen/archivo. No puedo excluir cualquier escritor POSIX; mantén archivos editados activamente o sincronizados fuera de la carpeta gestionada.
 
-## Linux 0.5.0 preliminar
+## Linux 0.5.0
 
-La [prerelease 0.5.0-rc.1](https://github.com/mglezz/dowlume/releases/tag/v0.5.0-rc.1)
-es para pruebas, inicialmente en Ubuntu 24.04 LTS x64 / GNOME con ext4 local.
+La [versión 0.5.0](https://github.com/mglezz/dowlume/releases/tag/v0.5.0)
+admite Ubuntu 24.04 LTS x64 / GNOME con ext4 local.
 Comprueba las [sumas de los paquetes](../releases/0.5.0.md#sumas-de-comprobación)
 y empieza con archivos desechables.
 
@@ -132,12 +132,11 @@ Cierra Dowlume antes de instalar o actualizar. En Ubuntu ejecuta
 dependencias nativas. Abre Dowlume desde el menú de aplicaciones. Las actualizaciones
 conservan el perfil y los archivos gestionados; respalda antes el perfil. Para quitar
 el paquete, desactiva el inicio de sesión en Ajustes, cierra la app y ejecuta
-`sudo apt remove dowlume`. El perfil y los archivos permanecen. La aceptación de
-instalación limpia, actualización y desinstalación sigue pendiente.
+`sudo apt remove dowlume`. El perfil y los archivos permanecen.
 
 Para Portable, extrae todo el `.tar.gz` en una carpeta permanente de tu usuario y
 arranca `./Dowlume.App`. `python3 register-menu.py` registra opcionalmente el menú;
-`python3 register-menu.py --remove` elimina esa entrada. Para actualizar, cierra la app,
+`python3 register-menu.py --remove` elimina la entrada de esa copia; una copia antigua no puede eliminar la de una nueva. Para actualizar, cierra la app,
 extrae la nueva versión en otra carpeta, compruébala y registra su entrada.
 Vuelve a activar el inicio de sesión desde la copia nueva si lo utilizas. No sobrescribas
 binarios en ejecución. `START-HERE.es.txt` incluye las dependencias nativas; .NET va incluido.
@@ -153,5 +152,4 @@ verificables. Se rechazan enlaces, Btrfs/XFS, red/FUSE/overlay y movimientos ent
 Elige carpetas fuera de sincronización y escrituras externas simultáneas. El mismo
 portable puede funcionar en Fedora/Arch con glibc, bibliotecas nativas y ext4 compatibles;
 siguen sin validación oficial. Consulta el [registro de aceptación](../releases/acceptance/0.5.0.md)
-para separar automatización de pruebas pendientes GNOME X11/Wayland, inicio de sesión,
-instalación e interrupción/reinicio.
+para distinguir la confirmación manual de rc.1 de las pruebas automáticas de los paquetes finales y sus límites de evidencia.

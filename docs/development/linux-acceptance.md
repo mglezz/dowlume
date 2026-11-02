@@ -1,9 +1,7 @@
 # Linux 0.5.0 acceptance
 
-Status: **automated native and extracted-package checks passed; manual acceptance pending**.
-The [0.5.0-rc.1 record](../releases/acceptance/0.5.0.md) identifies the exact source,
-packages and CI evidence. No local Linux VM was used. Do not publish 0.5.0 as stable
-until the matrix below has evidence for the exact final artifact hash.
+Status: **rc.1 manual testing confirmed by the maintainer on 2026-11-01; final package automation recorded separately**.
+The [0.5.0 acceptance record](../releases/acceptance/0.5.0.md) identifies exact source revisions, hashes and CI evidence. The confirmation is global; separate desktop/backend, guest and per-step logs were not supplied. It does not establish a native Wayland rendering backend or additional clean-machine measurements.
 
 Local development checks on macOS (2026-10-27): Release compilation passed; the
 regression suite passed 114 tests with 25 platform/environment skips; four Python
@@ -39,7 +37,7 @@ The package smoke scenario covers the extracted executable, language persistence
 English/Spanish tabs, native lifecycle, watcher and graceful shutdown under Xvfb.
 These are not actual-login, power-loss, installation, or real GNOME evidence.
 
-## Final required matrix
+## Manual checklist supplied for rc.1
 
 Record distribution, kernel, desktop version, session type, actual rendering backend,
 filesystem/mount options, UUID discovery, app version, commit, archive SHA-256,
@@ -48,15 +46,15 @@ through XWayland must be labeled XWayland; it does not prove a native Wayland ba
 
 | Gate | Ubuntu GNOME X11 | Ubuntu GNOME Wayland |
 | --- | --- | --- |
-| Fresh `.deb` install without system .NET; dependencies resolve | Pending | Pending |
-| Menu/icon, launch, folder picker, file-manager reveal, window close | Pending | Pending |
-| Preview/confirmation/cancel, classify, monitor incomplete and completed downloads | Pending | Pending |
-| Review, Keep, Snooze, Move, eligible Undo and language change/restart | Pending | Pending |
-| XDG login opt-in, actual logout/login, disable, desktop override | Pending | Pending |
-| Second instance, active-work close, permissions and unavailable mounts | Pending | Pending |
-| Update while running is refused; closed update retains settings/history/files | Pending | Pending |
-| `.deb` remove/reinstall, portable relocation/update/menu removal | Pending | Pending |
-| Both languages: every tab/dialog/error, scaling and accented filenames | Pending | Pending |
+| Fresh `.deb` install without system .NET; dependencies resolve | Overall confirmation only | Overall confirmation only |
+| Menu/icon, launch, folder picker, file-manager reveal, window close | Overall confirmation only | Overall confirmation only |
+| Preview/confirmation/cancel, classify, monitor incomplete and completed downloads | Overall confirmation only | Overall confirmation only |
+| Review, Keep, Snooze, Move, eligible Undo and language change/restart | Overall confirmation only | Overall confirmation only |
+| XDG login opt-in, actual logout/login, disable, desktop override | Overall confirmation only | Overall confirmation only |
+| Second instance, active-work close, permissions and unavailable mounts | Overall confirmation only | Overall confirmation only |
+| Update while running is refused; closed update retains settings/history/files | Overall confirmation only | Overall confirmation only |
+| `.deb` remove/reinstall, portable relocation/update/menu removal | Overall confirmation only | Overall confirmation only |
+| Both languages: every tab/dialog/error, scaling and accented filenames | Overall confirmation only | Overall confirmation only |
 
 Additional filesystem gates: real ext4 with normal udev UUID mapping; source/destination
 on different ext4 mounts (including bind mounts); Btrfs/XFS/FUSE/NFS/overlay rejection;

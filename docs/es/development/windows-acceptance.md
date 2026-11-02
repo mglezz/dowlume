@@ -2,7 +2,7 @@
 
 [English](../../development/windows-acceptance.md) · [Índice en español](../README.md)
 
-Este procedimiento se aplica a cada nuevo candidato. Los ejemplos usan 0.4.0 y el instalador 0.3.0 como referencia de actualización. Los registros anteriores no validan binarios nuevos.
+Este procedimiento se aplica a cada nuevo candidato. Los ejemplos usan 0.5.0 y el instalador 0.4.0 como referencia de actualización. Los registros anteriores no validan binarios nuevos.
 
 El [registro de aceptación de 0.4.0](../releases/acceptance/0.4.0.md) distingue los resultados documentados para esa versión. Registra SHA-256, commit de `BUILD-INFO.json`, compilación de Windows, persona que prueba, fecha y resultado. Un control sin resultado no es una prueba superada.
 
@@ -19,7 +19,7 @@ Descargo el instalador, ZIP, información de compilación y checksums del candid
 El kit incluye `Test-WindowsPackage.ps1`, `Test-WindowsTray.ps1` y `Test-WindowsLocalization.ps1`; los mantengo juntos. En Windows PowerShell, sin instalar .NET:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\Test-WindowsPackage.ps1 -Installer .\Dowlume-0.4.0-win-x64-setup.exe -Archive .\Dowlume-0.4.0-win-x64-portable.zip -PreviousInstaller .\Dowlume-0.3.0-win-x64-setup.exe -ReportPath .\package-result.json -RequireNoSharedDotNet -RequireLocalization
+powershell -NoProfile -ExecutionPolicy Bypass -File .\Test-WindowsPackage.ps1 -Installer .\Dowlume-0.5.0-win-x64-setup.exe -Archive .\Dowlume-0.5.0-win-x64-portable.zip -PreviousInstaller .\Dowlume-0.4.0-win-x64-setup.exe -ReportPath .\package-result.json -RequireNoSharedDotNet -RequireLocalization
 ```
 
 El script rechaza instalaciones o entradas de inicio existentes. Crea instalación, perfil y muestra únicos; comprueba lanzamiento portátil, instalación, reinstalación, instancia duplicada, bloqueo de cambios mientras la aplicación está abierta, bandeja, entradas de inicio y conservación de datos tras desinstalar. Necesita escritorio interactivo.
