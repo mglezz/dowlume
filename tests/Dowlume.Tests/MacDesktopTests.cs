@@ -10,6 +10,27 @@ namespace Dowlume.Tests;
 public sealed class MacDesktopTests
 {
     [MacFact]
+    public void DisablingAnOlderCopyPreservesTheNewCopiesLoginJob()
+    {
+        using var workspace = new TemporaryWorkspace();
+        string jobs = Path.Combine(workspace.Root, "LaunchAgents");
+        var original = new MacStartupRegistration(workspace.CreateFile("Old/Dowlume.app/Contents/MacOS/Dowlume.App"), jobs);
+        var updated = new MacStartupRegistration(workspace.CreateFile("New/Dowlume.app/Contents/MacOS/Dowlume.App"), jobs);
+        original.SetEnabled(true);
+        updated.SetEnabled(true);
+        string job = Assert.Single(Directory.EnumerateFiles(jobs));
+        byte[] registered = File.ReadAllBytes(job);
+
+        original.SetEnabled(false);
+
+        Assert.Equal(registered, File.ReadAllBytes(job));
+        Assert.False(original.IsEnabled);
+        Assert.True(updated.IsEnabled);
+        updated.SetEnabled(false);
+        Assert.False(File.Exists(job));
+    }
+
+    [MacFact]
     public void LoginConfigurationUsesLiteralPathsAndOnlyRemovesItsOwnJob()
     {
         using var workspace = new TemporaryWorkspace();

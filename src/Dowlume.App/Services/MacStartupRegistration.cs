@@ -54,10 +54,10 @@ public sealed class MacStartupRegistration : IStartupRegistration
     {
         if (!IsSupported)
             throw new PlatformNotSupportedException("Login startup requires the installed Dowlume application.");
-        _ = ReadOwnedExecutable(); // Refuse to replace or remove an unrelated job.
+        string? registeredExecutable = ReadOwnedExecutable();
         if (!enabled)
         {
-            if (File.Exists(_path))
+            if (registeredExecutable == _executable && File.Exists(_path))
                 File.Delete(_path);
             return;
         }

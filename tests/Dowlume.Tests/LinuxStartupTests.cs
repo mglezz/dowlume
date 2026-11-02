@@ -4,6 +4,26 @@ namespace Dowlume.Tests;
 
 public sealed class LinuxStartupTests
 {
+    [LinuxFact]
+    public void DisablingAnOlderCopyPreservesTheNewCopiesLoginEntry()
+    {
+        using var workspace = new TemporaryWorkspace();
+        var original = new LinuxStartupRegistration(workspace.CreateFile("old/Dowlume.App"), workspace.Root);
+        var updated = new LinuxStartupRegistration(workspace.CreateFile("new/Dowlume.App"), workspace.Root);
+        original.SetEnabled(true);
+        updated.SetEnabled(true);
+        string entry = Path.Combine(workspace.Root, "autostart", "com.mglezz.dowlume.desktop");
+        byte[] registered = File.ReadAllBytes(entry);
+
+        original.SetEnabled(false);
+
+        Assert.Equal(registered, File.ReadAllBytes(entry));
+        Assert.False(original.IsEnabled);
+        Assert.True(updated.IsEnabled);
+        updated.SetEnabled(false);
+        Assert.False(File.Exists(entry));
+    }
+
     [Theory]
     [InlineData("/opt/Dowlume App/Dowlume.App", "\"/opt/Dowlume App/Dowlume.App\"")]
     [InlineData("/opt/$HOME/Dowlume.App", "\"/opt/\\\\$HOME/Dowlume.App\"")]
