@@ -40,7 +40,7 @@ You can check the proposed destinations before choosing **Organize and monitor**
 
 ## Download
 
-Download **Dowlume 0.5.0** for your computer. The runtime is included.
+Download **Dowlume 0.5.0** for your computer. 
 
 | Platform | Download |
 | --- | --- |
