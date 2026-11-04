@@ -33,6 +33,10 @@
       <Setter Property="FontSize" Value="18" />
       <Setter Property="MinWidth" Value="150" />
       <Setter Property="Padding" Value="20,14" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="TabItem /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Margin" Value="0,0,0,10" />
     </Style>
   </Window.Styles>
   <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="28">
