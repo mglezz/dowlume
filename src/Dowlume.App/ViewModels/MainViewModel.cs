@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Text.Json;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -236,7 +235,7 @@ public partial class MainViewModel : ObservableObject
     {
         _organizer.RequireFileOperations();
         AppSettings settings = ReadSettings();
-        if (_previewSettings is null || JsonSerializer.Serialize(settings) != JsonSerializer.Serialize(_previewSettings))
+        if (!settings.HasSameValuesAs(_previewSettings))
         {
             throw new InvalidOperationException("Preview the current settings before starting.");
         }

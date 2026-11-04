@@ -21,6 +21,12 @@ public sealed record AppSettings
     ];
     public string[] ExcludedExtensions { get; init; } = [];
 
+    // Preview consent compares values, including collection order and case, not record references.
+    public bool HasSameValuesAs(AppSettings? other) =>
+        other is not null && Language == other.Language && DownloadsPath == other.DownloadsPath &&
+        ExcludedExtensions.SequenceEqual(other.ExcludedExtensions) && Categories.Count == other.Categories.Count &&
+        Categories.Zip(other.Categories).All(pair => pair.First.HasSameValuesAs(pair.Second));
+
     public void Validate()
     {
         if (!Path.IsPathFullyQualified(DownloadsPath))

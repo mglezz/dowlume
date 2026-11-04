@@ -92,10 +92,10 @@ public sealed class LinuxStartupRegistration : IStartupRegistration
     {
         if (!IsSupported)
             throw new PlatformNotSupportedException("Login startup requires the installed Dowlume application.");
-        _ = ReadOwned();
+        Dictionary<string, string>? entry = ReadOwned();
         if (!enabled)
         {
-            if (File.Exists(_path))
+            if (entry?.GetValueOrDefault("Exec") == QuoteExecutable(_executable!) && File.Exists(_path))
                 File.Delete(_path);
             return;
         }
