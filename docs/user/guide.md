@@ -52,6 +52,13 @@ On Windows, in **Settings**, enable **Start Dowlume when I sign in** to open thi
 
 A file's age starts when Dowlume first organizes it, not from its downloaded or modified timestamp. When its category's review period expires, it moves to `Expiring Files`.
 
+In source builds after 0.5.0, search by filename or current path to narrow the list
+as you type. Matching ignores letter case and treats punctuation literally.
+**Clear** restores the full list. The result count shows visible files and the
+total awaiting review; filtering does not change the overview total or move files.
+A selection hidden by the search is cleared before another action can be chosen.
+Search is temporary and resets when the application restarts.
+
 Select a file in **Review**:
 
 - **Keep:** return it to its category and exclude it from future age reviews.

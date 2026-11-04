@@ -157,13 +157,18 @@
         </Grid>
       </TabItem>
       <TabItem Header="{ReflectionBinding $parent[Window].DataContext.Text[Review]}">
-        <Grid RowDefinitions="Auto,*,Auto" Margin="0,20,0,0">
+        <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="0,20,0,0">
           <StackPanel Spacing="8" Margin="0,0,0,16">
             <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Alittlespacetodecide]}" Classes="heading" />
             <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[KeepreturnsafiletoitscategorypermanentlySnooze]}" TextWrapping="Wrap" Classes="muted" />
             <TextBlock Text="{Binding RecyclingNotice}" TextWrapping="Wrap" Classes="muted" />
           </StackPanel>
-          <ListBox Grid.Row="1" ItemsSource="{Binding ReviewFiles}" SelectedItem="{Binding SelectedReview}">
+          <Grid Grid.Row="1" ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="8" RowSpacing="8" Margin="0,0,0,12" IsEnabled="{Binding IsIdle}">
+            <TextBox Text="{Binding ReviewSearch}" AutomationProperties.AutomationId="ReviewSearch" PlaceholderText="{ReflectionBinding $parent[Window].DataContext.Text[SearchReviewFiles]}" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[SearchReviewFiles]}" />
+            <Button Grid.Column="1" Content="{ReflectionBinding $parent[Window].DataContext.Text[Clear]}" Command="{Binding ClearReviewSearchCommand}" />
+            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding ReviewResultsLabel}" Classes="muted" />
+          </Grid>
+          <ListBox Grid.Row="2" ItemsSource="{Binding ReviewFiles}" SelectedItem="{Binding SelectedReview}">
             <ListBox.ItemTemplate>
               <DataTemplate x:DataType="core:TrackedFile">
                 <StackPanel Spacing="4">
@@ -193,7 +198,8 @@
               </DataTemplate>
             </ListBox.ItemTemplate>
           </ListBox>
-          <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="10" Margin="0,16,0,0" IsEnabled="{Binding CanReviewSelectedFile}">
+          <TextBlock Grid.Row="2" Text="{Binding ReviewEmptyMessage}" IsVisible="{Binding IsReviewEmpty}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Classes="muted" />
+          <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="10" Margin="0,16,0,0" IsEnabled="{Binding CanReviewSelectedFile}">
             <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Keep]}" Command="{Binding KeepCommand}" Classes="primary" />
             <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Snooze7days]}" Command="{Binding SnoozeCommand}" />
             <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Moveto]}" Command="{Binding MoveCommand}" />

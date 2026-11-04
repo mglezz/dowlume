@@ -16,6 +16,89 @@ namespace Dowlume.Tests;
 public sealed class DesktopWorkflowTests
 {
     [Fact]
+    public async Task ReviewSearchPreservesTotalsAndClearsHiddenSelectionsWithoutChangingFiles()
+    {
+        using var session = HeadlessUnitTestSession.StartNew(typeof(TestAppBuilder));
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+        await session.Dispatch(async () =>
+        {
+            using var workspace = new TemporaryWorkspace();
+            var store = new SqliteStateStore(workspace.Database);
+            store.SaveSettings(new AppSettings { DownloadsPath = workspace.Downloads });
+            string source = workspace.CreateFile("Report [100%].pdf");
+            var report = new TrackedFile(Guid.NewGuid(), source, source, FileCategory.Documents,
+                DateTimeOffset.UtcNow, LifecycleStatus.InReview, "fixture");
+            var photo = report with
+            {
+                Id = Guid.NewGuid(),
+                CurrentPath = workspace.CreateFile("Photo.jpg"),
+                Category = FileCategory.Images
+            };
+            store.SaveFile(report);
+            store.SaveFile(photo);
+            var organizer = new DownloadOrganizer(store, FixtureFileMover.Create(workspace), new FileReadiness());
+            var model = new MainViewModel(store, organizer, new TestDialogs(), new DiagnosticLog(Path.Combine(workspace.Root, "diagnostics.jsonl")));
+            var window = new MainWindow { DataContext = model };
+            window.Show();
+            try
+            {
+                await model.RefreshAsync();
+                model.SelectedReview = report;
+                model.ReviewSearch = "  REPORT [100%]  ";
+                Assert.Equal(report, Assert.Single(model.ReviewFiles));
+                Assert.Equal(report, model.SelectedReview);
+                Assert.Equal(2, model.ReviewCount);
+                Assert.Equal("Showing 1 of 2 files awaiting review", model.ReviewResultsLabel);
+                model.SelectedLanguage = MainViewModel.Languages.Single(language => language.Code == "es");
+                Assert.Contains("1 de 2", model.ReviewResultsLabel);
+                Assert.Equal(report, Assert.Single(model.ReviewFiles));
+                model.ReviewSearch = "photo";
+                Assert.Null(model.SelectedReview);
+                Assert.False(model.CanReviewSelectedFile);
+                await model.KeepCommand.ExecuteAsync(null);
+                Assert.Empty(store.GetOperations());
+                Assert.Equal(LifecycleStatus.InReview, store.GetFiles().Single(file => file.Id == report.Id).Status);
+                model.SelectedReview = photo;
+                store.SaveFile(photo with
+                {
+                    Status = LifecycleStatus.Kept
+                });
+                await model.RefreshAsync();
+                Assert.True(model.IsReviewEmpty);
+                Assert.Null(model.SelectedReview);
+                Assert.Equal(1, model.ReviewCount);
+                model.ClearReviewSearchCommand.Execute(null);
+                Assert.Equal(report, Assert.Single(model.ReviewFiles));
+                model.ReviewSearch = workspace.Downloads;
+                Assert.Single(model.ReviewFiles);
+                Assert.True(File.Exists(source));
+                Assert.True(File.Exists(photo.CurrentPath));
+
+                window.GetVisualDescendants().OfType<TabControl>().Single().SelectedIndex = 2;
+                window.Width = window.MinWidth;
+                window.Height = window.MinHeight;
+                window.UpdateLayout();
+                TextBox search = window.GetVisualDescendants().OfType<TextBox>().Single(box => box.IsEffectivelyVisible);
+                search.Text = "no matching file";
+                Assert.True(model.IsReviewEmpty);
+                Assert.Contains("coincidencias", model.ReviewEmptyMessage);
+                store.SaveFile(report with
+                {
+                    Status = LifecycleStatus.Kept
+                });
+                await model.RefreshAsync();
+                Assert.Equal(0, model.ReviewCount);
+                Assert.True(model.IsReviewEmpty);
+                Assert.DoesNotContain("coincidencias", model.ReviewEmptyMessage);
+                using var frame = window.CaptureRenderedFrame();
+                Assert.NotNull(frame);
+            }
+            finally { await DesktopWindowTest.CloseAsync(window); }
+            return true;
+        }, timeout.Token);
+    }
+
+    [Fact]
     public async Task ClosingDuringConfirmationCancelsWithoutOrganizingFiles()
     {
         using var session = HeadlessUnitTestSession.StartNew(typeof(TestAppBuilder));

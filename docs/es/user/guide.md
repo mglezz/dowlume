@@ -46,6 +46,14 @@ Desactivé la papelera nativa en v0.1.0 porque las [pruebas de capacidad](../arc
 
 Calculo la antigüedad desde la primera organización, no desde la descarga o modificación. Al vencer el plazo de la categoría, traslado el archivo a `Expiring Files`.
 
+En compilaciones del código posteriores a 0.5.0, busca por nombre o ruta actual
+para filtrar la lista mientras escribes. La búsqueda no distingue mayúsculas y
+trata los signos de puntuación literalmente. **Limpiar** restaura la lista completa.
+El contador muestra los archivos visibles y el total pendiente de revisión; buscar
+no cambia el total del resumen ni mueve archivos. Si la búsqueda oculta el archivo
+seleccionado, se borra la selección antes de elegir otra acción. La búsqueda es
+temporal y se restablece al reiniciar la aplicación.
+
 Selecciona un archivo en **Revisión**:
 
 - **Conservar:** lo devuelve a su categoría y excluye futuras revisiones por antigüedad.
