@@ -94,6 +94,7 @@ public partial class MainViewModel : ObservableObject
         OnPropertyChanged(nameof(PlatformNotice));
         OnPropertyChanged(nameof(PrivacyNotice));
         OnPropertyChanged(nameof(ActivityPageLabel));
+        RefreshReviewLabels();
         OperationKind? kind = SelectedActivityKind.Value;
         OperationStatus? status = SelectedActivityStatus.Value;
         OnPropertyChanged(nameof(ActivityKinds));
@@ -350,19 +351,16 @@ public partial class MainViewModel : ObservableObject
             OperationHistoryQuery query = _historyQuery;
             var snapshot = await Task.Run(() => (Files: _store.GetFiles(), History: _store.GetOperationHistory(query),
                 AttentionCount: _store.CountOperationsRequiringAttention()));
-            TrackedFile? selectedReview = SelectedReview;
             string root = _store.LoadSettings()?.DownloadsPath ?? DownloadsPath;
             TrackedFile[] files = snapshot.Files.Where(file => PathSafety.IsWithin(root, file.CurrentPath)).ToArray();
-            Replace(ReviewFiles, files.Where(file => file.Status == LifecycleStatus.InReview));
+            UpdateReviewQueue(files);
             Replace(ManagedFiles, files.Where(file => file.IsManaged || file.Status == LifecycleStatus.Missing));
             if (query == _historyQuery)
             {
                 ShowActivityPage(snapshot.History);
             }
             Replace(Categories, Enum.GetValues<FileCategory>().Select(category => new CategorySummary(category, files.Count(file => file.IsManaged && file.Category == category))));
-            SelectedReview = ReviewFiles.FirstOrDefault(file => file.Id == selectedReview?.Id);
             ManagedCount = files.Count(file => file.IsManaged);
-            ReviewCount = ReviewFiles.Count;
             AttentionCount = files.Count(file => file.Status == LifecycleStatus.Missing) +
                 snapshot.AttentionCount;
         }

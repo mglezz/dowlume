@@ -491,4 +491,16 @@ La ubicación original debe estar disponible y el archivo no debe haber cambiado
   <data name="LinuxSameVolumeOnly" xml:space="preserve"><value>Las operaciones en Linux requieren carpetas ext4 locales del mismo montaje, con UUID del sistema de archivos y fecha de creación verificables. Elige otro destino.</value></data>
   <data name="LinuxDesktopPath" xml:space="preserve"><value>La ruta de la aplicación no puede representarse de forma segura en una entrada del escritorio.</value></data>
   <data name="LinuxX64Only" xml:space="preserve"><value>Las operaciones nativas de archivos requieren Linux x64.</value></data>
+  <data name="SearchReviewFiles" xml:space="preserve">
+    <value>Buscar nombres o rutas en revisión</value>
+  </data>
+  <data name="ReviewResults" xml:space="preserve">
+    <value>Se muestran {0} de {1} archivos pendientes de revisión</value>
+  </data>
+  <data name="ReviewEmpty" xml:space="preserve">
+    <value>No hay archivos pendientes de revisión.</value>
+  </data>
+  <data name="ReviewNoMatches" xml:space="preserve">
+    <value>No hay coincidencias. Prueba otra búsqueda o bórrala.</value>
+  </data>
 </root>

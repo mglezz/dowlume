@@ -97,6 +97,11 @@ internal static class Program
                     window.Height = window.MinHeight;
                     Capture(3, "activity-compact.png");
                     Capture(2, "review-compact.png");
+                    model.SelectedLanguage = MainViewModel.Languages.Single(language => language.Code == "es");
+                    model.ReviewSearch = "assets";
+                    Capture(2, "review-search-es.png");
+                    model.ReviewSearch = "no matching file";
+                    Capture(2, "review-empty-es.png");
 
                     void Capture(int index, string name)
                     {

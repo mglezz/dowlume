@@ -491,4 +491,16 @@ The original location must be available and the file must be unchanged. Undoing 
   <data name="LinuxSameVolumeOnly" xml:space="preserve"><value>Linux file operations require local ext4 folders on the same mount, with a verifiable filesystem UUID and creation time. Choose another destination.</value></data>
   <data name="LinuxDesktopPath" xml:space="preserve"><value>The application path cannot be represented safely in a desktop entry.</value></data>
   <data name="LinuxX64Only" xml:space="preserve"><value>Native Linux file operations require Linux x64.</value></data>
+  <data name="SearchReviewFiles" xml:space="preserve">
+    <value>Search review filenames or paths</value>
+  </data>
+  <data name="ReviewResults" xml:space="preserve">
+    <value>Showing {0} of {1} files awaiting review</value>
+  </data>
+  <data name="ReviewEmpty" xml:space="preserve">
+    <value>No files awaiting review.</value>
+  </data>
+  <data name="ReviewNoMatches" xml:space="preserve">
+    <value>No matching files. Try another search or clear it.</value>
+  </data>
 </root>
