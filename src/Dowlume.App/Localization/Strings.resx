@@ -163,7 +163,7 @@
     <value>Save settings</value>
   </data>
   <data name="LocalonlyNoaccountcloudsyncortelemetryClosing" xml:space="preserve">
-    <value>Local only. No account, cloud sync, or telemetry. Closing the window stops monitoring; Hide to tray keeps it running.</value>
+    <value>Files are processed locally. No account, cloud sync, or telemetry. Closing the window stops monitoring; Hide to tray keeps it running.</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
@@ -461,7 +461,7 @@ The original location must be available and the file must be unchanged. Undoing 
     <value>Start Dowlume when I sign in</value>
   </data>
   <data name="PreviewPrivacyNotice" xml:space="preserve">
-    <value>Local only. No account, cloud sync, or telemetry. Closing the window exits Dowlume.</value>
+    <value>Files are processed locally. No account, cloud sync, or telemetry. Closing the window exits Dowlume.</value>
   </data>
   <data name="PreviewInitialStatus" xml:space="preserve">
     <value>Choose a folder in Settings, then inspect its preview. File operations are unavailable on this platform.</value>
@@ -483,10 +483,10 @@ The original location must be available and the file must be unchanged. Undoing 
   <data name="MacHideOthers" xml:space="preserve"><value>Hide Others</value></data>
   <data name="MacShowAll" xml:space="preserve"><value>Show All</value></data>
   <data name="MacQuit" xml:space="preserve"><value>Quit</value></data>
-  <data name="MacPrivacyNotice" xml:space="preserve"><value>Local only. No account, cloud sync, or telemetry. Closing the window quits after finishing active work. Native Hide keeps monitoring running.</value></data>
+  <data name="MacPrivacyNotice" xml:space="preserve"><value>Files are processed locally. No account, cloud sync, or telemetry. Closing the window quits after finishing active work. Native Hide keeps monitoring running.</value></data>
   <data name="PortableFolderNames" xml:space="preserve"><value>Category names must be portable folder names.</value></data>
   <data name="LoginStartupExplanation" xml:space="preserve"><value>Applied immediately for your account. Monitoring starts paused. Your desktop settings may also disable login startup.</value></data>
-  <data name="LinuxPrivacyNotice" xml:space="preserve"><value>Local only. No account, cloud sync, or telemetry. Closing the window quits after finishing active work.</value></data>
+  <data name="LinuxPrivacyNotice" xml:space="preserve"><value>Files are processed locally. No account, cloud sync, or telemetry. Closing the window quits after finishing active work.</value></data>
   <data name="LinuxFolderScope" xml:space="preserve"><value>Linux: choose local ext4 folders on the same mount, outside cloud synchronization. Links and cross-volume moves are unavailable.</value></data>
   <data name="LinuxSameVolumeOnly" xml:space="preserve"><value>Linux file operations require local ext4 folders on the same mount, with a verifiable filesystem UUID and creation time. Choose another destination.</value></data>
   <data name="LinuxDesktopPath" xml:space="preserve"><value>The application path cannot be represented safely in a desktop entry.</value></data>
@@ -503,4 +503,29 @@ The original location must be available and the file must be unchanged. Undoing 
   <data name="ReviewNoMatches" xml:space="preserve">
     <value>No matching files. Try another search or clear it.</value>
   </data>
+  <data name="UsePeriodicOrganization" xml:space="preserve"><value>Organize periodically instead of continuously</value></data>
+  <data name="PeriodicOrganizationHelp" xml:space="preserve"><value>Optional. Preview and confirm to activate. Waits before the first check and between passes; only completed downloads are eligible. Restarting leaves organization paused.</value></data>
+  <data name="OrganizationInterval" xml:space="preserve"><value>Interval in minutes (1–1440)</value></data>
+  <data name="PeriodicOrganizationActive" xml:space="preserve"><value>Periodic organization is on · every {0} minutes</value></data>
+  <data name="PeriodicOrganizationStarted" xml:space="preserve"><value>Periodic organization enabled. The first check starts in {0} minutes. Pause to stop future checks.</value></data>
+  <data name="OrganizationIntervalInvalid" xml:space="preserve"><value>The organization interval must be 1–1440 minutes.</value></data>
+  <data name="PeriodicOrganizationConfirmation" xml:space="preserve"><value>Check this folder every {0} minutes?
+
+{1}
+
+The first pass waits for the interval. Each pass organizes completed downloads, including files added after this preview, and moves aging files to Expiring Files. Busy and unfinished downloads are skipped. No files will be deleted automatically. You can pause at any time; restarting Dowlume leaves organization paused.</value></data>
+  <data name="ApplicationUpdates" xml:space="preserve"><value>Application updates</value></data>
+  <data name="CheckForUpdates" xml:space="preserve"><value>Check for updates</value></data>
+  <data name="UpdatePrivacy" xml:space="preserve"><value>Updates are checked only when you ask. GitHub receives a network request, but no file names or paths.</value></data>
+  <data name="UpdateInstall" xml:space="preserve"><value>Download and install update…</value></data>
+  <data name="UpdateOpenRelease" xml:space="preserve"><value>Open release and instructions</value></data>
+  <data name="UpdateChecking" xml:space="preserve"><value>Checking for updates…</value></data>
+  <data name="UpdateAvailable" xml:space="preserve"><value>Dowlume {0} is available. Installed version: {1}.</value></data>
+  <data name="UpdateCurrent" xml:space="preserve"><value>No newer stable release is available. Current version: {0}.</value></data>
+  <data name="UpdateCheckFailed" xml:space="preserve"><value>Could not check for updates. Check your connection or try again later.</value></data>
+  <data name="UpdateConfirmTitle" xml:space="preserve"><value>Update Dowlume?</value></data>
+  <data name="UpdateConfirm" xml:space="preserve"><value>Download Dowlume {0} from GitHub and verify its checksum? Dowlume will pause organization and close before opening the installer. Install over the existing copy; your profile and organized files are retained. The installer is currently unsigned and Windows may ask for confirmation.</value></data>
+  <data name="UpdateDownloading" xml:space="preserve"><value>Downloading and verifying the update…</value></data>
+  <data name="UpdateClosing" xml:space="preserve"><value>Update verified. Closing Dowlume to open the installer…</value></data>
+  <data name="UpdateFailed" xml:space="preserve"><value>The update could not be prepared or verified. Nothing was installed. Try again later.</value></data>
 </root>

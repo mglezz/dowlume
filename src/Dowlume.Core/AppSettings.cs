@@ -7,6 +7,11 @@ public sealed record AppSettings
     public string Language { get; init; } = "en";
 
     public string DownloadsPath { get; init; } = string.Empty;
+    public bool UsePeriodicOrganization
+    {
+        get; init;
+    }
+    public int OrganizationIntervalMinutes { get; init; } = 10;
     public List<CategoryRule> Categories
     {
         get; init;
@@ -24,11 +29,16 @@ public sealed record AppSettings
     // Preview consent compares values, including collection order and case, not record references.
     public bool HasSameValuesAs(AppSettings? other) =>
         other is not null && Language == other.Language && DownloadsPath == other.DownloadsPath &&
+        UsePeriodicOrganization == other.UsePeriodicOrganization && OrganizationIntervalMinutes == other.OrganizationIntervalMinutes &&
         ExcludedExtensions.SequenceEqual(other.ExcludedExtensions) && Categories.Count == other.Categories.Count &&
         Categories.Zip(other.Categories).All(pair => pair.First.HasSameValuesAs(pair.Second));
 
     public void Validate()
     {
+        if (OrganizationIntervalMinutes is < 1 or > 1440)
+        {
+            throw new ArgumentException("The organization interval must be 1–1440 minutes.");
+        }
         if (!Path.IsPathFullyQualified(DownloadsPath))
         {
             throw new ArgumentException("Choose an absolute Downloads folder path.");

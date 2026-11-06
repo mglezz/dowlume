@@ -4,6 +4,20 @@
 
 Separo las reglas del dominio, los mecanismos de supervisión, la persistencia y la interfaz. En el [modelo de dominio](../requirements/domain-model.md) explico los conceptos; aquí describo cómo los implemento.
 
+## Organización periódica opcional
+
+Las compilaciones posteriores a 0.5.0 pueden usar `PeriodicDownloadMonitor` en lugar de `DownloadMonitor`. `UsePeriodicOrganization` vale false por defecto; `OrganizationIntervalMinutes` vale 10 y admite de 1 a 1440 minutos. Ambos valores se comparan al validar el consentimiento de la vista previa y se guardan en el JSON existente, sin migración del esquema. Elegir el modo no lo activa: cada inicio sigue exigiendo vista previa y confirmación.
+
+El trabajador espera el intervalo antes de la primera pasada, reconcilia archivos registrados y enumera únicamente los archivos de la raíz, utilizando el mismo organizador y sus comprobaciones de disponibilidad y movimiento. No emplea vigilante ni cola de eventos. El siguiente intervalo empieza al terminar la pasada; los errores se notifican sin solapar trabajo ni impedir intentos posteriores. La cancelación detiene la espera y el descubrimiento, y el cierre espera el trabajo activo. La inyección de `TimeProvider` permite pruebas deterministas sin reducir los intervalos reales.
+
+## Actualizaciones manuales
+
+`AppUpdates` consulta el endpoint público fijo de la última publicación de GitHub solo mediante una orden de la interfaz. Compara numéricamente versiones estables de tres componentes y excluye borradores, preliminares y versiones anteriores. Construye las páginas oficiales a partir de la versión validada. El instalador Windows exige el nombre y URL esperados, tamaño limitado y SHA-256 de los metadatos de GitHub. Solo sigue redirecciones HTTPS de GitHub y su servidor release-assets; limita tamaño, tiempo y cancelación de las peticiones.
+
+La instalación directa exige que el registro de desinstalación Windows corresponda al ejecutable actual. Descarga a una carpeta temporal propia, verifica tamaño y huella, detiene la organización y solicita el cierre ordenado. `Program` abre el instalador interactivo tras salir del ciclo de la aplicación y liberar el mutex, con una segunda verificación de huella antes de ejecutar. El AppId estable y la selección de carpeta previa de Inno Setup permiten actualizar sobre la copia existente; el perfil está fuera de esa carpeta. Los fallos al abrir el instalador quedan registrados y la descarga permanece en la carpeta temporal.
+
+Se confía en el repositorio y sus metadatos; SHA-256 no sustituye una firma de editor y los instaladores siguen sin firmar. No hay instalación silenciosa, elevación, consultas automáticas ni sustitución de portables. Otras distribuciones abren las instrucciones oficiales. Las pruebas usan respuestas y archivos inertes; el flujo con instalador real requiere aceptación nativa antes de publicar.
+
 ## Responsabilidades
 
 | Proyecto | Responsabilidad |

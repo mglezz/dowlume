@@ -297,6 +297,17 @@
         <ScrollViewer Margin="0,20,0,0" Padding="0,0,14,0">
           <StackPanel Spacing="18" IsEnabled="{Binding CanConfigure}">
             <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Makeroomforyourroutine]}" Classes="heading" />
+            <Border Classes="card">
+              <StackPanel Spacing="8">
+                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[ApplicationUpdates]}" FontWeight="SemiBold" />
+                <TextBlock Text="{Binding CurrentVersion}" />
+                <TextBlock Text="{Binding UpdateMessage}" TextWrapping="Wrap" Classes="muted" />
+                <WrapPanel>
+                  <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[CheckForUpdates]}" Command="{Binding CheckForUpdatesCommand}" Margin="0,0,8,8" />
+                  <Button Content="{Binding UpdateActionLabel}" Command="{Binding ApplyUpdateCommand}" IsVisible="{Binding HasUpdate}" Margin="0,0,0,8" />
+                </WrapPanel>
+              </StackPanel>
+            </Border>
             <StackPanel Spacing="6">
               <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Language]}" FontWeight="SemiBold" />
               <ComboBox AutomationProperties.AutomationId="LanguageSelector" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Language]}" MinWidth="180" />
@@ -349,6 +360,14 @@
               <TextBox Text="{Binding ExcludedExtensions}" PlaceholderText="{ReflectionBinding $parent[Window].DataContext.Text[Forexamplelogbak]}" />
               <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[BrowserpartialdownloadsarealwaysexcludedUnrecognizedextensionsgo]}" Classes="muted" />
             </StackPanel>
+            <Border Classes="card" IsVisible="{Binding SupportsFileOperations}">
+              <StackPanel Spacing="8">
+                <CheckBox Content="{ReflectionBinding $parent[Window].DataContext.Text[UsePeriodicOrganization]}" IsChecked="{Binding UsePeriodicOrganization}" />
+                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[PeriodicOrganizationHelp]}" TextWrapping="Wrap" Classes="muted" />
+                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[OrganizationInterval]}" FontWeight="SemiBold" />
+                <NumericUpDown Value="{Binding OrganizationIntervalMinutes}" IsEnabled="{Binding UsePeriodicOrganization}" Minimum="1" Maximum="1440" FormatString="0" Width="160" HorizontalAlignment="Left" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[OrganizationInterval]}" />
+              </StackPanel>
+            </Border>
             <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Savesettings]}" Command="{Binding SaveSettingsCommand}" Classes="primary" />
             <TextBlock IsVisible="{Binding IsMacOS}" Text="{ReflectionBinding $parent[Window].DataContext.Text[MacFolderScope]}" TextWrapping="Wrap" Classes="muted" />
             <TextBlock IsVisible="{Binding IsLinux}" Text="{ReflectionBinding $parent[Window].DataContext.Text[LinuxFolderScope]}" TextWrapping="Wrap" Classes="muted" />
