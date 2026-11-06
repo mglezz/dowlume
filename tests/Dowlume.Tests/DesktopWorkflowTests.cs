@@ -16,6 +16,60 @@ namespace Dowlume.Tests;
 public sealed class DesktopWorkflowTests
 {
     [Fact]
+    public async Task UpdateCheckIsManualAndInstallationRequiresConsentAndPausesOrganization()
+    {
+        using var session = HeadlessUnitTestSession.StartNew(typeof(TestAppBuilder));
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+        await session.Dispatch(async () =>
+        {
+            using var workspace = new TemporaryWorkspace();
+            var store = new SqliteStateStore(workspace.Database);
+            store.SaveSettings(new AppSettings { DownloadsPath = workspace.Downloads, UsePeriodicOrganization = true });
+            var organizer = new DownloadOrganizer(store, FixtureFileMover.Create(workspace), new FileReadiness());
+            var updates = new TestUpdates();
+            var dialogs = new TestDialogs();
+            var model = new MainViewModel(store, organizer, dialogs, new DiagnosticLog(Path.Combine(workspace.Root, "diagnostics.jsonl")), updates: updates);
+            try
+            {
+                Assert.Equal(0, updates.Checks);
+                Assert.False(model.HasUpdate);
+                await model.CheckForUpdatesCommand.ExecuteAsync(null);
+                Assert.Equal(1, updates.Checks);
+                Assert.True(model.HasUpdate);
+                Assert.Contains("0.6.0", model.UpdateMessage);
+                updates.CanInstall = false;
+                await model.ApplyUpdateCommand.ExecuteAsync(null);
+                Assert.Equal(1, updates.OpenedReleases);
+                Assert.Equal(0, updates.Downloads);
+                updates.CanInstall = true;
+                await model.ApplyUpdateCommand.ExecuteAsync(null);
+                Assert.Equal(0, updates.Downloads);
+                Assert.False(updates.Prepared);
+                dialogs.Confirm = true;
+                await model.PreviewCommand.ExecuteAsync(null);
+                await model.StartCommand.ExecuteAsync(null);
+                Assert.True(model.IsMonitoring);
+                updates.FailDownload = true;
+                await model.ApplyUpdateCommand.ExecuteAsync(null);
+                Assert.False(updates.Prepared);
+                Assert.True(model.IsMonitoring);
+                Assert.Contains("Nothing was installed", model.UpdateMessage);
+                updates.FailDownload = false;
+                await model.ApplyUpdateCommand.ExecuteAsync(null);
+                Assert.True(updates.Prepared);
+                Assert.False(model.IsMonitoring);
+                Assert.Empty(store.GetOperations());
+                updates.FailCheck = true;
+                await model.CheckForUpdatesCommand.ExecuteAsync(null);
+                Assert.False(model.HasUpdate);
+                Assert.Contains("Could not check", model.UpdateMessage);
+            }
+            finally { await model.ShutdownAsync(); }
+            return true;
+        }, timeout.Token);
+    }
+
+    [Fact]
     public async Task PeriodicOrganizationRequiresConsentWaitsAndRestartsPaused()
     {
         using var session = HeadlessUnitTestSession.StartNew(typeof(TestAppBuilder));
@@ -452,6 +506,52 @@ public sealed class DesktopWorkflowTests
         }
     }
 
+
+    private sealed class TestUpdates : IAppUpdates
+    {
+        public bool CanInstall { get; set; } = true;
+        public int OpenedReleases
+        {
+            get; private set;
+        }
+        public int Checks
+        {
+            get; private set;
+        }
+        public int Downloads
+        {
+            get; private set;
+        }
+        public bool Prepared
+        {
+            get; private set;
+        }
+        public bool FailCheck
+        {
+            get; set;
+        }
+        public bool FailDownload
+        {
+            get; set;
+        }
+        public Task<AvailableUpdate?> CheckAsync(Version currentVersion, CancellationToken cancellationToken)
+        {
+            Checks++;
+            if (FailCheck)
+                throw new HttpRequestException();
+            return Task.FromResult<AvailableUpdate?>(new AvailableUpdate(new Version(0, 6, 0), new Uri("https://github.com/mglezz/dowlume/releases/tag/v0.6.0"),
+                new Uri("https://github.com/mglezz/dowlume/releases/download/v0.6.0/Dowlume-0.6.0-win-x64-setup.exe"), new string('a', 64), 10));
+        }
+        public Task<DownloadedUpdate> DownloadAsync(AvailableUpdate update, CancellationToken cancellationToken)
+        {
+            Downloads++;
+            if (FailDownload)
+                throw new IOException();
+            return Task.FromResult(new DownloadedUpdate("inert fixture", new string('a', 64)));
+        }
+        public void InstallAfterExit(DownloadedUpdate update) => Prepared = true;
+        public void OpenRelease(AvailableUpdate update) => OpenedReleases++;
+    }
 
     private sealed class TestStartup : IStartupRegistration
     {

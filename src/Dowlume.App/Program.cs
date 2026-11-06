@@ -6,6 +6,10 @@ namespace Dowlume.App;
 
 internal static class Program
 {
+    internal static DownloadedUpdate? PendingInstaller
+    {
+        get; set;
+    }
     internal static string DataDirectory { get; private set; } = DesktopPlatform.Current.DataDirectory;
 
     internal static bool IsCustomDataDirectory
@@ -48,8 +52,23 @@ internal static class Program
             return;
         }
         // Setup checks this marker before replacing or uninstalling running binaries.
-        using Mutex? installationGuard = OperatingSystem.IsWindows() ? new Mutex(false, @"Local\Dowlume.Desktop") : null;
-        BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+        using (Mutex? installationGuard = OperatingSystem.IsWindows() ? new Mutex(false, @"Local\Dowlume.Desktop") : null)
+        {
+            BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+        }
+        // Setup must start only after the window, profile lock, and installation marker are released.
+        if (PendingInstaller is { } installer)
+        {
+            try
+            {
+                AppUpdates.LaunchInstaller(installer);
+            }
+            catch (Exception error)
+            {
+                new DiagnosticLog(Path.Combine(DataDirectory, "diagnostics.jsonl")).Write("update_launch_failed", error);
+                Environment.ExitCode = 1;
+            }
+        }
     }
 
     public static AppBuilder BuildAvaloniaApp()

@@ -42,6 +42,7 @@ public partial class App : Application
                 var model = new MainViewModel(store, organizer, new DesktopDialogs(window, text, platform.FileManager), log,
                     Program.IsCustomDataDirectory && platform.System != DesktopSystem.Windows ? new UnavailableStartupRegistration() : platform.Startup, text, platform.SuggestedDownloads);
                 window.DataContext = model;
+                model.UpdateInstallationReady += window.Close;
                 desktop.MainWindow = window;
                 if (platform.System == DesktopSystem.MacOS)
                     _macDesktop = new MacDesktopIntegration(this, desktop, window, text);

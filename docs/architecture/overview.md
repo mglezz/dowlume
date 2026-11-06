@@ -126,6 +126,14 @@ Localization belongs to `Dowlume.App`, using matching .NET resource files and a 
 
 Recognized historical messages are translated at presentation time; unknown messages are retained verbatim. Dates are displayed in local time with the selected culture. Enum values, paths, and diagnostic codes are language-independent. Native folder-picker controls follow the operating system language. A startup failure before settings can be read uses the English fallback.
 
+## Manual application updates
+
+`AppUpdates` reads the public fixed GitHub latest-release endpoint only on a UI command. Three-part stable versions are compared numerically; draft/prerelease and older versions are excluded. Release pages are constructed from the repository and validated version rather than arbitrary response URLs. A Windows installer must have the exact expected name/URL, bounded size, and SHA-256 digest from the [GitHub release asset metadata](https://docs.github.com/en/rest/releases/assets). Download redirects are limited to HTTPS GitHub and its release-assets host. Metadata and installer streams have size limits, timeouts, and shutdown cancellation.
+
+The Windows uninstall registration must identify the current executable before direct installation is offered. The download uses its own temporary directory, verifies length and hash, then stops monitoring and requests graceful window closure. `Program` launches the interactive installer after the application lifetime returns and releases the installer mutex. A second hash verification under a read handle precedes launch. [Inno Setup's stable AppId](https://jrsoftware.org/ishelp/topic_setup_appid.htm) and [previous directory selection](https://jrsoftware.org/ishelp/topic_setup_usepreviousappdir.htm) support installation over the existing copy. The profile is outside the installation directory. Launch failures are logged and leave the downloaded installer available in temporary storage.
+
+This trusts the GitHub repository and release metadata; the hash is not independent publisher authentication, and Windows installers remain unsigned. No silent install, elevation, automatic polling, portable replacement, or non-Windows installer execution is provided. Other distributions open official instructions. Tests use inert responses and payloads; real installer handoff requires native acceptance before release.
+
 ## Diagnostics and references
 
 The bounded diagnostic log rotates at approximately 1 MB and excludes exception messages and stack traces because they can reveal paths. The private journal intentionally retains paths for recovery.

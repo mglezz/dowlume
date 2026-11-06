@@ -14,6 +14,18 @@ The Windows packages are unsigned. The macOS app uses an ad-hoc signature withou
 
 The package includes `START-HERE.txt`, which opens offline in a text editor. The installer adds a **Dowlume quick start** Start menu shortcut. Exit Dowlume, including any instance hidden in the tray, before upgrading or uninstalling; Setup refuses while the app is running. Installation and uninstall retain your files and local profile.
 
+## Update without uninstalling (in development for 0.6.0)
+
+Windows installers already support installing a newer version over the existing installation; uninstalling first is unnecessary. Close Dowlume, run the new installer, and retain the existing installation folder. The profile and organized files are retained.
+
+Source builds after 0.5.0 add **Settings → Check for updates**. Pause organization to access Settings. The check contacts the public GitHub release endpoint only when requested, without an account, credentials, file names, or paths; GitHub still receives ordinary connection information such as your IP address. It offers newer stable releases, excluding drafts and prereleases. Network failures leave local organization available.
+
+For a registered Windows installation, **Download and install update…** asks for confirmation, downloads the official installer to a separate temporary folder, verifies its published size and SHA-256, pauses organization, and exits before opening the interactive installer. Complete the installer using the existing folder. No uninstall is needed. The hash verifies consistency with GitHub's release metadata; it is not a publisher signature. Windows packages remain unsigned. A missing checksum or installer offers the official release page instead. If installer launch fails, reopen Dowlume and retry, or use the release page. Downloaded installers remain in the system temporary directory for normal OS cleanup.
+
+Portable Windows copies, macOS, Linux, and custom test profiles use **Open release and instructions**. On Ubuntu, installing the new `.deb` with `sudo apt install ./<new-package>.deb` upgrades the package. For portable copies, close the old application and extract the complete new archive into a separate permanent folder; continue using the existing profile and update any startup/menu registration to the new location. The button does not automatically replace portable applications or run privileged Linux commands.
+
+Version 0.5.0 does not contain this button: reaching the first release that includes it still requires installing that release normally. Native end-to-end acceptance of the new update flow is required before publishing 0.6.0.
+
 ## Choose a language
 
 Pause monitoring and open **Settings → Language**. Choose **English** or **Español**. Dowlume applies the choice immediately and saves it automatically for that profile, including when folder settings have unsaved edits. Those edits are not saved by changing language. Restarting retains the language; older profiles default to English.

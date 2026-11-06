@@ -14,6 +14,8 @@ Las siguientes prioridades propuestas son un resumen de organización más claro
 
 Antes de publicar 0.6.0, hay que validar la actualización desde 0.5.0, ambos idiomas, navegación por teclado, pausa y cierre durante una pasada, suspensión y reanudación, y los paquetes exactos en todas las plataformas compatibles. Se mantienen los criterios de seguridad de operaciones con archivos.
 
+También está implementada la búsqueda manual de actualizaciones: las instalaciones registradas de Windows pueden descargar un instalador oficial verificado por tamaño y huella y abrirlo tras el cierre ordenado; las demás distribuciones abren las instrucciones oficiales. No hay consultas automáticas de red. Antes de publicar, hay que probar un instalador publicado más reciente con un perfil Windows desechable, incluyendo cancelación, fallo al abrirlo y conservación del registro de inicio. Las pruebas de actualización de paquetes no bastan para aceptar este nuevo flujo de descarga e instalación.
+
 ## Versiones previstas hacia 1.0
 
 | Hito | Resultado | Criterios de aceptación |

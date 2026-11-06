@@ -89,6 +89,8 @@ public partial class MainViewModel : ObservableObject
 
     private void RefreshLanguage()
     {
+        OnPropertyChanged(nameof(UpdateMessage));
+        OnPropertyChanged(nameof(UpdateActionLabel));
         OnPropertyChanged(nameof(StatusMessage));
         OnPropertyChanged(nameof(ErrorMessage));
         OnPropertyChanged(nameof(MonitoringLabel));
@@ -136,9 +138,10 @@ public partial class MainViewModel : ObservableObject
     public ObservableCollection<CategorySummary> Categories { get; } = [];
 
     public MainViewModel(IStateStore store, DownloadOrganizer organizer, IDesktopDialogs dialogs, DiagnosticLog log,
-        IStartupRegistration? startup = null, Localizer? localizer = null, string? suggestedDownloads = null)
+        IStartupRegistration? startup = null, Localizer? localizer = null, string? suggestedDownloads = null, IAppUpdates? updates = null)
     {
         Text = localizer ?? new Localizer();
+        _updates = updates ?? new AppUpdates();
         _store = store;
         _organizer = organizer;
         if (IsPreviewPlatform)

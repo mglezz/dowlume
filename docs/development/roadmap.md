@@ -14,6 +14,8 @@ The next priorities are a clearer organization summary (last completed pass and 
 
 Before publishing 0.6.0, validate upgrades from 0.5.0, both interface languages, keyboard access, pause/shutdown during a pass, sleep/resume, and exact packages on all supported platforms. Keep the existing file-operation safety gates.
 
+Manual update checks are also implemented: registered Windows installations can download a size/hash-verified official installer and launch it after graceful exit; other distributions open the official release instructions. There is no automatic network polling. Before release, exercise a published newer installer on an installed disposable Windows profile, including cancellation, launch failure and retained startup registration. Package upgrade tests alone do not establish acceptance of this new download-to-install flow.
+
 ## Planned releases toward 1.0
 
 | Milestone | Intended outcome | Acceptance criteria |

@@ -163,7 +163,7 @@
     <value>Guardar ajustes</value>
   </data>
   <data name="LocalonlyNoaccountcloudsyncortelemetryClosing" xml:space="preserve">
-    <value>Todo es local. Sin cuenta, sincronización ni telemetría. Cerrar la ventana detiene la supervisión; ocultarla en la bandeja la mantiene activa.</value>
+    <value>Los archivos se procesan localmente. Sin cuenta, sincronización ni telemetría. Cerrar la ventana detiene la supervisión; ocultarla en la bandeja la mantiene activa.</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Idioma</value>
@@ -461,7 +461,7 @@ La ubicación original debe estar disponible y el archivo no debe haber cambiado
     <value>Iniciar Dowlume al iniciar sesión</value>
   </data>
   <data name="PreviewPrivacyNotice" xml:space="preserve">
-    <value>Todo es local. Sin cuenta, sincronización ni telemetría. Cerrar la ventana sale de Dowlume.</value>
+    <value>Los archivos se procesan localmente. Sin cuenta, sincronización ni telemetría. Cerrar la ventana sale de Dowlume.</value>
   </data>
   <data name="PreviewInitialStatus" xml:space="preserve">
     <value>Elige una carpeta en Ajustes y consulta su vista previa. Las operaciones de archivos no están disponibles en esta plataforma.</value>
@@ -483,10 +483,10 @@ La ubicación original debe estar disponible y el archivo no debe haber cambiado
   <data name="MacHideOthers" xml:space="preserve"><value>Ocultar las demás</value></data>
   <data name="MacShowAll" xml:space="preserve"><value>Mostrar todo</value></data>
   <data name="MacQuit" xml:space="preserve"><value>Salir</value></data>
-  <data name="MacPrivacyNotice" xml:space="preserve"><value>Todo es local. Sin cuenta, sincronización ni telemetría. Cerrar la ventana termina tras completar el trabajo activo. Ocultar en macOS mantiene la supervisión.</value></data>
+  <data name="MacPrivacyNotice" xml:space="preserve"><value>Los archivos se procesan localmente. Sin cuenta, sincronización ni telemetría. Cerrar la ventana termina tras completar el trabajo activo. Ocultar en macOS mantiene la supervisión.</value></data>
   <data name="PortableFolderNames" xml:space="preserve"><value>Los nombres de categoría deben ser válidos entre plataformas.</value></data>
   <data name="LoginStartupExplanation" xml:space="preserve"><value>Se aplica inmediatamente a tu cuenta. La supervisión empieza en pausa. Los ajustes del escritorio también pueden desactivar el inicio de sesión.</value></data>
-  <data name="LinuxPrivacyNotice" xml:space="preserve"><value>Todo es local. Sin cuenta, sincronización ni telemetría. Cerrar la ventana termina tras completar el trabajo activo.</value></data>
+  <data name="LinuxPrivacyNotice" xml:space="preserve"><value>Los archivos se procesan localmente. Sin cuenta, sincronización ni telemetría. Cerrar la ventana termina tras completar el trabajo activo.</value></data>
   <data name="LinuxFolderScope" xml:space="preserve"><value>Linux: elige carpetas ext4 locales del mismo montaje, fuera de la sincronización en la nube. No se admiten enlaces ni movimientos entre volúmenes.</value></data>
   <data name="LinuxSameVolumeOnly" xml:space="preserve"><value>Las operaciones en Linux requieren carpetas ext4 locales del mismo montaje, con UUID del sistema de archivos y fecha de creación verificables. Elige otro destino.</value></data>
   <data name="LinuxDesktopPath" xml:space="preserve"><value>La ruta de la aplicación no puede representarse de forma segura en una entrada del escritorio.</value></data>
@@ -514,4 +514,18 @@ La ubicación original debe estar disponible y el archivo no debe haber cambiado
 {1}
 
 La primera pasada espera el intervalo indicado. Cada pasada organiza descargas completas, incluidas las añadidas después de esta vista previa, y mueve los archivos antiguos a Expiring Files. Se omiten las descargas ocupadas o incompletas. No se eliminarán archivos automáticamente. Puedes pausar cuando quieras; al reiniciar Dowlume, la organización queda pausada.</value></data>
+  <data name="ApplicationUpdates" xml:space="preserve"><value>Actualizaciones de la aplicación</value></data>
+  <data name="CheckForUpdates" xml:space="preserve"><value>Buscar actualizaciones</value></data>
+  <data name="UpdatePrivacy" xml:space="preserve"><value>Solo se buscan actualizaciones cuando lo solicitas. GitHub recibe una petición de red, pero no nombres de archivos ni rutas.</value></data>
+  <data name="UpdateInstall" xml:space="preserve"><value>Descargar e instalar actualización…</value></data>
+  <data name="UpdateOpenRelease" xml:space="preserve"><value>Abrir publicación e instrucciones</value></data>
+  <data name="UpdateChecking" xml:space="preserve"><value>Buscando actualizaciones…</value></data>
+  <data name="UpdateAvailable" xml:space="preserve"><value>Dowlume {0} está disponible. Versión instalada: {1}.</value></data>
+  <data name="UpdateCurrent" xml:space="preserve"><value>No hay una versión estable más reciente. Versión actual: {0}.</value></data>
+  <data name="UpdateCheckFailed" xml:space="preserve"><value>No se pudieron buscar actualizaciones. Comprueba la conexión o inténtalo más tarde.</value></data>
+  <data name="UpdateConfirmTitle" xml:space="preserve"><value>¿Actualizar Dowlume?</value></data>
+  <data name="UpdateConfirm" xml:space="preserve"><value>¿Descargar Dowlume {0} de GitHub y verificar su suma de comprobación? Dowlume pausará la organización y se cerrará antes de abrir el instalador. Instala sobre la copia existente; se conservan tu perfil y los archivos organizados. El instalador actualmente no está firmado y Windows puede pedir confirmación.</value></data>
+  <data name="UpdateDownloading" xml:space="preserve"><value>Descargando y verificando la actualización…</value></data>
+  <data name="UpdateClosing" xml:space="preserve"><value>Actualización verificada. Cerrando Dowlume para abrir el instalador…</value></data>
+  <data name="UpdateFailed" xml:space="preserve"><value>No se pudo preparar o verificar la actualización. No se ha instalado nada. Inténtalo más tarde.</value></data>
 </root>

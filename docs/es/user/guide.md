@@ -12,6 +12,18 @@ Ejecuta `Dowlume-0.5.0-win-x64-setup.exe` sin permisos de administrador. Para la
 
 Incluyo `START-HERE.txt` para consulta sin conexión y un acceso **Dowlume quick start** en el menú Inicio. Cierra también cualquier instancia oculta en la bandeja antes de actualizar o desinstalar; el instalador se niega a continuar mientras la aplicación está abierta. Conservo los archivos organizados y el perfil local al desinstalar.
 
+## Actualizar sin desinstalar (en desarrollo para 0.6.0)
+
+El instalador de Windows ya permite instalar una versión nueva sobre la existente, sin desinstalar primero. Cierra Dowlume, ejecuta el nuevo instalador y conserva la carpeta de instalación. Se mantienen el perfil y los archivos organizados.
+
+Las compilaciones posteriores a 0.5.0 añaden **Ajustes → Buscar actualizaciones**. Pausa la organización para acceder a Ajustes. La consulta contacta con el servicio público de publicaciones de GitHub solo cuando lo solicitas, sin cuenta, credenciales, nombres de archivos ni rutas; GitHub recibe los datos normales de conexión, como tu dirección IP. Solo ofrece versiones estables más recientes, excluyendo borradores y versiones preliminares. Un fallo de red no impide organizar archivos localmente.
+
+En una instalación registrada de Windows, **Descargar e instalar actualización…** pide confirmación, descarga el instalador oficial a una carpeta temporal independiente, verifica el tamaño y SHA-256 publicados, pausa la organización y sale antes de abrir el instalador interactivo. Completa la instalación conservando la carpeta existente. No hace falta desinstalar. La suma verifica la coherencia con los metadatos de GitHub; no es una firma de editor. Los paquetes Windows siguen sin estar firmados. Si falta el instalador o su suma, se ofrece la publicación oficial. Si el instalador no se abre, vuelve a abrir Dowlume y reinténtalo o utiliza la publicación oficial. Los instaladores descargados quedan en la carpeta temporal para la limpieza habitual del sistema.
+
+Las copias portables de Windows, macOS, Linux y los perfiles de prueba personalizados ofrecen **Abrir publicación e instrucciones**. En Ubuntu, `sudo apt install ./<nuevo-paquete>.deb` actualiza el paquete. Para copias portables, cierra la aplicación anterior y extrae el archivo completo en otra carpeta permanente; conserva el perfil y actualiza los registros de inicio o menú que apunten a la ubicación anterior. El botón no sustituye automáticamente aplicaciones portables ni ejecuta órdenes Linux con privilegios.
+
+La versión 0.5.0 no contiene este botón: la primera versión que lo incorpore debe instalarse normalmente. Antes de publicar 0.6.0 queda pendiente la aceptación nativa del flujo completo de actualización.
+
 ## Elegir idioma
 
 Pausa la supervisión y abre **Settings → Language**. Selecciona **Español** o **English**. El cambio se aplica y se guarda inmediatamente para ese perfil. Al reiniciar se conserva; los perfiles antiguos empiezan en inglés.
