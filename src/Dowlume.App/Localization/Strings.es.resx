@@ -503,4 +503,15 @@ La ubicación original debe estar disponible y el archivo no debe haber cambiado
   <data name="ReviewNoMatches" xml:space="preserve">
     <value>No hay coincidencias. Prueba otra búsqueda o bórrala.</value>
   </data>
+  <data name="UsePeriodicOrganization" xml:space="preserve"><value>Organizar por intervalos en lugar de continuamente</value></data>
+  <data name="PeriodicOrganizationHelp" xml:space="preserve"><value>Opcional. Revisa la vista previa y confirma para activarlo. Espera antes de la primera revisión y entre cada pasada; solo organiza descargas completas. Al reiniciar queda pausado.</value></data>
+  <data name="OrganizationInterval" xml:space="preserve"><value>Intervalo en minutos (1–1440)</value></data>
+  <data name="PeriodicOrganizationActive" xml:space="preserve"><value>Organización periódica activada · cada {0} minutos</value></data>
+  <data name="PeriodicOrganizationStarted" xml:space="preserve"><value>Organización periódica activada. La primera revisión comienza en {0} minutos. Pausa para detener las siguientes revisiones.</value></data>
+  <data name="OrganizationIntervalInvalid" xml:space="preserve"><value>El intervalo de organización debe ser de 1 a 1440 minutos.</value></data>
+  <data name="PeriodicOrganizationConfirmation" xml:space="preserve"><value>¿Revisar esta carpeta cada {0} minutos?
+
+{1}
+
+La primera pasada espera el intervalo indicado. Cada pasada organiza descargas completas, incluidas las añadidas después de esta vista previa, y mueve los archivos antiguos a Expiring Files. Se omiten las descargas ocupadas o incompletas. No se eliminarán archivos automáticamente. Puedes pausar cuando quieras; al reiniciar Dowlume, la organización queda pausada.</value></data>
 </root>

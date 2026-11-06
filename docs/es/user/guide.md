@@ -40,6 +40,14 @@ El icono puede aparecer entre los iconos ocultos del área de notificación. Un 
 
 En **Ajustes**, **Iniciar Dowlume al entrar en Windows** se aplica inmediatamente a tu cuenta y está desactivado inicialmente. La supervisión sigue empezando en pausa. Desactívalo antes de mover una copia portátil y actívalo de nuevo desde su ubicación final. Windows también puede desactivar aplicaciones de inicio. La desinstalación elimina la entrada solo si pertenece a esa instalación.
 
+## Organización periódica (en desarrollo para 0.6.0)
+
+Las compilaciones del código posteriores a 0.5.0 incluyen **Ajustes → Organizar por intervalos en lugar de continuamente**. Es opcional y está desactivada por defecto. Elige un intervalo entre 1 y 1440 minutos (10 por defecto), guarda, actualiza la vista previa y pulsa **Organizar y supervisar** para confirmar.
+
+Este modo no organiza nada inmediatamente, ni siquiera los archivos de la vista previa. La primera pasada espera el intervalo elegido. Cada pasada revisa los archivos directamente en la carpeta elegida y realiza las comprobaciones habituales de antigüedad y recuperación. Las nuevas descargas pueden organizarse en pasadas posteriores; se mantienen las protecciones para archivos incompletos, ocupados, recientes, excluidos y ya registrados. No se importan subcarpetas existentes. Actividad y Deshacer siguen disponibles.
+
+El modo periódico no utiliza un vigilante de cambios del sistema de archivos. Después de cada pasada completa espera otro intervalo: las pasadas lentas no se solapan ni acumulan ejecuciones pendientes. La aplicación debe seguir abierta; no es una tarea programada del sistema operativo. La suspensión del equipo puede retrasar las revisiones. **Pausar** cancela las siguientes revisiones y espera a que una operación ya registrada termine de forma segura. Cambiar el intervalo o el modo exige una nueva vista previa. Al reiniciar se recuerda la preferencia, pero la organización siempre queda pausada.
+
 ## Revisar archivos
 
 Desactivé la papelera nativa en v0.1.0 porque las [pruebas de capacidad](../archive/recycle-capacity-investigation.md) no conservaron los archivos de forma fiable. Puedes mantenerlos en revisión o usar las decisiones disponibles. La cuarentena recuperable es una propuesta, todavía no una función.

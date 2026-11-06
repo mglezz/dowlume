@@ -46,6 +46,14 @@ The Dowlume icon appears in the Windows notification area, sometimes inside the 
 
 On Windows, in **Settings**, enable **Start Dowlume when I sign in** to open this copy of the application at sign-in. The change applies immediately to your account and is off by default. Monitoring still starts paused. Disable the option before relocating a portable copy; enable it again from the new location. Windows Settings can independently disable startup applications. Uninstall removes the startup entry when it belongs to that installation.
 
+## Periodic organization (in development for 0.6.0)
+
+Source builds after 0.5.0 offer **Settings → Organize periodically instead of continuously**. This optional mode is off by default. Choose an interval from 1 to 1440 minutes (10 by default), save, refresh the preview, and select **Organize and monitor** to confirm the schedule.
+
+Nothing is organized immediately in this mode, including previewed files. The first pass waits for the chosen interval. Each pass checks files directly in the selected folder and runs the usual aging/recovery checks. New arrivals are eligible on later passes; partial, busy, recent, excluded, and already tracked files retain the usual protections. Existing subfolders are not imported. Activity and eligible Undo work as before.
+
+There is no filesystem watcher in periodic mode. A full interval follows each completed pass, so slow passes never overlap or accumulate catch-up runs. The application must remain running; this is not an operating-system scheduled task. Sleep can delay checks. **Pause** cancels pending checks and waits for any already journaled operation to finish safely. Changing the interval or mode requires a new preview. Restarting remembers the preference but always leaves organization paused.
+
 ## Review files
 
 **Recycling is unavailable:** native recycling is disabled because Windows Recycle Bin did not reliably preserve files in [capacity testing](../archive/recycle-capacity-investigation.md). Leave files in Review or use Keep, Snooze, or Move. A future recoverable quarantine is documented but is not implemented.

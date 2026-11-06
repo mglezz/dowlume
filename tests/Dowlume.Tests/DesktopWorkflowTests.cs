@@ -16,6 +16,54 @@ namespace Dowlume.Tests;
 public sealed class DesktopWorkflowTests
 {
     [Fact]
+    public async Task PeriodicOrganizationRequiresConsentWaitsAndRestartsPaused()
+    {
+        using var session = HeadlessUnitTestSession.StartNew(typeof(TestAppBuilder));
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+        await session.Dispatch(async () =>
+        {
+            using var workspace = new TemporaryWorkspace();
+            string source = workspace.CreateFile("scheduled.pdf");
+            var store = new SqliteStateStore(workspace.Database);
+            store.SaveSettings(new AppSettings { DownloadsPath = workspace.Downloads });
+            var organizer = new DownloadOrganizer(store, FixtureFileMover.Create(workspace), new FileReadiness(TimeSpan.Zero, TimeSpan.Zero));
+            var dialogs = new TestDialogs();
+            var log = new DiagnosticLog(Path.Combine(workspace.Root, "diagnostics.jsonl"));
+            var model = new MainViewModel(store, organizer, dialogs, log);
+            try
+            {
+                await model.PreviewCommand.ExecuteAsync(null);
+                model.UsePeriodicOrganization = true;
+                await model.StartCommand.ExecuteAsync(null);
+                Assert.Equal(0, dialogs.ConfirmationCount);
+                await model.PreviewCommand.ExecuteAsync(null);
+                await model.StartCommand.ExecuteAsync(null);
+                Assert.False(model.IsMonitoring);
+                Assert.Equal(1, dialogs.ConfirmationCount);
+                dialogs.Confirm = true;
+                await model.StartCommand.ExecuteAsync(null);
+                Assert.True(model.IsMonitoring);
+                Assert.False(model.CanConfigure);
+                Assert.Contains("every 10 minutes", model.MonitoringLabel);
+                Assert.True(File.Exists(source));
+                Assert.Empty(store.GetOperations());
+                await model.PauseCommand.ExecuteAsync(null);
+                Assert.False(model.IsMonitoring);
+                Assert.True(model.CanConfigure);
+                await model.StartCommand.ExecuteAsync(null);
+                Assert.False(model.IsMonitoring);
+            }
+            finally { await model.ShutdownAsync(); }
+            var restarted = new MainViewModel(store, organizer, dialogs, log);
+            Assert.True(restarted.UsePeriodicOrganization);
+            Assert.False(restarted.IsMonitoring);
+            Assert.False(restarted.HasPreview);
+            await restarted.ShutdownAsync();
+            return true;
+        }, timeout.Token);
+    }
+
+    [Fact]
     public async Task ReviewSearchPreservesTotalsAndClearsHiddenSelectionsWithoutChangingFiles()
     {
         using var session = HeadlessUnitTestSession.StartNew(typeof(TestAppBuilder));

@@ -349,6 +349,14 @@
               <TextBox Text="{Binding ExcludedExtensions}" PlaceholderText="{ReflectionBinding $parent[Window].DataContext.Text[Forexamplelogbak]}" />
               <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[BrowserpartialdownloadsarealwaysexcludedUnrecognizedextensionsgo]}" Classes="muted" />
             </StackPanel>
+            <Border Classes="card" IsVisible="{Binding SupportsFileOperations}">
+              <StackPanel Spacing="8">
+                <CheckBox Content="{ReflectionBinding $parent[Window].DataContext.Text[UsePeriodicOrganization]}" IsChecked="{Binding UsePeriodicOrganization}" />
+                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[PeriodicOrganizationHelp]}" TextWrapping="Wrap" Classes="muted" />
+                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[OrganizationInterval]}" FontWeight="SemiBold" />
+                <NumericUpDown Value="{Binding OrganizationIntervalMinutes}" IsEnabled="{Binding UsePeriodicOrganization}" Minimum="1" Maximum="1440" FormatString="0" Width="160" HorizontalAlignment="Left" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[OrganizationInterval]}" />
+              </StackPanel>
+            </Border>
             <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Savesettings]}" Command="{Binding SaveSettingsCommand}" Classes="primary" />
             <TextBlock IsVisible="{Binding IsMacOS}" Text="{ReflectionBinding $parent[Window].DataContext.Text[MacFolderScope]}" TextWrapping="Wrap" Classes="muted" />
             <TextBlock IsVisible="{Binding IsLinux}" Text="{ReflectionBinding $parent[Window].DataContext.Text[LinuxFolderScope]}" TextWrapping="Wrap" Classes="muted" />

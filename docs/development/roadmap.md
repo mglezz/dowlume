@@ -6,6 +6,14 @@ Version 0.5.0 provides the Windows x64, macOS Apple Silicon and Ubuntu 24.04 LTS
 
 These milestones describe intended scope, not release dates. Additional 0.x releases may be needed before 1.0. Support expands only after native acceptance; a successful build alone is insufficient.
 
+## Working toward 0.6.0
+
+The current source adds opt-in periodic organization with a configurable 1–1440 minute interval, explicit preview/confirmation, sequential passes, and paused startup. Review search and clearer tab selection are also available after 0.5.0. These changes are not a published 0.6.0 package.
+
+The next priorities are a clearer organization summary (last completed pass and next check), a one-off organization action for users who do not want background monitoring, and read-only storage insights by category. Duplicate detection should begin with a preview/report, without automatic deletion. These are proposed follow-ups, not implemented features.
+
+Before publishing 0.6.0, validate upgrades from 0.5.0, both interface languages, keyboard access, pause/shutdown during a pass, sleep/resume, and exact packages on all supported platforms. Keep the existing file-operation safety gates.
+
 ## Planned releases toward 1.0
 
 | Milestone | Intended outcome | Acceptance criteria |

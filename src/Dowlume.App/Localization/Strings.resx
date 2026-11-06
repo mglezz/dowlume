@@ -503,4 +503,15 @@ The original location must be available and the file must be unchanged. Undoing 
   <data name="ReviewNoMatches" xml:space="preserve">
     <value>No matching files. Try another search or clear it.</value>
   </data>
+  <data name="UsePeriodicOrganization" xml:space="preserve"><value>Organize periodically instead of continuously</value></data>
+  <data name="PeriodicOrganizationHelp" xml:space="preserve"><value>Optional. Preview and confirm to activate. Waits before the first check and between passes; only completed downloads are eligible. Restarting leaves organization paused.</value></data>
+  <data name="OrganizationInterval" xml:space="preserve"><value>Interval in minutes (1–1440)</value></data>
+  <data name="PeriodicOrganizationActive" xml:space="preserve"><value>Periodic organization is on · every {0} minutes</value></data>
+  <data name="PeriodicOrganizationStarted" xml:space="preserve"><value>Periodic organization enabled. The first check starts in {0} minutes. Pause to stop future checks.</value></data>
+  <data name="OrganizationIntervalInvalid" xml:space="preserve"><value>The organization interval must be 1–1440 minutes.</value></data>
+  <data name="PeriodicOrganizationConfirmation" xml:space="preserve"><value>Check this folder every {0} minutes?
+
+{1}
+
+The first pass waits for the interval. Each pass organizes completed downloads, including files added after this preview, and moves aging files to Expiring Files. Busy and unfinished downloads are skipped. No files will be deleted automatically. You can pause at any time; restarting Dowlume leaves organization paused.</value></data>
 </root>

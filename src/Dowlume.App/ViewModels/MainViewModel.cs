@@ -19,13 +19,15 @@ public partial class MainViewModel : ObservableObject
     private readonly IStartupRegistration? _startup;
     private readonly string _suggestedDownloads;
     private readonly CancellationTokenSource _shutdown = new();
-    private DownloadMonitor? _monitor;
+    private IAsyncDisposable? _monitor;
     private AppSettings? _previewSettings;
     private readonly SemaphoreSlim _refreshGate = new(1, 1);
     private Task _activeWork = Task.CompletedTask;
 
     [ObservableProperty] private string _downloadsPath = string.Empty;
     [ObservableProperty] private string _excludedExtensions = string.Empty;
+    [ObservableProperty] private bool _usePeriodicOrganization;
+    [ObservableProperty] private int _organizationIntervalMinutes = 10;
     private string _statusMessage = "Choose a folder, preview the changes, then start organizing.";
     private object[] _statusArguments = [];
     public string StatusMessage
@@ -123,7 +125,9 @@ public partial class MainViewModel : ObservableObject
     public bool CanReviewSelectedFile => SupportsFileOperations && IsIdle && SelectedReview is not null;
     public bool CanUndoSelectedOperation => SupportsFileOperations && IsIdle && SelectedOperation?.CanUndo == true;
     public bool CanConfigure => !IsBusy && !IsMonitoring;
-    public string MonitoringLabel => Text.Translate(IsMonitoring ? "Monitoring is on" : "Monitoring is paused");
+    public string MonitoringLabel => IsMonitoring && UsePeriodicOrganization
+        ? Text.Format("Periodic organization is on · every {0} minutes", OrganizationIntervalMinutes)
+        : Text.Translate(IsMonitoring ? "Monitoring is on" : "Monitoring is paused");
     public ObservableCollection<CategoryRuleViewModel> Rules { get; } = [];
     public ObservableCollection<PreviewItem> PreviewItems { get; } = [];
     public ObservableCollection<TrackedFile> ReviewFiles { get; } = [];
@@ -153,6 +157,8 @@ public partial class MainViewModel : ObservableObject
         _selectedLanguage = Languages.Single(language => language.Code == Text.Language);
         RefreshLanguage();
         DownloadsPath = settings.DownloadsPath;
+        UsePeriodicOrganization = settings.UsePeriodicOrganization;
+        OrganizationIntervalMinutes = settings.OrganizationIntervalMinutes;
         ExcludedExtensions = string.Join(", ", settings.ExcludedExtensions);
         foreach (CategoryRule rule in settings.Categories)
         {
@@ -240,23 +246,35 @@ public partial class MainViewModel : ObservableObject
         {
             throw new InvalidOperationException("Preview the current settings before starting.");
         }
-        if (!await _dialogs.ConfirmAsync(Text.Translate("Start organizing downloads?"),
-                Text.Format("Organize {0} previewed files and monitor this folder for completed downloads?\n\n{1}\n\nFuture and currently unfinished downloads will also be organized. Aging files will move to Expiring Files for your review. No files will be deleted automatically.", PreviewItems.Count, settings.DownloadsPath), Text.Translate("Organize and monitor")))
+        string confirmation = settings.UsePeriodicOrganization
+            ? Text.Format("Check this folder every {0} minutes?\n\n{1}\n\nThe first pass waits for the interval. Each pass organizes completed downloads, including files added after this preview, and moves aging files to Expiring Files. Busy and unfinished downloads are skipped. No files will be deleted automatically. You can pause at any time; restarting Dowlume leaves organization paused.", settings.OrganizationIntervalMinutes, settings.DownloadsPath)
+            : Text.Format("Organize {0} previewed files and monitor this folder for completed downloads?\n\n{1}\n\nFuture and currently unfinished downloads will also be organized. Aging files will move to Expiring Files for your review. No files will be deleted automatically.", PreviewItems.Count, settings.DownloadsPath);
+        if (!await _dialogs.ConfirmAsync(Text.Translate("Start organizing downloads?"), confirmation, Text.Translate("Organize and monitor")))
         {
             return;
         }
         _store.SaveSettings(settings);
-        foreach (PreviewItem item in PreviewItems.ToArray())
+        if (!settings.UsePeriodicOrganization)
         {
-            await Task.Run(() => _organizer.OrganizeAsync(item.SourcePath, settings, _shutdown.Token, item.ContentHash));
+            foreach (PreviewItem item in PreviewItems.ToArray())
+            {
+                await Task.Run(() => _organizer.OrganizeAsync(item.SourcePath, settings, _shutdown.Token, item.ContentHash));
+            }
         }
         _shutdown.Token.ThrowIfCancellationRequested();
-        _monitor = new DownloadMonitor(settings,
+        _monitor = settings.UsePeriodicOrganization
+            ? new PeriodicDownloadMonitor(settings,
+                (path, token) => _organizer.OrganizeAsync(path, settings, token),
+                token => _organizer.ReconcileAsync(settings, token), ReportBackgroundError)
+            : new DownloadMonitor(settings,
             (path, token) => _organizer.OrganizeAsync(path, settings, token),
             token => _organizer.ReconcileAsync(settings, token), ReportBackgroundError);
         IsMonitoring = true;
         InvalidatePreview();
-        StatusMessage = "Monitoring completed downloads. You can pause at any time.";
+        if (settings.UsePeriodicOrganization)
+            SetStatus("Periodic organization enabled. The first check starts in {0} minutes. Pause to stop future checks.", settings.OrganizationIntervalMinutes);
+        else
+            StatusMessage = "Monitoring completed downloads. You can pause at any time.";
         await RefreshAsync();
     });
 
@@ -381,6 +399,8 @@ public partial class MainViewModel : ObservableObject
         var settings = new AppSettings
         {
             Language = Text.Language,
+            UsePeriodicOrganization = UsePeriodicOrganization,
+            OrganizationIntervalMinutes = OrganizationIntervalMinutes,
             DownloadsPath = Path.TrimEndingDirectorySeparator(Path.GetFullPath(DownloadsPath.Trim())),
             Categories = Rules.Select(rule => rule.ToRule()).ToList(),
             ExcludedExtensions = CategoryRuleViewModel.ParseExtensions(ExcludedExtensions)

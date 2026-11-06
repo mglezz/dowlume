@@ -71,6 +71,12 @@ Watcher events are hints. Queue overflow is recovered by later scans. Managed de
 
 The application takes an exclusive profile lock before opening its database. It does not auto-start monitoring after a restart. All dependencies are supplied through constructors in the application composition root; a service locator or DI container is unnecessary for this scope.
 
+### Optional periodic organization
+
+Source builds after 0.5.0 can use `PeriodicDownloadMonitor` instead of `DownloadMonitor`. `UsePeriodicOrganization` defaults to false and `OrganizationIntervalMinutes` to 10; settings validation bounds the interval to 1–1440 minutes. Both values participate in preview consent comparison and persist in existing settings JSON without a schema migration. Selecting the mode does not start it: preview and confirmation remain mandatory on every launch.
+
+The periodic worker waits for the interval before its first pass, reconciles tracked files, then enumerates only root files sequentially through the same organizer/readiness/mover pipeline. It has no watcher or event queue. A new delay starts only after a pass finishes; failures are reported without overlapping work or preventing later retries. Cancellation stops the delay/discovery and disposal awaits active work. `TimeProvider` injection makes scheduling tests deterministic without shortening production intervals.
+
 ## Lifecycle
 
 ```text

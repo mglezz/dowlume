@@ -4,6 +4,12 @@
 
 Separo las reglas del dominio, los mecanismos de supervisión, la persistencia y la interfaz. En el [modelo de dominio](../requirements/domain-model.md) explico los conceptos; aquí describo cómo los implemento.
 
+## Organización periódica opcional
+
+Las compilaciones posteriores a 0.5.0 pueden usar `PeriodicDownloadMonitor` en lugar de `DownloadMonitor`. `UsePeriodicOrganization` vale false por defecto; `OrganizationIntervalMinutes` vale 10 y admite de 1 a 1440 minutos. Ambos valores se comparan al validar el consentimiento de la vista previa y se guardan en el JSON existente, sin migración del esquema. Elegir el modo no lo activa: cada inicio sigue exigiendo vista previa y confirmación.
+
+El trabajador espera el intervalo antes de la primera pasada, reconcilia archivos registrados y enumera únicamente los archivos de la raíz, utilizando el mismo organizador y sus comprobaciones de disponibilidad y movimiento. No emplea vigilante ni cola de eventos. El siguiente intervalo empieza al terminar la pasada; los errores se notifican sin solapar trabajo ni impedir intentos posteriores. La cancelación detiene la espera y el descubrimiento, y el cierre espera el trabajo activo. La inyección de `TimeProvider` permite pruebas deterministas sin reducir los intervalos reales.
+
 ## Responsabilidades
 
 | Proyecto | Responsabilidad |
