@@ -71,7 +71,7 @@ def build(output):
         shutil.copytree(package, app)
         for source, relative in [
             (ROOT / 'packaging/linux/com.mglezz.dowlume.desktop', 'usr/share/applications/com.mglezz.dowlume.desktop'),
-            (package / 'dowlume.png', 'usr/share/icons/hicolor/64x64/apps/com.mglezz.dowlume.png'),
+            (ROOT / 'src/Dowlume.App/Assets/dowlume-512.png', 'usr/share/icons/hicolor/512x512/apps/com.mglezz.dowlume.png'),
             (ROOT / 'LICENSE', 'usr/share/doc/dowlume/copyright')]:
             target = deb_root / relative
             target.parent.mkdir(parents=True, exist_ok=True)

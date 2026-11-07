@@ -48,5 +48,17 @@ Incidencias: https://github.com/mglezz/dowlume/issues
 Incluye versiones de Windows y Dowlume, pasos y resultado esperado y observado.
 No adjuntes descargas personales, bases de datos ni rutas privadas sin ocultar.
 
-Esta guía acompaña la versión 0.3.0 con selector. Los paquetes
+Esta guía acompaña la versión 0.6.0 con selector. Los paquetes
 originales publicados de v0.1.0 son anteriores a la localización y siguen en inglés.
+
+Dowlume 0.6.0
+
+Ajustes ofrece organizar por intervalos de 1 a 1440 minutos (10 por defecto).
+Requiere vista previa y confirmar; la primera pasada espera el intervalo.
+Pausar detiene las siguientes pasadas y cada inicio permanece pausado.
+
+Buscar actualizaciones consulta GitHub solo cuando lo solicitas, sin enviar
+nombres de archivos ni rutas. Windows instalado puede descargar y verificar
+el instalador y abrirlo tras el cierre, sin desinstalar. Los otros paquetes
+abren las instrucciones oficiales. Windows/Linux siguen sin firmar; macOS
+utiliza firma ad hoc.

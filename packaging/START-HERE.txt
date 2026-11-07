@@ -2,7 +2,7 @@ Dowlume - Your downloads, under control
 
 LANGUAGE
 
-In version 0.3.0, pause monitoring and choose English or Español in
+In version 0.6.0, pause monitoring and choose English or Español in
 Settings > Language. I save the choice immediately without renaming folders
 or changing files. The Spanish offline guide is START-HERE.es.txt.
 The original published v0.1.0 packages predate this selector and remain English-only.
@@ -52,3 +52,14 @@ Full guide: https://github.com/mglezz/dowlume/blob/main/docs/user/guide.md
 Report an issue: https://github.com/mglezz/dowlume/issues
 Include your Windows version, Dowlume version, steps, and expected/actual result.
 Do not attach personal downloads, the database, or unredacted private paths.
+
+VERSION 0.6.0
+
+Settings offers optional periodic organization (1-1440 minutes, default 10).
+Preview and confirm before enabling it; the first pass waits for the interval.
+Pause stops future passes and every launch remains paused.
+
+Check for updates contacts GitHub only when requested, without sending filenames
+or paths. Registered Windows installations can download and verify the installer
+and open it after shutdown, without uninstalling. Other packages open official
+release instructions. Windows/Linux are unsigned; macOS is ad-hoc signed.

@@ -2,6 +2,7 @@
     [Parameter(Mandatory = $true)][string]$Installer,
     [string]$Archive = '',
     [string]$PreviousInstaller = '',
+    [string]$UpdateAcceptanceTool = '',
     [Parameter(Mandatory = $true)][string]$ReportPath,
     [switch]$RequireNoSharedDotNet,
     [switch]$RequireLocalization
@@ -122,7 +123,12 @@ try {
     try { $key.SetValue('Dowlume', $startupCommand, [Microsoft.Win32.RegistryValueKind]::String) }
     finally { $key.Dispose() }
 
-    Install-Package $Installer 'upgrade.log'
+    if ($UpdateAcceptanceTool) {
+        dotnet $UpdateAcceptanceTool $Installer $installDirectory (Join-Path $workspace 'verified-update.json')
+        if ($LASTEXITCODE -ne 0) { throw 'Verified update integration failed.' }
+    } else {
+        Install-Package $Installer 'upgrade.log'
+    }
     if ((Get-StartupCommand) -ne $startupCommand) { throw 'Upgrade changed the opt-in startup entry.' }
     if ((Get-FileHash -LiteralPath $database).Hash -ne $databaseHash) { throw 'Upgrade changed the local database.' }
     if (-not (Test-Path -LiteralPath (Join-Path $installDirectory 'START-HERE.txt'))) { throw 'The offline quick-start guide is missing.' }
@@ -156,6 +162,14 @@ try {
     $application = $null
     $databaseHash = (Get-FileHash -LiteralPath $database).Hash
 
+    $workflowProfile = Join-Path $workspace 'WorkflowProfile'
+    $workflow = Start-Process -FilePath $executable -ArgumentList @('--smoke-test', '--data-directory', """$workflowProfile""") -WindowStyle Hidden -PassThru
+    if (-not $workflow.WaitForExit(180000)) { throw 'Native workflow acceptance timed out.' }
+    $workflow.Refresh()
+    if ($workflow.ExitCode -ne 0) { throw 'Native workflow acceptance failed.' }
+    $workflowReport = Get-Content -LiteralPath (Join-Path $workflowProfile 'WINDOWS-WORKFLOW.json') -Raw | ConvertFrom-Json
+    if (-not $workflowReport.Passed -or -not $workflowReport.NativePeriodicDelayOrganizationAndDrain) { throw 'Periodic package acceptance did not pass.' }
+
     $uninstallExit = Invoke-Setup $uninstaller @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', "/LOG=""$(Join-Path $workspace 'uninstall.log')""")
     if ($uninstallExit -ne 0 -or (Test-Path -LiteralPath $executable)) { throw 'Uninstall did not remove the application.' }
     if ((Get-FileHash -LiteralPath $database).Hash -ne $databaseHash -or (Get-FileHash -LiteralPath $sentinel).Hash -ne $sentinelHash) {
@@ -175,6 +189,8 @@ try {
         LanguageSwitchAndRestartPersistence = [bool]$RequireLocalization
         PreviousInstallerSha256 = if ($PreviousInstaller) { (Get-FileHash -LiteralPath $PreviousInstaller).Hash } else { $null }
         InstallerUpgrade = if ($PreviousInstaller) { 'Previous package to candidate' } else { 'Candidate reinstall' }
+        VerifiedUpdateDownloadAndLaunch = [bool]$UpdateAcceptanceTool
+        NativePeriodicDelayOrganizationAndDrain = $true
         SingleInstanceRefusal = $true
         NativeTrayRegistrationAndRestore = $true
         RunningUpgradeRefused = $true
@@ -190,6 +206,10 @@ try {
         Note = 'This automated smoke test does not certify a clean machine or replace first-use testing by a person.'
     }
     New-Item -ItemType Directory -Path (Split-Path $ReportPath -Parent) -Force | Out-Null
+    Copy-Item -LiteralPath (Join-Path $workflowProfile 'WINDOWS-WORKFLOW.json') -Destination (Join-Path (Split-Path $ReportPath -Parent) 'WINDOWS-WORKFLOW.json')
+    if ($UpdateAcceptanceTool) {
+        Copy-Item -LiteralPath (Join-Path $workspace 'verified-update.json') -Destination (Join-Path (Split-Path $ReportPath -Parent) 'verified-update.json')
+    }
     $report | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath $ReportPath -Encoding utf8
     Write-Output "Package acceptance passed. Report: $ReportPath"
 } finally {

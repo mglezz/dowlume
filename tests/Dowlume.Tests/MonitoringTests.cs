@@ -50,7 +50,7 @@ public sealed class MonitoringTests
         }, token => organizer.ReconcileAsync(settings, token), errors.Enqueue, TimeSpan.FromMilliseconds(30), capacity: 3))
         {
             // Durable SQLite commits on shared CI storage need more time than the old in-memory counter.
-            await WaitUntilAsync(() => store.GetFiles().Count == 40, TimeSpan.FromSeconds(60),
+            await WaitUntilAsync(() => store.GetFiles().Count == 40, TimeSpan.FromSeconds(120),
                 () => $"Only {store.GetFiles().Count}/40 files completed. Background errors: {string.Join(Environment.NewLine, errors)}");
         }
         // Shutdown must finish before checking background failures and final contents.

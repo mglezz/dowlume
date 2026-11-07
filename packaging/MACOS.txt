@@ -1,4 +1,4 @@
-Dowlume 0.4.0 — macOS Apple Silicon
+Dowlume 0.6.0 — macOS Apple Silicon
 
 Requires macOS 15+, Apple Silicon, and local APFS folders on the same volume.
 The .NET runtime and both interface languages are included. Intel is not supported.
@@ -39,3 +39,14 @@ GUIDES
 Offline user guide: docs/user/guide.md
 Platform support: docs/user/platform-support.md
 Spanish instructions: START-HERE.es.txt
+
+VERSION 0.6.0
+
+Settings offers optional periodic organization (1-1440 minutes, default 10).
+Preview and confirm before enabling it; the first pass waits for the interval.
+Pause stops future passes and every launch remains paused.
+
+Check for updates contacts GitHub only when requested, without sending filenames
+or paths. Registered Windows installations can download and verify the installer
+and open it after shutdown, without uninstalling. Other packages open official
+release instructions. Windows/Linux are unsigned; macOS is ad-hoc signed.

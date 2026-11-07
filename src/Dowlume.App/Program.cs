@@ -61,7 +61,7 @@ internal static class Program
         {
             try
             {
-                AppUpdates.LaunchInstaller(installer);
+                using var process = AppUpdates.LaunchInstaller(installer);
             }
             catch (Exception error)
             {
