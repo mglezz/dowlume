@@ -73,7 +73,7 @@ def build(runtime, output, staging):
             for scale in (1, 2):
                 name = f"icon_{size}x{size}" + ("@2x" if scale == 2 else "") + ".png"
                 run("sips", "-s", "format", "png", "-z", str(size * scale), str(size * scale),
-                    str(ROOT / "src/Dowlume.App/Assets/dowlume.ico"), "--out", str(iconset / name), capture_output=True)
+                    str(ROOT / "src/Dowlume.App/Assets/dowlume.png"), "--out", str(iconset / name), capture_output=True)
         run("iconutil", "-c", "icns", str(iconset), "-o", str(resources / "Dowlume.icns"))
     else:
         publish = package

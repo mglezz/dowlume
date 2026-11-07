@@ -15,6 +15,8 @@ These PNGs show the real Avalonia `MainWindow` rendered headlessly on Windows, w
 
 ## Regenerate
 
+The 0.6.0 application icon is a geometric D with an inset mint download arrow on a dark-blue rounded tile. Its editable master is [dowlume.svg](../../src/Dowlume.App/Assets/dowlume.svg). Run `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/New-AppIcon.ps1` on Windows to regenerate the 1024-pixel PNG, 512-pixel Linux theme icon, and Windows ICO with 16, 20, 24, 32, 48, 64, 128 and 256-pixel images. macOS packaging derives its icon set from the full-resolution PNG. No external artwork, fonts or rendering dependencies are required.
+
 From the repository root on Windows with the [required SDK](../development/getting-started.md#requirements):
 
 ```powershell

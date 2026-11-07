@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 256 256">
+  <title>Dowlume — downloads in order</title>
+  <path fill="#14283F" d="M64 8 L192 8 C223 8 248 33 248 64 L248 192 C248 223 223 248 192 248 L64 248 C33 248 8 223 8 192 L8 64 C8 33 33 8 64 8 Z" />
+  <path fill="#F4F7FB" fill-rule="evenodd" d="M64 60 L120 60 C166 60 192 88 192 128 C192 168 166 196 120 196 L64 196 Z M92 88 L92 168 L120 168 C149 168 164 153 164 128 C164 103 149 88 120 88 Z" />
+  <path fill="#5CE0BE" d="M113 103 L135 103 L135 128 L148 128 L124 152 L100 128 L113 128 Z" />
+</svg>

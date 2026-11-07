@@ -15,6 +15,8 @@ No presento estas imágenes como prueba de operaciones nativas superadas.
 
 ## Regenerar
 
+El icono de 0.6.0 tiene un original editable en [SVG](../../../src/Dowlume.App/Assets/dowlume.svg). En Windows, `scripts/New-AppIcon.ps1` genera el PNG de 1024 px, la variante Linux de 512 px y el ICO con ocho tamaños para Windows. Los paquetes macOS utilizan el PNG de máxima resolución.
+
 Desde la raíz, en Windows y con el SDK requerido:
 
 ```powershell
