@@ -1,4 +1,4 @@
-Dowlume 0.5.0 — Linux x64 candidate, native acceptance pending
+Dowlume 0.6.0 — Linux x64 candidate, native acceptance pending
 
 Target: Ubuntu 24.04 LTS, GNOME, local ext4. X11 and Wayland desktop
 acceptance is required before publication; a Wayland session may use XWayland.
@@ -36,3 +36,14 @@ File-manager integration opens the containing folder with xdg-open.
 On interruption, reopen Activity and retry recovery. Only matching UUID, inode,
 creation time and SHA-256 allow completion; ambiguous files remain for inspection.
 No operation overwrites an existing destination or deletes an uncertain copy.
+
+VERSION 0.6.0
+
+Settings offers optional periodic organization (1-1440 minutes, default 10).
+Preview and confirm before enabling it; the first pass waits for the interval.
+Pause stops future passes and every launch remains paused.
+
+Check for updates contacts GitHub only when requested, without sending filenames
+or paths. Registered Windows installations can download and verify the installer
+and open it after shutdown, without uninstalling. Other packages open official
+release instructions. Windows/Linux are unsigned; macOS is ad-hoc signed.

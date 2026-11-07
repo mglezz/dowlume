@@ -32,17 +32,19 @@ internal static class NativePackageAcceptance
         await VerifyLanguagesAsync(window, model, store);
         await Task.Run(() => VerifyFileWorkflowAsync(profile, databasePath, store, settings, readiness));
         await model.RefreshAsync();
-        Require(model.ManagedCount == 2 && model.ErrorMessage.Length == 0, "Desktop refresh");
+        Require(model.ManagedCount == 3 && model.ErrorMessage.Length == 0, "Desktop refresh");
         await WriteReportAsync(Path.Combine(profile, reportName), elapsed.ElapsedMilliseconds);
     }
 
     private static (IFileReadiness Readiness, string ReportName) SelectNativePlatform()
     {
+        if (OperatingSystem.IsWindows())
+            return (new FileReadiness(TimeSpan.Zero, TimeSpan.Zero), "WINDOWS-WORKFLOW.json");
         if (OperatingSystem.IsMacOS())
             return (new MacFileReadiness(TimeSpan.Zero), "MACOS-WORKFLOW.json");
         if (OperatingSystem.IsLinux())
             return (new LinuxFileReadiness(TimeSpan.Zero), "LINUX-WORKFLOW.json");
-        throw new PlatformNotSupportedException("Native package acceptance requires macOS or Linux.");
+        throw new PlatformNotSupportedException("Native package acceptance requires a supported desktop platform.");
     }
 
     private static async Task VerifyLanguagesAsync(MainWindow window, MainViewModel model, IStateStore store)
@@ -91,6 +93,38 @@ internal static class NativePackageAcceptance
         Require(mover.GetIdentity(reopened.GetFiles().Single().CurrentPath) == identity, "Identity after restart and Undo");
         Require(reopened.GetOperations().All(operation => operation.Status == OperationStatus.Completed), "Completed journal");
         await VerifyMonitoringAsync(organizer, store, settings);
+        await VerifyPeriodicOrganizationAsync(organizer, store, settings);
+    }
+
+    private static async Task VerifyPeriodicOrganizationAsync(DownloadOrganizer organizer, IStateStore store, AppSettings settings)
+    {
+        settings = settings with
+        {
+            UsePeriodicOrganization = true,
+            OrganizationIntervalMinutes = 1
+        };
+        store.SaveSettings(settings);
+        string source = Path.Combine(settings.DownloadsPath, "scheduled.txt");
+        string partial = Path.Combine(settings.DownloadsPath, "unfinished.crdownload");
+        await File.WriteAllTextAsync(source, "Periodic package acceptance");
+        await File.WriteAllTextAsync(partial, "Unfinished sample");
+        var errors = new ConcurrentQueue<Exception>();
+        await using (var monitor = new PeriodicDownloadMonitor(settings,
+            (path, token) => organizer.OrganizeAsync(path, settings, token),
+            token => organizer.ReconcileAsync(settings, token), errors.Enqueue))
+        {
+            await Task.Delay(1000);
+            Require(File.Exists(source) && store.GetFiles().Count == 2, "Periodic initial delay");
+            using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(80));
+            while (store.GetFiles().Count < 3)
+                await Task.Delay(100, timeout.Token);
+        }
+        Require(errors.IsEmpty && File.Exists(partial), "Periodic completed files only and drain");
+        Require(await File.ReadAllTextAsync(Path.Combine(settings.DownloadsPath, "Documents", "scheduled.txt")) == "Periodic package acceptance", "Periodic content preservation");
+        string paused = Path.Combine(settings.DownloadsPath, "paused.txt");
+        await File.WriteAllTextAsync(paused, "Paused sample");
+        await Task.Delay(500);
+        Require(File.Exists(paused) && store.LoadSettings()!.UsePeriodicOrganization, "Periodic pause and saved preference");
     }
 
     private static async Task VerifyMonitoringAsync(DownloadOrganizer organizer, IStateStore store, AppSettings settings)
@@ -118,6 +152,7 @@ internal static class NativePackageAcceptance
             NativeOrganizeReviewSnoozeKeepMoveUndo = true,
             ReopenedJournal = true,
             NativeWatcherAndDrain = true,
+            NativePeriodicDelayOrganizationAndDrain = true,
             ElapsedMilliseconds = elapsedMilliseconds,
             ManualDesktopAcceptance = false,
             ActualLoginAcceptance = false

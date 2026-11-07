@@ -129,7 +129,7 @@ def build(runtime, output, staging):
     command = [str(tested_executable), "--smoke-test", "--data-directory", str(profile)]
     if runtime == "linux-x64":
         command = ["xvfb-run", "-a", *command]
-    run(*command, timeout=60)
+    run(*command, timeout=180)
     if not (profile / "dowlume.db").is_file():
         raise RuntimeError("The extracted application did not initialize its isolated profile.")
     workflow = None

@@ -14,17 +14,17 @@ The Windows packages are unsigned. The macOS app uses an ad-hoc signature withou
 
 The package includes `START-HERE.txt`, which opens offline in a text editor. The installer adds a **Dowlume quick start** Start menu shortcut. Exit Dowlume, including any instance hidden in the tray, before upgrading or uninstalling; Setup refuses while the app is running. Installation and uninstall retain your files and local profile.
 
-## Update without uninstalling (in development for 0.6.0)
+## Update without uninstalling (0.6.0)
 
 Windows installers already support installing a newer version over the existing installation; uninstalling first is unnecessary. Close Dowlume, run the new installer, and retain the existing installation folder. The profile and organized files are retained.
 
-Source builds after 0.5.0 add **Settings → Check for updates**. Pause organization to access Settings. The check contacts the public GitHub release endpoint only when requested, without an account, credentials, file names, or paths; GitHub still receives ordinary connection information such as your IP address. It offers newer stable releases, excluding drafts and prereleases. Network failures leave local organization available.
+Version 0.6.0 adds **Settings → Check for updates**. Pause organization to access Settings. The check contacts the public GitHub release endpoint only when requested, without an account, credentials, file names, or paths; GitHub still receives ordinary connection information such as your IP address. It offers newer stable releases, excluding drafts and prereleases. Network failures leave local organization available.
 
 For a registered Windows installation, **Download and install update…** asks for confirmation, downloads the official installer to a separate temporary folder, verifies its published size and SHA-256, pauses organization, and exits before opening the interactive installer. Complete the installer using the existing folder. No uninstall is needed. The hash verifies consistency with GitHub's release metadata; it is not a publisher signature. Windows packages remain unsigned. A missing checksum or installer offers the official release page instead. If installer launch fails, reopen Dowlume and retry, or use the release page. Downloaded installers remain in the system temporary directory for normal OS cleanup.
 
 Portable Windows copies, macOS, Linux, and custom test profiles use **Open release and instructions**. On Ubuntu, installing the new `.deb` with `sudo apt install ./<new-package>.deb` upgrades the package. For portable copies, close the old application and extract the complete new archive into a separate permanent folder; continue using the existing profile and update any startup/menu registration to the new location. The button does not automatically replace portable applications or run privileged Linux commands.
 
-Version 0.5.0 does not contain this button: reaching the first release that includes it still requires installing that release normally. Native end-to-end acceptance of the new update flow is required before publishing 0.6.0.
+Version 0.5.0 does not contain this button: reaching the first release that includes it still requires installing that release normally. The release acceptance record describes automated update integration and any remaining manual acceptance limits.
 
 ## Choose a language
 
@@ -58,9 +58,9 @@ The Dowlume icon appears in the Windows notification area, sometimes inside the 
 
 On Windows, in **Settings**, enable **Start Dowlume when I sign in** to open this copy of the application at sign-in. The change applies immediately to your account and is off by default. Monitoring still starts paused. Disable the option before relocating a portable copy; enable it again from the new location. Windows Settings can independently disable startup applications. Uninstall removes the startup entry when it belongs to that installation.
 
-## Periodic organization (in development for 0.6.0)
+## Periodic organization (0.6.0)
 
-Source builds after 0.5.0 offer **Settings → Organize periodically instead of continuously**. This optional mode is off by default. Choose an interval from 1 to 1440 minutes (10 by default), save, refresh the preview, and select **Organize and monitor** to confirm the schedule.
+Version 0.6.0 offers **Settings → Organize periodically instead of continuously**. This optional mode is off by default. Choose an interval from 1 to 1440 minutes (10 by default), save, refresh the preview, and select **Organize and monitor** to confirm the schedule.
 
 Nothing is organized immediately in this mode, including previewed files. The first pass waits for the chosen interval. Each pass checks files directly in the selected folder and runs the usual aging/recovery checks. New arrivals are eligible on later passes; partial, busy, recent, excluded, and already tracked files retain the usual protections. Existing subfolders are not imported. Activity and eligible Undo work as before.
 

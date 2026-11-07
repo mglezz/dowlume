@@ -175,13 +175,16 @@ public sealed class AppUpdates(HttpClient? httpClient = null) : IAppUpdates
         Program.PendingInstaller = update;
     }
 
-    internal static void LaunchInstaller(DownloadedUpdate update)
+    internal static Process LaunchInstaller(DownloadedUpdate update, params string[] arguments)
     {
         PathSafety.RejectLinks(update.Path);
         using var file = new FileStream(update.Path, FileMode.Open, FileAccess.Read, FileShare.Read);
         if (!Convert.ToHexString(SHA256.HashData(file)).Equals(update.Sha256, StringComparison.OrdinalIgnoreCase))
             throw new InvalidDataException("The installer changed after download.");
-        using Process? process = Process.Start(new ProcessStartInfo(update.Path) { UseShellExecute = true });
+        var start = new ProcessStartInfo(update.Path) { UseShellExecute = true };
+        foreach (string argument in arguments)
+            start.ArgumentList.Add(argument);
+        return Process.Start(start) ?? throw new IOException("The installer did not start.");
     }
 
     public void OpenRelease(AvailableUpdate update)

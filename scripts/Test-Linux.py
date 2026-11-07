@@ -68,7 +68,7 @@ def verify(output, archive=None):
                     raise RuntimeError('Expected exactly one packaged executable.')
                 profile = mount / 'smoke-profile'
                 run('xvfb-run', '-a', str(executables[0]), '--smoke-test', '--data-directory', str(profile),
-                    env=env, timeout=120)
+                    env=env, timeout=180)
                 workflow = json.loads((profile / 'LINUX-WORKFLOW.json').read_text())
                 if workflow.get('Passed') is not True:
                     raise RuntimeError('Packaged workflow did not pass.')

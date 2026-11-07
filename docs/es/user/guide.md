@@ -12,7 +12,7 @@ Ejecuta `Dowlume-0.5.0-win-x64-setup.exe` sin permisos de administrador. Para la
 
 Incluyo `START-HERE.txt` para consulta sin conexión y un acceso **Dowlume quick start** en el menú Inicio. Cierra también cualquier instancia oculta en la bandeja antes de actualizar o desinstalar; el instalador se niega a continuar mientras la aplicación está abierta. Conservo los archivos organizados y el perfil local al desinstalar.
 
-## Actualizar sin desinstalar (en desarrollo para 0.6.0)
+## Actualizar sin desinstalar (0.6.0)
 
 El instalador de Windows ya permite instalar una versión nueva sobre la existente, sin desinstalar primero. Cierra Dowlume, ejecuta el nuevo instalador y conserva la carpeta de instalación. Se mantienen el perfil y los archivos organizados.
 
@@ -52,7 +52,7 @@ El icono puede aparecer entre los iconos ocultos del área de notificación. Un 
 
 En **Ajustes**, **Iniciar Dowlume al entrar en Windows** se aplica inmediatamente a tu cuenta y está desactivado inicialmente. La supervisión sigue empezando en pausa. Desactívalo antes de mover una copia portátil y actívalo de nuevo desde su ubicación final. Windows también puede desactivar aplicaciones de inicio. La desinstalación elimina la entrada solo si pertenece a esa instalación.
 
-## Organización periódica (en desarrollo para 0.6.0)
+## Organización periódica (0.6.0)
 
 Las compilaciones del código posteriores a 0.5.0 incluyen **Ajustes → Organizar por intervalos en lugar de continuamente**. Es opcional y está desactivada por defecto. Elige un intervalo entre 1 y 1440 minutos (10 por defecto), guarda, actualiza la vista previa y pulsa **Organizar y supervisar** para confirmar.
 

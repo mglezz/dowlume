@@ -1,4 +1,4 @@
-Dowlume 0.5.0 — Candidato Linux x64, aceptación nativa pendiente
+Dowlume 0.6.0 — Candidato Linux x64, aceptación nativa pendiente
 
 Objetivo: Ubuntu 24.04 LTS, GNOME y ext4 local. Antes de publicar se requiere
 aceptación en X11 y Wayland; una sesión Wayland puede utilizar XWayland.
@@ -36,3 +36,15 @@ El gestor de archivos abre la carpeta contenedora mediante xdg-open.
 Tras una interrupción, abre Actividad y reintenta la recuperación. Solo se confirma
 con UUID, inodo, fecha de creación y SHA-256 coincidentes. Las situaciones ambiguas
 requieren revisión. No se sobrescriben destinos ni se eliminan copias inciertas.
+
+Dowlume 0.6.0
+
+Ajustes ofrece organizar por intervalos de 1 a 1440 minutos (10 por defecto).
+Requiere vista previa y confirmar; la primera pasada espera el intervalo.
+Pausar detiene las siguientes pasadas y cada inicio permanece pausado.
+
+Buscar actualizaciones consulta GitHub solo cuando lo solicitas, sin enviar
+nombres de archivos ni rutas. Windows instalado puede descargar y verificar
+el instalador y abrirlo tras el cierre, sin desinstalar. Los otros paquetes
+abren las instrucciones oficiales. Windows/Linux siguen sin firmar; macOS
+utiliza firma ad hoc.
