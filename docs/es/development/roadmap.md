@@ -8,6 +8,8 @@ Los hitos definen alcance previsto, no fechas. Pueden hacer falta más versiones
 
 ## Camino a 0.6.0
 
+El candidato final incluye el nuevo icono y ha superado las pruebas automatizadas de paquetes nativos en Windows, macOS y Linux. El [registro de aceptación 0.6.0](../releases/acceptance/0.6.0.md) identifica los binarios conservados y las comprobaciones manuales pendientes. La publicación sigue pendiente; los paquetes no deben recompilarse al aprobarlos.
+
 El código actual incorpora organización periódica opcional con un intervalo de 1 a 1440 minutos, vista previa y confirmación explícitas, pasadas secuenciales y arranque pausado. La búsqueda en Revisión y la selección de pestañas más clara también están disponibles después de 0.5.0. Estos cambios todavía no constituyen un paquete 0.6.0 publicado.
 
 Las siguientes prioridades propuestas son un resumen de organización más claro (última pasada y próxima revisión), una acción para organizar una sola vez sin supervisión en segundo plano y estadísticas de espacio por categoría. La detección de duplicados debería comenzar con un informe o vista previa, sin eliminación automática. Son propuestas para continuar, no funciones implementadas.

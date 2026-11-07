@@ -8,6 +8,8 @@ These milestones describe intended scope, not release dates. Additional 0.x rele
 
 ## Working toward 0.6.0
 
+The final candidate includes refreshed application artwork and has passed native package automation on Windows, macOS and Linux. The [0.6.0 acceptance record](../releases/acceptance/0.6.0.md) identifies retained binaries and remaining manual checks. Publication remains pending; these packages must not be rebuilt when approved.
+
 The current source adds opt-in periodic organization with a configurable 1–1440 minute interval, explicit preview/confirmation, sequential passes, and paused startup. Review search and clearer tab selection are also available after 0.5.0. These changes are not a published 0.6.0 package.
 
 The next priorities are a clearer organization summary (last completed pass and next check), a one-off organization action for users who do not want background monitoring, and read-only storage insights by category. Duplicate detection should begin with a preview/report, without automatic deletion. These are proposed follow-ups, not implemented features.

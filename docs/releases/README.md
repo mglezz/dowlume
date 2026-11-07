@@ -6,6 +6,8 @@
 
 The records below describe shipped behavior. Acceptance records retain the source revisions, package hashes, test scope, and manual confirmation for each release.
 
+The [0.6.0 candidate](0.6.0.md) adds periodic organization, manual updates and new artwork. Its [exact-package evidence and remaining acceptance](acceptance/0.6.0.md) are recorded separately; 0.5.0 remains the latest public stable release.
+
 | Version | Release notes | Acceptance record |
 | --- | --- | --- |
 | 0.5.0 | [Ubuntu Linux, Windows and macOS](0.5.0.md) | [0.5.0 candidates and final packages](acceptance/0.5.0.md) |
