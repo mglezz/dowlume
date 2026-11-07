@@ -2,21 +2,13 @@
 
 [English](../../development/roadmap.md) · [Índice en español](../README.md)
 
-La versión 0.5.0 ofrece los flujos Windows x64, macOS Apple Silicon y Ubuntu 24.04 LTS x64 con GNOME y ext4 dentro del [alcance publicado](../user/platform-support.md). La siguiente etapa es la estabilización multiplataforma. El [registro 0.5.0](../releases/acceptance/0.5.0.md) conserva la confirmación manual y los límites de la automatización.
+La versión 0.6.0 ofrece los flujos Windows x64, macOS Apple Silicon y Ubuntu 24.04 LTS x64 con GNOME y ext4 dentro del [alcance publicado](../user/platform-support.md). La siguiente etapa es la estabilización multiplataforma. El [registro 0.6.0](../releases/acceptance/0.6.0.md) conserva la confirmación del mantenedor y los límites de la automatización.
 
 Los hitos definen alcance previsto, no fechas. Pueden hacer falta más versiones 0.x antes de 1.0. Compilar en una plataforma no basta para declararla compatible: requiere aceptación nativa.
 
-## Camino a 0.6.0
+## Versión 0.6.0 publicada
 
-El candidato final incluye el nuevo icono y ha superado las pruebas automatizadas de paquetes nativos en Windows, macOS y Linux. El [registro de aceptación 0.6.0](../releases/acceptance/0.6.0.md) identifica los binarios conservados y las comprobaciones manuales pendientes. La publicación sigue pendiente; los paquetes no deben recompilarse al aprobarlos.
-
-El código actual incorpora organización periódica opcional con un intervalo de 1 a 1440 minutos, vista previa y confirmación explícitas, pasadas secuenciales y arranque pausado. La búsqueda en Revisión y la selección de pestañas más clara también están disponibles después de 0.5.0. Estos cambios todavía no constituyen un paquete 0.6.0 publicado.
-
-Las siguientes prioridades propuestas son un resumen de organización más claro (última pasada y próxima revisión), una acción para organizar una sola vez sin supervisión en segundo plano y estadísticas de espacio por categoría. La detección de duplicados debería comenzar con un informe o vista previa, sin eliminación automática. Son propuestas para continuar, no funciones implementadas.
-
-Antes de publicar 0.6.0, hay que validar la actualización desde 0.5.0, ambos idiomas, navegación por teclado, pausa y cierre durante una pasada, suspensión y reanudación, y los paquetes exactos en todas las plataformas compatibles. Se mantienen los criterios de seguridad de operaciones con archivos.
-
-También está implementada la búsqueda manual de actualizaciones: las instalaciones registradas de Windows pueden descargar un instalador oficial verificado por tamaño y huella y abrirlo tras el cierre ordenado; las demás distribuciones abren las instrucciones oficiales. No hay consultas automáticas de red. Antes de publicar, hay que probar un instalador publicado más reciente con un perfil Windows desechable, incluyendo cancelación, fallo al abrirlo y conservación del registro de inicio. Las pruebas de actualización de paquetes no bastan para aceptar este nuevo flujo de descarga e instalación.
+La versión 0.6.0 incorpora organización periódica opcional, actualizaciones manuales, búsqueda en Revisión y nuevo icono. El [registro de aceptación](../releases/acceptance/0.6.0.md) conserva las pruebas de los paquetes exactos, la confirmación del mantenedor y los límites de la evidencia. Las próximas prioridades son un resumen de última/próxima pasada, organización puntual y estadísticas de espacio de solo lectura. Estas propuestas todavía no están implementadas.
 
 ## Versiones previstas hacia 1.0
 

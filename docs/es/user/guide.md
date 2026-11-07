@@ -2,13 +2,13 @@
 
 [English](../../user/guide.md) · [Índice en español](../README.md)
 
-Dowlume organiza descargas completas en Windows x64, macOS Apple Silicon y Ubuntu 24.04 LTS x64 con GNOME. La [versión 0.5.0](https://github.com/mglezz/dowlume/releases/tag/v0.5.0) incluye instaladores Windows/Ubuntu y paquetes portables con .NET incluido. Consulta las [instrucciones macOS](#macos-040), las [instrucciones Linux](#linux-050) y la [matriz de plataformas](platform-support.md). Empieza con copias de archivos de ejemplo en una carpeta desechable.
+Dowlume organiza descargas completas en Windows x64, macOS Apple Silicon y Ubuntu 24.04 LTS x64 con GNOME. La [versión 0.6.0](https://github.com/mglezz/dowlume/releases/tag/v0.6.0) incluye instaladores Windows/Ubuntu y paquetes portables con .NET incluido. Consulta las [instrucciones macOS](#macos-040), las [instrucciones Linux](#linux-060) y la [matriz de plataformas](platform-support.md). Empieza con copias de archivos de ejemplo en una carpeta desechable.
 
 ## Instalar y abrir
 
-Elige el instalador Windows para una instalación habitual, o **Portable** para descargar la aplicación completa en un ZIP desde la publicación de GitHub. Los paquetes Windows de v0.5.0 no tienen firma de editor: utiliza una fuente de confianza y compara el SHA-256 con las [sumas de comprobación](../releases/0.5.0.md#sumas-de-comprobación).
+Elige el instalador Windows para una instalación habitual, o **Portable** para descargar la aplicación completa en un ZIP desde la publicación de GitHub. Los paquetes Windows de v0.6.0 no tienen firma de editor: utiliza una fuente de confianza y compara el SHA-256 con las [sumas de comprobación](../releases/0.6.0.md#sumas-de-comprobación).
 
-Ejecuta `Dowlume-0.5.0-win-x64-setup.exe` sin permisos de administrador. Para la versión portátil, extrae todo el ZIP y ejecuta `Dowlume.App.exe` junto a sus archivos. No necesita una instalación separada de .NET.
+Ejecuta `Dowlume-0.6.0-win-x64-setup.exe` sin permisos de administrador. Para la versión portátil, extrae todo el ZIP y ejecuta `Dowlume.App.exe` junto a sus archivos. No necesita una instalación separada de .NET.
 
 Incluyo `START-HERE.txt` para consulta sin conexión y un acceso **Dowlume quick start** en el menú Inicio. Cierra también cualquier instancia oculta en la bandeja antes de actualizar o desinstalar; el instalador se niega a continuar mientras la aplicación está abierta. Conservo los archivos organizados y el perfil local al desinstalar.
 
@@ -16,13 +16,13 @@ Incluyo `START-HERE.txt` para consulta sin conexión y un acceso **Dowlume quick
 
 El instalador de Windows ya permite instalar una versión nueva sobre la existente, sin desinstalar primero. Cierra Dowlume, ejecuta el nuevo instalador y conserva la carpeta de instalación. Se mantienen el perfil y los archivos organizados.
 
-Las compilaciones posteriores a 0.5.0 añaden **Ajustes → Buscar actualizaciones**. Pausa la organización para acceder a Ajustes. La consulta contacta con el servicio público de publicaciones de GitHub solo cuando lo solicitas, sin cuenta, credenciales, nombres de archivos ni rutas; GitHub recibe los datos normales de conexión, como tu dirección IP. Solo ofrece versiones estables más recientes, excluyendo borradores y versiones preliminares. Un fallo de red no impide organizar archivos localmente.
+La versión 0.6.0 añade **Ajustes → Buscar actualizaciones**. Pausa la organización para acceder a Ajustes. La consulta contacta con el servicio público de publicaciones de GitHub solo cuando lo solicitas, sin cuenta, credenciales, nombres de archivos ni rutas; GitHub recibe los datos normales de conexión, como tu dirección IP. Solo ofrece versiones estables más recientes, excluyendo borradores y versiones preliminares. Un fallo de red no impide organizar archivos localmente.
 
 En una instalación registrada de Windows, **Descargar e instalar actualización…** pide confirmación, descarga el instalador oficial a una carpeta temporal independiente, verifica el tamaño y SHA-256 publicados, pausa la organización y sale antes de abrir el instalador interactivo. Completa la instalación conservando la carpeta existente. No hace falta desinstalar. La suma verifica la coherencia con los metadatos de GitHub; no es una firma de editor. Los paquetes Windows siguen sin estar firmados. Si falta el instalador o su suma, se ofrece la publicación oficial. Si el instalador no se abre, vuelve a abrir Dowlume y reinténtalo o utiliza la publicación oficial. Los instaladores descargados quedan en la carpeta temporal para la limpieza habitual del sistema.
 
 Las copias portables de Windows, macOS, Linux y los perfiles de prueba personalizados ofrecen **Abrir publicación e instrucciones**. En Ubuntu, `sudo apt install ./<nuevo-paquete>.deb` actualiza el paquete. Para copias portables, cierra la aplicación anterior y extrae el archivo completo en otra carpeta permanente; conserva el perfil y actualiza los registros de inicio o menú que apunten a la ubicación anterior. El botón no sustituye automáticamente aplicaciones portables ni ejecuta órdenes Linux con privilegios.
 
-La versión 0.5.0 no contiene este botón: la primera versión que lo incorpore debe instalarse normalmente. Antes de publicar 0.6.0 queda pendiente la aceptación nativa del flujo completo de actualización.
+La versión 0.5.0 no contiene este botón: el primer salto a 0.6.0 requiere el instalador habitual. El registro de aceptación distingue las pruebas automatizadas de la confirmación del mantenedor.
 
 ## Elegir idioma
 
@@ -30,7 +30,7 @@ Pausa la supervisión y abre **Settings → Language**. Selecciona **Español** 
 
 Cambio pestañas, botones, confirmaciones, bandeja, categorías, estados, fechas y mensajes conocidos. Mantengo los nombres de archivos y carpetas, las rutas y los datos históricos. La carpeta `Expiring Files` conserva ese nombre. No guardo otros ajustes pendientes al cambiar de idioma. Los mensajes históricos desconocidos mantienen su texto original y los controles nativos del selector de carpetas siguen el idioma de Windows.
 
-**El instalador y el ZIP portátil publicados de 0.5.0 incluyen el selector.** Los paquetes anteriores de 0.1.0 siguen en inglés.
+**El instalador y el ZIP portátil publicados de 0.6.0 incluyen el selector.** Los paquetes anteriores de 0.1.0 siguen en inglés.
 
 ## Primer uso
 
@@ -54,7 +54,7 @@ En **Ajustes**, **Iniciar Dowlume al entrar en Windows** se aplica inmediatament
 
 ## Organización periódica (0.6.0)
 
-Las compilaciones del código posteriores a 0.5.0 incluyen **Ajustes → Organizar por intervalos en lugar de continuamente**. Es opcional y está desactivada por defecto. Elige un intervalo entre 1 y 1440 minutos (10 por defecto), guarda, actualiza la vista previa y pulsa **Organizar y supervisar** para confirmar.
+La versión 0.6.0 incluye **Ajustes → Organizar por intervalos en lugar de continuamente**. Es opcional y está desactivada por defecto. Elige un intervalo entre 1 y 1440 minutos (10 por defecto), guarda, actualiza la vista previa y pulsa **Organizar y supervisar** para confirmar.
 
 Este modo no organiza nada inmediatamente, ni siquiera los archivos de la vista previa. La primera pasada espera el intervalo elegido. Cada pasada revisa los archivos directamente en la carpeta elegida y realiza las comprobaciones habituales de antigüedad y recuperación. Las nuevas descargas pueden organizarse en pasadas posteriores; se mantienen las protecciones para archivos incompletos, ocupados, recientes, excluidos y ya registrados. No se importan subcarpetas existentes. Actividad y Deshacer siguen disponibles.
 
@@ -66,7 +66,7 @@ Desactivé la papelera nativa en v0.1.0 porque las [pruebas de capacidad](../arc
 
 Calculo la antigüedad desde la primera organización, no desde la descarga o modificación. Al vencer el plazo de la categoría, traslado el archivo a `Expiring Files`.
 
-En compilaciones del código posteriores a 0.5.0, busca por nombre o ruta actual
+En la versión 0.6.0, busca por nombre o ruta actual
 para filtrar la lista mientras escribes. La búsqueda no distingue mayúsculas y
 trata los signos de puntuación literalmente. **Limpiar** restaura la lista completa.
 El contador muestra los archivos visibles y el total pendiente de revisión; buscar
@@ -126,7 +126,7 @@ Si editas un archivo registrado, rechazo las operaciones basadas en su huella an
 
 ## Límites
 
-Windows x64, macOS Apple Silicon y Ubuntu 24.04 LTS x64 con GNOME son los destinos estables publicados. El [flujo Linux](#linux-050) requiere ext4 local del mismo montaje. Rechazo recursos de red, raíces de unidades, carpetas del sistema, enlaces simbólicos, junctions y marcadores de nube con reparse points. No ejecuto la aplicación como servicio.
+Windows x64, macOS Apple Silicon y Ubuntu 24.04 LTS x64 con GNOME son los destinos estables publicados. El [flujo Linux](#linux-060) requiere ext4 local del mismo montaje. Rechazo recursos de red, raíces de unidades, carpetas del sistema, enlaces simbólicos, junctions y marcadores de nube con reparse points. No ejecuto la aplicación como servicio.
 
 En Windows compruebo antigüedad de escritura, dos observaciones estables y apertura exclusiva antes de considerar una descarga lista. Es una comprobación conservadora, sin garantía de que otro programa no vuelva a escribir después. Excluyo descargas parciales conocidas. Evita descargar directamente en las carpetas de categoría.
 
@@ -148,15 +148,15 @@ Guardo datos en `~/Library/Application Support/Dowlume`. En la primera apertura 
 
 Si detecto una carrera de archivos/carpetas, conservo los objetos y puedo mostrar NeedsAttention. Actividad incluye origen, destino previsto y, cuando está disponible, ubicación observada del objeto abierto original. Conserva esos archivos antes de reintentar recuperación. Los bytes iguales no bastan para completar una operación macOS: debe coincidir también la identidad registrada de volumen/archivo. No puedo excluir cualquier escritor POSIX; mantén archivos editados activamente o sincronizados fuera de la carpeta gestionada.
 
-## Linux 0.5.0
+## Linux 0.6.0
 
-La [versión 0.5.0](https://github.com/mglezz/dowlume/releases/tag/v0.5.0)
+La [versión 0.6.0](https://github.com/mglezz/dowlume/releases/tag/v0.6.0)
 admite Ubuntu 24.04 LTS x64 / GNOME con ext4 local.
-Comprueba las [sumas de los paquetes](../releases/0.5.0.md#sumas-de-comprobación)
+Comprueba las [sumas de los paquetes](../releases/0.6.0.md#sumas-de-comprobación)
 y empieza con archivos desechables.
 
 Cierra Dowlume antes de instalar o actualizar. En Ubuntu ejecuta
-`sudo apt install ./dowlume_0.5.0_amd64.deb`; instala la aplicación y declara sus
+`sudo apt install ./dowlume_0.6.0_amd64.deb`; instala la aplicación y declara sus
 dependencias nativas. Abre Dowlume desde el menú de aplicaciones. Las actualizaciones
 conservan el perfil y los archivos gestionados; respalda antes el perfil. Para quitar
 el paquete, desactiva el inicio de sesión en Ajustes, cierra la app y ejecuta
@@ -179,5 +179,5 @@ Los movimientos requieren ext4 local del mismo montaje, con UUID y fecha de crea
 verificables. Se rechazan enlaces, Btrfs/XFS, red/FUSE/overlay y movimientos entre montajes.
 Elige carpetas fuera de sincronización y escrituras externas simultáneas. El mismo
 portable puede funcionar en Fedora/Arch con glibc, bibliotecas nativas y ext4 compatibles;
-siguen sin validación oficial. Consulta el [registro de aceptación](../releases/acceptance/0.5.0.md)
-para distinguir la confirmación manual de rc.1 de las pruebas automáticas de los paquetes finales y sus límites de evidencia.
+siguen sin validación oficial. Consulta el [registro de aceptación](../releases/acceptance/0.6.0.md)
+para distinguir la confirmación del mantenedor de las pruebas automáticas de los paquetes finales y sus límites de evidencia.
