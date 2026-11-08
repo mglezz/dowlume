@@ -2,15 +2,15 @@
 
 [English](#) · [Español](../es/user/guide.md)
 
-Dowlume organizes completed downloads on Windows x64, macOS Apple Silicon, and Ubuntu 24.04 LTS x64 with GNOME. Version 0.5.0 includes Windows/Ubuntu installers and portable applications with .NET included. Start with copies of sample files in a disposable local folder. See the [platform matrix](platform-support.md) for filesystem and OS requirements.
+Dowlume organizes completed downloads on Windows x64, macOS Apple Silicon, and Ubuntu 24.04 LTS x64 with GNOME. Version 0.6.0 includes Windows/Ubuntu installers and portable applications with .NET included. Start with copies of sample files in a disposable local folder. See the [platform matrix](platform-support.md) for filesystem and OS requirements.
 
 ## Install and start
 
-Choose the Windows installer for a regular installation, or a **Portable** download for the complete application archive. Ubuntu users should follow the [Linux instructions](#linux-050). Download the package for your computer from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.5.0). For macOS installation, permissions, and startup, follow the [macOS instructions](#macos-040) below. Developers can also [build and run from source](../development/getting-started.md).
+Choose the Windows installer for a regular installation, or a **Portable** download for the complete application archive. Ubuntu users should follow the [Linux instructions](#linux-060). Download the package for your computer from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.6.0). For macOS installation, permissions, and startup, follow the [macOS instructions](#macos-040) below. Developers can also [build and run from source](../development/getting-started.md).
 
-For a downloaded or locally built package, run the setup executable (for example, `Dowlume-0.5.0-win-x64-setup.exe`). Installation is per user and does not require administrator privileges. Alternatively, extract the complete portable ZIP and run `Dowlume.App.exe`; do not move the executable out of its accompanying files. The .NET runtime is included.
+For a downloaded or locally built package, run the setup executable (for example, `Dowlume-0.6.0-win-x64-setup.exe`). Installation is per user and does not require administrator privileges. Alternatively, extract the complete portable ZIP and run `Dowlume.App.exe`; do not move the executable out of its accompanying files. The .NET runtime is included.
 
-The Windows packages are unsigned. The macOS app uses an ad-hoc signature without Developer ID or notarization. Only use a package from a source you trust and compare its SHA-256 checksum with the [download checksums](../releases/0.5.0.md#download-checksums).
+The Windows packages are unsigned. The macOS app uses an ad-hoc signature without Developer ID or notarization. Only use a package from a source you trust and compare its SHA-256 checksum with the [download checksums](../releases/0.6.0.md#download-checksums).
 
 The package includes `START-HERE.txt`, which opens offline in a text editor. The installer adds a **Dowlume quick start** Start menu shortcut. Exit Dowlume, including any instance hidden in the tray, before upgrading or uninstalling; Setup refuses while the app is running. Installation and uninstall retain your files and local profile.
 
@@ -72,7 +72,7 @@ There is no filesystem watcher in periodic mode. A full interval follows each co
 
 A file's age starts when Dowlume first organizes it, not from its downloaded or modified timestamp. When its category's review period expires, it moves to `Expiring Files`.
 
-In source builds after 0.5.0, search by filename or current path to narrow the list
+In version 0.6.0, search by filename or current path to narrow the list
 as you type. Matching ignores letter case and treats punctuation literally.
 **Clear** restores the full list. The result count shows visible files and the
 total awaiting review; filtering does not change the overview total or move files.
@@ -133,7 +133,7 @@ If a tracked file was edited, automatic moves refuse to act on the old content h
 
 ## Current limits
 
-Windows x64, macOS Apple Silicon and Ubuntu 24.04 LTS x64 with GNOME are supported within the [platform matrix](platform-support.md). The [Linux workflow](#linux-050) requires local ext4 on the same mount. Older restricted Linux previews remain read-only. Network shares, drive roots, symbolic links, junctions, and cloud placeholder/reparse paths are rejected. Use a fully local folder. The application does not run as a service. Windows sign-in startup is optional and can be enabled in Settings.
+Windows x64, macOS Apple Silicon and Ubuntu 24.04 LTS x64 with GNOME are supported within the [platform matrix](platform-support.md). The [Linux workflow](#linux-060) requires local ext4 on the same mount. Older restricted Linux previews remain read-only. Network shares, drive roots, symbolic links, junctions, and cloud placeholder/reparse paths are rejected. Use a fully local folder. The application does not run as a service. Windows sign-in startup is optional and can be enabled in Settings.
 
 On Windows, completion detection checks file age, two stable size/timestamp observations, and an exclusive-open probe. It is conservative but cannot prove that a program will never reopen a file later. Browser partial-download extensions are always excluded. Avoid downloading directly into managed category folders.
 
@@ -155,14 +155,14 @@ Dowlume stores data in `~/Library/Application Support/Dowlume`. On first default
 
 When a file or directory race is detected, Dowlume retains the objects and may report NeedsAttention. Activity includes the source, intended destination and, when available, the observed location of the original opened object. Preserve those files before retrying recovery. Matching bytes alone cannot complete a macOS interrupted operation: the recorded volume/file identity must also match. Cooperative locks cannot exclude arbitrary POSIX writers; keep actively edited or synchronized files outside the managed folder.
 
-## Linux 0.5.0
+## Linux 0.6.0
 
-The [0.5.0 release](https://github.com/mglezz/dowlume/releases/tag/v0.5.0)
+The [0.6.0 release](https://github.com/mglezz/dowlume/releases/tag/v0.6.0)
 supports Ubuntu 24.04 LTS x64 / GNOME with local ext4. Compare the
-[package checksums](../releases/0.5.0.md#download-checksums) and begin with disposable samples.
+[package checksums](../releases/0.6.0.md#download-checksums) and begin with disposable samples.
 
 Close Dowlume before installing or updating. On Ubuntu, use
-`sudo apt install ./dowlume_0.5.0_amd64.deb`; this installs the application and declares
+`sudo apt install ./dowlume_0.6.0_amd64.deb`; this installs the application and declares
 its native dependencies. Launch Dowlume from the applications menu. Updates retain
 your profile and managed files; back up the profile first. To remove the package,
 disable login startup in Settings, close Dowlume, and use `sudo apt remove dowlume`.
@@ -187,4 +187,4 @@ creation time. Links, Btrfs/XFS, network/FUSE/overlay storage and cross-mount mo
 refused. Use folders outside synchronization services and concurrent external writers.
 The same portable build may run on Fedora and Arch with compatible glibc/native
 libraries and ext4; those distributions remain unverified. See the
-[acceptance record](../releases/acceptance/0.5.0.md) for the rc.1 manual confirmation, final-package automation and evidence limitations.
+[acceptance record](../releases/acceptance/0.6.0.md) for maintainer confirmation, final-package automation and evidence limitations.

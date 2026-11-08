@@ -2,7 +2,7 @@
 
 [English](../../user/platform-support.md) · [Español](#)
 
-[Dowlume 0.5.0](../releases/0.5.0.md) admite Windows x64, macOS Apple Silicon y Ubuntu 24.04 LTS x64 con GNOME dentro del alcance siguiente. El [registro de aceptación](../releases/acceptance/0.5.0.md) distingue la confirmación manual global de rc.1 de las regresiones nativas y comprobaciones de los paquetes finales. No se afirma una segunda prueba manual ni mediciones adicionales en máquinas limpias.
+[Dowlume 0.6.0](../releases/0.6.0.md) admite Windows x64, macOS Apple Silicon y Ubuntu 24.04 LTS x64 con GNOME dentro del alcance siguiente. El [registro de aceptación](../releases/acceptance/0.6.0.md) distingue la confirmación del mantenedor de las pruebas automatizadas y sus límites.
 
 | Plataforma | Implementación actual | Distribución y aceptación |
 | --- | --- | --- |
@@ -34,7 +34,7 @@ Ejecuto pruebas compartidas en Windows x64, macOS ARM64 y Ubuntu x64. Los adapta
 python3 scripts/Build-PlatformPreview.py --runtime osx-arm64 --output artifacts/macos-package
 # En Ubuntu 24.04 x64:
 python3 scripts/Build-Linux.py --output artifacts/linux-candidate
-python3 scripts/Test-Linux.py --output artifacts/linux-native --archive artifacts/linux-candidate/Dowlume-0.5.0-linux-x64.tar.gz
+python3 scripts/Test-Linux.py --output artifacts/linux-native --archive artifacts/linux-candidate/Dowlume-0.6.0-linux-x64.tar.gz
 ```
 
 Compilo en cada plataforma nativa con SDK .NET 10.0.401 y Python 3.13 en CI. macOS requiere herramientas de línea de comandos Xcode para adaptador C, icono, firma y archivo. Linux CI instala `xvfb`, `xauth`, `libx11-6`, `libice6`, `libsm6`, `libfontconfig1`, `libgl1`, `libegl1`, `libxrandr2`, `libxi6`, `libxcursor1`, `libxrender1`, `libxext6` y `libxfixes3`. Mostrar carpetas en Linux también requiere `/usr/bin/xdg-open` (`xdg-utils`) y gestor de archivos.
