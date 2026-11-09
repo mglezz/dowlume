@@ -113,6 +113,7 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty] private int _reviewCount;
     [ObservableProperty] private int _attentionCount;
     [ObservableProperty] private bool _startAtLogin;
+    [ObservableProperty] private bool _showWindowAtWindowsLogin;
     [ObservableProperty, NotifyPropertyChangedFor(nameof(CanReviewSelectedFile))] private TrackedFile? _selectedReview;
     [ObservableProperty, NotifyPropertyChangedFor(nameof(CanUndoSelectedOperation))] private OperationRecord? _selectedOperation;
 
@@ -122,6 +123,7 @@ public partial class MainViewModel : ObservableObject
     public bool IsPreviewPlatform => !SupportsFileOperations;
     public static bool IsMacOS => OperatingSystem.IsMacOS();
     public static bool IsLinux => OperatingSystem.IsLinux();
+    public static bool IsWindows => OperatingSystem.IsWindows();
     public string PlatformNotice => Text.Translate(DownloadOrganizer.ReadOnlyMessage);
     public string PrivacyNotice => Text[IsPreviewPlatform ? "PreviewPrivacyNotice" : IsMacOS ? "MacPrivacyNotice" : IsLinux ? "LinuxPrivacyNotice" : "LocalonlyNoaccountcloudsyncortelemetryClosing"];
     public bool CanReviewSelectedFile => SupportsFileOperations && IsIdle && SelectedReview is not null;
@@ -156,6 +158,7 @@ public partial class MainViewModel : ObservableObject
         }
         catch (Exception error) { ShowError(error); }
         AppSettings settings = store.LoadSettings() ?? new AppSettings { DownloadsPath = _suggestedDownloads };
+        ShowWindowAtWindowsLogin = settings.ShowWindowAtWindowsLogin;
         Text.SetLanguage(settings.Language);
         _selectedLanguage = Languages.Single(language => language.Code == Text.Language);
         RefreshLanguage();
@@ -170,6 +173,26 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private Task ToggleWindowsLoginWindowAsync() => RunAsync(() =>
+    {
+        try
+        {
+            AppSettings saved = _store.LoadSettings() ?? new AppSettings { DownloadsPath = _suggestedDownloads };
+            _store.SaveSettings(saved with
+            {
+                ShowWindowAtWindowsLogin = !ShowWindowAtWindowsLogin
+            });
+            ShowWindowAtWindowsLogin = !ShowWindowAtWindowsLogin;
+        }
+        finally
+        {
+            // Restore the one-way checkbox if persistence fails.
+            OnPropertyChanged(nameof(ShowWindowAtWindowsLogin));
+        }
+        return Task.CompletedTask;
+    });
+
+    [RelayCommand]
     private Task ToggleLoginStartupAsync() => RunAsync(() =>
     {
         if (_startup is null || !_startup.IsSupported)
@@ -181,7 +204,7 @@ public partial class MainViewModel : ObservableObject
             _startup.SetEnabled(!StartAtLogin);
             StartAtLogin = _startup.IsEnabled;
             StatusMessage = StartAtLogin
-                ? "Dowlume will open when you sign in. Monitoring will remain paused until you preview and start."
+                ? "Dowlume will start when you sign in. Monitoring will remain paused until you preview and start."
                 : "Dowlume will no longer start automatically from this location.";
         }
         finally
@@ -402,6 +425,7 @@ public partial class MainViewModel : ObservableObject
         var settings = new AppSettings
         {
             Language = Text.Language,
+            ShowWindowAtWindowsLogin = ShowWindowAtWindowsLogin,
             UsePeriodicOrganization = UsePeriodicOrganization,
             OrganizationIntervalMinutes = OrganizationIntervalMinutes,
             DownloadsPath = Path.TrimEndingDirectorySeparator(Path.GetFullPath(DownloadsPath.Trim())),

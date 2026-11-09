@@ -23,7 +23,7 @@ public sealed class WindowsStartupTests
             startup.SetEnabled(true);
             Assert.True(startup.IsEnabled);
             using RegistryKey key = Registry.CurrentUser.OpenSubKey(registryPath, writable: true)!;
-            Assert.Equal($"\"{executable}\"", key.GetValue("Dowlume"));
+            Assert.Equal($"\"{executable}\" --login-startup", key.GetValue("Dowlume"));
             key.SetValue("Unrelated", "Retain this value");
             startup.SetEnabled(false);
             Assert.Null(key.GetValue("Dowlume"));
@@ -31,6 +31,20 @@ public sealed class WindowsStartupTests
             key.SetValue("Dowlume", "A different portable installation");
             startup.SetEnabled(false);
             Assert.Equal("A different portable installation", key.GetValue("Dowlume"));
+            startup.UpgradeExistingRegistration();
+            Assert.Equal("A different portable installation", key.GetValue("Dowlume"));
+            key.SetValue("Dowlume", $"\"{executable}\"");
+            Assert.True(startup.IsEnabled);
+            startup.UpgradeExistingRegistration();
+            Assert.Equal($"\"{executable}\" --login-startup", key.GetValue("Dowlume"));
+            startup.UpgradeExistingRegistration();
+            Assert.True(startup.IsEnabled);
+            startup.SetEnabled(false);
+            startup.UpgradeExistingRegistration();
+            Assert.Null(key.GetValue("Dowlume"));
+            key.SetValue("Dowlume", $"\"{executable}\"");
+            startup.SetEnabled(false);
+            Assert.Null(key.GetValue("Dowlume"));
         }
         finally
         {

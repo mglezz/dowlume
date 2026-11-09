@@ -6,6 +6,11 @@ public sealed record AppSettings
 
     public string Language { get; init; } = "en";
 
+    public bool ShowWindowAtWindowsLogin
+    {
+        get; init;
+    }
+
     public string DownloadsPath { get; init; } = string.Empty;
     public bool UsePeriodicOrganization
     {

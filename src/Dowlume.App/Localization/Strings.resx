@@ -184,7 +184,7 @@
     <value>Windows startup is unavailable for this application host.</value>
   </data>
   <data name="DowlumewillopenwhenyousigninMonitoringwill" xml:space="preserve">
-    <value>Dowlume will open when you sign in. Monitoring will remain paused until you preview and start.</value>
+    <value>Dowlume will start when you sign in. Monitoring will remain paused until you preview and start.</value>
   </data>
   <data name="Dowlumewillnolongerstartautomaticallyfromthislocation" xml:space="preserve">
     <value>Dowlume will no longer start automatically from this location.</value>
@@ -528,4 +528,6 @@ The first pass waits for the interval. Each pass organizes completed downloads, 
   <data name="UpdateDownloading" xml:space="preserve"><value>Downloading and verifying the update…</value></data>
   <data name="UpdateClosing" xml:space="preserve"><value>Update verified. Closing Dowlume to open the installer…</value></data>
   <data name="UpdateFailed" xml:space="preserve"><value>The update could not be prepared or verified. Nothing was installed. Try again later.</value></data>
+  <data name="ShowWindowAtWindowsLogin" xml:space="preserve"><value>Show the window when Windows starts</value></data>
+  <data name="WindowsLoginWindowHelp" xml:space="preserve"><value>By default, Dowlume starts in the background in the system tray. Enable this option to show its window. Saved immediately. Organization always starts paused.</value></data>
 </root>

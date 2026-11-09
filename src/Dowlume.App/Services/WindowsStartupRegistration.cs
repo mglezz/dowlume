@@ -19,7 +19,20 @@ public sealed class WindowsStartupRegistration : IStartupRegistration
     public bool IsSupported => OperatingSystem.IsWindows() &&
         string.Equals(Path.GetFileName(_executablePath), "Dowlume.App.exe", StringComparison.OrdinalIgnoreCase);
 
-    private string Command => $"\"{_executablePath}\"";
+    private string LegacyCommand => $"\"{_executablePath}\"";
+    private string Command => LegacyCommand + " --login-startup";
+    private bool OwnsCommand(string? command) =>
+        string.Equals(command, Command, StringComparison.OrdinalIgnoreCase) ||
+        string.Equals(command, LegacyCommand, StringComparison.OrdinalIgnoreCase);
+
+    internal void UpgradeExistingRegistration()
+    {
+        if (!OperatingSystem.IsWindows() || !IsSupported)
+            return;
+        using RegistryKey? key = Registry.CurrentUser.OpenSubKey(_registryPath, writable: true);
+        if (string.Equals(key?.GetValue("Dowlume") as string, LegacyCommand, StringComparison.OrdinalIgnoreCase))
+            key!.SetValue("Dowlume", Command, RegistryValueKind.String);
+    }
 
     public bool IsEnabled
     {
@@ -30,7 +43,7 @@ public sealed class WindowsStartupRegistration : IStartupRegistration
                 return false;
             }
             using RegistryKey? key = Registry.CurrentUser.OpenSubKey(_registryPath);
-            return string.Equals(key?.GetValue("Dowlume") as string, Command, StringComparison.OrdinalIgnoreCase);
+            return OwnsCommand(key?.GetValue("Dowlume") as string);
         }
     }
 
@@ -52,7 +65,7 @@ public sealed class WindowsStartupRegistration : IStartupRegistration
         else
         {
             using RegistryKey? key = Registry.CurrentUser.OpenSubKey(_registryPath, writable: true);
-            if (string.Equals(key?.GetValue("Dowlume") as string, Command, StringComparison.OrdinalIgnoreCase))
+            if (OwnsCommand(key?.GetValue("Dowlume") as string))
             {
                 key!.DeleteValue("Dowlume", throwOnMissingValue: false);
             }

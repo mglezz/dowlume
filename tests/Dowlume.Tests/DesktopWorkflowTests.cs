@@ -295,6 +295,57 @@ public sealed class DesktopWorkflowTests
     }
 
     [Fact]
+    public async Task WindowsLoginPreferencePersistsWithoutSavingUnrelatedEditsAndHiddenWindowCanExit()
+    {
+        using var session = HeadlessUnitTestSession.StartNew(typeof(TestAppBuilder));
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+        await session.Dispatch(async () =>
+        {
+            using var workspace = new TemporaryWorkspace();
+            var store = new SqliteStateStore(workspace.Database);
+            var saved = new AppSettings { DownloadsPath = workspace.Downloads };
+            store.SaveSettings(saved);
+            var organizer = new DownloadOrganizer(store, FixtureFileMover.Create(workspace), new FileReadiness());
+            var model = new MainViewModel(store, organizer, new TestDialogs(),
+                new DiagnosticLog(Path.Combine(workspace.Root, "diagnostics.jsonl")), new TestStartup());
+            Assert.False(model.ShowWindowAtWindowsLogin);
+            model.DownloadsPath = "unsaved folder edit";
+            await model.ToggleWindowsLoginWindowCommand.ExecuteAsync(null);
+            Assert.True(store.LoadSettings()!.ShowWindowAtWindowsLogin);
+            Assert.Equal(saved.DownloadsPath, store.LoadSettings()!.DownloadsPath);
+            Assert.False(model.StartAtLogin);
+            Assert.False(model.IsMonitoring);
+            var reopened = new MainViewModel(store, organizer, new TestDialogs(),
+                new DiagnosticLog(Path.Combine(workspace.Root, "reopened.jsonl")), new TestStartup());
+            Assert.True(reopened.ShowWindowAtWindowsLogin);
+            await reopened.SaveSettingsCommand.ExecuteAsync(null);
+            Assert.True(store.LoadSettings()!.ShowWindowAtWindowsLogin);
+            await reopened.ToggleWindowsLoginWindowCommand.ExecuteAsync(null);
+            Assert.False(store.LoadSettings()!.ShowWindowAtWindowsLogin);
+            using (var connection = new Microsoft.Data.Sqlite.SqliteConnection($"Data Source={workspace.Database};Pooling=False"))
+            {
+                connection.Open();
+                using var command = connection.CreateCommand();
+                command.CommandText = "CREATE TRIGGER refuse_setting_update BEFORE UPDATE ON settings BEGIN SELECT RAISE(ABORT, 'Fixture persistence failure'); END;";
+                command.ExecuteNonQuery();
+                bool restored = false;
+                reopened.PropertyChanged += (_, args) => restored |= args.PropertyName == nameof(MainViewModel.ShowWindowAtWindowsLogin);
+                await reopened.ToggleWindowsLoginWindowCommand.ExecuteAsync(null);
+                Assert.False(reopened.ShowWindowAtWindowsLogin);
+                Assert.False(store.LoadSettings()!.ShowWindowAtWindowsLogin);
+                Assert.NotEmpty(reopened.ErrorMessage);
+                Assert.True(restored);
+            }
+            var window = new MainWindow { DataContext = reopened };
+            Assert.False(window.IsVisible);
+            await DesktopWindowTest.CloseAsync(window);
+            Assert.True(window.IsShutdownComplete);
+            await model.ShutdownAsync();
+            return true;
+        }, timeout.Token);
+    }
+
+    [Fact]
     public async Task ActivitySearchPagingAndUndoWorkWithOlderHistory()
     {
         using var workspace = new TemporaryWorkspace();

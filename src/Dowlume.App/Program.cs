@@ -22,6 +22,11 @@ internal static class Program
         get; private set;
     }
 
+    internal static bool IsLoginStartup
+    {
+        get; private set;
+    }
+
     [STAThread]
     public static void Main(string[] args)
     {
@@ -45,9 +50,19 @@ internal static class Program
             IsCustomDataDirectory = true;
             DataDirectory = Path.GetFullPath(directory);
         }
+        else if (args is ["--login-startup", "--data-directory", var loginDirectory] && OperatingSystem.IsWindows())
+        {
+            IsLoginStartup = true;
+            IsCustomDataDirectory = true;
+            DataDirectory = Path.GetFullPath(loginDirectory);
+        }
+        else if (args is ["--login-startup"] && OperatingSystem.IsWindows())
+        {
+            IsLoginStartup = true;
+        }
         else if (args.Length != 0)
         {
-            Console.Error.WriteLine("Usage: Dowlume.App [--data-directory <profile>] or --smoke-test --data-directory <new-profile>");
+            Console.Error.WriteLine("Usage: Dowlume.App [--login-startup] or --data-directory <profile> or --smoke-test --data-directory <new-profile>");
             Environment.ExitCode = 1;
             return;
         }

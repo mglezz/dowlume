@@ -52,6 +52,12 @@ El icono puede aparecer entre los iconos ocultos del área de notificación. Un 
 
 En **Ajustes**, **Iniciar Dowlume al entrar en Windows** se aplica inmediatamente a tu cuenta y está desactivado inicialmente. La supervisión sigue empezando en pausa. Desactívalo antes de mover una copia portátil y actívalo de nuevo desde su ubicación final. Windows también puede desactivar aplicaciones de inicio. La desinstalación elimina la entrada solo si pertenece a esa instalación.
 
+### Ventana al iniciar Windows (código posterior a 0.6.0)
+
+Si has activado el inicio con Windows, Dowlume inicia por defecto en el área de notificación sin mostrar la ventana. Activa **Mostrar la ventana al iniciar Windows** en Ajustes si prefieres verla al iniciar sesión. La preferencia se guarda inmediatamente, sin guardar cambios pendientes en carpetas o reglas. La apertura manual muestra la ventana. Usa el icono de la bandeja para abrir o salir de una instancia en segundo plano; la organización sigue pausada hasta revisar la vista previa y confirmar. Si falla la creación de la bandeja, se muestra la ventana para mantener accesible la aplicación.
+
+La actualización conserva una entrada de inicio existente y añade el argumento de inicio de sesión; no activa el inicio automático si estaba desactivado. Una copia portable actualiza su propia entrada antigua la próxima vez que se abre normalmente. Los paquetes publicados de 0.6.0 todavía no incluyen esta opción.
+
 ## Organización periódica (0.6.0)
 
 La versión 0.6.0 incluye **Ajustes → Organizar por intervalos en lugar de continuamente**. Es opcional y está desactivada por defecto. Elige un intervalo entre 1 y 1440 minutos (10 por defecto), guarda, actualiza la vista previa y pulsa **Organizar y supervisar** para confirmar.

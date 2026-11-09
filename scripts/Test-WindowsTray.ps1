@@ -1,3 +1,66 @@
+function Test-WindowsLoginPresentation([string]$Executable, [string]$Profile) {
+    # Test-WindowsTray initializes the native tray probe first. Only this disposable
+    # package process/profile is used; no real sign-out or personal profile is needed.
+    $launch = 0
+    foreach ($showWindow in @($false, $true, $false)) {
+        $process = Start-Process -FilePath $Executable -ArgumentList @('--login-startup', '--data-directory', """$Profile""") -WindowStyle Hidden -PassThru
+        try {
+            $deadline = [DateTime]::UtcNow.AddSeconds(30)
+            do {
+                Start-Sleep -Milliseconds 100
+                $process.Refresh()
+                if ($process.HasExited) { throw 'Login startup exited unexpectedly.' }
+                $icon = [DowlumeTrayAcceptance]::FindIconWindow([uint32]$process.Id)
+            } while ($icon -eq [IntPtr]::Zero -and [DateTime]::UtcNow -lt $deadline)
+            if ($icon -eq [IntPtr]::Zero) { throw 'Login startup did not register a tray icon.' }
+            Start-Sleep -Milliseconds 1500
+            $process.Refresh()
+            if ($showWindow) {
+                if ($process.MainWindowHandle -eq [IntPtr]::Zero) { throw 'The saved visible-login preference was ignored.' }
+            } else {
+                if ($process.MainWindowHandle -ne [IntPtr]::Zero) { throw 'Background login startup displayed a window.' }
+                if (-not [DowlumeTrayAcceptance]::ClickIcon($icon)) { throw 'Could not reopen background startup from the tray.' }
+            }
+            $deadline = [DateTime]::UtcNow.AddSeconds(10)
+            do {
+                Start-Sleep -Milliseconds 100
+                $process.Refresh()
+            } while ($process.MainWindowHandle -eq [IntPtr]::Zero -and [DateTime]::UtcNow -lt $deadline)
+            if ($process.MainWindowHandle -eq [IntPtr]::Zero) { throw 'Login window did not become accessible.' }
+            $root = [Windows.Automation.AutomationElement]::FromHandle($process.MainWindowHandle)
+            $condition = New-Object Windows.Automation.PropertyCondition([Windows.Automation.AutomationElement]::NameProperty, 'Settings')
+            $tab = $root.FindFirst([Windows.Automation.TreeScope]::Descendants, $condition)
+            if ($null -eq $tab) { throw 'Settings tab is unavailable.' }
+            $tab.GetCurrentPattern([Windows.Automation.SelectionItemPattern]::Pattern).Select()
+            $condition = New-Object Windows.Automation.PropertyCondition([Windows.Automation.AutomationElement]::AutomationIdProperty, 'ShowWindowAtWindowsLogin')
+            $deadline = [DateTime]::UtcNow.AddSeconds(10)
+            do {
+                Start-Sleep -Milliseconds 100
+                $checkbox = $root.FindFirst([Windows.Automation.TreeScope]::Descendants, $condition)
+            } while ($null -eq $checkbox -and [DateTime]::UtcNow -lt $deadline)
+            if ($null -eq $checkbox) { throw 'Windows login preference is unavailable.' }
+            $toggle = $checkbox.GetCurrentPattern([Windows.Automation.TogglePattern]::Pattern)
+            $expected = if ($showWindow) { [Windows.Automation.ToggleState]::On } else { [Windows.Automation.ToggleState]::Off }
+            if ($toggle.Current.ToggleState -ne $expected) { throw 'Login preference did not persist.' }
+            # The first two launches verify off -> on -> off across real restarts.
+            if ($launch -lt 2) {
+                $toggle.Toggle()
+                $deadline = [DateTime]::UtcNow.AddSeconds(10)
+                while ($toggle.Current.ToggleState -eq $expected -and [DateTime]::UtcNow -lt $deadline) { Start-Sleep -Milliseconds 100 }
+                if ($toggle.Current.ToggleState -eq $expected) { throw 'Login preference could not be changed.' }
+            }
+            if (-not $process.CloseMainWindow() -or -not $process.WaitForExit(30000) -or $process.ExitCode -ne 0) {
+                throw 'Login startup did not shut down gracefully.'
+            }
+        } finally {
+            if (-not $process.HasExited) { $process.Kill(); $process.WaitForExit() }
+            $process.Dispose()
+        }
+        $launch++
+    }
+    Write-Output 'Background default, tray reopen, visible preference and restart persistence passed.'
+}
+
 function Test-WindowsTray([Diagnostics.Process]$Application) {
     Add-Type -AssemblyName UIAutomationClient
     Add-Type -AssemblyName UIAutomationTypes

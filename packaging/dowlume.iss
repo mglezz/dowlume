@@ -47,6 +47,20 @@ Filename: "{app}\Dowlume.App.exe"; Description: "Open Dowlume"; Flags: nowait po
 ; Deliberately retain the local database, diagnostics, and all user files on uninstall.
 
 [Code]
+procedure CurStepChanged(CurStep: TSetupStep);
+var
+  StartupCommand: String;
+  LegacyCommand: String;
+begin
+  if CurStep = ssPostInstall then
+  begin
+    LegacyCommand := '"' + ExpandConstant('{app}\Dowlume.App.exe') + '"';
+    if RegQueryStringValue(HKCU, 'Software\Microsoft\Windows\CurrentVersion\Run', 'Dowlume', StartupCommand) then
+      if CompareText(StartupCommand, LegacyCommand) = 0 then
+        RegWriteStringValue(HKCU, 'Software\Microsoft\Windows\CurrentVersion\Run', 'Dowlume', LegacyCommand + ' --login-startup');
+  end;
+end;
+
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 var
   StartupCommand: String;
@@ -54,7 +68,8 @@ begin
   if CurUninstallStep = usUninstall then
   begin
     if RegQueryStringValue(HKCU, 'Software\Microsoft\Windows\CurrentVersion\Run', 'Dowlume', StartupCommand) then
-      if CompareText(StartupCommand, '"' + ExpandConstant('{app}\Dowlume.App.exe') + '"') = 0 then
+      if (CompareText(StartupCommand, '"' + ExpandConstant('{app}\Dowlume.App.exe') + '"') = 0) or
+         (CompareText(StartupCommand, '"' + ExpandConstant('{app}\Dowlume.App.exe') + '" --login-startup') = 0) then
         RegDeleteValue(HKCU, 'Software\Microsoft\Windows\CurrentVersion\Run', 'Dowlume');
   end;
 end;

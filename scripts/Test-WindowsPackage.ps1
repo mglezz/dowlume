@@ -129,7 +129,8 @@ try {
     } else {
         Install-Package $Installer 'upgrade.log'
     }
-    if ((Get-StartupCommand) -ne $startupCommand) { throw 'Upgrade changed the opt-in startup entry.' }
+    $startupCommand += ' --login-startup'
+    if ((Get-StartupCommand) -ne $startupCommand) { throw 'Upgrade did not preserve and migrate the opt-in startup entry.' }
     if ((Get-FileHash -LiteralPath $database).Hash -ne $databaseHash) { throw 'Upgrade changed the local database.' }
     if (-not (Test-Path -LiteralPath (Join-Path $installDirectory 'START-HERE.txt'))) { throw 'The offline quick-start guide is missing.' }
     foreach ($runtimeFile in @('coreclr.dll', 'hostfxr.dll', 'e_sqlite3.dll', 'libSkiaSharp.dll')) {
@@ -160,6 +161,7 @@ try {
     if ((Get-StartupCommand) -ne $startupCommand) { throw 'Blocked uninstall changed the startup entry.' }
     Close-Application $application
     $application = $null
+    Test-WindowsLoginPresentation $executable $profile
     $databaseHash = (Get-FileHash -LiteralPath $database).Hash
 
     $workflowProfile = Join-Path $workspace 'WorkflowProfile'
@@ -193,6 +195,7 @@ try {
         NativePeriodicDelayOrganizationAndDrain = $true
         SingleInstanceRefusal = $true
         NativeTrayRegistrationAndRestore = $true
+        LoginBackgroundDefaultAndWindowPreference = $true
         RunningUpgradeRefused = $true
         RunningUninstallRefused = $true
         GracefulExit = $true
