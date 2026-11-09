@@ -58,6 +58,12 @@ The Dowlume icon appears in the Windows notification area, sometimes inside the 
 
 On Windows, in **Settings**, enable **Start Dowlume when I sign in** to open this copy of the application at sign-in. The change applies immediately to your account and is off by default. Monitoring still starts paused. Disable the option before relocating a portable copy; enable it again from the new location. Windows Settings can independently disable startup applications. Uninstall removes the startup entry when it belongs to that installation.
 
+### Windows login window (source builds after 0.6.0)
+
+With login startup enabled, Dowlume starts in the notification area by default without showing a window. Enable **Show the window when Windows starts** in Settings to display it at sign-in instead. This preference is saved immediately, independently of folder/rule edits. Opening Dowlume manually still shows its window. Use the tray icon to open or exit a background instance; organization remains paused until you preview and confirm. If tray initialization fails, the window opens so the application remains accessible.
+
+Upgrading an installation preserves an existing startup entry and adds the login-startup argument; it does not enable startup for users who disabled it. A portable copy updates its own older startup entry on its next normal launch. The published 0.6.0 packages predate this option.
+
 ## Periodic organization (0.6.0)
 
 Version 0.6.0 offers **Settings → Organize periodically instead of continuously**. This optional mode is off by default. Choose an interval from 1 to 1440 minutes (10 by default), save, refresh the preview, and select **Organize and monitor** to confirm the schedule.

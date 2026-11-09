@@ -184,7 +184,7 @@
     <value>El inicio con Windows no está disponible en este entorno.</value>
   </data>
   <data name="DowlumewillopenwhenyousigninMonitoringwill" xml:space="preserve">
-    <value>Dowlume se abrirá al iniciar sesión. La supervisión seguirá en pausa hasta que revises la vista previa y la inicies.</value>
+    <value>Dowlume se iniciará al iniciar sesión. La supervisión seguirá en pausa hasta que revises la vista previa y la inicies.</value>
   </data>
   <data name="Dowlumewillnolongerstartautomaticallyfromthislocation" xml:space="preserve">
     <value>Dowlume ya no se iniciará automáticamente desde esta ubicación.</value>
@@ -528,4 +528,6 @@ La primera pasada espera el intervalo indicado. Cada pasada organiza descargas c
   <data name="UpdateDownloading" xml:space="preserve"><value>Descargando y verificando la actualización…</value></data>
   <data name="UpdateClosing" xml:space="preserve"><value>Actualización verificada. Cerrando Dowlume para abrir el instalador…</value></data>
   <data name="UpdateFailed" xml:space="preserve"><value>No se pudo preparar o verificar la actualización. No se ha instalado nada. Inténtalo más tarde.</value></data>
+  <data name="ShowWindowAtWindowsLogin" xml:space="preserve"><value>Mostrar la ventana al iniciar Windows</value></data>
+  <data name="WindowsLoginWindowHelp" xml:space="preserve"><value>Por defecto, Dowlume inicia en segundo plano en la bandeja. Activa esta opción para mostrar la ventana. Se guarda inmediatamente. La organización siempre inicia pausada.</value></data>
 </root>

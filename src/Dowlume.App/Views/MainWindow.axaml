@@ -316,6 +316,10 @@
             <StackPanel Spacing="6" IsVisible="{Binding SupportsLoginStartup}">
               <CheckBox Content="{ReflectionBinding $parent[Window].DataContext.Text[StartDowlumeAtLogin]}" IsChecked="{Binding StartAtLogin, Mode=OneWay}" Command="{Binding ToggleLoginStartupCommand}" />
               <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[LoginStartupExplanation]}" TextWrapping="Wrap" Classes="muted" />
+              <StackPanel Spacing="6" IsVisible="{Binding IsWindows}">
+                <CheckBox AutomationProperties.AutomationId="ShowWindowAtWindowsLogin" Content="{ReflectionBinding $parent[Window].DataContext.Text[ShowWindowAtWindowsLogin]}" IsChecked="{Binding ShowWindowAtWindowsLogin, Mode=OneWay}" Command="{Binding ToggleWindowsLoginWindowCommand}" IsEnabled="{Binding StartAtLogin}" />
+                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[WindowsLoginWindowHelp]}" TextWrapping="Wrap" Classes="muted" />
+              </StackPanel>
             </StackPanel>
             <TextBlock IsVisible="{Binding SupportsFileOperations}" Text="{ReflectionBinding $parent[Window].DataContext.Text[PausemonitoringtochangethesesettingsSavedrulesapply]}" TextWrapping="Wrap" Classes="muted" />
             <StackPanel Spacing="8">

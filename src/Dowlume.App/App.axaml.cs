@@ -39,6 +39,14 @@ public partial class App : Application
                 var window = new MainWindow();
                 text.SetLanguage(store.LoadSettings()?.Language);
                 var platform = DesktopPlatform.Current;
+                if (!Program.IsCustomDataDirectory && platform.Startup is WindowsStartupRegistration windowsStartup)
+                {
+                    try
+                    {
+                        windowsStartup.UpgradeExistingRegistration();
+                    }
+                    catch (Exception error) { log.Write("startup_registration_upgrade_failed", error); }
+                }
                 var model = new MainViewModel(store, organizer, new DesktopDialogs(window, text, platform.FileManager), log,
                     Program.IsCustomDataDirectory && platform.System != DesktopSystem.Windows ? new UnavailableStartupRegistration() : platform.Startup, text, platform.SuggestedDownloads);
                 window.DataContext = model;
@@ -54,6 +62,14 @@ public partial class App : Application
                         window.ConfigureTray(true);
                     }
                     catch (Exception error) { log.Write("tray_unavailable", error); }
+                }
+                if (Program.IsLoginStartup && !model.ShowWindowAtWindowsLogin && _tray is not null)
+                {
+                    // The lifetime normally shows MainWindow automatically. Leave it unset so
+                    // login startup never flashes a window or steals focus, even briefly.
+                    desktop.MainWindow = null;
+                    desktop.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+                    window.Closed += (_, _) => desktop.Shutdown();
                 }
                 log.Write("application_started");
             }
