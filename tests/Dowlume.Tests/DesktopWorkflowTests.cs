@@ -322,6 +322,20 @@ public sealed class DesktopWorkflowTests
             Assert.True(store.LoadSettings()!.ShowWindowAtWindowsLogin);
             await reopened.ToggleWindowsLoginWindowCommand.ExecuteAsync(null);
             Assert.False(store.LoadSettings()!.ShowWindowAtWindowsLogin);
+            using (var connection = new Microsoft.Data.Sqlite.SqliteConnection($"Data Source={workspace.Database}"))
+            {
+                connection.Open();
+                using var command = connection.CreateCommand();
+                command.CommandText = "CREATE TRIGGER refuse_setting_update BEFORE UPDATE ON settings BEGIN SELECT RAISE(ABORT, 'Fixture persistence failure'); END;";
+                command.ExecuteNonQuery();
+                bool restored = false;
+                reopened.PropertyChanged += (_, args) => restored |= args.PropertyName == nameof(MainViewModel.ShowWindowAtWindowsLogin);
+                await reopened.ToggleWindowsLoginWindowCommand.ExecuteAsync(null);
+                Assert.False(reopened.ShowWindowAtWindowsLogin);
+                Assert.False(store.LoadSettings()!.ShowWindowAtWindowsLogin);
+                Assert.Contains("Fixture persistence failure", reopened.ErrorMessage);
+                Assert.True(restored);
+            }
             var window = new MainWindow { DataContext = reopened };
             Assert.False(window.IsVisible);
             await DesktopWindowTest.CloseAsync(window);

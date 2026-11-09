@@ -175,12 +175,20 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private Task ToggleWindowsLoginWindowAsync() => RunAsync(() =>
     {
-        AppSettings saved = _store.LoadSettings() ?? new AppSettings { DownloadsPath = _suggestedDownloads };
-        _store.SaveSettings(saved with
+        try
         {
-            ShowWindowAtWindowsLogin = !ShowWindowAtWindowsLogin
-        });
-        ShowWindowAtWindowsLogin = !ShowWindowAtWindowsLogin;
+            AppSettings saved = _store.LoadSettings() ?? new AppSettings { DownloadsPath = _suggestedDownloads };
+            _store.SaveSettings(saved with
+            {
+                ShowWindowAtWindowsLogin = !ShowWindowAtWindowsLogin
+            });
+            ShowWindowAtWindowsLogin = !ShowWindowAtWindowsLogin;
+        }
+        finally
+        {
+            // Restore the one-way checkbox if persistence fails.
+            OnPropertyChanged(nameof(ShowWindowAtWindowsLogin));
+        }
         return Task.CompletedTask;
     });
 
