@@ -265,6 +265,59 @@ public sealed class DesktopWorkflowTests
     }
 
     [Fact]
+    public async Task CustomRulesCanBeAddedEditedAndRemovedWithFreshPreviewAndLocalizedConflicts()
+    {
+        using var session = HeadlessUnitTestSession.StartNew(typeof(TestAppBuilder));
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+        await session.Dispatch(async () =>
+        {
+            using var workspace = new TemporaryWorkspace();
+            string source = workspace.CreateFile("contrato.pdf");
+            var store = new SqliteStateStore(workspace.Database);
+            store.SaveSettings(new AppSettings { DownloadsPath = workspace.Downloads });
+            var model = new MainViewModel(store,
+                new DownloadOrganizer(store, FixtureFileMover.Create(workspace), new FileReadiness(TimeSpan.Zero, TimeSpan.Zero)),
+                new TestDialogs(), new DiagnosticLog(Path.Combine(workspace.Root, "diagnostics.jsonl")));
+            model.AddRuleCommand.Execute(null);
+            CategoryRuleViewModel custom = model.Rules.Last();
+            custom.FolderName = "Contratos";
+            custom.MatchKind = RuleMatchKind.NameContains;
+            custom.NamePattern = "contrato";
+            await model.SaveSettingsCommand.ExecuteAsync(null);
+            Assert.Empty(model.ErrorMessage);
+            Assert.Equal(custom.Id, store.LoadSettings()!.Categories.Last().Id);
+            await model.PreviewCommand.ExecuteAsync(null);
+            Assert.Equal("Contratos", Assert.Single(model.PreviewItems).CustomFolder);
+            custom.NamePattern = "ABC";
+            await model.StartCommand.ExecuteAsync(null);
+            Assert.Contains("Preview the current settings", model.ErrorMessage);
+            Assert.False(model.IsMonitoring);
+            custom.NamePattern = "contrato";
+            model.SelectedLanguage = MainViewModel.Languages.Single(language => language.Code == "es");
+            model.AddRuleCommand.Execute(null);
+            CategoryRuleViewModel duplicate = model.Rules.Last();
+            duplicate.FolderName = "Duplicados";
+            duplicate.MatchKind = RuleMatchKind.NameStartsWith;
+            duplicate.NamePattern = "CONTRATO";
+            await model.SaveSettingsCommand.ExecuteAsync(null);
+            Assert.Contains("está asignado", model.ErrorMessage);
+            Assert.Contains("Contratos", model.ErrorMessage);
+            Assert.Equal(7, store.LoadSettings()!.Categories.Count);
+            model.RemoveRuleCommand.Execute(duplicate);
+            model.RemoveRuleCommand.Execute(custom);
+            model.RemoveRuleCommand.Execute(model.Rules[0]);
+            Assert.Equal(6, model.Rules.Count);
+            await model.SaveSettingsCommand.ExecuteAsync(null);
+            Assert.Empty(model.ErrorMessage);
+            Assert.Equal(6, store.LoadSettings()!.Categories.Count);
+            Assert.True(File.Exists(source));
+            Assert.Empty(store.GetOperations());
+            await model.ShutdownAsync();
+            return true;
+        }, timeout.Token);
+    }
+
+    [Fact]
     public async Task StartupToggleIsOptInAndReportsFailuresWithoutClaimingSuccess()
     {
         using var session = HeadlessUnitTestSession.StartNew(typeof(TestAppBuilder));

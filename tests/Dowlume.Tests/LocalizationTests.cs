@@ -95,7 +95,7 @@ public sealed class LocalizationTests
             TabControl tabs = window.GetVisualDescendants().OfType<TabControl>().Single();
             tabs.SelectedIndex = 4;
             window.UpdateLayout();
-            ComboBox selector = window.GetVisualDescendants().OfType<ComboBox>().Single(combo => combo.IsEffectivelyVisible);
+            ComboBox selector = window.GetVisualDescendants().OfType<ComboBox>().Single(combo => ReferenceEquals(combo.ItemsSource, MainViewModel.Languages));
             selector.SelectedItem = MainViewModel.Languages[1];
             window.UpdateLayout();
             Assert.Equal("es", text.Language);

@@ -530,4 +530,24 @@ The first pass waits for the interval. Each pass organizes completed downloads, 
   <data name="UpdateFailed" xml:space="preserve"><value>The update could not be prepared or verified. Nothing was installed. Try again later.</value></data>
   <data name="ShowWindowAtWindowsLogin" xml:space="preserve"><value>Show the window when Windows starts</value></data>
   <data name="WindowsLoginWindowHelp" xml:space="preserve"><value>By default, Dowlume starts in the background in the system tray. Enable this option to show its window. Saved immediately. Organization always starts paused.</value></data>
+  <data name="CustomRulesHeading" xml:space="preserve"><value>Folders and classification</value></data>
+  <data name="CustomRulesHelp" xml:space="preserve"><value>Names are matched without the final extension, ignoring case. Name rules take priority over extensions. If several name rules match, the file stays in place and an error identifies the conflict. Each extension and folder must be unique. Other remains the fallback.</value></data>
+  <data name="RuleEditScope" xml:space="preserve"><value>Save and preview again after editing. Existing folders and files are not renamed or rearranged. Removing a custom rule does not delete its files; existing review items retain a recorded return folder.</value></data>
+  <data name="CustomFolderLabel" xml:space="preserve"><value>Custom folder</value></data>
+  <data name="RuleMatchExtension" xml:space="preserve"><value>Extension</value></data>
+  <data name="RuleMatchNameContains" xml:space="preserve"><value>Name contains</value></data>
+  <data name="RuleMatchNameStartsWith" xml:space="preserve"><value>Name starts with</value></data>
+  <data name="RuleMatchMode" xml:space="preserve"><value>Match by</value></data>
+  <data name="RulePatternExample" xml:space="preserve"><value>For example: contract, ABC</value></data>
+  <data name="RuleNamePattern" xml:space="preserve"><value>Text to match</value></data>
+  <data name="AddCustomRule" xml:space="preserve"><value>Add folder</value></data>
+  <data name="RemoveCustomRule" xml:space="preserve"><value>Remove rule</value></data>
+  <data name="CustomRuleLimit" xml:space="preserve"><value>You can create up to 50 custom folders.</value></data>
+  <data name="OtherRuleFallback" xml:space="preserve"><value>The Other folder must remain the extension fallback.</value></data>
+  <data name="InvalidNameRule" xml:space="preserve"><value>Name rules need a literal pattern of 1–100 characters, without wildcards, paths or extensions.</value></data>
+  <data name="InvalidExtensionRule" xml:space="preserve"><value>Extension rules need extensions and no name pattern. Built-in folders may have no extensions.</value></data>
+  <data name="DuplicateNameRule" xml:space="preserve"><value>The name pattern {0} is assigned to both {1} and {2}.</value></data>
+  <data name="DuplicateExtensionRule" xml:space="preserve"><value>The extension {0} is assigned to both {1} and {2}.</value></data>
+  <data name="AmbiguousNameRule" xml:space="preserve"><value>The file {0} matches several name rules: {1}. It has not been moved. Edit the rules and preview again.</value></data>
+  <data name="MissingCustomFolder" xml:space="preserve"><value>The saved custom folder is unavailable. Choose Move to instead.</value></data>
 </root>

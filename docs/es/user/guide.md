@@ -58,6 +58,18 @@ Si has activado el inicio con Windows, Dowlume inicia por defecto en el área de
 
 La actualización conserva una entrada de inicio existente y añade el argumento de inicio de sesión; no activa el inicio automático si estaba desactivado. Una copia portable actualiza su propia entrada antigua la próxima vez que se abre normalmente. Los paquetes publicados de 0.6.0 todavía no incluyen esta opción.
 
+## Carpetas y reglas personalizadas (código posterior a 0.6.0)
+
+Pausa la organización y abre **Ajustes → Carpetas y clasificación**. Puedes editar las carpetas predefinidas o pulsar **Añadir carpeta** (hasta 50 personalizadas). Pon un nombre único, elige los días hasta la revisión y selecciona cómo clasificar:
+
+- **Extensión:** una lista separada por comas, como `.png, .mov, .mp4`. Retira primero la extensión de su carpeta anterior; se rechazan duplicados aunque cambien las mayúsculas.
+- **El nombre contiene:** un fragmento literal como `contrato` coincide con `Mi contrato firmado.pdf`.
+- **El nombre empieza por:** `ABC` coincide con `ABC-123.pdf`, pero no con `Informe ABC.pdf`.
+
+Se compara el nombre sin su última extensión, sin distinguir mayúsculas y normalizando Unicode. Se busca texto literal, sin expresiones regulares ni comodines. Las reglas por nombre tienen prioridad sobre las extensiones. Se rechazan patrones idénticos y carpetas de destino duplicadas. Dos patrones distintos pueden coincidir: `ABC contrato.pdf` encaja en ambos ejemplos. Una ambigüedad bloquea la vista previa y el inicio; si aparece en una descarga posterior, ese archivo permanece intacto y el error indica las carpetas implicadas. El orden de las reglas no decide el destino. Las descargas incompletas y las exclusiones tienen prioridad sobre cualquier regla. **Otros** conserva su función para archivos sin coincidencia.
+
+Guarda y actualiza la vista previa antes de iniciar. Editar reglas no renombra carpetas físicas ni mueve en bloque archivos existentes. **Eliminar regla** solo elimina una regla personalizada, nunca sus archivos o historial. Los archivos registrados mantienen su identidad de categoría; la revisión y el retorno usan la regla actual si existe, o la carpeta y el plazo registrados si se eliminó la regla personalizada. Deshacer sigue disponible cuando procede. Conserva una copia de seguridad y prueba los cambios con archivos desechables. Los paquetes publicados de 0.6.0 todavía no incluyen estas opciones.
+
 ## Organización periódica (0.6.0)
 
 La versión 0.6.0 incluye **Ajustes → Organizar por intervalos en lugar de continuamente**. Es opcional y está desactivada por defecto. Elige un intervalo entre 1 y 1440 minutos (10 por defecto), guarda, actualiza la vista previa y pulsa **Organizar y supervisar** para confirmar.

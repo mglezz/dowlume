@@ -64,6 +64,18 @@ With login startup enabled, Dowlume starts in the notification area by default w
 
 Upgrading an installation preserves an existing startup entry and adds the login-startup argument; it does not enable startup for users who disabled it. A portable copy updates its own older startup entry on its next normal launch. The published 0.6.0 packages predate this option.
 
+## Custom folders and rules (source builds after 0.6.0)
+
+Pause organization and open **Settings → Folders and classification**. You can edit the built-in folders or choose **Add folder** (up to 50 custom folders). Give each folder a unique name, choose a review period, and select a matching mode:
+
+- **Extension:** a comma-separated list such as `.png, .mov, .mp4`. Remove an extension from its previous folder before assigning it elsewhere; duplicates are rejected even with different letter case.
+- **Name contains:** a literal fragment such as `contract` matches `Signed contract.pdf`.
+- **Name starts with:** `ABC` matches `ABC-123.pdf`, but not `Report ABC.pdf`.
+
+Names are compared without their final extension, ignoring letter case and normalizing Unicode. Patterns are literal text, not regular expressions or wildcards. Name rules take priority over extension rules. Identical name patterns and duplicate destination folders are rejected. Different name patterns can still overlap: `ABC contract.pdf` matches both examples above. An ambiguous preview blocks starting; if a later download is ambiguous, that file stays untouched and an error lists the matching folders. Rule order never selects a winner. Partial downloads and exclusions still take precedence over every rule. **Other** remains the fallback for files without a match.
+
+Save changes and refresh Preview before starting. Editing rules does not rename physical folders or bulk-move existing files. **Remove rule** removes only a custom classification rule, not its files or history. Existing tracked files retain their category identity; review and return actions use the current rule if it exists, or their recorded folder and review period if the custom rule was removed. Eligible Undo remains available. Use a separate backup and disposable samples when changing rules. These features are not included in the published 0.6.0 packages.
+
 ## Periodic organization (0.6.0)
 
 Version 0.6.0 offers **Settings → Organize periodically instead of continuously**. This optional mode is off by default. Choose an interval from 1 to 1440 minutes (10 by default), save, refresh the preview, and select **Organize and monitor** to confirm the schedule.

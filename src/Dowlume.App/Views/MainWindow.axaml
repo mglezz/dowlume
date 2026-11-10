@@ -77,7 +77,8 @@
               </StackPanel>
             </Border>
           </Grid>
-          <ItemsControl Grid.Row="1" ItemsSource="{Binding Categories}" Margin="0,20">
+          <ScrollViewer Grid.Row="1" MaxHeight="160" Margin="0,20" VerticalScrollBarVisibility="Auto">
+          <ItemsControl ItemsSource="{Binding Categories}">
             <ItemsControl.ItemsPanel>
               <ItemsPanelTemplate>
                 <UniformGrid Columns="6" />
@@ -86,10 +87,10 @@
             <ItemsControl.ItemTemplate>
               <DataTemplate x:DataType="vm:CategorySummary">
                 <StackPanel Spacing="5">
-                  <TextBlock Classes="muted" >
+                  <TextBlock Classes="muted" TextTrimming="CharacterEllipsis">
                     <TextBlock.Text>
                       <MultiBinding Converter="{StaticResource LocalizedValue}">
-                        <Binding Path="Category" />
+                        <Binding Path="DisplayCategory" />
                         <ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
                         <ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
                       </MultiBinding>
@@ -100,6 +101,7 @@
               </DataTemplate>
             </ItemsControl.ItemTemplate>
           </ItemsControl>
+          </ScrollViewer>
           <Border Grid.Row="2" Classes="card">
             <Grid RowDefinitions="Auto,*">
               <StackPanel Spacing="6" Margin="0,0,0,12">
@@ -114,7 +116,7 @@
                       <TextBlock Grid.Column="1" Classes="muted" >
                     <TextBlock.Text>
                       <MultiBinding Converter="{StaticResource LocalizedValue}">
-                        <Binding Path="Category" />
+                        <Binding Path="DisplayCategory" />
                         <ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
                         <ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
                       </MultiBinding>
@@ -181,7 +183,7 @@
                     <TextBlock Grid.Column="1" Classes="muted" >
                     <TextBlock.Text>
                       <MultiBinding Converter="{StaticResource LocalizedValue}">
-                        <Binding Path="Category" />
+                        <Binding Path="DisplayCategory" />
                         <ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
                         <ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
                       </MultiBinding>
@@ -294,7 +296,7 @@
         </Grid>
       </TabItem>
       <TabItem Header="{ReflectionBinding $parent[Window].DataContext.Text[Settings]}">
-        <ScrollViewer Margin="0,20,0,0" Padding="0,0,14,0">
+        <ScrollViewer x:Name="SettingsScroll" Margin="0,20,0,0" Padding="0,0,14,0">
           <StackPanel Spacing="18" IsEnabled="{Binding CanConfigure}">
             <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Makeroomforyourroutine]}" Classes="heading" />
             <Border Classes="card">
@@ -331,32 +333,61 @@
             </StackPanel>
             <Border Classes="card">
               <StackPanel Spacing="12">
-                <Grid ColumnDefinitions="110,150,*,110" ColumnSpacing="12">
-                  <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Category]}" />
-                  <TextBlock Grid.Column="1" Text="{ReflectionBinding $parent[Window].DataContext.Text[Foldername]}" />
-                  <TextBlock Grid.Column="2" Text="{ReflectionBinding $parent[Window].DataContext.Text[Extensionscommaseparated]}" TextWrapping="Wrap" />
-                  <TextBlock Grid.Column="3" Text="{ReflectionBinding $parent[Window].DataContext.Text[Reviewdays]}" TextWrapping="Wrap" />
-                </Grid>
+                <TextBlock x:Name="CustomRulesHeading" Text="{ReflectionBinding $parent[Window].DataContext.Text[CustomRulesHeading]}" FontWeight="SemiBold" />
+                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[CustomRulesHelp]}" TextWrapping="Wrap" Classes="muted" />
                 <ItemsControl ItemsSource="{Binding Rules}">
                   <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="vm:CategoryRuleViewModel">
-                      <Grid ColumnDefinitions="110,150,*,110" ColumnSpacing="12" Margin="0,0,0,8">
-                        <TextBlock VerticalAlignment="Center" >
-                    <TextBlock.Text>
-                      <MultiBinding Converter="{StaticResource LocalizedValue}">
-                        <Binding Path="Category" />
-                        <ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
-                        <ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
-                      </MultiBinding>
-                    </TextBlock.Text>
-                  </TextBlock>
-                        <TextBox Grid.Column="1" Text="{Binding FolderName}" />
-                        <TextBox Grid.Column="2" Text="{Binding Extensions}" />
-                        <NumericUpDown Grid.Column="3" Value="{Binding ReviewAfterDays}" Minimum="1" Maximum="3650" FormatString="0" />
-                      </Grid>
+                      <Border BorderBrush="#E1E5ED" BorderThickness="0,0,0,1" Padding="0,8,0,16" Margin="0,0,0,8">
+                        <StackPanel Spacing="8">
+                          <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock VerticalAlignment="Center" FontWeight="SemiBold">
+                              <TextBlock.Text>
+                                <MultiBinding Converter="{StaticResource LocalizedValue}">
+                                  <Binding Path="DisplayCategory" />
+                                  <ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                                  <ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                                </MultiBinding>
+                              </TextBlock.Text>
+                            </TextBlock>
+                            <Button Grid.Column="1" Content="{ReflectionBinding $parent[Window].DataContext.Text[RemoveCustomRule]}" Command="{ReflectionBinding $parent[Window].DataContext.RemoveRuleCommand}" CommandParameter="{Binding}" IsVisible="{Binding IsCustom}" />
+                          </Grid>
+                          <Grid ColumnDefinitions="*,140" ColumnSpacing="12">
+                            <StackPanel Spacing="4">
+                              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Foldername]}" />
+                              <TextBox Text="{Binding FolderName}" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Foldername]}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Spacing="4">
+                              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Reviewdays]}" />
+                              <NumericUpDown Value="{Binding ReviewAfterDays}" Minimum="1" Maximum="3650" FormatString="0" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Reviewdays]}" />
+                            </StackPanel>
+                          </Grid>
+                          <Grid ColumnDefinitions="220,*" ColumnSpacing="12">
+                            <ComboBox ItemsSource="{Binding MatchKinds}" SelectedItem="{Binding MatchKind}" IsEnabled="{Binding CanChooseMatchKind}" HorizontalAlignment="Stretch" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[RuleMatchMode]}">
+                              <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                  <TextBlock>
+                                    <TextBlock.Text>
+                                      <MultiBinding Converter="{StaticResource LocalizedValue}">
+                                        <Binding />
+                                        <ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                                        <ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
+                                      </MultiBinding>
+                                    </TextBlock.Text>
+                                  </TextBlock>
+                                </DataTemplate>
+                              </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <TextBox Grid.Column="1" Text="{Binding Extensions}" IsVisible="{Binding IsExtensionRule}" PlaceholderText=".png, .mov, .mp4" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Extensionscommaseparated]}" />
+                            <TextBox Grid.Column="1" Text="{Binding NamePattern}" IsVisible="{Binding IsNameRule}" PlaceholderText="{ReflectionBinding $parent[Window].DataContext.Text[RulePatternExample]}" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[RuleNamePattern]}" />
+                          </Grid>
+                        </StackPanel>
+                      </Border>
                     </DataTemplate>
                   </ItemsControl.ItemTemplate>
                 </ItemsControl>
+                <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[AddCustomRule]}" Command="{Binding AddRuleCommand}" />
+                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[RuleEditScope]}" TextWrapping="Wrap" Classes="muted" />
               </StackPanel>
             </Border>
             <StackPanel Spacing="8">
