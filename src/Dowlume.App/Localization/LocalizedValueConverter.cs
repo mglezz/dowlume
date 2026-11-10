@@ -14,6 +14,8 @@ public sealed class LocalizedValueConverter : IMultiValueConverter
         }
         return values[0] switch
         {
+            FolderLabel folder => folder.Name,
+            RuleMatchKind kind => text["RuleMatch" + kind],
             OperationRecord operation => text.Describe(operation),
             DateTimeOffset date when parameter as string == "FirstTracked" => text.Format("First tracked: {0:d}", date.LocalDateTime),
             DateTimeOffset date => date.ToLocalTime().ToString("g", text.Culture),

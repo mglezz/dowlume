@@ -530,4 +530,24 @@ La primera pasada espera el intervalo indicado. Cada pasada organiza descargas c
   <data name="UpdateFailed" xml:space="preserve"><value>No se pudo preparar o verificar la actualización. No se ha instalado nada. Inténtalo más tarde.</value></data>
   <data name="ShowWindowAtWindowsLogin" xml:space="preserve"><value>Mostrar la ventana al iniciar Windows</value></data>
   <data name="WindowsLoginWindowHelp" xml:space="preserve"><value>Por defecto, Dowlume inicia en segundo plano en la bandeja. Activa esta opción para mostrar la ventana. Se guarda inmediatamente. La organización siempre inicia pausada.</value></data>
+  <data name="CustomRulesHeading" xml:space="preserve"><value>Carpetas y clasificación</value></data>
+  <data name="CustomRulesHelp" xml:space="preserve"><value>Los nombres se comparan sin la última extensión y sin distinguir mayúsculas. Las reglas por nombre tienen prioridad sobre las extensiones. Si coinciden varias reglas de nombre, el archivo permanece en su sitio y se indica el conflicto. Cada extensión y carpeta debe ser única. Otros conserva los archivos sin coincidencia.</value></data>
+  <data name="RuleEditScope" xml:space="preserve"><value>Guarda y revisa la vista previa tras editar. No se renombran ni reorganizan carpetas o archivos existentes. Eliminar una regla no borra sus archivos; los elementos en revisión conservan una carpeta de retorno registrada.</value></data>
+  <data name="CustomFolderLabel" xml:space="preserve"><value>Carpeta personalizada</value></data>
+  <data name="RuleMatchExtension" xml:space="preserve"><value>Extensión</value></data>
+  <data name="RuleMatchNameContains" xml:space="preserve"><value>El nombre contiene</value></data>
+  <data name="RuleMatchNameStartsWith" xml:space="preserve"><value>El nombre empieza por</value></data>
+  <data name="RuleMatchMode" xml:space="preserve"><value>Clasificar por</value></data>
+  <data name="RulePatternExample" xml:space="preserve"><value>Por ejemplo: contrato, ABC</value></data>
+  <data name="RuleNamePattern" xml:space="preserve"><value>Texto que buscar</value></data>
+  <data name="AddCustomRule" xml:space="preserve"><value>Añadir carpeta</value></data>
+  <data name="RemoveCustomRule" xml:space="preserve"><value>Eliminar regla</value></data>
+  <data name="CustomRuleLimit" xml:space="preserve"><value>Puedes crear hasta 50 carpetas personalizadas.</value></data>
+  <data name="OtherRuleFallback" xml:space="preserve"><value>La carpeta Otros debe conservar su función para extensiones sin coincidencia.</value></data>
+  <data name="InvalidNameRule" xml:space="preserve"><value>Las reglas por nombre necesitan un texto literal de 1 a 100 caracteres, sin comodines, rutas ni extensiones.</value></data>
+  <data name="InvalidExtensionRule" xml:space="preserve"><value>Las reglas por extensión necesitan extensiones y ningún patrón de nombre. Las carpetas predefinidas pueden quedar sin extensiones.</value></data>
+  <data name="DuplicateNameRule" xml:space="preserve"><value>El patrón de nombre {0} está asignado a {1} y a {2}.</value></data>
+  <data name="DuplicateExtensionRule" xml:space="preserve"><value>La extensión {0} está asignada a {1} y a {2}.</value></data>
+  <data name="AmbiguousNameRule" xml:space="preserve"><value>El archivo {0} coincide con varias reglas de nombre: {1}. No se ha movido. Edita las reglas y revisa de nuevo la vista previa.</value></data>
+  <data name="MissingCustomFolder" xml:space="preserve"><value>La carpeta personalizada guardada no está disponible. Utiliza Mover a para elegir otra.</value></data>
 </root>

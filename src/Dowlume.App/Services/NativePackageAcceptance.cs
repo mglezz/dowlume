@@ -33,6 +33,7 @@ internal static class NativePackageAcceptance
         await Task.Run(() => VerifyFileWorkflowAsync(profile, databasePath, store, settings, readiness));
         await model.RefreshAsync();
         Require(model.ManagedCount == 3 && model.ErrorMessage.Length == 0, "Desktop refresh");
+        await Task.Run(() => VerifyCustomRulesAsync(profile, readiness));
         await WriteReportAsync(Path.Combine(profile, reportName), elapsed.ElapsedMilliseconds);
     }
 
@@ -142,6 +143,58 @@ internal static class NativePackageAcceptance
         Require(errors.IsEmpty, "Monitoring and shutdown");
     }
 
+    private static async Task VerifyCustomRulesAsync(string profile, IFileReadiness readiness)
+    {
+        string downloads = Path.Combine(profile, "CustomSamples");
+        Directory.CreateDirectory(downloads);
+        string database = Path.Combine(profile, "custom-rules.db");
+        var store = new SqliteStateStore(database);
+        var settings = new AppSettings { DownloadsPath = downloads };
+        var contract = new CategoryRule(FileCategory.Other, "Contracts", [], 1)
+        {
+            Id = Guid.NewGuid(),
+            MatchKind = RuleMatchKind.NameContains,
+            NamePattern = "contract"
+        };
+        settings.Categories.Add(contract);
+        settings.Categories.Add(new CategoryRule(FileCategory.Other, "Projects", [], 1)
+        {
+            Id = Guid.NewGuid(),
+            MatchKind = RuleMatchKind.NameStartsWith,
+            NamePattern = "ABC"
+        });
+        store.SaveSettings(settings);
+        var clock = new AcceptanceClock();
+        var mover = new SafeFileMover();
+        var organizer = new DownloadOrganizer(store, mover, readiness, clock);
+        string ambiguous = Path.Combine(downloads, "ABC contract.pdf");
+        await File.WriteAllTextAsync(ambiguous, "Ambiguous file must remain here");
+        bool blocked = false;
+        try
+        {
+            await organizer.OrganizeAsync(ambiguous, settings);
+        }
+        catch (RuleConflictException) { blocked = true; }
+        Require(blocked && File.Exists(ambiguous) && store.GetOperations().Count == 0, "Ambiguous custom rules preserve source");
+        string source = Path.Combine(downloads, "contract.pdf");
+        await File.WriteAllTextAsync(source, "Custom routing acceptance");
+        FileIdentity identity = mover.GetIdentity(source)!;
+        await organizer.OrganizeAsync(source, settings);
+        Require(File.Exists(Path.Combine(downloads, "Contracts", "contract.pdf")), "Name rule before extension");
+        settings.Categories.Remove(contract);
+        store.SaveSettings(settings);
+        var reopened = new SqliteStateStore(database);
+        organizer = new DownloadOrganizer(reopened, mover, readiness, clock);
+        clock.Now = clock.Now.AddDays(2);
+        await organizer.ReconcileAsync(settings);
+        TrackedFile file = reopened.GetFiles().Single();
+        Require(file.Status == LifecycleStatus.InReview, "Removed custom rule retains review policy");
+        await organizer.KeepAsync(file.Id, settings);
+        await organizer.UndoAsync(reopened.GetOperations().Last().Id, settings);
+        Require(mover.GetIdentity(reopened.GetFiles().Single().CurrentPath) == identity, "Custom rule identity after reopen and Undo");
+        Require(await File.ReadAllTextAsync(ambiguous) == "Ambiguous file must remain here", "Ambiguous source content retained");
+    }
+
     private static Task WriteReportAsync(string path, long elapsedMilliseconds)
     {
         var report = new
@@ -153,6 +206,7 @@ internal static class NativePackageAcceptance
             ReopenedJournal = true,
             NativeWatcherAndDrain = true,
             NativePeriodicDelayOrganizationAndDrain = true,
+            NativeCustomRulesAndConflicts = true,
             ElapsedMilliseconds = elapsedMilliseconds,
             ManualDesktopAcceptance = false,
             ActualLoginAcceptance = false

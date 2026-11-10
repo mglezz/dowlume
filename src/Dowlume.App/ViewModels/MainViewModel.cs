@@ -43,12 +43,14 @@ public partial class MainViewModel : ObservableObject
         OnPropertyChanged(nameof(StatusMessage));
     }
     private string _errorMessage = string.Empty;
+    private object[] _errorArguments = [];
     public string ErrorMessage
     {
-        get => Text.Translate(_errorMessage);
+        get => _errorArguments.Length == 0 ? Text.Translate(_errorMessage) : Text.Format(_errorMessage, _errorArguments);
         private set
         {
             _errorMessage = value;
+            _errorArguments = [];
             OnPropertyChanged();
         }
     }
@@ -252,8 +254,27 @@ public partial class MainViewModel : ObservableObject
     });
 
     [RelayCommand]
+    private void AddRule()
+    {
+        if (!CanConfigure)
+            return;
+        Rules.Add(new CategoryRuleViewModel(new CategoryRule(FileCategory.Other, string.Empty, [], 30) { Id = Guid.NewGuid() }));
+        InvalidatePreview();
+    }
+
+    [RelayCommand]
+    private void RemoveRule(CategoryRuleViewModel rule)
+    {
+        if (!CanConfigure || !rule.IsCustom)
+            return;
+        Rules.Remove(rule);
+        InvalidatePreview();
+    }
+
+    [RelayCommand]
     private Task PreviewAsync() => RunAsync(async () =>
     {
+        InvalidatePreview();
         AppSettings settings = ReadSettings();
         StatusMessage = "Checking completed downloads. Large files may take a moment.";
         IReadOnlyList<PreviewItem> items = await Task.Run(() => _organizer.PreviewAsync(settings, _shutdown.Token));
@@ -403,7 +424,17 @@ public partial class MainViewModel : ObservableObject
             {
                 ShowActivityPage(snapshot.History);
             }
-            Replace(Categories, Enum.GetValues<FileCategory>().Select(category => new CategorySummary(category, files.Count(file => file.IsManaged && file.Category == category))));
+            var summaries = Enum.GetValues<FileCategory>().Select(category =>
+                new CategorySummary(category, files.Count(file => file.IsManaged && file.CustomRuleId is null && file.Category == category))).ToList();
+            AppSettings? saved = _store.LoadSettings();
+            var customIds = (saved?.Categories.Where(rule => rule.Id is not null).Select(rule => rule.Id!.Value) ?? [])
+                .Concat(files.Where(file => file.IsManaged && file.CustomRuleId is not null).Select(file => file.CustomRuleId!.Value)).Distinct();
+            foreach (Guid id in customIds)
+            {
+                string folder = saved?.Categories.SingleOrDefault(rule => rule.Id == id)?.FolderName ?? files.First(file => file.CustomRuleId == id).AssignedFolder!;
+                summaries.Add(new CategorySummary(FileCategory.Other, files.Count(file => file.IsManaged && file.CustomRuleId == id), folder));
+            }
+            Replace(Categories, summaries);
             ManagedCount = files.Count(file => file.IsManaged);
             AttentionCount = files.Count(file => file.Status == LifecycleStatus.Missing) +
                 snapshot.AttentionCount;
@@ -467,6 +498,11 @@ public partial class MainViewModel : ObservableObject
     {
         _log.Write("operation_failed", error);
         ErrorMessage = DownloadOrganizer.FriendlyError(error);
+        if (error is RuleConflictException conflict)
+        {
+            _errorArguments = conflict.Details.Cast<object>().ToArray();
+            OnPropertyChanged(nameof(ErrorMessage));
+        }
     }
 
     private void ReportBackgroundError(Exception error) => Dispatcher.UIThread.Post(() => ShowError(error));

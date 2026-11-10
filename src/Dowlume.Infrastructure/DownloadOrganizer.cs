@@ -44,7 +44,7 @@ public sealed class DownloadOrganizer(
                 }
                 CategoryRule rule = FileClassifier.Classify(path, settings);
                 string destination = PathSafety.AvailableDestination(Path.Combine(settings.DownloadsPath, rule.FolderName), Path.GetFileName(path));
-                result.Add(new PreviewItem(path, destination, rule.Category, mover.Hash(path)));
+                result.Add(new PreviewItem(path, destination, rule.Category, mover.Hash(path)) { CustomFolder = rule.Id is not null ? rule.FolderName : null });
             }
             return result;
         }
@@ -54,6 +54,7 @@ public sealed class DownloadOrganizer(
     public async Task OrganizeAsync(string path, AppSettings settings, CancellationToken cancellationToken = default, string? expectedHash = null)
     {
         RequireFileOperations();
+        settings.Validate();
         await _gate.WaitAsync(cancellationToken);
         try
         {
@@ -68,7 +69,12 @@ public sealed class DownloadOrganizer(
             }
             CategoryRule rule = FileClassifier.Classify(path, settings);
             string destination = PathSafety.AvailableDestination(Path.Combine(settings.DownloadsPath, rule.FolderName), Path.GetFileName(path));
-            var file = new TrackedFile(Guid.NewGuid(), path, destination, rule.Category, _clock.GetUtcNow(), LifecycleStatus.Organized, hash);
+            var file = new TrackedFile(Guid.NewGuid(), path, destination, rule.Category, _clock.GetUtcNow(), LifecycleStatus.Organized, hash)
+            {
+                CustomRuleId = rule.Id,
+                AssignedFolder = rule.Id is not null ? rule.FolderName : null,
+                AssignedReviewDays = rule.Id is not null ? rule.ReviewAfterDays : null
+            };
             await ExecuteAsync(OperationKind.Organize, null, file, path, destination, cancellationToken);
         }
         finally { _gate.Release(); }
@@ -77,6 +83,7 @@ public sealed class DownloadOrganizer(
     public async Task ReconcileAsync(AppSettings settings, CancellationToken cancellationToken = default)
     {
         RequireFileOperations();
+        settings.Validate();
         await _gate.WaitAsync(cancellationToken);
         try
         {
@@ -144,6 +151,7 @@ public sealed class DownloadOrganizer(
         {
             throw new NotSupportedException(WindowsRecycleBin.DisabledMessage);
         }
+        settings.Validate();
         await _gate.WaitAsync(cancellationToken);
         try
         {
@@ -163,7 +171,7 @@ public sealed class DownloadOrganizer(
                 OperationKind.Move => LifecycleStatus.Moved,
                 _ => throw new ArgumentOutOfRangeException(nameof(kind))
             };
-            string folder = destinationFolder ?? Path.Combine(settings.DownloadsPath, settings.Categories.Single(rule => rule.Category == before.Category).FolderName);
+            string folder = destinationFolder ?? Path.Combine(settings.DownloadsPath, settings.RuleFor(before).FolderName);
             if (destinationFolder is not null)
             {
                 PathSafety.ValidateRoot(folder);

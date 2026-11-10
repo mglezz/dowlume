@@ -103,6 +103,25 @@ internal static class Program
                     model.ReviewSearch = "no matching file";
                     Capture(2, "review-empty-es.png");
 
+                    // Fictitious rules only: rendering never saves or organizes files.
+                    model.Rules.Insert(0, new CategoryRuleViewModel(new CategoryRule(FileCategory.Other, "Contratos", [], 30)
+                    {
+                        Id = Guid.NewGuid(),
+                        MatchKind = RuleMatchKind.NameContains,
+                        NamePattern = "contrato"
+                    }));
+                    foreach (string language in new[] { "en", "es" })
+                    {
+                        model.SelectedLanguage = MainViewModel.Languages.Single(item => item.Code == language);
+                        tabs.SelectedIndex = 4;
+                        window.UpdateLayout();
+                        var heading = window.FindControl<TextBlock>("CustomRulesHeading")!;
+                        var scroll = window.FindControl<ScrollViewer>("SettingsScroll")!;
+                        double top = heading.TranslatePoint(default, (Control)scroll.Content!)!.Value.Y;
+                        scroll.Offset = new Vector(0, top);
+                        Capture(4, $"custom-rules-{language}.png");
+                    }
+
                     void Capture(int index, string name)
                     {
                         tabs.SelectedIndex = index;

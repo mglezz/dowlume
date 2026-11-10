@@ -49,35 +49,72 @@ public sealed record AppSettings
             throw new ArgumentException("Choose an absolute Downloads folder path.");
         }
 
-        if (Categories.Count != Enum.GetValues<FileCategory>().Length ||
-            Categories.Select(rule => rule.Category).Distinct().Count() != Categories.Count ||
-            Categories.Any(rule => !Enum.IsDefined(rule.Category)))
+        CategoryRule[] builtIn = Categories.Where(rule => rule.Id is null).ToArray();
+        if (builtIn.Length != Enum.GetValues<FileCategory>().Length ||
+            builtIn.Select(rule => rule.Category).Distinct().Count() != builtIn.Length ||
+            Categories.Any(rule => !Enum.IsDefined(rule.Category)) ||
+            Categories.Any(rule => rule.Id is not null && (rule.Id == Guid.Empty || rule.Category != FileCategory.Other)) ||
+            Categories.Where(rule => rule.Id is not null).Select(rule => rule.Id).Distinct().Count() != Categories.Count - builtIn.Length)
         {
             throw new ArgumentException("Define exactly one rule for each category.");
         }
+        if (Categories.Count > 56)
+            throw new ArgumentException("You can create up to 50 custom folders.");
 
         var folders = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { ReviewFolderName };
-        var extensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var extensions = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        var names = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         foreach (CategoryRule rule in Categories)
         {
             ValidateFolderName(rule.FolderName);
-            if (!folders.Add(rule.FolderName) || rule.ReviewAfterDays is < 1 or > 3650)
+            if (!folders.Add(rule.FolderName.Normalize()) || rule.ReviewAfterDays is < 1 or > 3650)
             {
                 throw new ArgumentException("Category folders must be unique; review periods must be 1–3650 days.");
             }
+            if (!Enum.IsDefined(rule.MatchKind) ||
+                (rule.Id is null && rule.Category == FileCategory.Other && rule.MatchKind != RuleMatchKind.Extension))
+                throw new ArgumentException("The Other folder must remain the extension fallback.");
+            if (rule.MatchKind != RuleMatchKind.Extension)
+            {
+                if (string.IsNullOrWhiteSpace(rule.NamePattern) || rule.NamePattern.Length > 100 ||
+                    rule.NamePattern != rule.NamePattern.Trim() || rule.NamePattern.Any(char.IsControl) ||
+                    rule.NamePattern.IndexOfAny(['/', '\\', '*', '?']) >= 0 || rule.Extensions.Length != 0)
+                    throw new ArgumentException("Name rules need a literal pattern of 1–100 characters, without wildcards, paths or extensions.");
+                string pattern = rule.NamePattern.Normalize();
+                if (names.TryGetValue(pattern, out string? owner))
+                    throw new RuleConflictException("The name pattern {0} is assigned to both {1} and {2}.", pattern, owner, rule.FolderName);
+                names.Add(pattern, rule.FolderName);
+            }
+            else if (rule.NamePattern.Length != 0 || (rule.Id is not null && rule.Extensions.Length == 0))
+                throw new ArgumentException("Extension rules need extensions and no name pattern. Built-in folders may have no extensions.");
             foreach (string extension in rule.Extensions)
             {
                 ValidateExtension(extension);
-                if (!extensions.Add(extension))
+                if (extensions.TryGetValue(extension, out string? owner))
                 {
-                    throw new ArgumentException("An extension can belong to only one category.");
+                    throw new RuleConflictException("The extension {0} is assigned to both {1} and {2}.", extension, owner, rule.FolderName);
                 }
+                extensions.Add(extension, rule.FolderName);
             }
         }
         foreach (string extension in ExcludedExtensions)
         {
             ValidateExtension(extension);
         }
+    }
+
+    public CategoryRule RuleFor(TrackedFile file)
+    {
+        if (file.CustomRuleId is not { } id)
+            return Categories.Single(rule => rule.Id is null && rule.Category == file.Category);
+        CategoryRule? current = Categories.SingleOrDefault(rule => rule.Id == id);
+        if (current is not null)
+            return current;
+        // Removing a rule never strands its existing review items or changes their identity.
+        ValidateFolderName(file.AssignedFolder ?? string.Empty);
+        if (file.AssignedReviewDays is not (>= 1 and <= 3650))
+            throw new ArgumentException("The saved custom folder is unavailable. Choose Move to instead.");
+        return new CategoryRule(FileCategory.Other, file.AssignedFolder!, [], file.AssignedReviewDays.Value) { Id = id };
     }
 
     private static void ValidateFolderName(string name)
