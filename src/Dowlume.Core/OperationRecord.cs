@@ -2,7 +2,7 @@ namespace Dowlume.Core;
 
 public enum OperationKind
 {
-    Organize, Review, Keep, Snooze, Move, Recycle, Undo
+    Organize, Review, Keep, Snooze, Move, Recycle, Undo, OrganizeFolder
 }
 public enum OperationStatus
 {
@@ -24,5 +24,5 @@ public sealed record OperationRecord(
     string? ObservedPath = null)
 {
     public string Description => $"{Kind}: {Path.GetFileName(SourcePath)}";
-    public bool CanUndo => Status == OperationStatus.Completed && Kind is not (OperationKind.Recycle or OperationKind.Undo);
+    public bool CanUndo => Status == OperationStatus.Completed && Kind is not (OperationKind.Recycle or OperationKind.Undo or OperationKind.OrganizeFolder);
 }

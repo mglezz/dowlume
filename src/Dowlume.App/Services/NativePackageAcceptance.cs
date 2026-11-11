@@ -34,6 +34,7 @@ internal static class NativePackageAcceptance
         await model.RefreshAsync();
         Require(model.ManagedCount == 3 && model.ErrorMessage.Length == 0, "Desktop refresh");
         await Task.Run(() => VerifyCustomRulesAsync(profile, readiness));
+        await Task.Run(() => VerifyFolderCollectionAsync(profile));
         await WriteReportAsync(Path.Combine(profile, reportName), elapsed.ElapsedMilliseconds);
     }
 
@@ -195,6 +196,39 @@ internal static class NativePackageAcceptance
         Require(await File.ReadAllTextAsync(ambiguous) == "Ambiguous file must remain here", "Ambiguous source content retained");
     }
 
+    private static async Task VerifyFolderCollectionAsync(string profile)
+    {
+        string root = Path.Combine(profile, "FolderSamples");
+        string source = Path.Combine(root, "Extracted");
+        string partial = Path.Combine(root, "Partial");
+        Directory.CreateDirectory(source);
+        Directory.CreateDirectory(partial);
+        Directory.CreateDirectory(Path.Combine(root, "Documents"));
+        Directory.CreateDirectory(Path.Combine(root, "Duplicate"));
+        Directory.CreateDirectory(Path.Combine(root, "Folders", "Duplicate"));
+        var clock = new AcceptanceClock();
+        await File.WriteAllTextAsync(Path.Combine(source, "document.txt"), "Whole folder acceptance");
+        await File.WriteAllTextAsync(Path.Combine(partial, "unfinished.crdownload"), "Incomplete");
+        foreach (string path in new[] { Path.Combine(source, "document.txt"), Path.Combine(partial, "unfinished.crdownload"), source, partial, Path.Combine(root, "Duplicate") })
+        {
+            if (Directory.Exists(path))
+                Directory.SetLastWriteTimeUtc(path, clock.Now.AddHours(-1).UtcDateTime);
+            else
+                File.SetLastWriteTimeUtc(path, clock.Now.AddHours(-1).UtcDateTime);
+        }
+        var settings = new AppSettings { DownloadsPath = root, OrganizeFolders = true };
+        var store = new SqliteStateStore(Path.Combine(profile, "folders.db"));
+        var organizer = new FolderOrganizer(store, clock);
+        await organizer.ScanAsync(settings);
+        Require(Directory.Exists(source) && store.GetOperations().Count == 0, "Folder stability first observation");
+        clock.Now = clock.Now.AddMinutes(21);
+        await organizer.ScanAsync(settings);
+        Require(!Directory.Exists(source) && File.ReadAllText(Path.Combine(root, "Folders", "Extracted", "document.txt")) == "Whole folder acceptance", "Native whole-folder rename");
+        Require(Directory.Exists(partial) && Directory.Exists(Path.Combine(root, "Documents")), "Protected and incomplete folders retained");
+        Require(Directory.Exists(Path.Combine(root, "Duplicate")) && Directory.Exists(Path.Combine(root, "Folders", "Duplicate")), "Folder collisions never merge or overwrite");
+        Require(store.GetOperations().Single().Status == OperationStatus.Completed && store.GetFiles().Count == 0, "Folder activity isolated from file lifecycle");
+    }
+
     private static Task WriteReportAsync(string path, long elapsedMilliseconds)
     {
         var report = new
@@ -207,6 +241,7 @@ internal static class NativePackageAcceptance
             NativeWatcherAndDrain = true,
             NativePeriodicDelayOrganizationAndDrain = true,
             NativeCustomRulesAndConflicts = true,
+            NativeStableFolderCollection = true,
             ElapsedMilliseconds = elapsedMilliseconds,
             ManualDesktopAcceptance = false,
             ActualLoginAcceptance = false

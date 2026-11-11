@@ -124,7 +124,7 @@
     <value>Start Dowlume when I sign in to Windows</value>
   </data>
   <data name="AppliedimmediatelyforyourWindowsaccountMonitoringstartspaused" xml:space="preserve">
-    <value>Applied immediately for your Windows account. Monitoring starts paused. Windows Settings can also disable startup apps.</value>
+    <value>Applied immediately for your Windows account. Monitoring follows your saved automatic-start preference. Windows Settings can also disable startup apps.</value>
   </data>
   <data name="PausemonitoringtochangethesesettingsSavedrulesapply" xml:space="preserve">
     <value>Pause monitoring to change these settings. Saved rules apply to future organization; existing categories are not rearranged.</value>
@@ -485,7 +485,7 @@ The original location must be available and the file must be unchanged. Undoing 
   <data name="MacQuit" xml:space="preserve"><value>Quit</value></data>
   <data name="MacPrivacyNotice" xml:space="preserve"><value>Files are processed locally. No account, cloud sync, or telemetry. Closing the window quits after finishing active work. Native Hide keeps monitoring running.</value></data>
   <data name="PortableFolderNames" xml:space="preserve"><value>Category names must be portable folder names.</value></data>
-  <data name="LoginStartupExplanation" xml:space="preserve"><value>Applied immediately for your account. Monitoring starts paused. Your desktop settings may also disable login startup.</value></data>
+  <data name="LoginStartupExplanation" xml:space="preserve"><value>Applied immediately for your account. Monitoring follows your saved automatic-start preference. Your desktop settings may also disable login startup.</value></data>
   <data name="LinuxPrivacyNotice" xml:space="preserve"><value>Files are processed locally. No account, cloud sync, or telemetry. Closing the window quits after finishing active work.</value></data>
   <data name="LinuxFolderScope" xml:space="preserve"><value>Linux: choose local ext4 folders on the same mount, outside cloud synchronization. Links and cross-volume moves are unavailable.</value></data>
   <data name="LinuxSameVolumeOnly" xml:space="preserve"><value>Linux file operations require local ext4 folders on the same mount, with a verifiable filesystem UUID and creation time. Choose another destination.</value></data>
@@ -504,7 +504,7 @@ The original location must be available and the file must be unchanged. Undoing 
     <value>No matching files. Try another search or clear it.</value>
   </data>
   <data name="UsePeriodicOrganization" xml:space="preserve"><value>Organize periodically instead of continuously</value></data>
-  <data name="PeriodicOrganizationHelp" xml:space="preserve"><value>Optional. Preview and confirm to activate. Waits before the first check and between passes; only completed downloads are eligible. Restarting leaves organization paused.</value></data>
+  <data name="PeriodicOrganizationHelp" xml:space="preserve"><value>Optional. Preview and confirm to activate. Waits before the first check and between passes; only completed downloads are eligible. Automatic startup requires your saved opt-in preference.</value></data>
   <data name="OrganizationInterval" xml:space="preserve"><value>Interval in minutes (1–1440)</value></data>
   <data name="PeriodicOrganizationActive" xml:space="preserve"><value>Periodic organization is on · every {0} minutes</value></data>
   <data name="PeriodicOrganizationStarted" xml:space="preserve"><value>Periodic organization enabled. The first check starts in {0} minutes. Pause to stop future checks.</value></data>
@@ -513,7 +513,7 @@ The original location must be available and the file must be unchanged. Undoing 
 
 {1}
 
-The first pass waits for the interval. Each pass organizes completed downloads, including files added after this preview, and moves aging files to Expiring Files. Busy and unfinished downloads are skipped. No files will be deleted automatically. You can pause at any time; restarting Dowlume leaves organization paused.</value></data>
+The first pass waits for the interval. Each pass organizes completed downloads, including files added after this preview, and moves aging files to Expiring Files. Busy and unfinished downloads are skipped. No files will be deleted automatically. You can turn monitoring off at any time. Automatic startup requires your saved opt-in preference.</value></data>
   <data name="ApplicationUpdates" xml:space="preserve"><value>Application updates</value></data>
   <data name="CheckForUpdates" xml:space="preserve"><value>Check for updates</value></data>
   <data name="UpdatePrivacy" xml:space="preserve"><value>Updates are checked only when you ask. GitHub receives a network request, but no file names or paths.</value></data>
@@ -529,7 +529,7 @@ The first pass waits for the interval. Each pass organizes completed downloads, 
   <data name="UpdateClosing" xml:space="preserve"><value>Update verified. Closing Dowlume to open the installer…</value></data>
   <data name="UpdateFailed" xml:space="preserve"><value>The update could not be prepared or verified. Nothing was installed. Try again later.</value></data>
   <data name="ShowWindowAtWindowsLogin" xml:space="preserve"><value>Show the window when Windows starts</value></data>
-  <data name="WindowsLoginWindowHelp" xml:space="preserve"><value>By default, Dowlume starts in the background in the system tray. Enable this option to show its window. Saved immediately. Organization always starts paused.</value></data>
+  <data name="WindowsLoginWindowHelp" xml:space="preserve"><value>By default, Dowlume starts in the background in the system tray. Enable this option to show its window. Saved immediately. Monitoring follows your saved automatic-start preference.</value></data>
   <data name="CustomRulesHeading" xml:space="preserve"><value>Folders and classification</value></data>
   <data name="CustomRulesHelp" xml:space="preserve"><value>Names are matched without the final extension, ignoring case. Name rules take priority over extensions. If several name rules match, the file stays in place and an error identifies the conflict. Each extension and folder must be unique. Other remains the fallback.</value></data>
   <data name="RuleEditScope" xml:space="preserve"><value>Save and preview again after editing. Existing folders and files are not renamed or rearranged. Removing a custom rule does not delete its files; existing review items retain a recorded return folder.</value></data>
@@ -550,4 +550,29 @@ The first pass waits for the interval. Each pass organizes completed downloads, 
   <data name="DuplicateExtensionRule" xml:space="preserve"><value>The extension {0} is assigned to both {1} and {2}.</value></data>
   <data name="AmbiguousNameRule" xml:space="preserve"><value>The file {0} matches several name rules: {1}. It has not been moved. Edit the rules and preview again.</value></data>
   <data name="MissingCustomFolder" xml:space="preserve"><value>The saved custom folder is unavailable. Choose Move to instead.</value></data>
+  <data name="Appearance" xml:space="preserve"><value>Appearance</value></data>
+  <data name="AppearanceHelp" xml:space="preserve"><value>Changes apply immediately and are saved automatically. System follows your operating system.</value></data>
+  <data name="System" xml:space="preserve"><value>System</value></data>
+  <data name="Light" xml:space="preserve"><value>Light</value></data>
+  <data name="Dark" xml:space="preserve"><value>Dark</value></data>
+  <data name="MonitoringOn" xml:space="preserve"><value>On</value></data>
+  <data name="MonitoringOff" xml:space="preserve"><value>Off</value></data>
+  <data name="ResumeMonitoring" xml:space="preserve"><value>Resume monitoring when Dowlume opens</value></data>
+  <data name="ResumeMonitoringHelp" xml:space="preserve"><value>Save this preference. Automatic startup requires a successful preview and confirmed start with the current rules. Turning monitoring off also disables this preference.</value></data>
+  <data name="OrganizeFolders" xml:space="preserve"><value>Collect loose folders (optional)</value></data>
+  <data name="OrganizeFoldersHelp" xml:space="preserve"><value>Disabled by default. Checks are independent of file monitoring and wait at least 20 minutes. Folders must remain unchanged across two checks; the first possible move is after two intervals. Classification folders, links, hidden folders and incomplete downloads are skipped. Name collisions stay in place. Moves appear in Activity; restore folders manually with your file manager.</value></data>
+  <data name="CollectedFoldersName" xml:space="preserve"><value>Collection folder name</value></data>
+  <data name="FolderInterval" xml:space="preserve"><value>Folder check interval (minutes, minimum 20)</value></data>
+  <data name="OrganizeFolder" xml:space="preserve"><value>OrganizeFolder</value></data>
+  <data name="FolderIntervalError" xml:space="preserve"><value>The folder interval must be 20–1440 minutes.</value></data>
+  <data name="FolderConflictError" xml:space="preserve"><value>The collection folder must differ from every classification and review folder.</value></data>
+  <data name="FolderConfirmation" xml:space="preserve"><value>Stable folders will be collected in {0}, with checks every {1} minutes. Classification folders, links and incomplete downloads are skipped. Folders are never merged or deleted; folder moves are recorded but have no automatic Undo.</value></data>
+  <data name="ResumeConfirmation" xml:space="preserve"><value>Monitoring will resume automatically when Dowlume opens, including at login. Turning monitoring off also disables automatic startup.</value></data>
+  <data name="FolderRecovery" xml:space="preserve"><value>Inspect the source and destination folders manually. Folder moves are never replayed automatically.</value></data>
+  <data name="FolderChanged" xml:space="preserve"><value>The folder changed before moving. It was left in place.</value></data>
+  <data name="FolderVolume" xml:space="preserve"><value>Folders can only be collected on the same volume.</value></data>
+  <data name="ThemeError" xml:space="preserve"><value>Choose System, Light or Dark appearance.</value></data>
+  <data name="StartupPreferenceStatus" xml:space="preserve"><value>Dowlume will start when you sign in. Monitoring follows your saved automatic-start preference.</value></data>
+  <data name="FolderPreview" xml:space="preserve"><value>Folders to check on the schedule</value></data>
+  <data name="FolderPreviewHelp" xml:space="preserve"><value>These are candidates, not immediate moves. Each folder must pass stability and safety checks on later scheduled passes.</value></data>
 </root>

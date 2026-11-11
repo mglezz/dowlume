@@ -161,6 +161,12 @@ public partial class MainViewModel : ObservableObject
         catch (Exception error) { ShowError(error); }
         AppSettings settings = store.LoadSettings() ?? new AppSettings { DownloadsPath = _suggestedDownloads };
         ShowWindowAtWindowsLogin = settings.ShowWindowAtWindowsLogin;
+        _selectedTheme = settings.Theme;
+        ApplyTheme(settings.Theme);
+        ResumeMonitoringOnStartup = settings.ResumeMonitoringOnStartup;
+        OrganizeFolders = settings.OrganizeFolders;
+        FolderIntervalMinutes = settings.FolderIntervalMinutes;
+        CollectedFoldersName = settings.CollectedFoldersName;
         Text.SetLanguage(settings.Language);
         _selectedLanguage = Languages.Single(language => language.Code == Text.Language);
         RefreshLanguage();
@@ -206,7 +212,7 @@ public partial class MainViewModel : ObservableObject
             _startup.SetEnabled(!StartAtLogin);
             StartAtLogin = _startup.IsEnabled;
             StatusMessage = StartAtLogin
-                ? "Dowlume will start when you sign in. Monitoring will remain paused until you preview and start."
+                ? "Dowlume will start when you sign in. Monitoring follows your saved automatic-start preference."
                 : "Dowlume will no longer start automatically from this location.";
         }
         finally
@@ -245,7 +251,13 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private Task SaveSettingsAsync() => RunAsync(() =>
     {
-        _store.SaveSettings(ReadSettings());
+        // Changed organization settings revoke automatic-start consent until previewed again.
+        AppSettings settings = ReadSettings();
+        AppSettings? previous = _store.LoadSettings();
+        _store.SaveSettings(settings with
+        {
+            MonitoringConsentGranted = previous?.MonitoringConsentGranted == true && settings.HasSameValuesAs(previous)
+        });
         InvalidatePreview();
         StatusMessage = IsPreviewPlatform
             ? "Settings saved. You can inspect the folder in Preview. File operations remain unavailable."
@@ -278,7 +290,9 @@ public partial class MainViewModel : ObservableObject
         AppSettings settings = ReadSettings();
         StatusMessage = "Checking completed downloads. Large files may take a moment.";
         IReadOnlyList<PreviewItem> items = await Task.Run(() => _organizer.PreviewAsync(settings, _shutdown.Token));
+        IReadOnlyList<string> folders = await Task.Run(() => new FolderOrganizer(_store).Preview(settings));
         Replace(PreviewItems, items);
+        Replace(FolderPreview, folders.Select(path => $"{Path.GetFileName(path)} → {settings.CollectedFoldersName}"));
         _previewSettings = settings;
         HasPreview = true;
         SetStatus("{0} completed files are ready. Busy, recent, excluded, and already tracked files are skipped. Nothing has moved.", items.Count);
@@ -294,13 +308,20 @@ public partial class MainViewModel : ObservableObject
             throw new InvalidOperationException("Preview the current settings before starting.");
         }
         string confirmation = settings.UsePeriodicOrganization
-            ? Text.Format("Check this folder every {0} minutes?\n\n{1}\n\nThe first pass waits for the interval. Each pass organizes completed downloads, including files added after this preview, and moves aging files to Expiring Files. Busy and unfinished downloads are skipped. No files will be deleted automatically. You can pause at any time; restarting Dowlume leaves organization paused.", settings.OrganizationIntervalMinutes, settings.DownloadsPath)
+            ? Text.Format("Check this folder every {0} minutes?\n\n{1}\n\nThe first pass waits for the interval. Each pass organizes completed downloads, including files added after this preview, and moves aging files to Expiring Files. Busy and unfinished downloads are skipped. No files will be deleted automatically. You can turn monitoring off at any time. Automatic startup requires your saved opt-in preference.", settings.OrganizationIntervalMinutes, settings.DownloadsPath)
             : Text.Format("Organize {0} previewed files and monitor this folder for completed downloads?\n\n{1}\n\nFuture and currently unfinished downloads will also be organized. Aging files will move to Expiring Files for your review. No files will be deleted automatically.", PreviewItems.Count, settings.DownloadsPath);
+        if (settings.OrganizeFolders)
+            confirmation += "\n\n" + Text.Format("Stable folders will be collected in {0}, with checks every {1} minutes. Classification folders, links and incomplete downloads are skipped. Folders are never merged or deleted; folder moves are recorded but have no automatic Undo.", settings.CollectedFoldersName, settings.FolderIntervalMinutes);
+        if (settings.ResumeMonitoringOnStartup)
+            confirmation += "\n\n" + Text.Translate("Monitoring will resume automatically when Dowlume opens, including at login. Turning monitoring off also disables automatic startup.");
         if (!await _dialogs.ConfirmAsync(Text.Translate("Start organizing downloads?"), confirmation, Text.Translate("Organize and monitor")))
         {
             return;
         }
-        _store.SaveSettings(settings);
+        _store.SaveSettings(settings with
+        {
+            MonitoringConsentGranted = false
+        });
         if (!settings.UsePeriodicOrganization)
         {
             foreach (PreviewItem item in PreviewItems.ToArray())
@@ -308,27 +329,27 @@ public partial class MainViewModel : ObservableObject
                 await Task.Run(() => _organizer.OrganizeAsync(item.SourcePath, settings, _shutdown.Token, item.ContentHash));
             }
         }
-        _shutdown.Token.ThrowIfCancellationRequested();
-        _monitor = settings.UsePeriodicOrganization
-            ? new PeriodicDownloadMonitor(settings,
-                (path, token) => _organizer.OrganizeAsync(path, settings, token),
-                token => _organizer.ReconcileAsync(settings, token), ReportBackgroundError)
-            : new DownloadMonitor(settings,
-            (path, token) => _organizer.OrganizeAsync(path, settings, token),
-            token => _organizer.ReconcileAsync(settings, token), ReportBackgroundError);
-        IsMonitoring = true;
-        InvalidatePreview();
-        if (settings.UsePeriodicOrganization)
-            SetStatus("Periodic organization enabled. The first check starts in {0} minutes. Pause to stop future checks.", settings.OrganizationIntervalMinutes);
-        else
-            StatusMessage = "Monitoring completed downloads. You can pause at any time.";
-        await RefreshAsync();
+        await BeginMonitoringAsync(settings);
+        try
+        {
+            _store.SaveSettings(settings with
+            {
+                MonitoringConsentGranted = true
+            });
+        }
+        catch { await StopMonitorAsync(); throw; }
     });
 
     [RelayCommand]
     private Task PauseAsync() => RunAsync(async () =>
     {
         await StopMonitorAsync();
+        // Explicit Off also prevents a surprising restart after login.
+        _store.SaveSettings(SavedSettings() with
+        {
+            ResumeMonitoringOnStartup = false
+        });
+        ResumeMonitoringOnStartup = false;
         StatusMessage = "Monitoring paused. Preview again when you are ready to resume.";
     });
 
@@ -456,6 +477,11 @@ public partial class MainViewModel : ObservableObject
         var settings = new AppSettings
         {
             Language = Text.Language,
+            Theme = SelectedTheme,
+            ResumeMonitoringOnStartup = ResumeMonitoringOnStartup,
+            OrganizeFolders = OrganizeFolders,
+            FolderIntervalMinutes = FolderIntervalMinutes,
+            CollectedFoldersName = CollectedFoldersName.Trim(),
             ShowWindowAtWindowsLogin = ShowWindowAtWindowsLogin,
             UsePeriodicOrganization = UsePeriodicOrganization,
             OrganizationIntervalMinutes = OrganizationIntervalMinutes,
@@ -512,10 +538,16 @@ public partial class MainViewModel : ObservableObject
         _previewSettings = null;
         HasPreview = false;
         PreviewItems.Clear();
+        FolderPreview.Clear();
     }
 
     private async Task StopMonitorAsync()
     {
+        if (_folderMonitor is not null)
+        {
+            await _folderMonitor.DisposeAsync();
+            _folderMonitor = null;
+        }
         if (_monitor is not null)
         {
             await _monitor.DisposeAsync();

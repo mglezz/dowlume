@@ -317,6 +317,16 @@ public sealed class DownloadOrganizer(
         {
             try
             {
+                if (operation.Kind == OperationKind.OrganizeFolder)
+                {
+                    if (operation.Status == OperationStatus.Pending)
+                        store.SaveOperation(operation with
+                        {
+                            Status = OperationStatus.NeedsAttention,
+                            Error = "Inspect the source and destination folders manually. Folder moves are never replayed automatically."
+                        });
+                    continue;
+                }
                 PathSafety.RejectLinks(operation.SourcePath);
                 bool sourceExists = File.Exists(operation.SourcePath);
                 if (operation.Kind == OperationKind.Recycle)

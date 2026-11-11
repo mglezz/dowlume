@@ -578,9 +578,11 @@ public sealed class DesktopWorkflowTests
             .WithInterFont().UseSkia().UseHeadless(new AvaloniaHeadlessPlatformOptions { UseHeadlessDrawing = false });
     }
 
-    public sealed class TestApplication : Application
+    public sealed class TestApplication : Dowlume.App.App
     {
-        public override void Initialize() => Styles.Add(new FluentTheme());
+        public override void OnFrameworkInitializationCompleted()
+        {
+        }
     }
 
     private sealed class TestClock : TimeProvider

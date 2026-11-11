@@ -9,6 +9,30 @@
         <NativeMenu />
     </NativeMenu.Menu>
 
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="PageBrush">#F5F6FA</SolidColorBrush>
+                    <SolidColorBrush x:Key="CardBrush">#FFFFFF</SolidColorBrush>
+                    <SolidColorBrush x:Key="HeadingBrush">#172137</SolidColorBrush>
+                    <SolidColorBrush x:Key="MutedBrush">#5B6578</SolidColorBrush>
+                    <SolidColorBrush x:Key="LineBrush">#E1E5ED</SolidColorBrush>
+                    <SolidColorBrush x:Key="LinkBrush">#3456CF</SolidColorBrush>
+                    <SolidColorBrush x:Key="ErrorBrush">#9E361B</SolidColorBrush>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="PageBrush">#141922</SolidColorBrush>
+                    <SolidColorBrush x:Key="CardBrush">#202735</SolidColorBrush>
+                    <SolidColorBrush x:Key="HeadingBrush">#F1F4FA</SolidColorBrush>
+                    <SolidColorBrush x:Key="MutedBrush">#B8C3D6</SolidColorBrush>
+                    <SolidColorBrush x:Key="LineBrush">#3B475C</SolidColorBrush>
+                    <SolidColorBrush x:Key="LinkBrush">#A7BCFF</SolidColorBrush>
+                    <SolidColorBrush x:Key="ErrorBrush">#FFAB94</SolidColorBrush>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
     <Application.Styles>
         <FluentTheme />
     </Application.Styles>

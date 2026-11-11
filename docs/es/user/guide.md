@@ -44,21 +44,41 @@ Cambio pestañas, botones, confirmaciones, bandeja, categorías, estados, fechas
 
 *Conservo las capturas de v0.1.0 en inglés como referencia histórica. [Procedencia](../images/README.md).*
 
-Solo descubro archivos directamente en la carpeta elegida. No importo ni reorganizo subcarpetas existentes. Creo las categorías y `Expiring Files` cuando hacen falta. Si un nombre está ocupado, añado un sufijo numérico; no sobrescribo el destino.
+Solo descubro archivos directamente en la carpeta elegida. Las subcarpetas no se reorganizan salvo que actives expresamente la agrupación de carpetas de 0.7.0. Creo las categorías y `Expiring Files` cuando hacen falta. Si un nombre está ocupado, añado un sufijo numérico; no sobrescribo el destino.
 
-La supervisión empieza en pausa en cada arranque. Para continuar, revisa la vista previa y confirma otra vez. **Pausar** detiene la supervisión y espera a la operación activa. **Ocultar en la bandeja** mantiene la aplicación abierta; cerrar la ventana detiene la supervisión.
+En la versión publicada 0.6.0, la supervisión empieza en pausa en cada arranque; 0.7.0 añade la preferencia descrita abajo. Para continuar, revisa la vista previa y confirma otra vez. **Pausar** detiene la supervisión y espera a la operación activa. **Ocultar en la bandeja** mantiene la aplicación abierta; cerrar la ventana detiene la supervisión.
 
 El icono puede aparecer entre los iconos ocultos del área de notificación. Un clic restaura la ventana; el menú contextual ofrece **Abrir Dowlume** y **Salir**. Windows permite fijarlo en el área visible.
 
-En **Ajustes**, **Iniciar Dowlume al entrar en Windows** se aplica inmediatamente a tu cuenta y está desactivado inicialmente. La supervisión sigue empezando en pausa. Desactívalo antes de mover una copia portátil y actívalo de nuevo desde su ubicación final. Windows también puede desactivar aplicaciones de inicio. La desinstalación elimina la entrada solo si pertenece a esa instalación.
+En **Ajustes**, **Iniciar Dowlume al entrar en Windows** se aplica inmediatamente a tu cuenta y está desactivado inicialmente. En 0.6.0 empieza en pausa; en 0.7.0 sigue la preferencia guardada de inicio automático. Desactívalo antes de mover una copia portátil y actívalo de nuevo desde su ubicación final. Windows también puede desactivar aplicaciones de inicio. La desinstalación elimina la entrada solo si pertenece a esa instalación.
 
-### Ventana al iniciar Windows (código posterior a 0.6.0)
+### Ventana al iniciar Windows (desarrollo de 0.7.0)
 
-Si has activado el inicio con Windows, Dowlume inicia por defecto en el área de notificación sin mostrar la ventana. Activa **Mostrar la ventana al iniciar Windows** en Ajustes si prefieres verla al iniciar sesión. La preferencia se guarda inmediatamente, sin guardar cambios pendientes en carpetas o reglas. La apertura manual muestra la ventana. Usa el icono de la bandeja para abrir o salir de una instancia en segundo plano; la organización sigue pausada hasta revisar la vista previa y confirmar. Si falla la creación de la bandeja, se muestra la ventana para mantener accesible la aplicación.
+Si has activado el inicio con Windows, Dowlume inicia por defecto en el área de notificación sin mostrar la ventana. Activa **Mostrar la ventana al iniciar Windows** en Ajustes si prefieres verla al iniciar sesión. La preferencia se guarda inmediatamente, sin guardar cambios pendientes en carpetas o reglas. La apertura manual muestra la ventana. Usa el icono de la bandeja para abrir o salir de una instancia en segundo plano; la monitorización sigue la preferencia guardada de inicio automático descrita abajo. Si falla la creación de la bandeja, se muestra la ventana para mantener accesible la aplicación.
 
 La actualización conserva una entrada de inicio existente y añade el argumento de inicio de sesión; no activa el inicio automático si estaba desactivado. Una copia portable actualiza su propia entrada antigua la próxima vez que se abre normalmente. Los paquetes publicados de 0.6.0 todavía no incluyen esta opción.
 
-## Carpetas y reglas personalizadas (código posterior a 0.6.0)
+## Apariencia y monitorización persistente (desarrollo de 0.7.0)
+
+Estas novedades, la preferencia de ventana al iniciar Windows y las reglas personalizadas pertenecen a la próxima **0.7.0**, no a los paquetes publicados de 0.6.0.
+
+En **Ajustes → Apariencia**, elige **Sistema**, **Claro** u **Oscuro**. La elección se aplica y guarda al instante, incluidos los diálogos. Sistema sigue al sistema operativo. Pausa la monitorización para acceder a Ajustes.
+
+La cabecera incluye un interruptor **Encendido / Apagado**. Los perfiles nuevos y actualizados empiezan apagados. Primero elige una carpeta, actualiza Vista previa y confirma **Organizar y supervisar**. Para reanudar tras reiniciar Dowlume o iniciar sesión, marca **Reanudar la monitorización al abrir Dowlume**, guarda y confirma la activación inicial. Iniciar la aplicación con Windows es una preferencia independiente.
+
+El inicio automático usa las últimas reglas guardadas y confirmadas. Cambiar la ruta, clasificación, exclusiones, intervalos o agrupación de carpetas exige otra vista previa y confirmación. Cambiar solo el tema o la preferencia de inicio automático no invalida las reglas. Si la ruta no está disponible o es inválida, la monitorización queda apagada y se muestra un error. **Apagado** detiene ambos monitores y desactiva la reanudación automática; cerrar la aplicación conserva la preferencia. El modo continuo revisa las descargas existentes al reanudar; el periódico vuelve a esperar su intervalo completo.
+
+## Agrupar carpetas sueltas (desarrollo de 0.7.0)
+
+Activa **Ajustes → Agrupar carpetas sueltas** si quieres mover las carpetas completas del primer nivel a una carpeta contenedora, llamada `Folders` por defecto. Elige un nombre portable distinto de las categorías y un intervalo de **20–1440 minutos**. La opción empieza desactivada. Guarda, revisa las candidatas en Vista previa y confirma la organización. Su temporizador es independiente del de archivos; apagar la monitorización detiene ambos.
+
+Las carpetas deben permanecer sin cambios entre dos revisiones programadas y no contener elementos modificados recientemente. El primer movimiento posible es tras dos intervalos (40 minutos con el valor predeterminado); los cambios reinician la espera. Reiniciar la aplicación también reinicia las observaciones. Se mueve el directorio completo dentro del mismo volumen compatible; nunca se fusiona, elimina ni reclasifica su contenido. Si el nombre ya existe en el destino, se deja el origen en su sitio.
+
+Se protegen las categorías, `Expiring Files`, la contenedora y los antiguos destinos registrados en el historial. Se omiten carpetas ocultas o del sistema, enlaces, marcadores de nube, descargas incompletas o excluidas, contenidos inaccesibles y árboles que superen el límite de inspección de 10 000 entradas. Mantén las carpetas importantes de trabajo fuera de la raíz supervisada. La estabilidad observada no garantiza que otro programa no reabra un archivo; los procesos POSIX pueden ignorar los bloqueos de acceso compartido.
+
+Los movimientos aparecen en **Actividad**, con ambas rutas, pero no entran en revisión por antigüedad ni tienen Deshacer automático. Para restaurar una carpeta, apaga la monitorización y devuélvela completa con el explorador. Los movimientos interrumpidos requieren inspeccionar ambas rutas manualmente: nunca se repiten ni eliminan automáticamente. Una carpeta con una incidencia pendiente en el historial queda excluida de futuras agrupaciones.
+
+## Carpetas y reglas personalizadas (desarrollo de 0.7.0)
 
 Pausa la organización y abre **Ajustes → Carpetas y clasificación**. Puedes editar las carpetas predefinidas o pulsar **Añadir carpeta** (hasta 50 personalizadas). Pon un nombre único, elige los días hasta la revisión y selecciona cómo clasificar:
 
@@ -76,7 +96,7 @@ La versión 0.6.0 incluye **Ajustes → Organizar por intervalos en lugar de con
 
 Este modo no organiza nada inmediatamente, ni siquiera los archivos de la vista previa. La primera pasada espera el intervalo elegido. Cada pasada revisa los archivos directamente en la carpeta elegida y realiza las comprobaciones habituales de antigüedad y recuperación. Las nuevas descargas pueden organizarse en pasadas posteriores; se mantienen las protecciones para archivos incompletos, ocupados, recientes, excluidos y ya registrados. No se importan subcarpetas existentes. Actividad y Deshacer siguen disponibles.
 
-El modo periódico no utiliza un vigilante de cambios del sistema de archivos. Después de cada pasada completa espera otro intervalo: las pasadas lentas no se solapan ni acumulan ejecuciones pendientes. La aplicación debe seguir abierta; no es una tarea programada del sistema operativo. La suspensión del equipo puede retrasar las revisiones. **Pausar** cancela las siguientes revisiones y espera a que una operación ya registrada termine de forma segura. Cambiar el intervalo o el modo exige una nueva vista previa. Al reiniciar se recuerda la preferencia, pero la organización siempre queda pausada.
+El modo periódico no utiliza un vigilante de cambios del sistema de archivos. Después de cada pasada completa espera otro intervalo: las pasadas lentas no se solapan ni acumulan ejecuciones pendientes. La aplicación debe seguir abierta; no es una tarea programada del sistema operativo. La suspensión del equipo puede retrasar las revisiones. **Pausar** cancela las siguientes revisiones y espera a que una operación ya registrada termine de forma segura. Cambiar el intervalo o el modo exige una nueva vista previa. En 0.6.0, reiniciar deja la organización pausada. En 0.7.0 se aplica la preferencia guardada de inicio automático.
 
 ## Revisar archivos
 

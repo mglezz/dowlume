@@ -122,6 +122,14 @@ internal static class Program
                         Capture(4, $"custom-rules-{language}.png");
                     }
 
+                    foreach (string theme in MainViewModel.Themes)
+                    {
+                        model.SelectedTheme = theme;
+                        window.FindControl<ScrollViewer>("SettingsScroll")!.Offset = default;
+                        Capture(4, $"preferences-{theme.ToLowerInvariant()}.png");
+                        Capture(0, $"overview-{theme.ToLowerInvariant()}.png");
+                    }
+
                     void Capture(int index, string name)
                     {
                         tabs.SelectedIndex = index;
@@ -144,9 +152,11 @@ internal static class Program
             .WithInterFont().UseSkia().UseHeadless(new AvaloniaHeadlessPlatformOptions { UseHeadlessDrawing = false });
     }
 
-    public sealed class CaptureApplication : Application
+    public sealed class CaptureApplication : Dowlume.App.App
     {
-        public override void Initialize() => Styles.Add(new FluentTheme());
+        public override void OnFrameworkInitializationCompleted()
+        {
+        }
     }
 
     private sealed class NoDialogs : IDesktopDialogs
