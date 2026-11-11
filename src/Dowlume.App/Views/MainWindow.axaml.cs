@@ -18,7 +18,7 @@ public partial class MainWindow : Window
         AvaloniaXamlLoader.Load(this);
         _refreshTimer.Tick += async (_, _) =>
         {
-            if (DataContext is MainViewModel model)
+            if (IsVisible && DataContext is MainViewModel model)
             {
                 await model.RefreshAsync(skipIfRefreshing: true);
             }

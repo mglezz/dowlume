@@ -72,6 +72,8 @@ public partial class App : Application
                     window.Closed += (_, _) => desktop.Shutdown();
                 }
                 log.Write("application_started");
+                if (!Program.IsSmokeTest)
+                    Avalonia.Threading.Dispatcher.UIThread.Post(async () => await model.ResumeOnStartupAsync());
             }
             catch (Exception error)
             {

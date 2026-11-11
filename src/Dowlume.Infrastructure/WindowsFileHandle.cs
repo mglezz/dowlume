@@ -33,6 +33,9 @@ internal static class WindowsFileHandle
     internal static SafeFileHandle LockDirectory(string path) =>
         Open(path, GenericRead, FileShare.Read | FileShare.Write, BackupSemantics | OpenReparsePoint);
 
+    internal static SafeFileHandle OpenDirectoryForMove(string path) =>
+        Open(path, GenericRead | DeleteAccess, FileShare.Read, BackupSemantics | OpenReparsePoint);
+
     private static SafeFileHandle Open(string path, uint access, FileShare share, uint flags)
     {
         SafeFileHandle handle = CreateFileW(path, access, share, IntPtr.Zero, OpenExisting, flags, IntPtr.Zero);

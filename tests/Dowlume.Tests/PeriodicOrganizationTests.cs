@@ -10,6 +10,38 @@ namespace Dowlume.Tests;
 public sealed class PeriodicOrganizationTests
 {
     [Fact]
+    public async Task FolderTimerWaitsAtLeastTwentyMinutesAndCancelsWithoutOverlap()
+    {
+        using var workspace = new TemporaryWorkspace();
+        var settings = new AppSettings { DownloadsPath = workspace.Downloads, OrganizeFolders = true };
+        var clock = new ManualClock();
+        var started = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        bool cancelled = false;
+        int calls = 0;
+        var monitor = new FolderMonitor(settings, async token =>
+        {
+            calls++;
+            started.SetResult();
+            try
+            {
+                await Task.Delay(Timeout.Infinite, token);
+            }
+            finally { cancelled = token.IsCancellationRequested; }
+        }, error => throw error, clock);
+        ManualTimer timer = await clock.NextAsync();
+        Assert.Equal(TimeSpan.FromMinutes(20), timer.DueTime);
+        Assert.Equal(0, calls);
+        timer.Fire();
+        await started.Task.WaitAsync(TimeSpan.FromSeconds(5));
+        Assert.False(clock.HasPendingTimer);
+        await monitor.DisposeAsync();
+        Assert.True(cancelled);
+        Assert.Equal(1, calls);
+        Assert.Throws<ArgumentException>(() => new FolderMonitor(settings with { OrganizeFolders = false }, _ => Task.CompletedTask, _ => { }));
+        Assert.Throws<ArgumentException>(() => new FolderMonitor(settings with { FolderIntervalMinutes = 19 }, _ => Task.CompletedTask, _ => { }));
+    }
+
+    [Fact]
     public void OlderProfilesRemainOptInAndScheduleChangesInvalidateConsent()
     {
         AppSettings settings = JsonSerializer.Deserialize<AppSettings>("{}")!;

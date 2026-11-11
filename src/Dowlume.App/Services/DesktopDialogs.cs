@@ -34,7 +34,11 @@ public sealed class DesktopDialogs(Window owner, Localizer? localizer = null, IF
             Spacing = 24,
             Children =
             {
-                new TextBlock { Text = message, TextWrapping = Avalonia.Media.TextWrapping.Wrap },
+                new ScrollViewer
+                {
+                    MaxHeight = 420,
+                    Content = new TextBlock { Text = message, TextWrapping = Avalonia.Media.TextWrapping.Wrap }
+                },
                 new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right, Spacing = 12, Children = { cancel, confirm } }
             }
         };

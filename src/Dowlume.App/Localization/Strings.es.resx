@@ -124,7 +124,7 @@
     <value>Iniciar Dowlume al entrar en Windows</value>
   </data>
   <data name="AppliedimmediatelyforyourWindowsaccountMonitoringstartspaused" xml:space="preserve">
-    <value>Se aplica inmediatamente a tu cuenta de Windows. La supervisión empieza en pausa. También puedes desactivar el inicio desde los ajustes de Windows.</value>
+    <value>Se aplica inmediatamente a tu cuenta de Windows. La monitorización sigue tu preferencia guardada de inicio automático. También puedes desactivar el inicio desde los ajustes de Windows.</value>
   </data>
   <data name="PausemonitoringtochangethesesettingsSavedrulesapply" xml:space="preserve">
     <value>Pausa la supervisión para cambiar estos ajustes. Las reglas guardadas se aplican a futuras descargas; no reorganizan las categorías existentes.</value>
@@ -485,7 +485,7 @@ La ubicación original debe estar disponible y el archivo no debe haber cambiado
   <data name="MacQuit" xml:space="preserve"><value>Salir</value></data>
   <data name="MacPrivacyNotice" xml:space="preserve"><value>Los archivos se procesan localmente. Sin cuenta, sincronización ni telemetría. Cerrar la ventana termina tras completar el trabajo activo. Ocultar en macOS mantiene la supervisión.</value></data>
   <data name="PortableFolderNames" xml:space="preserve"><value>Los nombres de categoría deben ser válidos entre plataformas.</value></data>
-  <data name="LoginStartupExplanation" xml:space="preserve"><value>Se aplica inmediatamente a tu cuenta. La supervisión empieza en pausa. Los ajustes del escritorio también pueden desactivar el inicio de sesión.</value></data>
+  <data name="LoginStartupExplanation" xml:space="preserve"><value>Se aplica inmediatamente a tu cuenta. La monitorización sigue tu preferencia guardada de inicio automático. Los ajustes del escritorio también pueden desactivar el inicio de sesión.</value></data>
   <data name="LinuxPrivacyNotice" xml:space="preserve"><value>Los archivos se procesan localmente. Sin cuenta, sincronización ni telemetría. Cerrar la ventana termina tras completar el trabajo activo.</value></data>
   <data name="LinuxFolderScope" xml:space="preserve"><value>Linux: elige carpetas ext4 locales del mismo montaje, fuera de la sincronización en la nube. No se admiten enlaces ni movimientos entre volúmenes.</value></data>
   <data name="LinuxSameVolumeOnly" xml:space="preserve"><value>Las operaciones en Linux requieren carpetas ext4 locales del mismo montaje, con UUID del sistema de archivos y fecha de creación verificables. Elige otro destino.</value></data>
@@ -504,7 +504,7 @@ La ubicación original debe estar disponible y el archivo no debe haber cambiado
     <value>No hay coincidencias. Prueba otra búsqueda o bórrala.</value>
   </data>
   <data name="UsePeriodicOrganization" xml:space="preserve"><value>Organizar por intervalos en lugar de continuamente</value></data>
-  <data name="PeriodicOrganizationHelp" xml:space="preserve"><value>Opcional. Revisa la vista previa y confirma para activarlo. Espera antes de la primera revisión y entre cada pasada; solo organiza descargas completas. Al reiniciar queda pausado.</value></data>
+  <data name="PeriodicOrganizationHelp" xml:space="preserve"><value>Opcional. Revisa la vista previa y confirma para activarlo. Espera antes de la primera revisión y entre cada pasada; solo organiza descargas completas. El inicio automático requiere tu preferencia guardada.</value></data>
   <data name="OrganizationInterval" xml:space="preserve"><value>Intervalo en minutos (1–1440)</value></data>
   <data name="PeriodicOrganizationActive" xml:space="preserve"><value>Organización periódica activada · cada {0} minutos</value></data>
   <data name="PeriodicOrganizationStarted" xml:space="preserve"><value>Organización periódica activada. La primera revisión comienza en {0} minutos. Pausa para detener las siguientes revisiones.</value></data>
@@ -513,7 +513,7 @@ La ubicación original debe estar disponible y el archivo no debe haber cambiado
 
 {1}
 
-La primera pasada espera el intervalo indicado. Cada pasada organiza descargas completas, incluidas las añadidas después de esta vista previa, y mueve los archivos antiguos a Expiring Files. Se omiten las descargas ocupadas o incompletas. No se eliminarán archivos automáticamente. Puedes pausar cuando quieras; al reiniciar Dowlume, la organización queda pausada.</value></data>
+La primera pasada espera el intervalo indicado. Cada pasada organiza descargas completas, incluidas las añadidas después de esta vista previa, y mueve los archivos antiguos a Expiring Files. Se omiten las descargas ocupadas o incompletas. No se eliminarán archivos automáticamente. Puedes apagar la monitorización en cualquier momento. El inicio automático requiere tu preferencia guardada.</value></data>
   <data name="ApplicationUpdates" xml:space="preserve"><value>Actualizaciones de la aplicación</value></data>
   <data name="CheckForUpdates" xml:space="preserve"><value>Buscar actualizaciones</value></data>
   <data name="UpdatePrivacy" xml:space="preserve"><value>Solo se buscan actualizaciones cuando lo solicitas. GitHub recibe una petición de red, pero no nombres de archivos ni rutas.</value></data>
@@ -529,7 +529,7 @@ La primera pasada espera el intervalo indicado. Cada pasada organiza descargas c
   <data name="UpdateClosing" xml:space="preserve"><value>Actualización verificada. Cerrando Dowlume para abrir el instalador…</value></data>
   <data name="UpdateFailed" xml:space="preserve"><value>No se pudo preparar o verificar la actualización. No se ha instalado nada. Inténtalo más tarde.</value></data>
   <data name="ShowWindowAtWindowsLogin" xml:space="preserve"><value>Mostrar la ventana al iniciar Windows</value></data>
-  <data name="WindowsLoginWindowHelp" xml:space="preserve"><value>Por defecto, Dowlume inicia en segundo plano en la bandeja. Activa esta opción para mostrar la ventana. Se guarda inmediatamente. La organización siempre inicia pausada.</value></data>
+  <data name="WindowsLoginWindowHelp" xml:space="preserve"><value>Por defecto, Dowlume inicia en segundo plano en la bandeja. Activa esta opción para mostrar la ventana. Se guarda inmediatamente. La monitorización sigue tu preferencia guardada de inicio automático.</value></data>
   <data name="CustomRulesHeading" xml:space="preserve"><value>Carpetas y clasificación</value></data>
   <data name="CustomRulesHelp" xml:space="preserve"><value>Los nombres se comparan sin la última extensión y sin distinguir mayúsculas. Las reglas por nombre tienen prioridad sobre las extensiones. Si coinciden varias reglas de nombre, el archivo permanece en su sitio y se indica el conflicto. Cada extensión y carpeta debe ser única. Otros conserva los archivos sin coincidencia.</value></data>
   <data name="RuleEditScope" xml:space="preserve"><value>Guarda y revisa la vista previa tras editar. No se renombran ni reorganizan carpetas o archivos existentes. Eliminar una regla no borra sus archivos; los elementos en revisión conservan una carpeta de retorno registrada.</value></data>
@@ -550,4 +550,29 @@ La primera pasada espera el intervalo indicado. Cada pasada organiza descargas c
   <data name="DuplicateExtensionRule" xml:space="preserve"><value>La extensión {0} está asignada a {1} y a {2}.</value></data>
   <data name="AmbiguousNameRule" xml:space="preserve"><value>El archivo {0} coincide con varias reglas de nombre: {1}. No se ha movido. Edita las reglas y revisa de nuevo la vista previa.</value></data>
   <data name="MissingCustomFolder" xml:space="preserve"><value>La carpeta personalizada guardada no está disponible. Utiliza Mover a para elegir otra.</value></data>
+  <data name="Appearance" xml:space="preserve"><value>Apariencia</value></data>
+  <data name="AppearanceHelp" xml:space="preserve"><value>Los cambios se aplican y guardan al instante. Sistema sigue la apariencia del sistema operativo.</value></data>
+  <data name="System" xml:space="preserve"><value>Sistema</value></data>
+  <data name="Light" xml:space="preserve"><value>Claro</value></data>
+  <data name="Dark" xml:space="preserve"><value>Oscuro</value></data>
+  <data name="MonitoringOn" xml:space="preserve"><value>Encendido</value></data>
+  <data name="MonitoringOff" xml:space="preserve"><value>Apagado</value></data>
+  <data name="ResumeMonitoring" xml:space="preserve"><value>Reanudar la monitorización al abrir Dowlume</value></data>
+  <data name="ResumeMonitoringHelp" xml:space="preserve"><value>Guarda esta preferencia. El inicio automático requiere una vista previa y una activación confirmada con las reglas actuales. Apagar la monitorización también desactiva esta preferencia.</value></data>
+  <data name="OrganizeFolders" xml:space="preserve"><value>Agrupar carpetas sueltas (opcional)</value></data>
+  <data name="OrganizeFoldersHelp" xml:space="preserve"><value>Desactivado por defecto. Las revisiones son independientes de los archivos y esperan al menos 20 minutos. Las carpetas deben permanecer sin cambios entre dos revisiones; el primer movimiento posible es tras dos intervalos. Se omiten carpetas de clasificación, enlaces, carpetas ocultas y descargas incompletas. Los nombres duplicados se dejan en su sitio. Los movimientos aparecen en Actividad; restaura las carpetas manualmente desde el explorador.</value></data>
+  <data name="CollectedFoldersName" xml:space="preserve"><value>Nombre de la carpeta contenedora</value></data>
+  <data name="FolderInterval" xml:space="preserve"><value>Intervalo de revisión de carpetas (minutos, mínimo 20)</value></data>
+  <data name="OrganizeFolder" xml:space="preserve"><value>Agrupar carpeta</value></data>
+  <data name="FolderIntervalError" xml:space="preserve"><value>El intervalo de carpetas debe ser de 20 a 1440 minutos.</value></data>
+  <data name="FolderConflictError" xml:space="preserve"><value>La carpeta contenedora debe ser distinta de las carpetas de clasificación y revisión.</value></data>
+  <data name="FolderConfirmation" xml:space="preserve"><value>Las carpetas estables se agruparán en {0}, con revisiones cada {1} minutos. Se omiten carpetas de clasificación, enlaces y descargas incompletas. Nunca se fusionan ni eliminan carpetas; los movimientos se registran pero no tienen Deshacer automático.</value></data>
+  <data name="ResumeConfirmation" xml:space="preserve"><value>La monitorización se reanudará automáticamente al abrir Dowlume, incluido el inicio de sesión. Apagarla también desactiva el inicio automático.</value></data>
+  <data name="FolderRecovery" xml:space="preserve"><value>Inspecciona manualmente las carpetas de origen y destino. Los movimientos de carpetas nunca se repiten automáticamente.</value></data>
+  <data name="FolderChanged" xml:space="preserve"><value>La carpeta cambió antes de moverse. Se ha dejado en su sitio.</value></data>
+  <data name="FolderVolume" xml:space="preserve"><value>Las carpetas solo se pueden agrupar dentro del mismo volumen.</value></data>
+  <data name="ThemeError" xml:space="preserve"><value>Elige la apariencia Sistema, Claro u Oscuro.</value></data>
+  <data name="StartupPreferenceStatus" xml:space="preserve"><value>Dowlume se iniciará al iniciar sesión. La monitorización seguirá tu preferencia guardada de inicio automático.</value></data>
+  <data name="FolderPreview" xml:space="preserve"><value>Carpetas que se revisarán por intervalos</value></data>
+  <data name="FolderPreviewHelp" xml:space="preserve"><value>Son candidatas, no movimientos inmediatos. Cada carpeta debe superar las comprobaciones de estabilidad y seguridad en las siguientes revisiones programadas.</value></data>
 </root>

@@ -1,5 +1,5 @@
 <Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:ac="using:Avalonia.Data.Converters" xmlns:vm="using:Dowlume.App.ViewModels" xmlns:core="using:Dowlume.Core" xmlns:loc="using:Dowlume.App.Localization" x:Class="Dowlume.App.Views.MainWindow" x:DataType="vm:MainViewModel" x:CompileBindings="True" Title="Dowlume" Icon="/Assets/dowlume.ico" Width="1120" Height="820" MinWidth="880" MinHeight="680" Background="#F5F6FA" RequestedThemeVariant="Light">
+        xmlns:ac="using:Avalonia.Data.Converters" xmlns:vm="using:Dowlume.App.ViewModels" xmlns:core="using:Dowlume.Core" xmlns:loc="using:Dowlume.App.Localization" x:Class="Dowlume.App.Views.MainWindow" x:DataType="vm:MainViewModel" x:CompileBindings="True" Title="Dowlume" Icon="/Assets/dowlume.ico" Width="1120" Height="820" MinWidth="880" MinHeight="680" Background="{DynamicResource PageBrush}">
   <Window.Resources>
     <loc:LocalizedValueConverter x:Key="LocalizedValue" />
   </Window.Resources>
@@ -7,16 +7,16 @@
     <Style Selector="TextBlock.heading">
       <Setter Property="FontSize" Value="24" />
       <Setter Property="FontWeight" Value="SemiBold" />
-      <Setter Property="Foreground" Value="#172137" />
+      <Setter Property="Foreground" Value="{DynamicResource HeadingBrush}" />
     </Style>
     <Style Selector="TextBlock.muted">
-      <Setter Property="Foreground" Value="#5B6578" />
+      <Setter Property="Foreground" Value="{DynamicResource MutedBrush}" />
     </Style>
     <Style Selector="Border.card">
-      <Setter Property="Background" Value="White" />
+      <Setter Property="Background" Value="{DynamicResource CardBrush}" />
       <Setter Property="CornerRadius" Value="12" />
       <Setter Property="Padding" Value="20" />
-      <Setter Property="BorderBrush" Value="#E1E5ED" />
+      <Setter Property="BorderBrush" Value="{DynamicResource LineBrush}" />
       <Setter Property="BorderThickness" Value="1" />
     </Style>
     <Style Selector="Button">
@@ -42,12 +42,12 @@
   <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="28">
     <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,22">
       <StackPanel Spacing="5">
-        <TextBlock Text="Dowlume" FontSize="32" FontWeight="Bold" Foreground="#172137" />
+        <TextBlock Text="Dowlume" FontSize="32" FontWeight="Bold" Foreground="{DynamicResource HeadingBrush}" />
         <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Yourdownloadsundercontrol]}" Classes="muted" />
       </StackPanel>
       <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
         <TextBlock Text="{Binding MonitoringLabel}" VerticalAlignment="Center" Classes="muted" />
-        <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Pause]}" Command="{Binding PauseCommand}" IsEnabled="{Binding IsIdle}" IsVisible="{Binding IsMonitoring}" />
+        <ToggleSwitch AutomationProperties.AutomationId="MonitoringSwitch" IsChecked="{Binding IsMonitoring, Mode=OneWay}" Command="{Binding ToggleMonitoringCommand}" IsEnabled="{Binding IsIdle}" OnContent="{ReflectionBinding $parent[Window].DataContext.Text[MonitoringOn]}" OffContent="{ReflectionBinding $parent[Window].DataContext.Text[MonitoringOff]}" />
         <Button x:Name="HideToTrayButton" IsVisible="False" Content="{ReflectionBinding $parent[Window].DataContext.Text[Hidetotray]}" Click="OnHideToTray" />
       </StackPanel>
     </Grid>
@@ -67,7 +67,7 @@
             <Border Grid.Column="1" Classes="card">
               <StackPanel Spacing="8">
                 <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Awaitingyourreview]}" Classes="muted" />
-                <TextBlock Text="{Binding ReviewCount}" FontSize="36" Foreground="#3456CF" FontWeight="SemiBold" />
+                <TextBlock Text="{Binding ReviewCount}" FontSize="36" Foreground="{DynamicResource LinkBrush}" FontWeight="SemiBold" />
               </StackPanel>
             </Border>
             <Border Grid.Column="2" Classes="card">
@@ -145,13 +145,19 @@
             <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Seewhatwillchange]}" Classes="heading" />
             <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Previewcheckscompletedfilesatthetopofyour]}" TextWrapping="Wrap" Classes="muted" />
             <TextBlock Text="{Binding DownloadsPath}" TextWrapping="Wrap" />
+            <Expander IsVisible="{Binding OrganizeFolders}" Header="{ReflectionBinding $parent[Window].DataContext.Text[FolderPreview]}">
+              <StackPanel Spacing="6">
+                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[FolderPreviewHelp]}" Classes="muted" TextWrapping="Wrap" />
+                <ScrollViewer MaxHeight="110"><ItemsControl ItemsSource="{Binding FolderPreview}" /></ScrollViewer>
+              </StackPanel>
+            </Expander>
           </StackPanel>
           <ListBox Grid.Row="1" ItemsSource="{Binding PreviewItems}">
             <ListBox.ItemTemplate>
               <DataTemplate x:DataType="core:PreviewItem">
                 <Grid ColumnDefinitions="*,*">
                   <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
-                  <TextBlock Grid.Column="1" Text="{Binding Destination}" Foreground="#3456CF" TextTrimming="CharacterEllipsis" />
+                  <TextBlock Grid.Column="1" Text="{Binding Destination}" Foreground="{DynamicResource LinkBrush}" TextTrimming="CharacterEllipsis" />
                 </Grid>
               </DataTemplate>
             </ListBox.ItemTemplate>
@@ -278,7 +284,7 @@
               <SelectableTextBlock Text="{Binding SelectedOperation.DestinationPath}" TextWrapping="Wrap" />
               <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[ObservedFileLocation]}" Classes="muted" IsVisible="{Binding SelectedOperation.ObservedPath, Converter={x:Static ac:StringConverters.IsNotNullOrEmpty}}" />
               <SelectableTextBlock Text="{Binding SelectedOperation.ObservedPath}" TextWrapping="Wrap" />
-              <TextBlock TextWrapping="Wrap" Foreground="#9E361B" >
+              <TextBlock TextWrapping="Wrap" Foreground="{DynamicResource ErrorBrush}" >
                     <TextBlock.Text>
                       <MultiBinding Converter="{StaticResource LocalizedValue}">
                         <Binding Path="SelectedOperation.Error" />
@@ -315,6 +321,15 @@
               <ComboBox AutomationProperties.AutomationId="LanguageSelector" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Language]}" MinWidth="180" />
               <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[LanguagechangesapplyimmediatelyandaresavedautomaticallyFolder]}" TextWrapping="Wrap" Classes="muted" />
             </StackPanel>
+            <StackPanel Spacing="6">
+              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Appearance]}" FontWeight="SemiBold" />
+              <ComboBox ItemsSource="{Binding Themes}" SelectedItem="{Binding SelectedTheme}" AutomationProperties.AutomationId="ThemeSelector" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Appearance]}" MinWidth="180">
+                <ComboBox.ItemTemplate><DataTemplate><TextBlock><TextBlock.Text><MultiBinding Converter="{StaticResource LocalizedValue}"><Binding /><ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" /><ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" /></MultiBinding></TextBlock.Text></TextBlock></DataTemplate></ComboBox.ItemTemplate>
+              </ComboBox>
+              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[AppearanceHelp]}" Classes="muted" TextWrapping="Wrap" />
+              <CheckBox IsChecked="{Binding ResumeMonitoringOnStartup}" Content="{ReflectionBinding $parent[Window].DataContext.Text[ResumeMonitoring]}" />
+              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[ResumeMonitoringHelp]}" Classes="muted" TextWrapping="Wrap" />
+            </StackPanel>
             <StackPanel Spacing="6" IsVisible="{Binding SupportsLoginStartup}">
               <CheckBox Content="{ReflectionBinding $parent[Window].DataContext.Text[StartDowlumeAtLogin]}" IsChecked="{Binding StartAtLogin, Mode=OneWay}" Command="{Binding ToggleLoginStartupCommand}" />
               <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[LoginStartupExplanation]}" TextWrapping="Wrap" Classes="muted" />
@@ -338,7 +353,7 @@
                 <ItemsControl ItemsSource="{Binding Rules}">
                   <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="vm:CategoryRuleViewModel">
-                      <Border BorderBrush="#E1E5ED" BorderThickness="0,0,0,1" Padding="0,8,0,16" Margin="0,0,0,8">
+                      <Border BorderBrush="{DynamicResource LineBrush}" BorderThickness="0,0,0,1" Padding="0,8,0,16" Margin="0,0,0,8">
                         <StackPanel Spacing="8">
                           <Grid ColumnDefinitions="*,Auto">
                             <TextBlock VerticalAlignment="Center" FontWeight="SemiBold">
@@ -403,6 +418,16 @@
                 <NumericUpDown Value="{Binding OrganizationIntervalMinutes}" IsEnabled="{Binding UsePeriodicOrganization}" Minimum="1" Maximum="1440" FormatString="0" Width="160" HorizontalAlignment="Left" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[OrganizationInterval]}" />
               </StackPanel>
             </Border>
+            <Border Classes="card" IsVisible="{Binding SupportsFileOperations}">
+              <StackPanel Spacing="8">
+                <CheckBox IsChecked="{Binding OrganizeFolders}" Content="{ReflectionBinding $parent[Window].DataContext.Text[OrganizeFolders]}" />
+                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[OrganizeFoldersHelp]}" Classes="muted" TextWrapping="Wrap" />
+                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[CollectedFoldersName]}" />
+                <TextBox Text="{Binding CollectedFoldersName}" IsEnabled="{Binding OrganizeFolders}" />
+                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[FolderInterval]}" />
+                <NumericUpDown Value="{Binding FolderIntervalMinutes}" Minimum="20" Maximum="1440" FormatString="0" IsEnabled="{Binding OrganizeFolders}" Width="160" HorizontalAlignment="Left" />
+              </StackPanel>
+            </Border>
             <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Savesettings]}" Command="{Binding SaveSettingsCommand}" Classes="primary" />
             <TextBlock IsVisible="{Binding IsMacOS}" Text="{ReflectionBinding $parent[Window].DataContext.Text[MacFolderScope]}" TextWrapping="Wrap" Classes="muted" />
             <TextBlock IsVisible="{Binding IsLinux}" Text="{ReflectionBinding $parent[Window].DataContext.Text[LinuxFolderScope]}" TextWrapping="Wrap" Classes="muted" />
@@ -414,7 +439,7 @@
     <StackPanel Grid.Row="3" Spacing="7" Margin="0,18,0,0">
       <ProgressBar IsIndeterminate="True" IsVisible="{Binding IsBusy}" Height="3" />
       <TextBlock Text="{Binding StatusMessage}" TextWrapping="Wrap" Classes="muted" />
-      <TextBlock Text="{Binding ErrorMessage}" TextWrapping="Wrap" Foreground="#9E361B" />
+      <TextBlock Text="{Binding ErrorMessage}" TextWrapping="Wrap" Foreground="{DynamicResource ErrorBrush}" />
     </StackPanel>
   </Grid>
 </Window>

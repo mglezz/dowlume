@@ -5,6 +5,21 @@ public sealed record AppSettings
     public const string ReviewFolderName = "Expiring Files";
 
     public string Language { get; init; } = "en";
+    public string Theme { get; init; } = "System";
+    public bool ResumeMonitoringOnStartup
+    {
+        get; init;
+    }
+    public bool MonitoringConsentGranted
+    {
+        get; init;
+    }
+    public bool OrganizeFolders
+    {
+        get; init;
+    }
+    public int FolderIntervalMinutes { get; init; } = 20;
+    public string CollectedFoldersName { get; init; } = "Folders";
 
     public bool ShowWindowAtWindowsLogin
     {
@@ -35,11 +50,20 @@ public sealed record AppSettings
     public bool HasSameValuesAs(AppSettings? other) =>
         other is not null && Language == other.Language && DownloadsPath == other.DownloadsPath &&
         UsePeriodicOrganization == other.UsePeriodicOrganization && OrganizationIntervalMinutes == other.OrganizationIntervalMinutes &&
+        OrganizeFolders == other.OrganizeFolders && FolderIntervalMinutes == other.FolderIntervalMinutes && CollectedFoldersName == other.CollectedFoldersName &&
         ExcludedExtensions.SequenceEqual(other.ExcludedExtensions) && Categories.Count == other.Categories.Count &&
         Categories.Zip(other.Categories).All(pair => pair.First.HasSameValuesAs(pair.Second));
 
     public void Validate()
     {
+        if (Theme is not ("System" or "Light" or "Dark"))
+            throw new ArgumentException("Choose System, Light or Dark appearance.");
+        if (FolderIntervalMinutes is < 20 or > 1440)
+            throw new ArgumentException("The folder interval must be 20–1440 minutes.");
+        ValidateFolderName(CollectedFoldersName);
+        if (OrganizeFolders && (CollectedFoldersName.Equals(ReviewFolderName, StringComparison.OrdinalIgnoreCase) ||
+            Categories.Any(rule => rule.FolderName.Normalize().Equals(CollectedFoldersName.Normalize(), StringComparison.OrdinalIgnoreCase))))
+            throw new ArgumentException("The collection folder must differ from every classification and review folder.");
         if (OrganizationIntervalMinutes is < 1 or > 1440)
         {
             throw new ArgumentException("The organization interval must be 1–1440 minutes.");
