@@ -50,21 +50,41 @@ The current packages include both interface languages. Older 0.1.0 packages rema
 
 *Overview brings together category counts, tracked files, and items that need your attention.*
 
-Only files directly inside the selected folder are discovered. Existing subfolders are not imported or rearranged. Category folders and `Expiring Files` are created when needed. Name collisions receive a numeric suffix; existing files are never overwritten.
+File classification discovers only files directly inside the selected folder. Existing subfolders are unchanged unless 0.7.0 folder collection is explicitly enabled. Category folders and `Expiring Files` are created when needed. Name collisions receive a numeric suffix; existing files are never overwritten.
 
-Monitoring starts paused on every launch. Preview and confirm again to resume. **Pause** stops the watcher and waits for an active operation. On Windows, **Hide to tray** keeps the application running; use the tray menu to reopen it or exit. Closing the main window stops monitoring.
+In published 0.6.0, monitoring starts paused on every launch; 0.7.0 adds the saved opt-in described below. Preview and confirm again to resume. **Pause** stops the watcher and waits for an active operation. On Windows, **Hide to tray** keeps the application running; use the tray menu to reopen it or exit. Closing the main window stops monitoring.
 
 The Dowlume icon appears in the Windows notification area, sometimes inside the **Show hidden icons** overflow. Click it to restore the window, or right-click for **Open Dowlume** and **Exit**. You can move the icon into the visible notification area using Windows taskbar settings.
 
-On Windows, in **Settings**, enable **Start Dowlume when I sign in** to open this copy of the application at sign-in. The change applies immediately to your account and is off by default. Monitoring still starts paused. Disable the option before relocating a portable copy; enable it again from the new location. Windows Settings can independently disable startup applications. Uninstall removes the startup entry when it belongs to that installation.
+On Windows, in **Settings**, enable **Start Dowlume when I sign in** to open this copy of the application at sign-in. The change applies immediately to your account and is off by default. In 0.6.0 monitoring still starts paused; in 0.7.0 it follows the saved automatic-start preference. Disable the option before relocating a portable copy; enable it again from the new location. Windows Settings can independently disable startup applications. Uninstall removes the startup entry when it belongs to that installation.
 
-### Windows login window (source builds after 0.6.0)
+### Windows login window (0.7.0 development)
 
-With login startup enabled, Dowlume starts in the notification area by default without showing a window. Enable **Show the window when Windows starts** in Settings to display it at sign-in instead. This preference is saved immediately, independently of folder/rule edits. Opening Dowlume manually still shows its window. Use the tray icon to open or exit a background instance; organization remains paused until you preview and confirm. If tray initialization fails, the window opens so the application remains accessible.
+With login startup enabled, Dowlume starts in the notification area by default without showing a window. Enable **Show the window when Windows starts** in Settings to display it at sign-in instead. This preference is saved immediately, independently of folder/rule edits. Opening Dowlume manually still shows its window. Use the tray icon to open or exit a background instance; monitoring follows the saved automatic-start preference described below. If tray initialization fails, the window opens so the application remains accessible.
 
 Upgrading an installation preserves an existing startup entry and adds the login-startup argument; it does not enable startup for users who disabled it. A portable copy updates its own older startup entry on its next normal launch. The published 0.6.0 packages predate this option.
 
-## Custom folders and rules (source builds after 0.6.0)
+## Appearance and persistent monitoring (0.7.0 development)
+
+These changes, the Windows login-window preference, and custom classification rules belong to the upcoming **0.7.0**, not the published 0.6.0 packages.
+
+In **Settings → Appearance**, choose **System**, **Light**, or **Dark**. The choice applies and saves immediately, including dialogs. System follows the operating system. Pause monitoring to access Settings.
+
+The header has an **On / Off** monitoring switch. New and upgraded profiles start Off. First choose a folder, refresh Preview, and confirm **Organize and monitor**. To resume after restarting Dowlume or signing in, select **Resume monitoring when Dowlume opens**, save, and confirm the initial start. Launching automatically at Windows login is a separate preference.
+
+Automatic startup uses the last saved, confirmed rules. A changed path, classification, exclusion, interval, or folder-collection setting requires another preview and confirmed start. Changing only theme or the automatic-start preference does not invalidate the rules. An unavailable or invalid Downloads path leaves monitoring off and displays an error. **Off** stops both monitors and clears the automatic-start preference; closing the application preserves it. Continuous mode checks existing downloads when resuming; periodic mode waits its full interval again.
+
+## Collect loose folders (0.7.0 development)
+
+Enable **Settings → Collect loose folders** only if you want whole top-level folders moved into a collection folder, named `Folders` by default. Choose a distinct portable name and an interval of **20–1440 minutes**. The option defaults off. Save, inspect the folder candidates in Preview, and confirm organization. This schedule is independent of the file interval; turning monitoring off stops both.
+
+Folders must remain unchanged across two scheduled observations and have no recently modified contents. The earliest move is after two intervals (40 minutes at the default), and changes restart the wait. A restart also resets observations. The app moves the entire directory on the same supported volume; it never merges, deletes, or reclassifies children. A destination with the same name leaves the source in place.
+
+Classification folders, `Expiring Files`, the collection folder, and former destinations recorded in history are protected. Hidden/system folders, links, cloud placeholders, incomplete or excluded downloads, inaccessible contents, and trees above the 10,000-entry inspection limit are skipped. Keep important working folders outside the monitored root. Stability is a conservative observation, not a guarantee that another program will never reopen a file; POSIX writers can ignore sharing locks.
+
+Folder moves appear in **Activity**, with both paths, but do not enter file aging or review and have no automatic Undo. To restore one, turn monitoring off and move the whole folder back with your file manager. Interrupted moves require manual inspection of both paths; they are never replayed or deleted automatically. A folder with an unresolved journal entry is excluded from future collection.
+
+## Custom folders and rules (0.7.0 development)
 
 Pause organization and open **Settings → Folders and classification**. You can edit the built-in folders or choose **Add folder** (up to 50 custom folders). Give each folder a unique name, choose a review period, and select a matching mode:
 
@@ -82,7 +102,7 @@ Version 0.6.0 offers **Settings → Organize periodically instead of continuousl
 
 Nothing is organized immediately in this mode, including previewed files. The first pass waits for the chosen interval. Each pass checks files directly in the selected folder and runs the usual aging/recovery checks. New arrivals are eligible on later passes; partial, busy, recent, excluded, and already tracked files retain the usual protections. Existing subfolders are not imported. Activity and eligible Undo work as before.
 
-There is no filesystem watcher in periodic mode. A full interval follows each completed pass, so slow passes never overlap or accumulate catch-up runs. The application must remain running; this is not an operating-system scheduled task. Sleep can delay checks. **Pause** cancels pending checks and waits for any already journaled operation to finish safely. Changing the interval or mode requires a new preview. Restarting remembers the preference but always leaves organization paused.
+There is no filesystem watcher in periodic mode. A full interval follows each completed pass, so slow passes never overlap or accumulate catch-up runs. The application must remain running; this is not an operating-system scheduled task. Sleep can delay checks. **Pause** cancels pending checks and waits for any already journaled operation to finish safely. Changing the interval or mode requires a new preview. In 0.6.0 restarting always leaves organization paused. In 0.7.0 the saved automatic-start preference controls resumption.
 
 ## Review files
 

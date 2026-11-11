@@ -12,6 +12,10 @@ Version 0.6.0 adds opt-in periodic organization, manual updates, review search a
 
 ## Planned releases toward 1.0
 
+### Version 0.7.0 in preparation
+
+The [0.7.0 notes](../releases/0.7.0.md) include light/dark/system appearance, confirmed opt-in startup monitoring, optional stable-folder collection, and reduced hidden-window polling. The previously merged Windows background-login preference and custom classification rules also belong to 0.7.0 because the public 0.6.0 packages predate them. Final-package acceptance and publication remain separate release steps. Last/next-pass summaries, one-off organization and storage insights remain future work.
+
 | Milestone | Intended outcome | Acceptance criteria |
 | --- | --- | --- |
 | 0.6.x–0.9.x · Stabilization, if needed | Close gaps across supported platforms | Profile migration, usability and accessibility, performance regressions, recovery scope, Windows publisher signing, and macOS Developer ID signing and notarization. |
