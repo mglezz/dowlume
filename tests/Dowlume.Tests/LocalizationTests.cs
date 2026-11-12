@@ -21,6 +21,40 @@ namespace Dowlume.Tests;
 public sealed class LocalizationTests
 {
     [Fact]
+    public async Task ThemeReadOrSaveFailureRetainsAppliedPreferenceWithoutThrowing()
+    {
+        using var session = HeadlessUnitTestSession.StartNew(typeof(DesktopWorkflowTests.TestAppBuilder));
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+        await session.Dispatch(async () =>
+        {
+            using var workspace = new TemporaryWorkspace();
+            var database = new SqliteStateStore(workspace.Database);
+            database.SaveSettings(new AppSettings { DownloadsPath = workspace.Downloads, Theme = "Light" });
+            var store = new FailingSettingsStore(database);
+            var model = new MainViewModel(store, new DownloadOrganizer(store, FixtureFileMover.Create(workspace), new FileReadiness()),
+                new UnusedDialogs(), new DiagnosticLog(Path.Combine(workspace.Root, "theme.jsonl")));
+            try
+            {
+                store.RefuseRead = true;
+                model.SelectedTheme = "Dark";
+                Assert.Equal("Light", model.SelectedTheme);
+                Assert.Equal(Avalonia.Styling.ThemeVariant.Light, Application.Current!.RequestedThemeVariant);
+                Assert.NotEmpty(model.ErrorMessage);
+                store.RefuseRead = false;
+                store.RefuseSave = true;
+                model.SelectedTheme = "Dark";
+                Assert.Equal("Light", model.SelectedTheme);
+                Assert.Equal("Light", database.LoadSettings()!.Theme);
+                store.RefuseSave = false;
+                model.SelectedTheme = "Dark";
+                Assert.Equal("Dark", database.LoadSettings()!.Theme);
+            }
+            finally { await model.ShutdownAsync(); }
+            return true;
+        }, timeout.Token);
+    }
+
+    [Fact]
     public void ResourcesHaveMatchingKeysAndFormatArguments()
     {
         var manager = new ResourceManager("Dowlume.App.Localization.Strings", typeof(Localizer).Assembly);
@@ -213,11 +247,15 @@ public sealed class LocalizationTests
     }
     private sealed class FailingSettingsStore(IStateStore inner) : IStateStore
     {
+        public bool RefuseRead
+        {
+            get; set;
+        }
         public bool RefuseSave
         {
             get; set;
         }
-        public AppSettings? LoadSettings() => inner.LoadSettings();
+        public AppSettings? LoadSettings() => RefuseRead ? throw new IOException("Unavailable profile") : inner.LoadSettings();
         public void SaveSettings(AppSettings settings)
         {
             if (RefuseSave)

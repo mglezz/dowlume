@@ -35,10 +35,14 @@ public sealed class DownloadOrganizer(
             }
             var result = new List<PreviewItem>();
             IReadOnlyList<TrackedFile> tracked = store.GetFiles();
+            // The organizer gate excludes file mutations throughout this read-only pass.
+            // Read unresolved history once, rather than deserialize the whole journal per file.
+            OperationRecord[] unresolved = store.GetOperations()
+                .Where(operation => operation.Status is OperationStatus.Pending or OperationStatus.NeedsAttention).ToArray();
             foreach (string path in Directory.EnumerateFiles(settings.DownloadsPath).Order(StringComparer.OrdinalIgnoreCase))
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                if (!CanDiscover(path, settings, tracked) || !await readiness.IsReadyAsync(path, cancellationToken))
+                if (!CanDiscover(path, settings, tracked, unresolved) || !await readiness.IsReadyAsync(path, cancellationToken))
                 {
                     continue;
                 }
@@ -258,17 +262,17 @@ public sealed class DownloadOrganizer(
         return file;
     }
 
-    private bool CanDiscover(string path, AppSettings settings, IReadOnlyList<TrackedFile> tracked)
+    private bool CanDiscover(string path, AppSettings settings, IReadOnlyList<TrackedFile> tracked, IReadOnlyList<OperationRecord>? history = null)
     {
         PathSafety.RequireWithin(settings.DownloadsPath, path);
         return File.Exists(path) &&
                PathSafety.AreSame(Path.GetDirectoryName(Path.GetFullPath(path))!, settings.DownloadsPath) &&
                !FileClassifier.IsExcluded(path, settings) &&
                !tracked.Any(file => file.IsManaged && PathSafety.AreSame(file.CurrentPath, path)) &&
-               !IsBlocked(null, path);
+               !IsBlocked(null, path, history);
     }
 
-    private bool IsBlocked(Guid? fileId, string path) => store.GetOperations().Any(operation =>
+    private bool IsBlocked(Guid? fileId, string path, IReadOnlyList<OperationRecord>? history = null) => (history ?? store.GetOperations()).Any(operation =>
         operation.Status is OperationStatus.Pending or OperationStatus.NeedsAttention &&
         (operation.After.Id == fileId || PathSafety.AreSame(operation.SourcePath, path) || (operation.DestinationPath is not null && PathSafety.AreSame(operation.DestinationPath, path))));
 
