@@ -2,15 +2,15 @@
 
 [English](#) · [Español](../es/user/guide.md)
 
-Dowlume organizes completed downloads on Windows x64, macOS Apple Silicon, and Ubuntu 24.04 LTS x64 with GNOME. Version 0.6.0 includes Windows/Ubuntu installers and portable applications with .NET included. Start with copies of sample files in a disposable local folder. See the [platform matrix](platform-support.md) for filesystem and OS requirements.
+Dowlume organizes completed downloads on Windows x64, macOS Apple Silicon, and Ubuntu 24.04 LTS x64 with GNOME. Version 0.7.0 includes Windows/Ubuntu installers and portable applications with .NET included. Start with copies of sample files in a disposable local folder. See the [platform matrix](platform-support.md) for filesystem and OS requirements.
 
 ## Install and start
 
-Choose the Windows installer for a regular installation, or a **Portable** download for the complete application archive. Ubuntu users should follow the [Linux instructions](#linux-060). Download the package for your computer from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.6.0). For macOS installation, permissions, and startup, follow the [macOS instructions](#macos-040) below. Developers can also [build and run from source](../development/getting-started.md).
+Choose the Windows installer for a regular installation, or a **Portable** download for the complete application archive. Ubuntu users should follow the [Linux instructions](#linux-060). Download the package for your computer from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.7.0). For macOS installation, permissions, and startup, follow the [macOS instructions](#macos-040) below. Developers can also [build and run from source](../development/getting-started.md).
 
-For a downloaded or locally built package, run the setup executable (for example, `Dowlume-0.6.0-win-x64-setup.exe`). Installation is per user and does not require administrator privileges. Alternatively, extract the complete portable ZIP and run `Dowlume.App.exe`; do not move the executable out of its accompanying files. The .NET runtime is included.
+For a downloaded or locally built package, run the setup executable (for example, `Dowlume-0.7.0-win-x64-setup.exe`). Installation is per user and does not require administrator privileges. Alternatively, extract the complete portable ZIP and run `Dowlume.App.exe`; do not move the executable out of its accompanying files. The .NET runtime is included.
 
-The Windows packages are unsigned. The macOS app uses an ad-hoc signature without Developer ID or notarization. Only use a package from a source you trust and compare its SHA-256 checksum with the [download checksums](../releases/0.6.0.md#download-checksums).
+The Windows packages are unsigned. The macOS app uses an ad-hoc signature without Developer ID or notarization. Only use a package from a source you trust and compare its SHA-256 checksum with the [download checksums](../releases/0.7.0.md#download-checksums).
 
 The package includes `START-HERE.txt`, which opens offline in a text editor. The installer adds a **Dowlume quick start** Start menu shortcut. Exit Dowlume, including any instance hidden in the tray, before upgrading or uninstalling; Setup refuses while the app is running. Installation and uninstall retain your files and local profile.
 
@@ -58,15 +58,15 @@ The Dowlume icon appears in the Windows notification area, sometimes inside the 
 
 On Windows, in **Settings**, enable **Start Dowlume when I sign in** to open this copy of the application at sign-in. The change applies immediately to your account and is off by default. In 0.6.0 monitoring still starts paused; in 0.7.0 it follows the saved automatic-start preference. Disable the option before relocating a portable copy; enable it again from the new location. Windows Settings can independently disable startup applications. Uninstall removes the startup entry when it belongs to that installation.
 
-### Windows login window (0.7.0 development)
+### Windows login window (0.7.0)
 
 With login startup enabled, Dowlume starts in the notification area by default without showing a window. Enable **Show the window when Windows starts** in Settings to display it at sign-in instead. This preference is saved immediately, independently of folder/rule edits. Opening Dowlume manually still shows its window. Use the tray icon to open or exit a background instance; monitoring follows the saved automatic-start preference described below. If tray initialization fails, the window opens so the application remains accessible.
 
-Upgrading an installation preserves an existing startup entry and adds the login-startup argument; it does not enable startup for users who disabled it. A portable copy updates its own older startup entry on its next normal launch. The published 0.6.0 packages predate this option.
+Upgrading an installation preserves an existing startup entry and adds the login-startup argument; it does not enable startup for users who disabled it. A portable copy updates its own older startup entry on its next normal launch. This option is included from 0.7.0.
 
-## Appearance and persistent monitoring (0.7.0 development)
+## Appearance and persistent monitoring (0.7.0)
 
-These changes, the Windows login-window preference, and custom classification rules belong to the upcoming **0.7.0**, not the published 0.6.0 packages.
+Version **0.7.0** includes appearance, persistent monitoring, folder collection, the Windows login-window preference and custom classification rules. These were not included in 0.6.0.
 
 In **Settings → Appearance**, choose **System**, **Light**, or **Dark**. The choice applies and saves immediately, including dialogs. System follows the operating system. Pause monitoring to access Settings.
 
@@ -74,7 +74,7 @@ The header has an **On / Off** monitoring switch. New and upgraded profiles star
 
 Automatic startup uses the last saved, confirmed rules. A changed path, classification, exclusion, interval, or folder-collection setting requires another preview and confirmed start. Changing only theme or the automatic-start preference does not invalidate the rules. An unavailable or invalid Downloads path leaves monitoring off and displays an error. **Off** stops both monitors and clears the automatic-start preference; closing the application preserves it. Continuous mode checks existing downloads when resuming; periodic mode waits its full interval again.
 
-## Collect loose folders (0.7.0 development)
+## Collect loose folders (0.7.0)
 
 Enable **Settings → Collect loose folders** only if you want whole top-level folders moved into a collection folder, named `Folders` by default. Choose a distinct portable name and an interval of **20–1440 minutes**. The option defaults off. Save, inspect the folder candidates in Preview, and confirm organization. This schedule is independent of the file interval; turning monitoring off stops both.
 
@@ -84,7 +84,7 @@ Classification folders, `Expiring Files`, the collection folder, and former dest
 
 Folder moves appear in **Activity**, with both paths, but do not enter file aging or review and have no automatic Undo. To restore one, turn monitoring off and move the whole folder back with your file manager. Interrupted moves require manual inspection of both paths; they are never replayed or deleted automatically. A folder with an unresolved journal entry is excluded from future collection.
 
-## Custom folders and rules (0.7.0 development)
+## Custom folders and rules (0.7.0)
 
 Pause organization and open **Settings → Folders and classification**. You can edit the built-in folders or choose **Add folder** (up to 50 custom folders). Give each folder a unique name, choose a review period, and select a matching mode:
 
@@ -94,7 +94,7 @@ Pause organization and open **Settings → Folders and classification**. You can
 
 Names are compared without their final extension, ignoring letter case and normalizing Unicode. Patterns are literal text, not regular expressions or wildcards. Name rules take priority over extension rules. Identical name patterns and duplicate destination folders are rejected. Different name patterns can still overlap: `ABC contract.pdf` matches both examples above. An ambiguous preview blocks starting; if a later download is ambiguous, that file stays untouched and an error lists the matching folders. Rule order never selects a winner. Partial downloads and exclusions still take precedence over every rule. **Other** remains the fallback for files without a match.
 
-Save changes and refresh Preview before starting. Editing rules does not rename physical folders or bulk-move existing files. **Remove rule** removes only a custom classification rule, not its files or history. Existing tracked files retain their category identity; review and return actions use the current rule if it exists, or their recorded folder and review period if the custom rule was removed. Eligible Undo remains available. Use a separate backup and disposable samples when changing rules. These features are not included in the published 0.6.0 packages.
+Save changes and refresh Preview before starting. Editing rules does not rename physical folders or bulk-move existing files. **Remove rule** removes only a custom classification rule, not its files or history. Existing tracked files retain their category identity; review and return actions use the current rule if it exists, or their recorded folder and review period if the custom rule was removed. Eligible Undo remains available. Use a separate backup and disposable samples when changing rules. These features are included from 0.7.0.
 
 ## Periodic organization (0.6.0)
 
@@ -195,12 +195,12 @@ When a file or directory race is detected, Dowlume retains the objects and may r
 
 ## Linux 0.6.0
 
-The [0.6.0 release](https://github.com/mglezz/dowlume/releases/tag/v0.6.0)
+The [0.6.0 release](https://github.com/mglezz/dowlume/releases/tag/v0.7.0)
 supports Ubuntu 24.04 LTS x64 / GNOME with local ext4. Compare the
 [package checksums](../releases/0.6.0.md#download-checksums) and begin with disposable samples.
 
 Close Dowlume before installing or updating. On Ubuntu, use
-`sudo apt install ./dowlume_0.6.0_amd64.deb`; this installs the application and declares
+`sudo apt install ./dowlume_0.7.0_amd64.deb`; this installs the application and declares
 its native dependencies. Launch Dowlume from the applications menu. Updates retain
 your profile and managed files; back up the profile first. To remove the package,
 disable login startup in Settings, close Dowlume, and use `sudo apt remove dowlume`.

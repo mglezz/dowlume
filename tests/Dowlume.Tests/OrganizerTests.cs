@@ -33,6 +33,23 @@ public sealed class OrganizerTests : IDisposable
     }
 
     [Fact]
+    public async Task PreviewStillExcludesBothPathsOfUnresolvedHistory()
+    {
+        string source = _workspace.CreateFile("ambiguous.txt", "source content");
+        string destination = _workspace.CreateFile("destination.txt", "different content");
+        string eligible = _workspace.CreateFile("eligible.txt");
+        var file = new TrackedFile(Guid.NewGuid(), source, destination, FileCategory.Documents,
+            DateTimeOffset.UtcNow, LifecycleStatus.Organized, _mover.Hash(source));
+        _store.SaveOperation(new OperationRecord(Guid.NewGuid(), OperationKind.Organize, OperationStatus.NeedsAttention,
+            DateTimeOffset.UtcNow, null, file, source, destination));
+        PreviewItem preview = Assert.Single(await _organizer.PreviewAsync(_settings));
+        Assert.Equal(eligible, preview.SourcePath);
+        Assert.Equal("source content", File.ReadAllText(source));
+        Assert.Equal("different content", File.ReadAllText(destination));
+        Assert.Equal(OperationStatus.NeedsAttention, Assert.Single(_store.GetOperations()).Status);
+    }
+
+    [Fact]
     public async Task OrganizeResolvesCollisionsAndIsIdempotent()
     {
         string existing = _workspace.CreateFile("Documents/report.pdf", "Original");

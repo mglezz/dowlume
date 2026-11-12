@@ -2,13 +2,13 @@
 
 [English](../../user/guide.md) · [Índice en español](../README.md)
 
-Dowlume organiza descargas completas en Windows x64, macOS Apple Silicon y Ubuntu 24.04 LTS x64 con GNOME. La [versión 0.6.0](https://github.com/mglezz/dowlume/releases/tag/v0.6.0) incluye instaladores Windows/Ubuntu y paquetes portables con .NET incluido. Consulta las [instrucciones macOS](#macos-040), las [instrucciones Linux](#linux-060) y la [matriz de plataformas](platform-support.md). Empieza con copias de archivos de ejemplo en una carpeta desechable.
+Dowlume organiza descargas completas en Windows x64, macOS Apple Silicon y Ubuntu 24.04 LTS x64 con GNOME. La [versión 0.7.0](https://github.com/mglezz/dowlume/releases/tag/v0.7.0) incluye instaladores Windows/Ubuntu y paquetes portables con .NET incluido. Consulta las [instrucciones macOS](#macos-040), las [instrucciones Linux](#linux-060) y la [matriz de plataformas](platform-support.md). Empieza con copias de archivos de ejemplo en una carpeta desechable.
 
 ## Instalar y abrir
 
-Elige el instalador Windows para una instalación habitual, o **Portable** para descargar la aplicación completa en un ZIP desde la publicación de GitHub. Los paquetes Windows de v0.6.0 no tienen firma de editor: utiliza una fuente de confianza y compara el SHA-256 con las [sumas de comprobación](../releases/0.6.0.md#sumas-de-comprobación).
+Elige el instalador Windows para una instalación habitual, o **Portable** para descargar la aplicación completa en un ZIP desde la publicación de GitHub. Los paquetes Windows de v0.7.0 no tienen firma de editor: utiliza una fuente de confianza y compara el SHA-256 con las [sumas de comprobación](../releases/0.7.0.md#sumas-de-comprobación).
 
-Ejecuta `Dowlume-0.6.0-win-x64-setup.exe` sin permisos de administrador. Para la versión portátil, extrae todo el ZIP y ejecuta `Dowlume.App.exe` junto a sus archivos. No necesita una instalación separada de .NET.
+Ejecuta `Dowlume-0.7.0-win-x64-setup.exe` sin permisos de administrador. Para la versión portátil, extrae todo el ZIP y ejecuta `Dowlume.App.exe` junto a sus archivos. No necesita una instalación separada de .NET.
 
 Incluyo `START-HERE.txt` para consulta sin conexión y un acceso **Dowlume quick start** en el menú Inicio. Cierra también cualquier instancia oculta en la bandeja antes de actualizar o desinstalar; el instalador se niega a continuar mientras la aplicación está abierta. Conservo los archivos organizados y el perfil local al desinstalar.
 
@@ -52,15 +52,15 @@ El icono puede aparecer entre los iconos ocultos del área de notificación. Un 
 
 En **Ajustes**, **Iniciar Dowlume al entrar en Windows** se aplica inmediatamente a tu cuenta y está desactivado inicialmente. En 0.6.0 empieza en pausa; en 0.7.0 sigue la preferencia guardada de inicio automático. Desactívalo antes de mover una copia portátil y actívalo de nuevo desde su ubicación final. Windows también puede desactivar aplicaciones de inicio. La desinstalación elimina la entrada solo si pertenece a esa instalación.
 
-### Ventana al iniciar Windows (desarrollo de 0.7.0)
+### Ventana al iniciar Windows (0.7.0)
 
 Si has activado el inicio con Windows, Dowlume inicia por defecto en el área de notificación sin mostrar la ventana. Activa **Mostrar la ventana al iniciar Windows** en Ajustes si prefieres verla al iniciar sesión. La preferencia se guarda inmediatamente, sin guardar cambios pendientes en carpetas o reglas. La apertura manual muestra la ventana. Usa el icono de la bandeja para abrir o salir de una instancia en segundo plano; la monitorización sigue la preferencia guardada de inicio automático descrita abajo. Si falla la creación de la bandeja, se muestra la ventana para mantener accesible la aplicación.
 
-La actualización conserva una entrada de inicio existente y añade el argumento de inicio de sesión; no activa el inicio automático si estaba desactivado. Una copia portable actualiza su propia entrada antigua la próxima vez que se abre normalmente. Los paquetes publicados de 0.6.0 todavía no incluyen esta opción.
+La actualización conserva una entrada de inicio existente y añade el argumento de inicio de sesión; no activa el inicio automático si estaba desactivado. Una copia portable actualiza su propia entrada antigua la próxima vez que se abre normalmente. Esta opción se incluye desde 0.7.0.
 
-## Apariencia y monitorización persistente (desarrollo de 0.7.0)
+## Apariencia y monitorización persistente (0.7.0)
 
-Estas novedades, la preferencia de ventana al iniciar Windows y las reglas personalizadas pertenecen a la próxima **0.7.0**, no a los paquetes publicados de 0.6.0.
+La versión **0.7.0** incluye apariencia, monitorización persistente, agrupación de carpetas, preferencia de ventana Windows y reglas personalizadas. No estaban incluidas en 0.6.0.
 
 En **Ajustes → Apariencia**, elige **Sistema**, **Claro** u **Oscuro**. La elección se aplica y guarda al instante, incluidos los diálogos. Sistema sigue al sistema operativo. Pausa la monitorización para acceder a Ajustes.
 
@@ -68,7 +68,7 @@ La cabecera incluye un interruptor **Encendido / Apagado**. Los perfiles nuevos 
 
 El inicio automático usa las últimas reglas guardadas y confirmadas. Cambiar la ruta, clasificación, exclusiones, intervalos o agrupación de carpetas exige otra vista previa y confirmación. Cambiar solo el tema o la preferencia de inicio automático no invalida las reglas. Si la ruta no está disponible o es inválida, la monitorización queda apagada y se muestra un error. **Apagado** detiene ambos monitores y desactiva la reanudación automática; cerrar la aplicación conserva la preferencia. El modo continuo revisa las descargas existentes al reanudar; el periódico vuelve a esperar su intervalo completo.
 
-## Agrupar carpetas sueltas (desarrollo de 0.7.0)
+## Agrupar carpetas sueltas (0.7.0)
 
 Activa **Ajustes → Agrupar carpetas sueltas** si quieres mover las carpetas completas del primer nivel a una carpeta contenedora, llamada `Folders` por defecto. Elige un nombre portable distinto de las categorías y un intervalo de **20–1440 minutos**. La opción empieza desactivada. Guarda, revisa las candidatas en Vista previa y confirma la organización. Su temporizador es independiente del de archivos; apagar la monitorización detiene ambos.
 
@@ -78,7 +78,7 @@ Se protegen las categorías, `Expiring Files`, la contenedora y los antiguos des
 
 Los movimientos aparecen en **Actividad**, con ambas rutas, pero no entran en revisión por antigüedad ni tienen Deshacer automático. Para restaurar una carpeta, apaga la monitorización y devuélvela completa con el explorador. Los movimientos interrumpidos requieren inspeccionar ambas rutas manualmente: nunca se repiten ni eliminan automáticamente. Una carpeta con una incidencia pendiente en el historial queda excluida de futuras agrupaciones.
 
-## Carpetas y reglas personalizadas (desarrollo de 0.7.0)
+## Carpetas y reglas personalizadas (0.7.0)
 
 Pausa la organización y abre **Ajustes → Carpetas y clasificación**. Puedes editar las carpetas predefinidas o pulsar **Añadir carpeta** (hasta 50 personalizadas). Pon un nombre único, elige los días hasta la revisión y selecciona cómo clasificar:
 
@@ -88,7 +88,7 @@ Pausa la organización y abre **Ajustes → Carpetas y clasificación**. Puedes 
 
 Se compara el nombre sin su última extensión, sin distinguir mayúsculas y normalizando Unicode. Se busca texto literal, sin expresiones regulares ni comodines. Las reglas por nombre tienen prioridad sobre las extensiones. Se rechazan patrones idénticos y carpetas de destino duplicadas. Dos patrones distintos pueden coincidir: `ABC contrato.pdf` encaja en ambos ejemplos. Una ambigüedad bloquea la vista previa y el inicio; si aparece en una descarga posterior, ese archivo permanece intacto y el error indica las carpetas implicadas. El orden de las reglas no decide el destino. Las descargas incompletas y las exclusiones tienen prioridad sobre cualquier regla. **Otros** conserva su función para archivos sin coincidencia.
 
-Guarda y actualiza la vista previa antes de iniciar. Editar reglas no renombra carpetas físicas ni mueve en bloque archivos existentes. **Eliminar regla** solo elimina una regla personalizada, nunca sus archivos o historial. Los archivos registrados mantienen su identidad de categoría; la revisión y el retorno usan la regla actual si existe, o la carpeta y el plazo registrados si se eliminó la regla personalizada. Deshacer sigue disponible cuando procede. Conserva una copia de seguridad y prueba los cambios con archivos desechables. Los paquetes publicados de 0.6.0 todavía no incluyen estas opciones.
+Guarda y actualiza la vista previa antes de iniciar. Editar reglas no renombra carpetas físicas ni mueve en bloque archivos existentes. **Eliminar regla** solo elimina una regla personalizada, nunca sus archivos o historial. Los archivos registrados mantienen su identidad de categoría; la revisión y el retorno usan la regla actual si existe, o la carpeta y el plazo registrados si se eliminó la regla personalizada. Deshacer sigue disponible cuando procede. Conserva una copia de seguridad y prueba los cambios con archivos desechables. Estas opciones se incluyen desde 0.7.0.
 
 ## Organización periódica (0.6.0)
 
@@ -188,13 +188,13 @@ Si detecto una carrera de archivos/carpetas, conservo los objetos y puedo mostra
 
 ## Linux 0.6.0
 
-La [versión 0.6.0](https://github.com/mglezz/dowlume/releases/tag/v0.6.0)
+La [versión 0.6.0](https://github.com/mglezz/dowlume/releases/tag/v0.7.0)
 admite Ubuntu 24.04 LTS x64 / GNOME con ext4 local.
 Comprueba las [sumas de los paquetes](../releases/0.6.0.md#sumas-de-comprobación)
 y empieza con archivos desechables.
 
 Cierra Dowlume antes de instalar o actualizar. En Ubuntu ejecuta
-`sudo apt install ./dowlume_0.6.0_amd64.deb`; instala la aplicación y declara sus
+`sudo apt install ./dowlume_0.7.0_amd64.deb`; instala la aplicación y declara sus
 dependencias nativas. Abre Dowlume desde el menú de aplicaciones. Las actualizaciones
 conservan el perfil y los archivos gestionados; respalda antes el perfil. Para quitar
 el paquete, desactiva el inicio de sesión en Ajustes, cierra la app y ejecuta

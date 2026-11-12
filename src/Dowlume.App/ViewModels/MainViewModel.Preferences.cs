@@ -12,6 +12,7 @@ public partial class MainViewModel
 {
     public static IReadOnlyList<string> Themes { get; } = ["System", "Light", "Dark"];
     [ObservableProperty] private string _selectedTheme = "System";
+    private string _savedTheme = "System";
     [ObservableProperty] private bool _resumeMonitoringOnStartup;
     [ObservableProperty] private bool _organizeFolders;
     [ObservableProperty] private int _folderIntervalMinutes = 20;
@@ -29,11 +30,13 @@ public partial class MainViewModel
             {
                 Theme = value
             });
+            _savedTheme = value;
             ApplyTheme(value);
         }
         catch (Exception error)
         {
-            _selectedTheme = _store.LoadSettings()?.Theme ?? "System";
+            // A failed read must not trigger another database access inside error handling.
+            _selectedTheme = _savedTheme;
             OnPropertyChanged(nameof(SelectedTheme));
             ShowError(error);
         }

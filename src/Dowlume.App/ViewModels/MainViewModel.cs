@@ -162,6 +162,7 @@ public partial class MainViewModel : ObservableObject
         AppSettings settings = store.LoadSettings() ?? new AppSettings { DownloadsPath = _suggestedDownloads };
         ShowWindowAtWindowsLogin = settings.ShowWindowAtWindowsLogin;
         _selectedTheme = settings.Theme;
+        _savedTheme = settings.Theme;
         ApplyTheme(settings.Theme);
         ResumeMonitoringOnStartup = settings.ResumeMonitoringOnStartup;
         OrganizeFolders = settings.OrganizeFolders;
@@ -435,9 +436,9 @@ public partial class MainViewModel : ObservableObject
                 return;
             }
             OperationHistoryQuery query = _historyQuery;
-            var snapshot = await Task.Run(() => (Files: _store.GetFiles(), History: _store.GetOperationHistory(query),
+            var snapshot = await Task.Run(() => (Settings: _store.LoadSettings(), Files: _store.GetFiles(), History: _store.GetOperationHistory(query),
                 AttentionCount: _store.CountOperationsRequiringAttention()));
-            string root = _store.LoadSettings()?.DownloadsPath ?? DownloadsPath;
+            string root = snapshot.Settings?.DownloadsPath ?? DownloadsPath;
             TrackedFile[] files = snapshot.Files.Where(file => PathSafety.IsWithin(root, file.CurrentPath)).ToArray();
             UpdateReviewQueue(files);
             Replace(ManagedFiles, files.Where(file => file.IsManaged || file.Status == LifecycleStatus.Missing));
@@ -447,7 +448,7 @@ public partial class MainViewModel : ObservableObject
             }
             var summaries = Enum.GetValues<FileCategory>().Select(category =>
                 new CategorySummary(category, files.Count(file => file.IsManaged && file.CustomRuleId is null && file.Category == category))).ToList();
-            AppSettings? saved = _store.LoadSettings();
+            AppSettings? saved = snapshot.Settings;
             var customIds = (saved?.Categories.Where(rule => rule.Id is not null).Select(rule => rule.Id!.Value) ?? [])
                 .Concat(files.Where(file => file.IsManaged && file.CustomRuleId is not null).Select(file => file.CustomRuleId!.Value)).Distinct();
             foreach (Guid id in customIds)
