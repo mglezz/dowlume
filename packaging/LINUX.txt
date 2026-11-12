@@ -1,4 +1,4 @@
-Dowlume 0.6.0 — Linux x64 candidate, native acceptance pending
+Dowlume 0.7.0 — Linux x64
 
 Target: Ubuntu 24.04 LTS, GNOME, local ext4. X11 and Wayland desktop
 acceptance is required before publication; a Wayland session may use XWayland.
@@ -13,7 +13,7 @@ Ubuntu installation: close Dowlume, then sudo apt install ./dowlume_*_amd64.deb
 Upgrade: close Dowlume, back up your profile, then install the newer .deb in the
 same way. Removal: sudo apt remove dowlume. Personal files and profiles remain.
 Disable login startup in Dowlume before uninstalling. It is opt-in, never enabled
-by installation, and monitoring starts paused after every launch.
+by installation, and automatic monitoring requires the saved opt-in and initial consent.
 
 Portable: extract to a permanent, user-owned directory and run ./Dowlume.App.
 Optional application-menu registration: python3 register-menu.py
@@ -37,13 +37,31 @@ On interruption, reopen Activity and retry recovery. Only matching UUID, inode,
 creation time and SHA-256 allow completion; ambiguous files remain for inspection.
 No operation overwrites an existing destination or deletes an uncertain copy.
 
-VERSION 0.6.0
+VERSION 0.7.0
 
 Settings offers optional periodic organization (1-1440 minutes, default 10).
 Preview and confirm before enabling it; the first pass waits for the interval.
-Pause stops future passes and every launch remains paused.
+Off stops both monitors and disables automatic resumption.
 
 Check for updates contacts GitHub only when requested, without sending filenames
 or paths. Registered Windows installations can download and verify the installer
 and open it after shutdown, without uninstalling. Other packages open official
 release instructions. Windows/Linux are unsigned; macOS is ad-hoc signed.
+
+
+NEW IN 0.7.0
+
+Choose System, Light or Dark appearance in Settings; it saves immediately.
+Edit classification folders or add extension, name-contains or starts-with rules.
+Duplicates are refused and files with ambiguous matches remain untouched.
+Resume monitoring when Dowlume opens is optional: save the preference, inspect
+Preview and confirm the initial start. Changed rules require new consent.
+Off also disables automatic resumption; closing preserves the preference.
+Collect loose folders is optional and disabled by default. Use Folders or a
+collection name distinct from your categories. Checks run every 20-1440 minutes
+and require two stable observations (earliest move: at least 40 minutes).
+Classification folders, links, incomplete, hidden or inaccessible contents, and
+trees above 10,000 entries are skipped. Never merges, overwrites or deletes.
+Folder moves appear in Activity without Undo or age-based review. To restore a
+folder, turn monitoring off and use your file manager. Interrupted folder moves
+require manual inspection and are never replayed automatically.

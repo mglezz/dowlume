@@ -14,7 +14,7 @@ PRIMEROS PASOS
 5. Pausar detiene la supervisión. Cerrar la ventana detiene la aplicación.
    Ocultar en la bandeja la mantiene abierta; usa el icono del área de
    notificación, quizá entre los iconos ocultos, para restaurar o salir.
-   El inicio con Windows es opcional. La supervisión siempre empieza en pausa.
+   El inicio con Windows es opcional. La ventana inicia en la bandeja por defecto; mostrarla es opcional.
 6. Cuando conozcas el flujo, elige tu carpeta local de descargas.
 
 REVISIÓN Y RECUPERACIÓN
@@ -34,8 +34,8 @@ ninguna sin comprobar su contenido.
 
 ARCHIVOS Y PRIVACIDAD
 
-Solo descubro archivos directamente en la carpeta elegida. No importo las
-subcarpetas existentes. No admito red, enlaces, junctions ni marcadores de nube.
+La clasificación descubre archivos del primer nivel. Agrupar carpetas completas
+es una opción independiente y desactivada por defecto. No admito red, enlaces, junctions ni marcadores de nube.
 Mantén copias de seguridad. Cierra Dowlume antes de actualizar o desinstalar.
 La desinstalación conserva tus archivos y el perfil en %LOCALAPPDATA%\Dowlume.
 La base de datos privada contiene rutas y hashes. Cierra la aplicación antes de
@@ -48,17 +48,35 @@ Incidencias: https://github.com/mglezz/dowlume/issues
 Incluye versiones de Windows y Dowlume, pasos y resultado esperado y observado.
 No adjuntes descargas personales, bases de datos ni rutas privadas sin ocultar.
 
-Esta guía acompaña la versión 0.6.0 con selector. Los paquetes
+Esta guía acompaña la versión 0.7.0 con selector. Los paquetes
 originales publicados de v0.1.0 son anteriores a la localización y siguen en inglés.
 
-Dowlume 0.6.0
+Dowlume 0.7.0
 
 Ajustes ofrece organizar por intervalos de 1 a 1440 minutos (10 por defecto).
 Requiere vista previa y confirmar; la primera pasada espera el intervalo.
-Pausar detiene las siguientes pasadas y cada inicio permanece pausado.
+Apagado detiene ambos monitores y desactiva la reanudación automática.
 
 Buscar actualizaciones consulta GitHub solo cuando lo solicitas, sin enviar
 nombres de archivos ni rutas. Windows instalado puede descargar y verificar
 el instalador y abrirlo tras el cierre, sin desinstalar. Los otros paquetes
 abren las instrucciones oficiales. Windows/Linux siguen sin firmar; macOS
 utiliza firma ad hoc.
+
+
+NOVEDADES DE 0.7.0
+
+Elige apariencia Sistema, Claro u Oscuro en Ajustes; se guarda al instante.
+Edita las carpetas de clasificación o añade reglas por extensión o nombre.
+Se rechazan duplicados y los archivos con coincidencias ambiguas quedan intactos.
+Reanudar la monitorización al abrir Dowlume es opcional: guarda la preferencia,
+revisa Vista previa y confirma la primera activación. Cambiar reglas exige nueva
+confirmación. Apagado también desactiva la reanudación; cerrar conserva la opción.
+Agrupar carpetas sueltas es opcional y está desactivado por defecto. Usa Folders
+u otra contenedora distinta de las categorías. Revisa cada 20-1440 minutos y
+exige dos observaciones estables (primer movimiento: al menos 40 minutos).
+Omite categorías, enlaces, contenidos incompletos, ocultos o inaccesibles y
+árboles de más de 10 000 entradas. No fusiona, sobrescribe ni elimina carpetas.
+Los movimientos aparecen en Actividad, sin Deshacer ni revisión por antigüedad.
+Para restaurar una carpeta, apaga la monitorización y usa el explorador.
+Una interrupción requiere inspección manual; nunca se repite automáticamente.

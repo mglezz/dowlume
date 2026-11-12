@@ -2,7 +2,7 @@ Dowlume - Your downloads, under control
 
 LANGUAGE
 
-In version 0.6.0, pause monitoring and choose English or Español in
+In version 0.7.0, pause monitoring and choose English or Español in
 Settings > Language. I save the choice immediately without renaming folders
 or changing files. The Spanish offline guide is START-HERE.es.txt.
 The original published v0.1.0 packages predate this selector and remain English-only.
@@ -18,7 +18,7 @@ GET STARTED
 4. Pause stops monitoring. Closing the window stops the app. Hide to tray keeps
    it running; use the notification-area icon (possibly under Show hidden icons)
    to reopen it or exit. Settings offers an optional Windows sign-in startup
-   setting, off by default. Monitoring still starts paused after sign-in.
+   setting, off by default. Windows login starts in the tray by default; the window is optional.
 5. When comfortable with the workflow, choose your local Downloads folder.
 
 REVIEW AND RECOVERY
@@ -37,8 +37,8 @@ Ambiguous copies are preserved. Do not delete either copy without checking it.
 
 FILES AND PRIVACY
 
-Only direct files in the chosen folder are discovered. Existing subfolders are
-left alone. Monitoring starts paused after every launch. Network shares,
+File classification discovers direct files only. Whole-folder collection is
+separately optional and disabled by default. Automatic monitoring requires the saved opt-in and initial consent. Network shares,
 symbolic links, junctions, and cloud placeholders are unsupported.
 
 Keep backups of valuable files. Close Dowlume before upgrading or uninstalling.
@@ -53,13 +53,31 @@ Report an issue: https://github.com/mglezz/dowlume/issues
 Include your Windows version, Dowlume version, steps, and expected/actual result.
 Do not attach personal downloads, the database, or unredacted private paths.
 
-VERSION 0.6.0
+VERSION 0.7.0
 
 Settings offers optional periodic organization (1-1440 minutes, default 10).
 Preview and confirm before enabling it; the first pass waits for the interval.
-Pause stops future passes and every launch remains paused.
+Off stops both monitors and disables automatic resumption.
 
 Check for updates contacts GitHub only when requested, without sending filenames
 or paths. Registered Windows installations can download and verify the installer
 and open it after shutdown, without uninstalling. Other packages open official
 release instructions. Windows/Linux are unsigned; macOS is ad-hoc signed.
+
+
+NEW IN 0.7.0
+
+Choose System, Light or Dark appearance in Settings; it saves immediately.
+Edit classification folders or add extension, name-contains or starts-with rules.
+Duplicates are refused and files with ambiguous matches remain untouched.
+Resume monitoring when Dowlume opens is optional: save the preference, inspect
+Preview and confirm the initial start. Changed rules require new consent.
+Off also disables automatic resumption; closing preserves the preference.
+Collect loose folders is optional and disabled by default. Use Folders or a
+collection name distinct from your categories. Checks run every 20-1440 minutes
+and require two stable observations (earliest move: at least 40 minutes).
+Classification folders, links, incomplete, hidden or inaccessible contents, and
+trees above 10,000 entries are skipped. Never merges, overwrites or deletes.
+Folder moves appear in Activity without Undo or age-based review. To restore a
+folder, turn monitoring off and use your file manager. Interrupted folder moves
+require manual inspection and are never replayed automatically.
