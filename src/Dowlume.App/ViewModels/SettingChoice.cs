@@ -8,5 +8,6 @@ public sealed class SettingChoice(object value, Localizer text, string key) : Ob
 {
     public object Value { get; } = value;
     public string Label => text[key];
+    public override string ToString() => Label;
     public void Refresh() => OnPropertyChanged(nameof(Label));
 }
