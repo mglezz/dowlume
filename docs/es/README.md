@@ -6,7 +6,7 @@
 
 Encuentra lo que necesitas. Revisa lo que olvidaste. Decide qué conservar.
 
-[Descargar Dowlume](https://github.com/mglezz/dowlume/releases/tag/v0.6.0) · [Guía de uso](user/guide.md) · [English](../../README.md)
+[Descargar Dowlume](https://github.com/mglezz/dowlume/releases/tag/v0.7.0) · [Guía de uso](user/guide.md) · [English](../../README.md)
 
 </div>
 
@@ -24,26 +24,26 @@ Organiza las descargas completas en carpetas y lleva los archivos antiguos a una
 | --- | --- | --- |
 | La vista previa muestra dónde irá cada archivo antes de empezar. | Las descargas completas se ordenan en seis categorías con reglas configurables. | Los archivos antiguos aparecen en **Expiring Files**. Puedes conservarlos, posponer la revisión o moverlos. |
 
-Tú decides cuándo empieza la supervisión. Dowlume respeta las subcarpetas existentes, guarda un historial y permite deshacer los movimientos compatibles. No hay una fecha límite de borrado automático. El envío a la papelera está desactivado.
+Tú decides cuándo empieza la supervisión. Dowlume guarda un historial y permite deshacer los movimientos de archivos compatibles. Puedes personalizar reglas, apariencia e inicio; agrupar carpetas completas es una opción independiente y desactivada por defecto. No hay una fecha límite de borrado automático. El envío a la papelera está desactivado.
 
 ## Descargar
 
-Los paquetes de **Dowlume 0.6.0** incluyen el runtime; no necesitas instalar .NET por separado.
+Los paquetes de **Dowlume 0.7.0** incluyen el runtime; no necesitas instalar .NET por separado.
 
 | Plataforma | Descarga |
 | --- | --- |
-| Ubuntu 24.04 LTS · x64 · GNOME | [Instalador](https://github.com/mglezz/dowlume/releases/download/v0.6.0/dowlume_0.6.0_amd64.deb) · [Portable](https://github.com/mglezz/dowlume/releases/download/v0.6.0/Dowlume-0.6.0-linux-x64.tar.gz) |
-| macOS 15+ · Apple Silicon | [Portable](https://github.com/mglezz/dowlume/releases/download/v0.6.0/Dowlume-0.6.0-osx-arm64-portable.zip) |
-| Windows · x64 | [Instalador (recomendado)](https://github.com/mglezz/dowlume/releases/download/v0.6.0/Dowlume-0.6.0-win-x64-setup.exe) · [Portable](https://github.com/mglezz/dowlume/releases/download/v0.6.0/Dowlume-0.6.0-win-x64-portable.zip) |
+| Ubuntu 24.04 LTS · x64 · GNOME | [Instalador](https://github.com/mglezz/dowlume/releases/download/v0.7.0/dowlume_0.7.0_amd64.deb) · [Portable](https://github.com/mglezz/dowlume/releases/download/v0.7.0/Dowlume-0.7.0-linux-x64.tar.gz) |
+| macOS 15+ · Apple Silicon | [Portable](https://github.com/mglezz/dowlume/releases/download/v0.7.0/Dowlume-0.7.0-osx-arm64-portable.zip) |
+| Windows · x64 | [Instalador (recomendado)](https://github.com/mglezz/dowlume/releases/download/v0.7.0/Dowlume-0.7.0-win-x64-setup.exe) · [Portable](https://github.com/mglezz/dowlume/releases/download/v0.7.0/Dowlume-0.7.0-win-x64-portable.zip) |
 
 Empieza con copias de unos pocos archivos en una carpeta local y consulta la vista previa. La interfaz empieza en inglés; puedes seleccionar español en **Settings → Language**.
 
-macOS utiliza firma ad hoc sin notarización; los paquetes Windows y Linux no tienen firma de editor. Consulta la [instalación](user/guide.md#instalar-y-abrir) y comprueba las [sumas SHA-256](releases/0.6.0.md#sumas-de-comprobación). macOS requiere APFS local del mismo volumen; Linux requiere ext4 local del mismo montaje. La [matriz de plataformas](user/platform-support.md) detalla el alcance y los límites.
+macOS utiliza firma ad hoc sin notarización; los paquetes Windows y Linux no tienen firma de editor. Consulta la [instalación](user/guide.md#instalar-y-abrir) y comprueba las [sumas SHA-256](releases/0.7.0.md#sumas-de-comprobación). macOS requiere APFS local del mismo volumen; Linux requiere ext4 local del mismo montaje. La [matriz de plataformas](user/platform-support.md) detalla el alcance y los límites.
 
 ## Documentación en español
 
 - [Guía de uso](user/guide.md): instalación, organización, revisión y recuperación.
-- [Notas de 0.6.0](releases/0.6.0.md): cambios de la versión y su [aceptación](releases/acceptance/0.6.0.md).
+- [Notas de 0.7.0](releases/0.7.0.md): cambios de la versión y su [aceptación](releases/acceptance/0.7.0.md).
 - [Preparación del entorno](development/getting-started.md), [contribuciones](development/contributing.md) y [ramas](development/branches.md).
 - [Arquitectura](architecture/overview.md), [contrato de archivos](architecture/file-operations.md) e [implementación macOS](architecture/macos.md).
 - [Modelo de dominio](requirements/domain-model.md) y [hoja de ruta](development/roadmap.md).
