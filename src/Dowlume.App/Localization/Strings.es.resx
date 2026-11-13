@@ -575,4 +575,13 @@ La primera pasada espera el intervalo indicado. Cada pasada organiza descargas c
   <data name="StartupPreferenceStatus" xml:space="preserve"><value>Dowlume se iniciará al iniciar sesión. La monitorización seguirá tu preferencia guardada de inicio automático.</value></data>
   <data name="FolderPreview" xml:space="preserve"><value>Carpetas que se revisarán por intervalos</value></data>
   <data name="FolderPreviewHelp" xml:space="preserve"><value>Son candidatas, no movimientos inmediatos. Cada carpeta debe superar las comprobaciones de estabilidad y seguridad en las siguientes revisiones programadas.</value></data>
+  <data name="SettingsFolders" xml:space="preserve"><value>Carpetas y reglas</value></data>
+  <data name="SettingsAutomation" xml:space="preserve"><value>Automatización</value></data>
+  <data name="SettingsApplication" xml:space="preserve"><value>Aplicación</value></data>
+  <data name="RuleHelpHeading" xml:space="preserve"><value>Cómo funciona la clasificación</value></data>
+  <data name="SettingsSaveHelp" xml:space="preserve"><value>Guarda aquí las carpetas, reglas y automatización. Apariencia, idioma e inicio de sesión se guardan al instante.</value></data>
+  <data name="AdvancedFolderSettings" xml:space="preserve"><value>Avanzado: agrupar carpetas completas</value></data>
+  <data name="FolderMoveWarning" xml:space="preserve"><value>Mover una carpeta cambia su ruta y puede romper accesos directos o proyectos. Actívalo solo para descargas terminadas, nunca para carpetas de trabajo. Las comprobaciones de estabilidad no garantizan que ninguna aplicación esté usando una carpeta. No hay deshacer automático.</value></data>
+  <data name="NewFolder" xml:space="preserve"><value>Nueva carpeta</value></data>
+  <data name="SettingsMonitoringHelp" xml:space="preserve"><value>Pausa la monitorización para editar carpetas, automatización u opciones de la aplicación. La apariencia sigue disponible.</value></data>
 </root>

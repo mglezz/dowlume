@@ -11,6 +11,10 @@ namespace Dowlume.App.ViewModels;
 public partial class MainViewModel
 {
     public static IReadOnlyList<string> Themes { get; } = ["System", "Light", "Dark"];
+    public IReadOnlyList<SettingChoice> ThemeOptions
+    {
+        get;
+    }
     [ObservableProperty] private string _selectedTheme = "System";
     private string _savedTheme = "System";
     [ObservableProperty] private bool _resumeMonitoringOnStartup;

@@ -575,4 +575,13 @@ The first pass waits for the interval. Each pass organizes completed downloads, 
   <data name="StartupPreferenceStatus" xml:space="preserve"><value>Dowlume will start when you sign in. Monitoring follows your saved automatic-start preference.</value></data>
   <data name="FolderPreview" xml:space="preserve"><value>Folders to check on the schedule</value></data>
   <data name="FolderPreviewHelp" xml:space="preserve"><value>These are candidates, not immediate moves. Each folder must pass stability and safety checks on later scheduled passes.</value></data>
+  <data name="SettingsFolders" xml:space="preserve"><value>Folders and rules</value></data>
+  <data name="SettingsAutomation" xml:space="preserve"><value>Automation</value></data>
+  <data name="SettingsApplication" xml:space="preserve"><value>Application</value></data>
+  <data name="RuleHelpHeading" xml:space="preserve"><value>How classification works</value></data>
+  <data name="SettingsSaveHelp" xml:space="preserve"><value>Save folders, rules and automation here. Appearance, language and login preferences save immediately.</value></data>
+  <data name="AdvancedFolderSettings" xml:space="preserve"><value>Advanced: collect entire folders</value></data>
+  <data name="FolderMoveWarning" xml:space="preserve"><value>Moving a folder changes its path and can break shortcuts or projects. Enable only for completed downloads, never for folders you work in. Stability checks cannot guarantee that no application is using a folder. There is no automatic undo.</value></data>
+  <data name="NewFolder" xml:space="preserve"><value>New folder</value></data>
+  <data name="SettingsMonitoringHelp" xml:space="preserve"><value>Pause monitoring to edit folders, automation or application options. Appearance remains available.</value></data>
 </root>

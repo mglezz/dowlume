@@ -176,7 +176,7 @@ public sealed class DesktopWorkflowTests
                 Assert.True(File.Exists(source));
                 Assert.True(File.Exists(photo.CurrentPath));
 
-                window.GetVisualDescendants().OfType<TabControl>().Single().SelectedIndex = 2;
+                window.FindControl<TabControl>("MainTabs")!.SelectedIndex = 2;
                 window.Width = window.MinWidth;
                 window.Height = window.MinHeight;
                 window.UpdateLayout();
@@ -471,7 +471,7 @@ public sealed class DesktopWorkflowTests
                 Assert.False(model.HasPreviousActivityPage);
                 Assert.Equal(string.Empty, model.ErrorMessage);
 
-                TabControl tabs = window.GetVisualDescendants().OfType<TabControl>().Single();
+                TabControl tabs = window.FindControl<TabControl>("MainTabs")!;
                 tabs.SelectedIndex = 3;
                 window.Width = window.MinWidth;
                 window.Height = window.MinHeight;
@@ -533,7 +533,7 @@ public sealed class DesktopWorkflowTests
             model.SelectedReview = Assert.Single(model.ReviewFiles);
             TrackedFile reviewed = model.SelectedReview;
             OperationRecord[] beforeRecycle = store.GetOperations().ToArray();
-            TabControl reviewTabs = window.GetVisualDescendants().OfType<TabControl>().Single();
+            TabControl reviewTabs = window.FindControl<TabControl>("MainTabs")!;
             reviewTabs.SelectedIndex = 2;
             window.UpdateLayout();
             Button recycle = window.GetVisualDescendants().OfType<Button>().Single(button => button.Command == model.RecycleCommand);
@@ -553,7 +553,7 @@ public sealed class DesktopWorkflowTests
             Assert.Empty(model.ReviewFiles);
             Assert.Equal(LifecycleStatus.Kept, Assert.Single(model.ManagedFiles).Status);
 
-            TabControl tabs = window.GetVisualDescendants().OfType<TabControl>().Single();
+            TabControl tabs = window.FindControl<TabControl>("MainTabs")!;
             for (int index = 0; index < 5; index++)
             {
                 tabs.SelectedIndex = index;

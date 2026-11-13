@@ -16,6 +16,12 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         AvaloniaXamlLoader.Load(this);
+        TabControl mainTabs = this.FindControl<TabControl>("MainTabs")!;
+        mainTabs.SelectionChanged += (_, args) =>
+        {
+            if (ReferenceEquals(args.Source, mainTabs) && mainTabs.SelectedIndex == 4)
+                this.FindControl<TabControl>("SettingsTabs")!.SelectedIndex = 0;
+        };
         _refreshTimer.Tick += async (_, _) =>
         {
             if (IsVisible && WindowState != WindowState.Minimized && DataContext is MainViewModel model)

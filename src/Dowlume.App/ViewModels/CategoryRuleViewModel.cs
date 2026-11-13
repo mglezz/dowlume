@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using Dowlume.App.Localization;
 using Dowlume.Core;
 
 namespace Dowlume.App.ViewModels;
@@ -9,7 +10,9 @@ public partial class CategoryRuleViewModel : ObservableObject
     {
         get;
     }
-    [ObservableProperty] private string _folderName;
+    private readonly Localizer _text;
+    [ObservableProperty, NotifyPropertyChangedFor(nameof(EditorTitle))] private string _folderName;
+    public string EditorTitle => string.IsNullOrWhiteSpace(FolderName) ? _text["NewFolder"] : FolderName;
     [ObservableProperty] private string _extensions;
     [ObservableProperty] private int _reviewAfterDays;
     public Guid? Id
@@ -20,14 +23,22 @@ public partial class CategoryRuleViewModel : ObservableObject
     public bool CanChooseMatchKind => IsCustom || Category != FileCategory.Other;
     public object DisplayCategory => IsCustom ? "Custom folder" : Category;
     public static IReadOnlyList<RuleMatchKind> MatchKinds { get; } = Enum.GetValues<RuleMatchKind>();
+    public IReadOnlyList<SettingChoice> MatchOptions
+    {
+        get;
+    }
+    [ObservableProperty] private bool _isExpanded;
     [ObservableProperty, NotifyPropertyChangedFor(nameof(IsExtensionRule)), NotifyPropertyChangedFor(nameof(IsNameRule))]
     private RuleMatchKind _matchKind;
     [ObservableProperty] private string _namePattern;
     public bool IsExtensionRule => MatchKind == RuleMatchKind.Extension;
     public bool IsNameRule => !IsExtensionRule;
 
-    public CategoryRuleViewModel(CategoryRule rule)
+    public CategoryRuleViewModel(CategoryRule rule, Localizer? text = null)
     {
+        text ??= new Localizer();
+        _text = text;
+        MatchOptions = MatchKinds.Select(kind => new SettingChoice(kind, text, "RuleMatch" + kind)).ToArray();
         Category = rule.Category;
         Id = rule.Id;
         _matchKind = rule.MatchKind;
@@ -35,6 +46,13 @@ public partial class CategoryRuleViewModel : ObservableObject
         _folderName = rule.FolderName;
         _extensions = string.Join(", ", rule.Extensions);
         _reviewAfterDays = rule.ReviewAfterDays;
+    }
+
+    public void RefreshLabels()
+    {
+        OnPropertyChanged(nameof(EditorTitle));
+        foreach (SettingChoice option in MatchOptions)
+            option.Refresh();
     }
 
     public CategoryRule ToRule() => new(Category, FolderName.Trim().Normalize(), IsExtensionRule ? ParseExtensions(Extensions) : [], ReviewAfterDays)

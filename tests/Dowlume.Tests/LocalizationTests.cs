@@ -126,8 +126,9 @@ public sealed class LocalizationTests
             await model.PreviewCommand.ExecuteAsync(null);
             model.Rules[0].FolderName = "Unsaved folder";
             model.DownloadsPath = "invalid unsaved path";
-            TabControl tabs = window.GetVisualDescendants().OfType<TabControl>().Single();
+            TabControl tabs = window.FindControl<TabControl>("MainTabs")!;
             tabs.SelectedIndex = 4;
+            window.FindControl<TabControl>("SettingsTabs")!.SelectedIndex = 2;
             window.UpdateLayout();
             ComboBox selector = window.GetVisualDescendants().OfType<ComboBox>().Single(combo => ReferenceEquals(combo.ItemsSource, MainViewModel.Languages));
             selector.SelectedItem = MainViewModel.Languages[1];
