@@ -21,9 +21,9 @@ La fiabilidad Windows sigue siendo un requisito durante el desarrollo Linux. mac
 
 ## Calidad en todos los hitos
 
-### Versión 0.7.0 en preparación
+### Versión 0.7.0 publicada
 
-Las [notas de 0.7.0](../releases/0.7.0.md) incluyen apariencia clara, oscura o del sistema, reanudación de monitorización con autorización previa, agrupación opcional de carpetas estables y menos consultas con la ventana oculta. También incluye el inicio Windows en segundo plano y las reglas personalizadas ya integradas, porque no están en los paquetes públicos de 0.6.0. La aceptación de paquetes definitivos y la publicación siguen siendo pasos posteriores. El resumen de próximas pasadas, la organización puntual y las estadísticas de espacio quedan para más adelante.
+Las [notas de 0.7.0](../releases/0.7.0.md) incluyen apariencia clara, oscura o del sistema, reanudación de monitorización con autorización previa, agrupación opcional de carpetas estables y menos consultas con la ventana oculta. También incluye el inicio Windows en segundo plano y las reglas personalizadas ya integradas, porque no están en los paquetes públicos de 0.6.0. El [registro de aceptación](../releases/acceptance/0.7.0.md) conserva los paquetes exactos, publicación y límites de evidencia automática/manual. El resumen de próximas pasadas, la organización puntual y las estadísticas de espacio quedan para más adelante.
 
 Comprueba vista previa y cancelación, organización y supervisión, Conservar/Posponer/Mover, Deshacer, historial, reinicio y recuperación en ambos idiomas. Los cambios en operaciones requieren pruebas desechables de archivos ocupados o cambiantes, colisiones, permisos, volúmenes ausentes, falta de espacio e interrupciones. Conserva las copias ambiguas.
 
