@@ -15,7 +15,17 @@ public partial class MainViewModel
     {
         get;
     }
-    [ObservableProperty] private string _selectedTheme = "System";
+    [ObservableProperty, NotifyPropertyChangedFor(nameof(SelectedThemeChoice))] private string _selectedTheme = "System";
+    public SettingChoice? SelectedThemeChoice
+    {
+        get => ThemeOptions.FirstOrDefault(option => Equals(option.Value, SelectedTheme));
+        set
+        {
+            // Controls temporarily clear selection while attaching/rebuilding their item source.
+            if (value?.Value is string theme)
+                SelectedTheme = theme;
+        }
+    }
     private string _savedTheme = "System";
     [ObservableProperty] private bool _resumeMonitoringOnStartup;
     [ObservableProperty] private bool _organizeFolders;

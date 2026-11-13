@@ -355,7 +355,7 @@
                                     </StackPanel>
                                   </Grid>
                                   <Grid ColumnDefinitions="220,*" ColumnSpacing="12">
-                                    <ComboBox ItemsSource="{Binding MatchOptions}" IsEnabled="{Binding CanChooseMatchKind}" HorizontalAlignment="Stretch" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[RuleMatchMode]}" SelectedValue="{Binding MatchKind}" SelectedValueBinding="{ReflectionBinding Value}">
+                                    <ComboBox ItemsSource="{Binding MatchOptions}" IsEnabled="{Binding CanChooseMatchKind}" HorizontalAlignment="Stretch" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[RuleMatchMode]}" SelectedItem="{Binding SelectedMatchChoice}">
                                       <ComboBox.ItemTemplate>
                                         <DataTemplate x:DataType="vm:SettingChoice">
                                           <TextBlock Text="{Binding Label}"/>
@@ -425,7 +425,7 @@
                   </StackPanel>
                   <StackPanel Spacing="6">
                     <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Appearance]}" FontWeight="SemiBold"/>
-                    <ComboBox ItemsSource="{Binding ThemeOptions}" AutomationProperties.AutomationId="ThemeSelector" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Appearance]}" MinWidth="180" SelectedValue="{Binding SelectedTheme}" SelectedValueBinding="{ReflectionBinding Value}">
+                    <ComboBox ItemsSource="{Binding ThemeOptions}" AutomationProperties.AutomationId="ThemeSelector" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Appearance]}" MinWidth="180" SelectedItem="{Binding SelectedThemeChoice}">
                       <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="vm:SettingChoice">
                           <TextBlock Text="{Binding Label}"/>

@@ -28,8 +28,17 @@ public partial class CategoryRuleViewModel : ObservableObject
         get;
     }
     [ObservableProperty] private bool _isExpanded;
-    [ObservableProperty, NotifyPropertyChangedFor(nameof(IsExtensionRule)), NotifyPropertyChangedFor(nameof(IsNameRule))]
+    [ObservableProperty, NotifyPropertyChangedFor(nameof(IsExtensionRule)), NotifyPropertyChangedFor(nameof(IsNameRule)), NotifyPropertyChangedFor(nameof(SelectedMatchChoice))]
     private RuleMatchKind _matchKind;
+    public SettingChoice? SelectedMatchChoice
+    {
+        get => MatchOptions.FirstOrDefault(option => Equals(option.Value, MatchKind));
+        set
+        {
+            if (value?.Value is RuleMatchKind kind)
+                MatchKind = kind;
+        }
+    }
     [ObservableProperty] private string _namePattern;
     public bool IsExtensionRule => MatchKind == RuleMatchKind.Extension;
     public bool IsNameRule => !IsExtensionRule;

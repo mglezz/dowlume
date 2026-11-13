@@ -16,6 +16,60 @@ namespace Dowlume.Tests;
 [Collection("Desktop")]
 public sealed class SettingsNavigationTests
 {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task FirstWindowDoesNotPersistAnUnsetPopupSelection(bool existingProfile)
+    {
+        using var session = HeadlessUnitTestSession.StartNew(typeof(DesktopWorkflowTests.TestAppBuilder));
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+        await session.Dispatch(async () =>
+        {
+            using var workspace = new TemporaryWorkspace();
+            var store = new SqliteStateStore(workspace.Database);
+            var saved = new AppSettings { DownloadsPath = workspace.Downloads, Theme = "Dark" };
+            saved.Categories[0] = saved.Categories[0] with
+            {
+                MatchKind = RuleMatchKind.NameContains,
+                Extensions = [],
+                NamePattern = "contract"
+            };
+            if (existingProfile)
+                store.SaveSettings(saved);
+            var window = new MainWindow();
+            var model = new MainViewModel(store,
+                new DownloadOrganizer(store, FixtureFileMover.Create(workspace), new FileReadiness()),
+                new DesktopDialogs(window), new DiagnosticLog(Path.Combine(workspace.Root, "log.jsonl")),
+                suggestedDownloads: workspace.Downloads);
+            window.DataContext = model;
+            window.Show();
+            try
+            {
+                await model.RefreshAsync();
+                Assert.Equal(string.Empty, model.ErrorMessage);
+                Assert.Equal(existingProfile ? "Dark" : "System", model.SelectedTheme);
+                window.FindControl<TabControl>("MainTabs")!.SelectedIndex = 4;
+                TabControl sections = window.FindControl<TabControl>("SettingsTabs")!;
+                sections.SelectedIndex = 2;
+                window.UpdateLayout();
+                Assert.Same(model.SelectedThemeChoice, window.GetVisualDescendants().OfType<ComboBox>()
+                    .Single(combo => ReferenceEquals(combo.ItemsSource, model.ThemeOptions)).SelectedItem);
+                sections.SelectedIndex = 0;
+                model.Rules[0].IsExpanded = true;
+                window.UpdateLayout();
+                Assert.Equal(existingProfile ? RuleMatchKind.NameContains : RuleMatchKind.Extension, model.Rules[0].MatchKind);
+                Assert.Same(model.Rules[0].SelectedMatchChoice, window.GetVisualDescendants().OfType<ComboBox>()
+                    .Single(combo => ReferenceEquals(combo.ItemsSource, model.Rules[0].MatchOptions)).SelectedItem);
+                if (existingProfile)
+                    Assert.True(saved.HasSameValuesAs(store.LoadSettings()));
+                else
+                    Assert.Null(store.LoadSettings());
+            }
+            finally { await DesktopWindowTest.CloseAsync(window); }
+            return true;
+        }, timeout.Token);
+    }
+
     [Fact]
     public async Task SettingsStartWithFoldersAndPopupChoicesRemainVisibleAndPersistAcrossLanguages()
     {
