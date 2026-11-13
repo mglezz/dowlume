@@ -16,7 +16,7 @@ Incluyo `START-HERE.txt` para consulta sin conexión y un acceso **Dowlume quick
 
 El instalador de Windows ya permite instalar una versión nueva sobre la existente, sin desinstalar primero. Cierra Dowlume, ejecuta el nuevo instalador y conserva la carpeta de instalación. Se mantienen el perfil y los archivos organizados.
 
-La versión 0.6.0 añade **Ajustes → Buscar actualizaciones**. Pausa la organización para acceder a Ajustes. La consulta contacta con el servicio público de publicaciones de GitHub solo cuando lo solicitas, sin cuenta, credenciales, nombres de archivos ni rutas; GitHub recibe los datos normales de conexión, como tu dirección IP. Solo ofrece versiones estables más recientes, excluyendo borradores y versiones preliminares. Un fallo de red no impide organizar archivos localmente.
+La versión 0.6.0 añade **Ajustes → Aplicación → Buscar actualizaciones**. Pausa la organización para acceder a Ajustes. La consulta contacta con el servicio público de publicaciones de GitHub solo cuando lo solicitas, sin cuenta, credenciales, nombres de archivos ni rutas; GitHub recibe los datos normales de conexión, como tu dirección IP. Solo ofrece versiones estables más recientes, excluyendo borradores y versiones preliminares. Un fallo de red no impide organizar archivos localmente.
 
 En una instalación registrada de Windows, **Descargar e instalar actualización…** pide confirmación, descarga el instalador oficial a una carpeta temporal independiente, verifica el tamaño y SHA-256 publicados, pausa la organización y sale antes de abrir el instalador interactivo. Completa la instalación conservando la carpeta existente. No hace falta desinstalar. La suma verifica la coherencia con los metadatos de GitHub; no es una firma de editor. Los paquetes Windows siguen sin estar firmados. Si falta el instalador o su suma, se ofrece la publicación oficial. Si el instalador no se abre, vuelve a abrir Dowlume y reinténtalo o utiliza la publicación oficial. Los instaladores descargados quedan en la carpeta temporal para la limpieza habitual del sistema.
 
@@ -26,11 +26,19 @@ La versión 0.5.0 no contiene este botón: el primer salto a 0.6.0 requiere el i
 
 ## Elegir idioma
 
-Pausa la supervisión y abre **Settings → Language**. Selecciona **Español** o **English**. El cambio se aplica y se guarda inmediatamente para ese perfil. Al reiniciar se conserva; los perfiles antiguos empiezan en inglés.
+Abre **Ajustes → Apariencia → Idioma**. Selecciona **Español** o **English**. El cambio se aplica y se guarda inmediatamente para ese perfil. Al reiniciar se conserva; los perfiles antiguos empiezan en inglés.
 
 Cambio pestañas, botones, confirmaciones, bandeja, categorías, estados, fechas y mensajes conocidos. Mantengo los nombres de archivos y carpetas, las rutas y los datos históricos. La carpeta `Expiring Files` conserva ese nombre. No guardo otros ajustes pendientes al cambiar de idioma. Los mensajes históricos desconocidos mantienen su texto original y los controles nativos del selector de carpetas siguen el idioma de Windows.
 
 **El instalador y el ZIP portátil publicados de 0.6.0 incluyen el selector.** Los paquetes anteriores de 0.1.0 siguen en inglés.
+
+## Navegación de Ajustes (código de 0.7.1)
+
+Esta navegación está incluida en el código de 0.7.1; la versión publicada 0.7.0 conserva la página única. **Ajustes** abre siempre **Carpetas y reglas**. Despliega una carpeta para editar su nombre, plazo de revisión y regla. **Automatización** contiene la reanudación al abrir, los intervalos de archivos y la agrupación avanzada de carpetas. **Apariencia** reúne tema e idioma. **Aplicación** contiene actualizaciones, inicio de sesión e información de la plataforma.
+
+El botón fijo **Guardar ajustes** guarda las carpetas, reglas y automatización de todos los apartados, incluidos los cambios pendientes en otras pestañas. Tema, idioma e inicio de sesión se guardan al instante y de forma independiente. Cambiar de apartado no descarta las ediciones. Para cambiar la organización hay que pausarla y revisar otra vista previa antes de activarla.
+
+Agrupar carpetas completas es una opción avanzada y voluntaria: cambia sus rutas y puede romper accesos directos o proyectos. Úsala solo para descargas terminadas, nunca para directorios de trabajo. Dos comprobaciones de estabilidad no garantizan que ninguna aplicación esté usando la carpeta; no hay deshacer automático. La confirmación de inicio muestra también esta advertencia si activas la agrupación.
 
 ## Primer uso
 
@@ -62,7 +70,7 @@ La actualización conserva una entrada de inicio existente y añade el argumento
 
 La versión **0.7.0** incluye apariencia, monitorización persistente, agrupación de carpetas, preferencia de ventana Windows y reglas personalizadas. No estaban incluidas en 0.6.0.
 
-En **Ajustes → Apariencia**, elige **Sistema**, **Claro** u **Oscuro**. La elección se aplica y guarda al instante, incluidos los diálogos. Sistema sigue al sistema operativo. Pausa la monitorización para acceder a Ajustes.
+En **Ajustes → Apariencia**, elige **Sistema**, **Claro** u **Oscuro**. La elección se aplica y guarda al instante, incluidos los diálogos. Sistema sigue al sistema operativo. La apariencia y el idioma siguen disponibles durante la monitorización; pausa para editar los ajustes de organización.
 
 La cabecera incluye un interruptor **Encendido / Apagado**. Los perfiles nuevos y actualizados empiezan apagados. Primero elige una carpeta, actualiza Vista previa y confirma **Organizar y supervisar**. Para reanudar tras reiniciar Dowlume o iniciar sesión, marca **Reanudar la monitorización al abrir Dowlume**, guarda y confirma la activación inicial. Iniciar la aplicación con Windows es una preferencia independiente.
 
@@ -70,7 +78,7 @@ El inicio automático usa las últimas reglas guardadas y confirmadas. Cambiar l
 
 ## Agrupar carpetas sueltas (0.7.0)
 
-Activa **Ajustes → Agrupar carpetas sueltas** si quieres mover las carpetas completas del primer nivel a una carpeta contenedora, llamada `Folders` por defecto. Elige un nombre portable distinto de las categorías y un intervalo de **20–1440 minutos**. La opción empieza desactivada. Guarda, revisa las candidatas en Vista previa y confirma la organización. Su temporizador es independiente del de archivos; apagar la monitorización detiene ambos.
+Activa **Ajustes → Automatización → Avanzado: agrupar carpetas completas** si quieres mover las carpetas completas del primer nivel a una carpeta contenedora, llamada `Folders` por defecto. Elige un nombre portable distinto de las categorías y un intervalo de **20–1440 minutos**. La opción empieza desactivada. Guarda, revisa las candidatas en Vista previa y confirma la organización. Su temporizador es independiente del de archivos; apagar la monitorización detiene ambos.
 
 Las carpetas deben permanecer sin cambios entre dos revisiones programadas y no contener elementos modificados recientemente. El primer movimiento posible es tras dos intervalos (40 minutos con el valor predeterminado); los cambios reinician la espera. Reiniciar la aplicación también reinicia las observaciones. Se mueve el directorio completo dentro del mismo volumen compatible; nunca se fusiona, elimina ni reclasifica su contenido. Si el nombre ya existe en el destino, se deja el origen en su sitio.
 
@@ -80,7 +88,7 @@ Los movimientos aparecen en **Actividad**, con ambas rutas, pero no entran en re
 
 ## Carpetas y reglas personalizadas (0.7.0)
 
-Pausa la organización y abre **Ajustes → Carpetas y clasificación**. Puedes editar las carpetas predefinidas o pulsar **Añadir carpeta** (hasta 50 personalizadas). Pon un nombre único, elige los días hasta la revisión y selecciona cómo clasificar:
+Pausa la organización y abre **Ajustes → Carpetas y reglas**. Puedes editar las carpetas predefinidas o pulsar **Añadir carpeta** (hasta 50 personalizadas). Pon un nombre único, elige los días hasta la revisión y selecciona cómo clasificar:
 
 - **Extensión:** una lista separada por comas, como `.png, .mov, .mp4`. Retira primero la extensión de su carpeta anterior; se rechazan duplicados aunque cambien las mayúsculas.
 - **El nombre contiene:** un fragmento literal como `contrato` coincide con `Mi contrato firmado.pdf`.
