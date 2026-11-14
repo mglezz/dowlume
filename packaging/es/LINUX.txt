@@ -1,4 +1,4 @@
-Dowlume 0.7.0 — Linux x64
+Dowlume 0.7.1 — Linux x64
 
 Objetivo: Ubuntu 24.04 LTS, GNOME y ext4 local. Antes de publicar se requiere
 aceptación en X11 y Wayland; una sesión Wayland puede utilizar XWayland.
@@ -37,7 +37,7 @@ Tras una interrupción, abre Actividad y reintenta la recuperación. Solo se con
 con UUID, inodo, fecha de creación y SHA-256 coincidentes. Las situaciones ambiguas
 requieren revisión. No se sobrescriben destinos ni se eliminan copias inciertas.
 
-Dowlume 0.7.0
+Dowlume 0.7.1
 
 Ajustes ofrece organizar por intervalos de 1 a 1440 minutos (10 por defecto).
 Requiere vista previa y confirmar; la primera pasada espera el intervalo.
@@ -50,7 +50,7 @@ abren las instrucciones oficiales. Windows/Linux siguen sin firmar; macOS
 utiliza firma ad hoc.
 
 
-NOVEDADES DE 0.7.0
+FUNCIONES DE ORGANIZACIÓN
 
 Elige apariencia Sistema, Claro u Oscuro en Ajustes; se guarda al instante.
 Edita las carpetas de clasificación o añade reglas por extensión o nombre.
@@ -66,3 +66,14 @@ Omite categorías, enlaces, contenidos incompletos, ocultos o inaccesibles y
 Los movimientos aparecen en Actividad, sin Deshacer ni revisión por antigüedad.
 Para restaurar una carpeta, apaga la monitorización y usa el explorador.
 Una interrupción requiere inspección manual; nunca se repite automáticamente.
+
+AJUSTES EN 0.7.1
+
+Ajustes abre Carpetas y reglas. Despliega una carpeta para editarla.
+Automatización reúne reanudación, intervalos y agrupación avanzada de carpetas.
+Apariencia contiene tema e idioma; Aplicación, actualizaciones e inicio de sesión.
+Guarda carpetas, reglas y automatización con Guardar ajustes. Tema, idioma e
+inicio de sesión se guardan al instante. Pausa para cambiar la organización.
+Agrupar carpetas está desactivado por defecto: cambia rutas, puede romper
+proyectos o accesos directos y no tiene deshacer automático. Úsalo solo para
+descargas terminadas, nunca para carpetas de trabajo.
