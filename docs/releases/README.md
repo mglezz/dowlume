@@ -2,12 +2,13 @@
 
 [Documentation](../README.md)
 
-[Dowlume 0.7.0](0.7.0.md) is the latest stable release, adding appearance, persistent monitoring, custom rules and optional folder collection. The [acceptance record](acceptance/0.7.0.md) separates maintainer confirmation from final-package automation.
+[Dowlume 0.7.1](0.7.1.md) is the latest stable release, simplifying settings and fixing dropdowns. The [acceptance record](acceptance/0.7.1.md) separates maintainer confirmation from final-package automation.
 
 The records below describe shipped behavior. Acceptance records retain the source revisions, package hashes, test scope, and manual confirmation for each release.
 
 | Version | Release notes | Acceptance record |
 | --- | --- | --- |
+| 0.7.1 | [Clearer settings and reliable dropdowns](0.7.1.md) | [Final packages](acceptance/0.7.1.md) |
 | 0.7.0 | [Personalization and controlled automation](0.7.0.md) | [Final packages and publication](acceptance/0.7.0.md) |
 | 0.6.0 | [Periodic organization and updates](0.6.0.md) | [Final packages and publication](acceptance/0.6.0.md) |
 | 0.5.0 | [Ubuntu Linux, Windows and macOS](0.5.0.md) | [0.5.0 candidates and final packages](acceptance/0.5.0.md) |

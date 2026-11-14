@@ -2,13 +2,13 @@
 
 [English](../../user/guide.md) · [Índice en español](../README.md)
 
-Dowlume organiza descargas completas en Windows x64, macOS Apple Silicon y Ubuntu 24.04 LTS x64 con GNOME. La [versión 0.7.0](https://github.com/mglezz/dowlume/releases/tag/v0.7.0) incluye instaladores Windows/Ubuntu y paquetes portables con .NET incluido. Consulta las [instrucciones macOS](#macos-040), las [instrucciones Linux](#linux-060) y la [matriz de plataformas](platform-support.md). Empieza con copias de archivos de ejemplo en una carpeta desechable.
+Dowlume organiza descargas completas en Windows x64, macOS Apple Silicon y Ubuntu 24.04 LTS x64 con GNOME. La [versión 0.7.1](https://github.com/mglezz/dowlume/releases/tag/v0.7.1) incluye instaladores Windows/Ubuntu y paquetes portables con .NET incluido. Consulta las [instrucciones macOS](#macos-040), las [instrucciones Linux](#linux-060) y la [matriz de plataformas](platform-support.md). Empieza con copias de archivos de ejemplo en una carpeta desechable.
 
 ## Instalar y abrir
 
-Elige el instalador Windows para una instalación habitual, o **Portable** para descargar la aplicación completa en un ZIP desde la publicación de GitHub. Los paquetes Windows de v0.7.0 no tienen firma de editor: utiliza una fuente de confianza y compara el SHA-256 con las [sumas de comprobación](../releases/0.7.0.md#sumas-de-comprobación).
+Elige el instalador Windows para una instalación habitual, o **Portable** para descargar la aplicación completa en un ZIP desde la publicación de GitHub. Los paquetes Windows de v0.7.1 no tienen firma de editor: utiliza una fuente de confianza y compara el SHA-256 con las [sumas de comprobación](../releases/0.7.1.md#sumas-de-comprobación).
 
-Ejecuta `Dowlume-0.7.0-win-x64-setup.exe` sin permisos de administrador. Para la versión portátil, extrae todo el ZIP y ejecuta `Dowlume.App.exe` junto a sus archivos. No necesita una instalación separada de .NET.
+Ejecuta `Dowlume-0.7.1-win-x64-setup.exe` sin permisos de administrador. Para la versión portátil, extrae todo el ZIP y ejecuta `Dowlume.App.exe` junto a sus archivos. No necesita una instalación separada de .NET.
 
 Incluyo `START-HERE.txt` para consulta sin conexión y un acceso **Dowlume quick start** en el menú Inicio. Cierra también cualquier instancia oculta en la bandeja antes de actualizar o desinstalar; el instalador se niega a continuar mientras la aplicación está abierta. Conservo los archivos organizados y el perfil local al desinstalar.
 
@@ -196,7 +196,7 @@ Si detecto una carrera de archivos/carpetas, conservo los objetos y puedo mostra
 
 ## Linux 0.6.0
 
-La [versión 0.6.0](https://github.com/mglezz/dowlume/releases/tag/v0.7.0)
+La [versión 0.6.0](https://github.com/mglezz/dowlume/releases/tag/v0.7.1)
 admite Ubuntu 24.04 LTS x64 / GNOME con ext4 local.
 Comprueba las [sumas de los paquetes](../releases/0.6.0.md#sumas-de-comprobación)
 y empieza con archivos desechables.

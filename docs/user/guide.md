@@ -2,15 +2,15 @@
 
 [English](#) · [Español](../es/user/guide.md)
 
-Dowlume organizes completed downloads on Windows x64, macOS Apple Silicon, and Ubuntu 24.04 LTS x64 with GNOME. Version 0.7.0 includes Windows/Ubuntu installers and portable applications with .NET included. Start with copies of sample files in a disposable local folder. See the [platform matrix](platform-support.md) for filesystem and OS requirements.
+Dowlume organizes completed downloads on Windows x64, macOS Apple Silicon, and Ubuntu 24.04 LTS x64 with GNOME. Version 0.7.1 includes Windows/Ubuntu installers and portable applications with .NET included. Start with copies of sample files in a disposable local folder. See the [platform matrix](platform-support.md) for filesystem and OS requirements.
 
 ## Install and start
 
-Choose the Windows installer for a regular installation, or a **Portable** download for the complete application archive. Ubuntu users should follow the [Linux instructions](#linux-060). Download the package for your computer from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.7.0). For macOS installation, permissions, and startup, follow the [macOS instructions](#macos-040) below. Developers can also [build and run from source](../development/getting-started.md).
+Choose the Windows installer for a regular installation, or a **Portable** download for the complete application archive. Ubuntu users should follow the [Linux instructions](#linux-060). Download the package for your computer from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.7.1). For macOS installation, permissions, and startup, follow the [macOS instructions](#macos-040) below. Developers can also [build and run from source](../development/getting-started.md).
 
-For a downloaded or locally built package, run the setup executable (for example, `Dowlume-0.7.0-win-x64-setup.exe`). Installation is per user and does not require administrator privileges. Alternatively, extract the complete portable ZIP and run `Dowlume.App.exe`; do not move the executable out of its accompanying files. The .NET runtime is included.
+For a downloaded or locally built package, run the setup executable (for example, `Dowlume-0.7.1-win-x64-setup.exe`). Installation is per user and does not require administrator privileges. Alternatively, extract the complete portable ZIP and run `Dowlume.App.exe`; do not move the executable out of its accompanying files. The .NET runtime is included.
 
-The Windows packages are unsigned. The macOS app uses an ad-hoc signature without Developer ID or notarization. Only use a package from a source you trust and compare its SHA-256 checksum with the [download checksums](../releases/0.7.0.md#download-checksums).
+The Windows packages are unsigned. The macOS app uses an ad-hoc signature without Developer ID or notarization. Only use a package from a source you trust and compare its SHA-256 checksum with the [download checksums](../releases/0.7.1.md#download-checksums).
 
 The package includes `START-HERE.txt`, which opens offline in a text editor. The installer adds a **Dowlume quick start** Start menu shortcut. Exit Dowlume, including any instance hidden in the tray, before upgrading or uninstalling; Setup refuses while the app is running. Installation and uninstall retain your files and local profile.
 
@@ -203,7 +203,7 @@ When a file or directory race is detected, Dowlume retains the objects and may r
 
 ## Linux 0.6.0
 
-The [0.6.0 release](https://github.com/mglezz/dowlume/releases/tag/v0.7.0)
+The [0.6.0 release](https://github.com/mglezz/dowlume/releases/tag/v0.7.1)
 supports Ubuntu 24.04 LTS x64 / GNOME with local ext4. Compare the
 [package checksums](../releases/0.6.0.md#download-checksums) and begin with disposable samples.
 

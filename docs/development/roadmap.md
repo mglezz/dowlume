@@ -58,3 +58,7 @@ These ideas are unscheduled and do not expand the Linux milestone by default:
 - Additional interface languages.
 
 Content-based classification, cloud synchronization, arbitrary scripts, and permanent automatic deletion remain outside the current scope.
+
+### Version 0.7.1 shipped
+
+[0.7.1](../releases/0.7.1.md): settings navigation, translated popup choices, safe selection initialization and advanced folder-collection guidance.

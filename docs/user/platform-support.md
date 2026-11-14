@@ -2,11 +2,11 @@
 
 [English](#) · [Español](../es/user/platform-support.md)
 
-[Dowlume 0.7.0](../releases/0.7.0.md) supports Windows x64, macOS Apple Silicon and Ubuntu 24.04 LTS x64 with GNOME within the scope below. The [acceptance record](../releases/acceptance/0.7.0.md) separates maintainer confirmation from measured automation and its limitations.
+[Dowlume 0.7.1](../releases/0.7.1.md) supports Windows x64, macOS Apple Silicon and Ubuntu 24.04 LTS x64 with GNOME within the scope below. The [acceptance record](../releases/acceptance/0.7.1.md) separates maintainer confirmation from measured automation and its limitations.
 
 | Target | Current implementation | Distribution and acceptance |
 | --- | --- | --- |
-| Windows x64 | Organization, monitoring, review, eligible Undo, recovery, Explorer, tray and login startup | Installer and portable ZIP; release CI tests upgrading from hash-pinned 0.6.0, languages, tray, running-app guards and uninstall. |
+| Windows x64 | Organization, monitoring, review, eligible Undo, recovery, Explorer, tray and login startup | Installer and portable ZIP; release CI tests upgrading from hash-pinned 0.7.0, languages, tray, running-app guards and uninstall. |
 | macOS 15+ Apple Silicon | Complete supported workflow on local APFS within one volume; native dialogs/Finder, application/Dock menus, reopen/quit, optional login startup, both languages and preview-profile migration | Self-contained `.app` ZIP, ad-hoc signed. Native CI targets macOS 15; local development also runs on 26.6.2. Manual functional confirmation and its evidence limits are recorded separately from package automation. |
 | macOS Intel | Excluded | No x64 package or support claim. |
 | Ubuntu 24.04 LTS x64 · GNOME | Native same-mount local ext4 workflow, identity-based recovery, XDG Downloads and optional autostart, file-manager reveal; no tray | Self-contained `.deb` Installer and `.tar.gz` Portable. Overall rc.1 manual confirmation plus final native/package automation. The rendering backend was not separately recorded; a native Wayland backend is not certified. See [Linux acceptance](../development/linux-acceptance.md). |
@@ -34,7 +34,7 @@ CI runs shared tests on Windows x64, macOS ARM64 and Ubuntu x64. Shared fixture 
 python3 scripts/Build-PlatformPreview.py --runtime osx-arm64 --output artifacts/macos-package
 # On Ubuntu 24.04 x64:
 python3 scripts/Build-Linux.py --output artifacts/linux-candidate
-python3 scripts/Test-Linux.py --output artifacts/linux-native --archive artifacts/linux-candidate/Dowlume-0.7.0-linux-x64.tar.gz
+python3 scripts/Test-Linux.py --output artifacts/linux-native --archive artifacts/linux-candidate/Dowlume-0.7.1-linux-x64.tar.gz
 ```
 
 Packages are built on each native target with .NET SDK 10.0.401 and Python 3.13 in CI. macOS requires Xcode command-line tools for the C adapter, icon conversion, signing and archiving. Linux CI installs `xvfb`, `xauth`, `libx11-6`, `libice6`, `libsm6`, `libfontconfig1`, `libgl1`, `libegl1`, `libxrandr2`, `libxi6`, `libxcursor1`, `libxrender1`, `libxext6`, and `libxfixes3`. Interactive Linux reveal also needs `/usr/bin/xdg-open` (`xdg-utils`) and a desktop file manager.
