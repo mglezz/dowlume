@@ -18,7 +18,7 @@ The package includes `START-HERE.txt`, which opens offline in a text editor. The
 
 Windows installers already support installing a newer version over the existing installation; uninstalling first is unnecessary. Close Dowlume, run the new installer, and retain the existing installation folder. The profile and organized files are retained.
 
-Version 0.6.0 adds **Settings → Check for updates**. Pause organization to access Settings. The check contacts the public GitHub release endpoint only when requested, without an account, credentials, file names, or paths; GitHub still receives ordinary connection information such as your IP address. It offers newer stable releases, excluding drafts and prereleases. Network failures leave local organization available.
+Update checks are available since 0.6.0. In the 0.7.1 source, open **Settings → Application → Check for updates**; in published 0.7.0, the button is directly on the settings page. Pause organization to use these controls. The check contacts the public GitHub release endpoint only when requested, without an account, credentials, file names, or paths; GitHub still receives ordinary connection information such as your IP address. It offers newer stable releases, excluding drafts and prereleases. Network failures leave local organization available.
 
 For a registered Windows installation, **Download and install update…** asks for confirmation, downloads the official installer to a separate temporary folder, verifies its published size and SHA-256, pauses organization, and exits before opening the interactive installer. Complete the installer using the existing folder. No uninstall is needed. The hash verifies consistency with GitHub's release metadata; it is not a publisher signature. Windows packages remain unsigned. A missing checksum or installer offers the official release page instead. If installer launch fails, reopen Dowlume and retry, or use the release page. Downloaded installers remain in the system temporary directory for normal OS cleanup.
 
@@ -28,11 +28,19 @@ Version 0.5.0 does not contain this button: reaching the first release that incl
 
 ## Choose a language
 
-Pause monitoring and open **Settings → Language**. Choose **English** or **Español**. Dowlume applies the choice immediately and saves it automatically for that profile, including when folder settings have unsaved edits. Those edits are not saved by changing language. Restarting retains the language; older profiles default to English.
+Open **Settings → Appearance → Language**. Choose **English** or **Español**. Dowlume applies the choice immediately and saves it automatically for that profile, including when folder settings have unsaved edits. Those edits are not saved by changing language. Restarting retains the language; older profiles default to English.
 
 Tabs, buttons, confirmations, tray items, categories, states, dates, and known error messages follow the selected language. Configured folder names, filenames, paths, and journal data remain unchanged. `Expiring Files` keeps its name in both languages. Unknown historical or operating-system messages retain their original wording. Native folder-picker controls follow the operating system language settings.
 
 The current packages include both interface languages. Older 0.1.0 packages remain English-only.
+
+## Settings navigation (0.7.1 source)
+
+The following navigation is included in the 0.7.1 source; published 0.7.0 still uses a single settings page. Opening **Settings** starts with **Folders and rules**. Expand a folder to edit its name, review period and matching rule. **Automation** holds resume-on-startup, periodic file checks and advanced whole-folder collection. **Appearance** holds theme and language. **Application** holds updates, login startup and platform information.
+
+The fixed **Save settings** button saves folders, rules and automation together, including edits in other sections. Theme, language and login options save immediately and independently. Switching sections does not discard pending edits. Folder/rule edits require paused monitoring and a fresh preview before activation.
+
+Whole-folder collection is an advanced opt-in: moving a folder changes its path and can break shortcuts or projects. Use it only for completed downloads, never working directories. Two stability checks cannot guarantee that no application is using the folder; there is no automatic undo. The same warning appears before starting organization with collection enabled.
 
 ## First use
 
@@ -56,11 +64,11 @@ In published 0.6.0, monitoring starts paused on every launch; 0.7.0 adds the sav
 
 The Dowlume icon appears in the Windows notification area, sometimes inside the **Show hidden icons** overflow. Click it to restore the window, or right-click for **Open Dowlume** and **Exit**. You can move the icon into the visible notification area using Windows taskbar settings.
 
-On Windows, in **Settings**, enable **Start Dowlume when I sign in** to open this copy of the application at sign-in. The change applies immediately to your account and is off by default. In 0.6.0 monitoring still starts paused; in 0.7.0 it follows the saved automatic-start preference. Disable the option before relocating a portable copy; enable it again from the new location. Windows Settings can independently disable startup applications. Uninstall removes the startup entry when it belongs to that installation.
+On Windows, in **Settings → Application**, enable **Start Dowlume when I sign in** to open this copy of the application at sign-in. The change applies immediately to your account and is off by default. In 0.6.0 monitoring still starts paused; in 0.7.0 it follows the saved automatic-start preference. Disable the option before relocating a portable copy; enable it again from the new location. Windows Settings can independently disable startup applications. Uninstall removes the startup entry when it belongs to that installation.
 
 ### Windows login window (0.7.0)
 
-With login startup enabled, Dowlume starts in the notification area by default without showing a window. Enable **Show the window when Windows starts** in Settings to display it at sign-in instead. This preference is saved immediately, independently of folder/rule edits. Opening Dowlume manually still shows its window. Use the tray icon to open or exit a background instance; monitoring follows the saved automatic-start preference described below. If tray initialization fails, the window opens so the application remains accessible.
+With login startup enabled, Dowlume starts in the notification area by default without showing a window. Enable **Show the window when Windows starts** in **Settings → Application** to display it at sign-in instead. This preference is saved immediately, independently of folder/rule edits. Opening Dowlume manually still shows its window. Use the tray icon to open or exit a background instance; monitoring follows the saved automatic-start preference described below. If tray initialization fails, the window opens so the application remains accessible.
 
 Upgrading an installation preserves an existing startup entry and adds the login-startup argument; it does not enable startup for users who disabled it. A portable copy updates its own older startup entry on its next normal launch. This option is included from 0.7.0.
 
@@ -68,7 +76,7 @@ Upgrading an installation preserves an existing startup entry and adds the login
 
 Version **0.7.0** includes appearance, persistent monitoring, folder collection, the Windows login-window preference and custom classification rules. These were not included in 0.6.0.
 
-In **Settings → Appearance**, choose **System**, **Light**, or **Dark**. The choice applies and saves immediately, including dialogs. System follows the operating system. Pause monitoring to access Settings.
+In **Settings → Appearance**, choose **System**, **Light**, or **Dark**. The choice applies and saves immediately, including dialogs. System follows the operating system. Appearance and language remain available while monitoring; pause to edit organization settings.
 
 The header has an **On / Off** monitoring switch. New and upgraded profiles start Off. First choose a folder, refresh Preview, and confirm **Organize and monitor**. To resume after restarting Dowlume or signing in, select **Resume monitoring when Dowlume opens**, save, and confirm the initial start. Launching automatically at Windows login is a separate preference.
 
@@ -76,7 +84,7 @@ Automatic startup uses the last saved, confirmed rules. A changed path, classifi
 
 ## Collect loose folders (0.7.0)
 
-Enable **Settings → Collect loose folders** only if you want whole top-level folders moved into a collection folder, named `Folders` by default. Choose a distinct portable name and an interval of **20–1440 minutes**. The option defaults off. Save, inspect the folder candidates in Preview, and confirm organization. This schedule is independent of the file interval; turning monitoring off stops both.
+Enable **Settings → Automation → Advanced: collect entire folders** only if you want whole top-level folders moved into a collection folder, named `Folders` by default. Choose a distinct portable name and an interval of **20–1440 minutes**. The option defaults off. Save, inspect the folder candidates in Preview, and confirm organization. This schedule is independent of the file interval; turning monitoring off stops both.
 
 Folders must remain unchanged across two scheduled observations and have no recently modified contents. The earliest move is after two intervals (40 minutes at the default), and changes restart the wait. A restart also resets observations. The app moves the entire directory on the same supported volume; it never merges, deletes, or reclassifies children. A destination with the same name leaves the source in place.
 
@@ -86,7 +94,7 @@ Folder moves appear in **Activity**, with both paths, but do not enter file agin
 
 ## Custom folders and rules (0.7.0)
 
-Pause organization and open **Settings → Folders and classification**. You can edit the built-in folders or choose **Add folder** (up to 50 custom folders). Give each folder a unique name, choose a review period, and select a matching mode:
+Pause organization and open **Settings → Folders and rules**. You can edit the built-in folders or choose **Add folder** (up to 50 custom folders). Give each folder a unique name, choose a review period, and select a matching mode:
 
 - **Extension:** a comma-separated list such as `.png, .mov, .mp4`. Remove an extension from its previous folder before assigning it elsewhere; duplicates are rejected even with different letter case.
 - **Name contains:** a literal fragment such as `contract` matches `Signed contract.pdf`.
@@ -187,7 +195,7 @@ Quit the previous application, extract the ZIP and place the complete `Dowlume.a
 
 Allow access only to folders selected for organization. If access is denied, Dowlume displays an error and preserves the files; use **System Settings → Privacy & Security → Files and Folders** to review access, then retry. Full Disk Access is not required. The actual permission prompt depends on the chosen folder and prior system grants.
 
-**Command-comma** opens Settings. Native Hide and Dock reopen restore the same running application. Closing its window or **Quit** drains work and exits; there is no macOS tray mode. **Start at login** applies to an installed `.app` at the next login; monitoring remains paused and macOS Login Items can override it. Disable startup before relocating or uninstalling the app. To uninstall, quit and remove the app; the profile and managed files are retained.
+**Command-comma** opens Settings. Native Hide and Dock reopen restore the same running application. Closing its window or **Quit** drains work and exits; there is no macOS tray mode. **Start at login** applies to an installed `.app` at the next login; monitoring follows the saved, confirmed resumption preference, and macOS Login Items can override login registration. Disable startup before relocating or uninstalling the app. To uninstall, quit and remove the app; the profile and managed files are retained.
 
 Dowlume stores data in `~/Library/Application Support/Dowlume`. On first default launch it copies the closed `Dowlume.Preview` profile if the new profile is absent, preserves the original, and retains its language, settings, and history. Close the preview first. An existing new profile takes precedence; an incomplete destination or migration error requires inspection rather than an automatic merge. Back up the complete closed profile and managed files before updating. Custom `--data-directory` launches neither migrate the personal profile nor alter login startup.
 

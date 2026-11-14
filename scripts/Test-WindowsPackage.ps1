@@ -144,10 +144,12 @@ try {
     Test-WindowsTray $application
     if ($RequireLocalization) {
         Set-TestLanguage $application 'English' 'Español'
+        Test-ThemeDropdown $application 'Español'
         Close-Application $application
         $application = Start-Application 'Dowlume'
         Assert-TestLanguage $application 'Español'
         Set-TestLanguage $application 'Español' 'English'
+        Test-ThemeDropdown $application 'English'
         Close-Application $application
         $application = Start-Application 'Dowlume'
         Assert-TestLanguage $application 'English'

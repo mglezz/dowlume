@@ -38,6 +38,11 @@
     <Style Selector="TabItem /template/ ContentPresenter#PART_ContentPresenter">
       <Setter Property="Margin" Value="0,0,0,10" />
     </Style>
+    <Style Selector="TabControl.settingsTabs > TabItem">
+      <Setter Property="FontSize" Value="14" />
+      <Setter Property="MinWidth" Value="130" />
+      <Setter Property="Padding" Value="12,10" />
+    </Style>
   </Window.Styles>
   <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="28">
     <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,22">
@@ -302,138 +307,170 @@
         </Grid>
       </TabItem>
       <TabItem Header="{ReflectionBinding $parent[Window].DataContext.Text[Settings]}">
-        <ScrollViewer x:Name="SettingsScroll" Margin="0,20,0,0" Padding="0,0,14,0">
-          <StackPanel Spacing="18" IsEnabled="{Binding CanConfigure}">
-            <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Makeroomforyourroutine]}" Classes="heading" />
-            <Border Classes="card">
-              <StackPanel Spacing="8">
-                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[ApplicationUpdates]}" FontWeight="SemiBold" />
-                <TextBlock Text="{Binding CurrentVersion}" />
-                <TextBlock Text="{Binding UpdateMessage}" TextWrapping="Wrap" Classes="muted" />
-                <WrapPanel>
-                  <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[CheckForUpdates]}" Command="{Binding CheckForUpdatesCommand}" Margin="0,0,8,8" />
-                  <Button Content="{Binding UpdateActionLabel}" Command="{Binding ApplyUpdateCommand}" IsVisible="{Binding HasUpdate}" Margin="0,0,0,8" />
-                </WrapPanel>
-              </StackPanel>
-            </Border>
-            <StackPanel Spacing="6">
-              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Language]}" FontWeight="SemiBold" />
-              <ComboBox AutomationProperties.AutomationId="LanguageSelector" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Language]}" MinWidth="180" />
-              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[LanguagechangesapplyimmediatelyandaresavedautomaticallyFolder]}" TextWrapping="Wrap" Classes="muted" />
-            </StackPanel>
-            <StackPanel Spacing="6">
-              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Appearance]}" FontWeight="SemiBold" />
-              <ComboBox ItemsSource="{Binding Themes}" SelectedItem="{Binding SelectedTheme}" AutomationProperties.AutomationId="ThemeSelector" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Appearance]}" MinWidth="180">
-                <ComboBox.ItemTemplate><DataTemplate><TextBlock><TextBlock.Text><MultiBinding Converter="{StaticResource LocalizedValue}"><Binding /><ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" /><ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" /></MultiBinding></TextBlock.Text></TextBlock></DataTemplate></ComboBox.ItemTemplate>
-              </ComboBox>
-              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[AppearanceHelp]}" Classes="muted" TextWrapping="Wrap" />
-              <CheckBox IsChecked="{Binding ResumeMonitoringOnStartup}" Content="{ReflectionBinding $parent[Window].DataContext.Text[ResumeMonitoring]}" />
-              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[ResumeMonitoringHelp]}" Classes="muted" TextWrapping="Wrap" />
-            </StackPanel>
-            <StackPanel Spacing="6" IsVisible="{Binding SupportsLoginStartup}">
-              <CheckBox Content="{ReflectionBinding $parent[Window].DataContext.Text[StartDowlumeAtLogin]}" IsChecked="{Binding StartAtLogin, Mode=OneWay}" Command="{Binding ToggleLoginStartupCommand}" />
-              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[LoginStartupExplanation]}" TextWrapping="Wrap" Classes="muted" />
-              <StackPanel Spacing="6" IsVisible="{Binding IsWindows}">
-                <CheckBox AutomationProperties.AutomationId="ShowWindowAtWindowsLogin" Content="{ReflectionBinding $parent[Window].DataContext.Text[ShowWindowAtWindowsLogin]}" IsChecked="{Binding ShowWindowAtWindowsLogin, Mode=OneWay}" Command="{Binding ToggleWindowsLoginWindowCommand}" IsEnabled="{Binding StartAtLogin}" />
-                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[WindowsLoginWindowHelp]}" TextWrapping="Wrap" Classes="muted" />
-              </StackPanel>
-            </StackPanel>
-            <TextBlock IsVisible="{Binding SupportsFileOperations}" Text="{ReflectionBinding $parent[Window].DataContext.Text[PausemonitoringtochangethesesettingsSavedrulesapply]}" TextWrapping="Wrap" Classes="muted" />
-            <StackPanel Spacing="8">
-              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Downloadsfolder]}" FontWeight="SemiBold" />
-              <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
-                <TextBox Text="{Binding DownloadsPath}" PlaceholderText="{ReflectionBinding $parent[Window].DataContext.Text[Choosealocalfolder]}" />
-                <Button Grid.Column="1" Content="{ReflectionBinding $parent[Window].DataContext.Text[Browse]}" Command="{Binding ChooseFolderCommand}" />
-              </Grid>
-            </StackPanel>
-            <Border Classes="card">
-              <StackPanel Spacing="12">
-                <TextBlock x:Name="CustomRulesHeading" Text="{ReflectionBinding $parent[Window].DataContext.Text[CustomRulesHeading]}" FontWeight="SemiBold" />
-                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[CustomRulesHelp]}" TextWrapping="Wrap" Classes="muted" />
-                <ItemsControl ItemsSource="{Binding Rules}">
-                  <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="vm:CategoryRuleViewModel">
-                      <Border BorderBrush="{DynamicResource LineBrush}" BorderThickness="0,0,0,1" Padding="0,8,0,16" Margin="0,0,0,8">
-                        <StackPanel Spacing="8">
-                          <Grid ColumnDefinitions="*,Auto">
-                            <TextBlock VerticalAlignment="Center" FontWeight="SemiBold">
-                              <TextBlock.Text>
-                                <MultiBinding Converter="{StaticResource LocalizedValue}">
-                                  <Binding Path="DisplayCategory" />
-                                  <ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
-                                  <ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
-                                </MultiBinding>
-                              </TextBlock.Text>
-                            </TextBlock>
-                            <Button Grid.Column="1" Content="{ReflectionBinding $parent[Window].DataContext.Text[RemoveCustomRule]}" Command="{ReflectionBinding $parent[Window].DataContext.RemoveRuleCommand}" CommandParameter="{Binding}" IsVisible="{Binding IsCustom}" />
-                          </Grid>
-                          <Grid ColumnDefinitions="*,140" ColumnSpacing="12">
-                            <StackPanel Spacing="4">
-                              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Foldername]}" />
-                              <TextBox Text="{Binding FolderName}" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Foldername]}" />
-                            </StackPanel>
-                            <StackPanel Grid.Column="1" Spacing="4">
-                              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Reviewdays]}" />
-                              <NumericUpDown Value="{Binding ReviewAfterDays}" Minimum="1" Maximum="3650" FormatString="0" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Reviewdays]}" />
-                            </StackPanel>
-                          </Grid>
-                          <Grid ColumnDefinitions="220,*" ColumnSpacing="12">
-                            <ComboBox ItemsSource="{Binding MatchKinds}" SelectedItem="{Binding MatchKind}" IsEnabled="{Binding CanChooseMatchKind}" HorizontalAlignment="Stretch" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[RuleMatchMode]}">
-                              <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                  <TextBlock>
-                                    <TextBlock.Text>
-                                      <MultiBinding Converter="{StaticResource LocalizedValue}">
-                                        <Binding />
-                                        <ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
-                                        <ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}" />
-                                      </MultiBinding>
-                                    </TextBlock.Text>
-                                  </TextBlock>
-                                </DataTemplate>
-                              </ComboBox.ItemTemplate>
-                            </ComboBox>
-                            <TextBox Grid.Column="1" Text="{Binding Extensions}" IsVisible="{Binding IsExtensionRule}" PlaceholderText=".png, .mov, .mp4" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Extensionscommaseparated]}" />
-                            <TextBox Grid.Column="1" Text="{Binding NamePattern}" IsVisible="{Binding IsNameRule}" PlaceholderText="{ReflectionBinding $parent[Window].DataContext.Text[RulePatternExample]}" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[RuleNamePattern]}" />
-                          </Grid>
-                        </StackPanel>
-                      </Border>
-                    </DataTemplate>
-                  </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[AddCustomRule]}" Command="{Binding AddRuleCommand}" />
-                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[RuleEditScope]}" TextWrapping="Wrap" Classes="muted" />
-              </StackPanel>
-            </Border>
-            <StackPanel Spacing="8">
-              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Excludedextensions]}" FontWeight="SemiBold" />
-              <TextBox Text="{Binding ExcludedExtensions}" PlaceholderText="{ReflectionBinding $parent[Window].DataContext.Text[Forexamplelogbak]}" />
-              <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[BrowserpartialdownloadsarealwaysexcludedUnrecognizedextensionsgo]}" Classes="muted" />
-            </StackPanel>
-            <Border Classes="card" IsVisible="{Binding SupportsFileOperations}">
-              <StackPanel Spacing="8">
-                <CheckBox Content="{ReflectionBinding $parent[Window].DataContext.Text[UsePeriodicOrganization]}" IsChecked="{Binding UsePeriodicOrganization}" />
-                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[PeriodicOrganizationHelp]}" TextWrapping="Wrap" Classes="muted" />
-                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[OrganizationInterval]}" FontWeight="SemiBold" />
-                <NumericUpDown Value="{Binding OrganizationIntervalMinutes}" IsEnabled="{Binding UsePeriodicOrganization}" Minimum="1" Maximum="1440" FormatString="0" Width="160" HorizontalAlignment="Left" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[OrganizationInterval]}" />
-              </StackPanel>
-            </Border>
-            <Border Classes="card" IsVisible="{Binding SupportsFileOperations}">
-              <StackPanel Spacing="8">
-                <CheckBox IsChecked="{Binding OrganizeFolders}" Content="{ReflectionBinding $parent[Window].DataContext.Text[OrganizeFolders]}" />
-                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[OrganizeFoldersHelp]}" Classes="muted" TextWrapping="Wrap" />
-                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[CollectedFoldersName]}" />
-                <TextBox Text="{Binding CollectedFoldersName}" IsEnabled="{Binding OrganizeFolders}" />
-                <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[FolderInterval]}" />
-                <NumericUpDown Value="{Binding FolderIntervalMinutes}" Minimum="20" Maximum="1440" FormatString="0" IsEnabled="{Binding OrganizeFolders}" Width="160" HorizontalAlignment="Left" />
-              </StackPanel>
-            </Border>
-            <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[Savesettings]}" Command="{Binding SaveSettingsCommand}" Classes="primary" />
-            <TextBlock IsVisible="{Binding IsMacOS}" Text="{ReflectionBinding $parent[Window].DataContext.Text[MacFolderScope]}" TextWrapping="Wrap" Classes="muted" />
-            <TextBlock IsVisible="{Binding IsLinux}" Text="{ReflectionBinding $parent[Window].DataContext.Text[LinuxFolderScope]}" TextWrapping="Wrap" Classes="muted" />
-            <TextBlock Text="{Binding PrivacyNotice}" TextWrapping="Wrap" Classes="muted" />
-          </StackPanel>
-        </ScrollViewer>
+        <Grid RowDefinitions="Auto,*,Auto" Margin="0,12,0,0">
+          <TextBlock IsVisible="{Binding IsMonitoring}" Text="{ReflectionBinding $parent[Window].DataContext.Text[SettingsMonitoringHelp]}" TextWrapping="Wrap" Classes="muted"/>
+          <TabControl x:Name="SettingsTabs" Grid.Row="1" Classes="settingsTabs" Margin="0,8,0,0">
+            <TabItem AutomationProperties.AutomationId="SettingsRulesTab" Header="{ReflectionBinding $parent[Window].DataContext.Text[SettingsFolders]}">
+              <ScrollViewer x:Name="SettingsScroll" Margin="0,12,0,0" Padding="0,0,14,0">
+                <StackPanel Spacing="16" IsEnabled="{Binding CanConfigure}">
+                  <StackPanel Spacing="8">
+                    <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Downloadsfolder]}" FontWeight="SemiBold"/>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                      <TextBox Text="{Binding DownloadsPath}" PlaceholderText="{ReflectionBinding $parent[Window].DataContext.Text[Choosealocalfolder]}"/>
+                      <Button Grid.Column="1" Content="{ReflectionBinding $parent[Window].DataContext.Text[Browse]}" Command="{Binding ChooseFolderCommand}"/>
+                    </Grid>
+                  </StackPanel>
+                  <Border Classes="card">
+                    <StackPanel Spacing="12">
+                      <TextBlock x:Name="CustomRulesHeading" Text="{ReflectionBinding $parent[Window].DataContext.Text[CustomRulesHeading]}" FontWeight="SemiBold"/>
+                      <ItemsControl ItemsSource="{Binding Rules}">
+                        <ItemsControl.ItemTemplate>
+                          <DataTemplate x:DataType="vm:CategoryRuleViewModel">
+                            <Border Margin="0,0,0,6">
+                              <Expander IsExpanded="{Binding IsExpanded}" HorizontalAlignment="Stretch">
+                                <Expander.Header>
+                                  <TextBlock Text="{Binding EditorTitle}" FontWeight="SemiBold"/>
+                                </Expander.Header>
+                                <StackPanel Spacing="8">
+                                  <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock VerticalAlignment="Center" FontWeight="SemiBold">
+                                      <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource LocalizedValue}">
+                                          <Binding Path="DisplayCategory"/>
+                                          <ReflectionBinding Path="DataContext.Text" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}"/>
+                                          <ReflectionBinding Path="DataContext.Text.Language" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}"/>
+                                        </MultiBinding>
+                                      </TextBlock.Text>
+                                    </TextBlock>
+                                    <Button Grid.Column="1" Content="{ReflectionBinding $parent[Window].DataContext.Text[RemoveCustomRule]}" Command="{ReflectionBinding $parent[Window].DataContext.RemoveRuleCommand}" CommandParameter="{Binding}" IsVisible="{Binding IsCustom}"/>
+                                  </Grid>
+                                  <Grid ColumnDefinitions="*,140" ColumnSpacing="12">
+                                    <StackPanel Spacing="4">
+                                      <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Foldername]}"/>
+                                      <TextBox Text="{Binding FolderName}" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Foldername]}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Spacing="4">
+                                      <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Reviewdays]}"/>
+                                      <NumericUpDown Value="{Binding ReviewAfterDays}" Minimum="1" Maximum="3650" FormatString="0" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Reviewdays]}"/>
+                                    </StackPanel>
+                                  </Grid>
+                                  <Grid ColumnDefinitions="220,*" ColumnSpacing="12">
+                                    <ComboBox ItemsSource="{Binding MatchOptions}" IsEnabled="{Binding CanChooseMatchKind}" HorizontalAlignment="Stretch" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[RuleMatchMode]}" SelectedItem="{Binding SelectedMatchChoice}">
+                                      <ComboBox.ItemTemplate>
+                                        <DataTemplate x:DataType="vm:SettingChoice">
+                                          <TextBlock Text="{Binding Label}"/>
+                                        </DataTemplate>
+                                      </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                    <TextBox Grid.Column="1" Text="{Binding Extensions}" IsVisible="{Binding IsExtensionRule}" PlaceholderText=".png, .mov, .mp4" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Extensionscommaseparated]}"/>
+                                    <TextBox Grid.Column="1" Text="{Binding NamePattern}" IsVisible="{Binding IsNameRule}" PlaceholderText="{ReflectionBinding $parent[Window].DataContext.Text[RulePatternExample]}" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[RuleNamePattern]}"/>
+                                  </Grid>
+                                </StackPanel>
+                              </Expander>
+                            </Border>
+                          </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                      </ItemsControl>
+                      <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[AddCustomRule]}" Command="{Binding AddRuleCommand}"/>
+                      <Expander Header="{ReflectionBinding $parent[Window].DataContext.Text[RuleHelpHeading]}" HorizontalAlignment="Stretch">
+                        <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[CustomRulesHelp]}" TextWrapping="Wrap" Classes="muted"/>
+                      </Expander>
+                      <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[RuleEditScope]}" TextWrapping="Wrap" Classes="muted"/>
+                    </StackPanel>
+                  </Border>
+                  <StackPanel Spacing="8">
+                    <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Excludedextensions]}" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                    <TextBox Text="{Binding ExcludedExtensions}" PlaceholderText="{ReflectionBinding $parent[Window].DataContext.Text[Forexamplelogbak]}"/>
+                    <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[BrowserpartialdownloadsarealwaysexcludedUnrecognizedextensionsgo]}" Classes="muted" TextWrapping="Wrap"/>
+                  </StackPanel>
+                </StackPanel>
+              </ScrollViewer>
+            </TabItem>
+            <TabItem AutomationProperties.AutomationId="SettingsAutomationTab" Header="{ReflectionBinding $parent[Window].DataContext.Text[SettingsAutomation]}">
+              <ScrollViewer x:Name="AutomationScroll" Margin="0,12,0,0" Padding="0,0,14,0">
+                <StackPanel Spacing="16" IsEnabled="{Binding CanConfigure}">
+                  <CheckBox IsChecked="{Binding ResumeMonitoringOnStartup}" Content="{ReflectionBinding $parent[Window].DataContext.Text[ResumeMonitoring]}"/>
+                  <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[ResumeMonitoringHelp]}" Classes="muted" TextWrapping="Wrap"/>
+                  <Border Classes="card" IsVisible="{Binding SupportsFileOperations}">
+                    <StackPanel Spacing="8">
+                      <CheckBox Content="{ReflectionBinding $parent[Window].DataContext.Text[UsePeriodicOrganization]}" IsChecked="{Binding UsePeriodicOrganization}"/>
+                      <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[PeriodicOrganizationHelp]}" TextWrapping="Wrap" Classes="muted"/>
+                      <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[OrganizationInterval]}" FontWeight="SemiBold"/>
+                      <NumericUpDown Value="{Binding OrganizationIntervalMinutes}" IsEnabled="{Binding UsePeriodicOrganization}" Minimum="1" Maximum="1440" FormatString="0" Width="160" HorizontalAlignment="Left" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[OrganizationInterval]}"/>
+                    </StackPanel>
+                  </Border>
+                  <Expander Header="{ReflectionBinding $parent[Window].DataContext.Text[AdvancedFolderSettings]}" HorizontalAlignment="Stretch">
+                    <Border Classes="card" IsVisible="{Binding SupportsFileOperations}">
+                      <StackPanel Spacing="8">
+                        <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[FolderMoveWarning]}" TextWrapping="Wrap" Foreground="{DynamicResource ErrorBrush}"/>
+                        <CheckBox IsChecked="{Binding OrganizeFolders}" Content="{ReflectionBinding $parent[Window].DataContext.Text[OrganizeFolders]}"/>
+                        <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[OrganizeFoldersHelp]}" Classes="muted" TextWrapping="Wrap"/>
+                        <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[CollectedFoldersName]}"/>
+                        <TextBox Text="{Binding CollectedFoldersName}" IsEnabled="{Binding OrganizeFolders}"/>
+                        <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[FolderInterval]}"/>
+                        <NumericUpDown Value="{Binding FolderIntervalMinutes}" Minimum="20" Maximum="1440" FormatString="0" IsEnabled="{Binding OrganizeFolders}" Width="160" HorizontalAlignment="Left"/>
+                      </StackPanel>
+                    </Border>
+                  </Expander>
+                </StackPanel>
+              </ScrollViewer>
+            </TabItem>
+            <TabItem AutomationProperties.AutomationId="SettingsAppearanceTab" Header="{ReflectionBinding $parent[Window].DataContext.Text[Appearance]}">
+              <ScrollViewer x:Name="AppearanceScroll" Margin="0,12,0,0" Padding="0,0,14,0">
+                <StackPanel Spacing="16" IsEnabled="{Binding IsIdle}">
+                  <StackPanel Spacing="6">
+                    <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Language]}" FontWeight="SemiBold"/>
+                    <ComboBox AutomationProperties.AutomationId="LanguageSelector" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Language]}" MinWidth="180"/>
+                    <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[LanguagechangesapplyimmediatelyandaresavedautomaticallyFolder]}" TextWrapping="Wrap" Classes="muted"/>
+                  </StackPanel>
+                  <StackPanel Spacing="6">
+                    <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[Appearance]}" FontWeight="SemiBold"/>
+                    <ComboBox ItemsSource="{Binding ThemeOptions}" AutomationProperties.AutomationId="ThemeSelector" AutomationProperties.Name="{ReflectionBinding $parent[Window].DataContext.Text[Appearance]}" MinWidth="180" SelectedItem="{Binding SelectedThemeChoice}">
+                      <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="vm:SettingChoice">
+                          <TextBlock Text="{Binding Label}"/>
+                        </DataTemplate>
+                      </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[AppearanceHelp]}" Classes="muted" TextWrapping="Wrap"/>
+                  </StackPanel>
+                </StackPanel>
+              </ScrollViewer>
+            </TabItem>
+            <TabItem AutomationProperties.AutomationId="SettingsApplicationTab" Header="{ReflectionBinding $parent[Window].DataContext.Text[SettingsApplication]}">
+              <ScrollViewer x:Name="ApplicationScroll" Margin="0,12,0,0" Padding="0,0,14,0">
+                <StackPanel Spacing="16" IsEnabled="{Binding CanConfigure}">
+                  <Border Classes="card">
+                    <StackPanel Spacing="8">
+                      <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[ApplicationUpdates]}" FontWeight="SemiBold"/>
+                      <TextBlock Text="{Binding CurrentVersion}"/>
+                      <TextBlock Text="{Binding UpdateMessage}" TextWrapping="Wrap" Classes="muted"/>
+                      <WrapPanel>
+                        <Button Content="{ReflectionBinding $parent[Window].DataContext.Text[CheckForUpdates]}" Command="{Binding CheckForUpdatesCommand}" Margin="0,0,8,8"/>
+                        <Button Content="{Binding UpdateActionLabel}" Command="{Binding ApplyUpdateCommand}" IsVisible="{Binding HasUpdate}" Margin="0,0,0,8"/>
+                      </WrapPanel>
+                    </StackPanel>
+                  </Border>
+                  <StackPanel Spacing="6" IsVisible="{Binding SupportsLoginStartup}">
+                    <CheckBox Content="{ReflectionBinding $parent[Window].DataContext.Text[StartDowlumeAtLogin]}" IsChecked="{Binding StartAtLogin, Mode=OneWay}" Command="{Binding ToggleLoginStartupCommand}"/>
+                    <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[LoginStartupExplanation]}" TextWrapping="Wrap" Classes="muted"/>
+                    <StackPanel Spacing="6" IsVisible="{Binding IsWindows}">
+                      <CheckBox AutomationProperties.AutomationId="ShowWindowAtWindowsLogin" Content="{ReflectionBinding $parent[Window].DataContext.Text[ShowWindowAtWindowsLogin]}" IsChecked="{Binding ShowWindowAtWindowsLogin, Mode=OneWay}" Command="{Binding ToggleWindowsLoginWindowCommand}" IsEnabled="{Binding StartAtLogin}"/>
+                      <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[WindowsLoginWindowHelp]}" TextWrapping="Wrap" Classes="muted"/>
+                    </StackPanel>
+                  </StackPanel>
+                  <TextBlock IsVisible="{Binding IsMacOS}" Text="{ReflectionBinding $parent[Window].DataContext.Text[MacFolderScope]}" TextWrapping="Wrap" Classes="muted"/>
+                  <TextBlock IsVisible="{Binding IsLinux}" Text="{ReflectionBinding $parent[Window].DataContext.Text[LinuxFolderScope]}" TextWrapping="Wrap" Classes="muted"/>
+                  <TextBlock Text="{Binding PrivacyNotice}" TextWrapping="Wrap" Classes="muted"/>
+                </StackPanel>
+              </ScrollViewer>
+            </TabItem>
+          </TabControl>
+          <Grid Grid.Row="2" ColumnDefinitions="*,Auto" Margin="0,12,0,0" ColumnSpacing="12">
+            <TextBlock Text="{ReflectionBinding $parent[Window].DataContext.Text[SettingsSaveHelp]}" TextWrapping="Wrap" Classes="muted" VerticalAlignment="Center"/>
+            <Button Grid.Column="1" Content="{ReflectionBinding $parent[Window].DataContext.Text[Savesettings]}" Command="{Binding SaveSettingsCommand}" IsEnabled="{Binding CanConfigure}" Classes="primary"/>
+          </Grid>
+        </Grid>
       </TabItem>
     </TabControl>
     <StackPanel Grid.Row="3" Spacing="7" Margin="0,18,0,0">

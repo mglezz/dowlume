@@ -32,6 +32,14 @@ function Test-WindowsLoginPresentation([string]$Executable, [string]$Profile) {
             $tab = $root.FindFirst([Windows.Automation.TreeScope]::Descendants, $condition)
             if ($null -eq $tab) { throw 'Settings tab is unavailable.' }
             $tab.GetCurrentPattern([Windows.Automation.SelectionItemPattern]::Pattern).Select()
+            $condition = New-Object Windows.Automation.PropertyCondition([Windows.Automation.AutomationElement]::AutomationIdProperty, 'SettingsApplicationTab')
+            $deadline = [DateTime]::UtcNow.AddSeconds(10)
+            do {
+                Start-Sleep -Milliseconds 100
+                $applicationTab = $root.FindFirst([Windows.Automation.TreeScope]::Descendants, $condition)
+            } while ($null -eq $applicationTab -and [DateTime]::UtcNow -lt $deadline)
+            if ($null -eq $applicationTab) { throw 'Application settings tab is unavailable.' }
+            $applicationTab.GetCurrentPattern([Windows.Automation.SelectionItemPattern]::Pattern).Select()
             $condition = New-Object Windows.Automation.PropertyCondition([Windows.Automation.AutomationElement]::AutomationIdProperty, 'ShowWindowAtWindowsLogin')
             $deadline = [DateTime]::UtcNow.AddSeconds(10)
             do {

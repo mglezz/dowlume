@@ -91,6 +91,10 @@ public partial class MainViewModel : ObservableObject
 
     private void RefreshLanguage()
     {
+        foreach (SettingChoice option in ThemeOptions)
+            option.Refresh();
+        foreach (CategoryRuleViewModel rule in Rules)
+            rule.RefreshLabels();
         OnPropertyChanged(nameof(UpdateMessage));
         OnPropertyChanged(nameof(UpdateActionLabel));
         OnPropertyChanged(nameof(StatusMessage));
@@ -145,6 +149,7 @@ public partial class MainViewModel : ObservableObject
         IStartupRegistration? startup = null, Localizer? localizer = null, string? suggestedDownloads = null, IAppUpdates? updates = null)
     {
         Text = localizer ?? new Localizer();
+        ThemeOptions = Themes.Select(theme => new SettingChoice(theme, Text, theme)).ToArray();
         _updates = updates ?? new AppUpdates();
         _store = store;
         _organizer = organizer;
@@ -177,7 +182,7 @@ public partial class MainViewModel : ObservableObject
         ExcludedExtensions = string.Join(", ", settings.ExcludedExtensions);
         foreach (CategoryRule rule in settings.Categories)
         {
-            Rules.Add(new CategoryRuleViewModel(rule));
+            Rules.Add(new CategoryRuleViewModel(rule, Text));
         }
     }
 
@@ -271,7 +276,7 @@ public partial class MainViewModel : ObservableObject
     {
         if (!CanConfigure)
             return;
-        Rules.Add(new CategoryRuleViewModel(new CategoryRule(FileCategory.Other, string.Empty, [], 30) { Id = Guid.NewGuid() }));
+        Rules.Add(new CategoryRuleViewModel(new CategoryRule(FileCategory.Other, string.Empty, [], 30) { Id = Guid.NewGuid() }, Text) { IsExpanded = true });
         InvalidatePreview();
     }
 
@@ -312,7 +317,10 @@ public partial class MainViewModel : ObservableObject
             ? Text.Format("Check this folder every {0} minutes?\n\n{1}\n\nThe first pass waits for the interval. Each pass organizes completed downloads, including files added after this preview, and moves aging files to Expiring Files. Busy and unfinished downloads are skipped. No files will be deleted automatically. You can turn monitoring off at any time. Automatic startup requires your saved opt-in preference.", settings.OrganizationIntervalMinutes, settings.DownloadsPath)
             : Text.Format("Organize {0} previewed files and monitor this folder for completed downloads?\n\n{1}\n\nFuture and currently unfinished downloads will also be organized. Aging files will move to Expiring Files for your review. No files will be deleted automatically.", PreviewItems.Count, settings.DownloadsPath);
         if (settings.OrganizeFolders)
+        {
             confirmation += "\n\n" + Text.Format("Stable folders will be collected in {0}, with checks every {1} minutes. Classification folders, links and incomplete downloads are skipped. Folders are never merged or deleted; folder moves are recorded but have no automatic Undo.", settings.CollectedFoldersName, settings.FolderIntervalMinutes);
+            confirmation += "\n\n" + Text["FolderMoveWarning"];
+        }
         if (settings.ResumeMonitoringOnStartup)
             confirmation += "\n\n" + Text.Translate("Monitoring will resume automatically when Dowlume opens, including at login. Turning monitoring off also disables automatic startup.");
         if (!await _dialogs.ConfirmAsync(Text.Translate("Start organizing downloads?"), confirmation, Text.Translate("Organize and monitor")))

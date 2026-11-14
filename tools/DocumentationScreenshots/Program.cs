@@ -73,7 +73,7 @@ internal static class Program
                 {
                     await model.RefreshAsync();
                     model.StatusMessage = "Monitoring paused. Preview again when you are ready to resume.";
-                    TabControl tabs = window.GetVisualDescendants().OfType<TabControl>().Single();
+                    TabControl tabs = window.FindControl<TabControl>("MainTabs")!;
                     Capture(0, "overview.png");
 
                     // Populate the real Preview template without invoking filesystem commands.
@@ -109,7 +109,10 @@ internal static class Program
                         Id = Guid.NewGuid(),
                         MatchKind = RuleMatchKind.NameContains,
                         NamePattern = "contrato"
-                    }));
+                    }, model.Text)
+                    {
+                        IsExpanded = true
+                    });
                     foreach (string language in new[] { "en", "es" })
                     {
                         model.SelectedLanguage = MainViewModel.Languages.Single(item => item.Code == language);
@@ -126,7 +129,12 @@ internal static class Program
                     {
                         model.SelectedTheme = theme;
                         window.FindControl<ScrollViewer>("SettingsScroll")!.Offset = default;
-                        Capture(4, $"preferences-{theme.ToLowerInvariant()}.png");
+                        tabs.SelectedIndex = 4;
+                        for (int section = 0; section < 4; section++)
+                        {
+                            window.FindControl<TabControl>("SettingsTabs")!.SelectedIndex = section;
+                            Capture(4, $"preferences-{section}-{theme.ToLowerInvariant()}.png");
+                        }
                         Capture(0, $"overview-{theme.ToLowerInvariant()}.png");
                     }
 

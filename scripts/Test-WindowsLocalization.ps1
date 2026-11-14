@@ -31,6 +31,8 @@ function Assert-TestLanguage([Diagnostics.Process]$Application, [string]$Languag
     $null = Find-LanguageElement $Application $overviewName
     $settings = Find-LanguageElement $Application $settingsName
     $settings.GetCurrentPattern([Windows.Automation.SelectionItemPattern]::Pattern).Select()
+    $appearance = Find-LanguageElement $Application 'SettingsAppearanceTab' -ById
+    $appearance.GetCurrentPattern([Windows.Automation.SelectionItemPattern]::Pattern).Select()
     $selector = Find-LanguageElement $Application 'LanguageSelector' -ById
     $selected = $selector.GetCurrentPattern([Windows.Automation.SelectionPattern]::Pattern).Current.GetSelection()
     if ($selected.Count -ne 1 -or $selected[0].Current.Name -ne $Language) {
@@ -40,7 +42,12 @@ function Assert-TestLanguage([Diagnostics.Process]$Application, [string]$Languag
 
 function Set-TestLanguage([Diagnostics.Process]$Application, [string]$From, [string]$To) {
     Assert-TestLanguage $Application $From
-    $selector = Find-LanguageElement $Application 'LanguageSelector' -ById
+    Select-TestComboOption $Application 'LanguageSelector' $To
+    Assert-TestLanguage $Application $To
+}
+
+function Select-TestComboOption([Diagnostics.Process]$Application, [string]$SelectorId, [string]$To) {
+    $selector = Find-LanguageElement $Application $SelectorId -ById
     $selector.GetCurrentPattern([Windows.Automation.ExpandCollapsePattern]::Pattern).Expand()
     # Avalonia can expose the popup in a separate native window; constrain the search to this process.
     $processCondition = New-Object Windows.Automation.PropertyCondition([Windows.Automation.AutomationElement]::ProcessIdProperty, $Application.Id)
@@ -54,7 +61,18 @@ function Set-TestLanguage([Diagnostics.Process]$Application, [string]$From, [str
         if ($null -ne $option) { break }
         Start-Sleep -Milliseconds 100
     } while ([DateTime]::UtcNow -lt $deadline)
-    if ($null -eq $option) { throw "The language option is unavailable: $To" }
+    if ($null -eq $option) { throw "The dropdown option is unavailable in ${SelectorId}: $To" }
     $option.GetCurrentPattern([Windows.Automation.SelectionItemPattern]::Pattern).Select()
-    Assert-TestLanguage $Application $To
+    $selected = $selector.GetCurrentPattern([Windows.Automation.SelectionPattern]::Pattern).Current.GetSelection()
+    if ($selected.Count -ne 1 -or $selected[0].Current.Name -ne $To) {
+        throw "The dropdown did not select ${To}: $SelectorId"
+    }
+}
+
+function Test-ThemeDropdown([Diagnostics.Process]$Application, [string]$Language) {
+    Assert-TestLanguage $Application $Language
+    $choices = if ($Language -eq 'Español') { @('Oscuro', 'Claro', 'Sistema') } else { @('Dark', 'Light', 'System') }
+    foreach ($choice in $choices) {
+        Select-TestComboOption $Application 'ThemeSelector' $choice
+    }
 }
