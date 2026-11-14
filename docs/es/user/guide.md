@@ -16,7 +16,7 @@ Incluyo `START-HERE.txt` para consulta sin conexión y un acceso **Dowlume quick
 
 El instalador de Windows ya permite instalar una versión nueva sobre la existente, sin desinstalar primero. Cierra Dowlume, ejecuta el nuevo instalador y conserva la carpeta de instalación. Se mantienen el perfil y los archivos organizados.
 
-La búsqueda de actualizaciones está disponible desde 0.6.0. En el código de 0.7.1, abre **Ajustes → Aplicación → Buscar actualizaciones**; en la versión publicada 0.7.0, el botón está directamente en Ajustes. Pausa la organización para usar estos controles. La consulta contacta con el servicio público de publicaciones de GitHub solo cuando lo solicitas, sin cuenta, credenciales, nombres de archivos ni rutas; GitHub recibe los datos normales de conexión, como tu dirección IP. Solo ofrece versiones estables más recientes, excluyendo borradores y versiones preliminares. Un fallo de red no impide organizar archivos localmente.
+La búsqueda de actualizaciones está disponible desde 0.6.0. En 0.7.1, abre **Ajustes → Aplicación → Buscar actualizaciones**; en la versión publicada 0.7.0, el botón está directamente en Ajustes. Pausa la organización para usar estos controles. La consulta contacta con el servicio público de publicaciones de GitHub solo cuando lo solicitas, sin cuenta, credenciales, nombres de archivos ni rutas; GitHub recibe los datos normales de conexión, como tu dirección IP. Solo ofrece versiones estables más recientes, excluyendo borradores y versiones preliminares. Un fallo de red no impide organizar archivos localmente.
 
 En una instalación registrada de Windows, **Descargar e instalar actualización…** pide confirmación, descarga el instalador oficial a una carpeta temporal independiente, verifica el tamaño y SHA-256 publicados, pausa la organización y sale antes de abrir el instalador interactivo. Completa la instalación conservando la carpeta existente. No hace falta desinstalar. La suma verifica la coherencia con los metadatos de GitHub; no es una firma de editor. Los paquetes Windows siguen sin estar firmados. Si falta el instalador o su suma, se ofrece la publicación oficial. Si el instalador no se abre, vuelve a abrir Dowlume y reinténtalo o utiliza la publicación oficial. Los instaladores descargados quedan en la carpeta temporal para la limpieza habitual del sistema.
 
@@ -32,9 +32,9 @@ Cambio pestañas, botones, confirmaciones, bandeja, categorías, estados, fechas
 
 **El instalador y el ZIP portátil publicados de 0.6.0 incluyen el selector.** Los paquetes anteriores de 0.1.0 siguen en inglés.
 
-## Navegación de Ajustes (código de 0.7.1)
+## Navegación de Ajustes (0.7.1)
 
-Esta navegación está incluida en el código de 0.7.1; la versión publicada 0.7.0 conserva la página única. **Ajustes** abre siempre **Carpetas y reglas**. Despliega una carpeta para editar su nombre, plazo de revisión y regla. **Automatización** contiene la reanudación al abrir, los intervalos de archivos y la agrupación avanzada de carpetas. **Apariencia** reúne tema e idioma. **Aplicación** contiene actualizaciones, inicio de sesión e información de la plataforma.
+La versión 0.7.1 introduce esta navegación; 0.7.0 conserva la página única. **Ajustes** abre siempre **Carpetas y reglas**. Despliega una carpeta para editar su nombre, plazo de revisión y regla. **Automatización** contiene la reanudación al abrir, los intervalos de archivos y la agrupación avanzada de carpetas. **Apariencia** reúne tema e idioma. **Aplicación** contiene actualizaciones, inicio de sesión e información de la plataforma.
 
 El botón fijo **Guardar ajustes** guarda las carpetas, reglas y automatización de todos los apartados, incluidos los cambios pendientes en otras pestañas. Tema, idioma e inicio de sesión se guardan al instante y de forma independiente. Cambiar de apartado no descarta las ediciones. Para cambiar la organización hay que pausarla y revisar otra vista previa antes de activarla.
 
