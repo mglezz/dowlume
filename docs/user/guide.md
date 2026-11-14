@@ -2,15 +2,15 @@
 
 [English](#) · [Español](../es/user/guide.md)
 
-Dowlume organizes completed downloads on Windows x64, macOS Apple Silicon, and Ubuntu 24.04 LTS x64 with GNOME. Version 0.7.0 includes Windows/Ubuntu installers and portable applications with .NET included. Start with copies of sample files in a disposable local folder. See the [platform matrix](platform-support.md) for filesystem and OS requirements.
+Dowlume organizes completed downloads on Windows x64, macOS Apple Silicon, and Ubuntu 24.04 LTS x64 with GNOME. Version 0.7.1 includes Windows/Ubuntu installers and portable applications with .NET included. Start with copies of sample files in a disposable local folder. See the [platform matrix](platform-support.md) for filesystem and OS requirements.
 
 ## Install and start
 
-Choose the Windows installer for a regular installation, or a **Portable** download for the complete application archive. Ubuntu users should follow the [Linux instructions](#linux-060). Download the package for your computer from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.7.0). For macOS installation, permissions, and startup, follow the [macOS instructions](#macos-040) below. Developers can also [build and run from source](../development/getting-started.md).
+Choose the Windows installer for a regular installation, or a **Portable** download for the complete application archive. Ubuntu users should follow the [Linux instructions](#linux-060). Download the package for your computer from [GitHub Releases](https://github.com/mglezz/dowlume/releases/tag/v0.7.1). For macOS installation, permissions, and startup, follow the [macOS instructions](#macos-040) below. Developers can also [build and run from source](../development/getting-started.md).
 
-For a downloaded or locally built package, run the setup executable (for example, `Dowlume-0.7.0-win-x64-setup.exe`). Installation is per user and does not require administrator privileges. Alternatively, extract the complete portable ZIP and run `Dowlume.App.exe`; do not move the executable out of its accompanying files. The .NET runtime is included.
+For a downloaded or locally built package, run the setup executable (for example, `Dowlume-0.7.1-win-x64-setup.exe`). Installation is per user and does not require administrator privileges. Alternatively, extract the complete portable ZIP and run `Dowlume.App.exe`; do not move the executable out of its accompanying files. The .NET runtime is included.
 
-The Windows packages are unsigned. The macOS app uses an ad-hoc signature without Developer ID or notarization. Only use a package from a source you trust and compare its SHA-256 checksum with the [download checksums](../releases/0.7.0.md#download-checksums).
+The Windows packages are unsigned. The macOS app uses an ad-hoc signature without Developer ID or notarization. Only use a package from a source you trust and compare its SHA-256 checksum with the [download checksums](../releases/0.7.1.md#download-checksums).
 
 The package includes `START-HERE.txt`, which opens offline in a text editor. The installer adds a **Dowlume quick start** Start menu shortcut. Exit Dowlume, including any instance hidden in the tray, before upgrading or uninstalling; Setup refuses while the app is running. Installation and uninstall retain your files and local profile.
 
@@ -18,7 +18,7 @@ The package includes `START-HERE.txt`, which opens offline in a text editor. The
 
 Windows installers already support installing a newer version over the existing installation; uninstalling first is unnecessary. Close Dowlume, run the new installer, and retain the existing installation folder. The profile and organized files are retained.
 
-Update checks are available since 0.6.0. In the 0.7.1 source, open **Settings → Application → Check for updates**; in published 0.7.0, the button is directly on the settings page. Pause organization to use these controls. The check contacts the public GitHub release endpoint only when requested, without an account, credentials, file names, or paths; GitHub still receives ordinary connection information such as your IP address. It offers newer stable releases, excluding drafts and prereleases. Network failures leave local organization available.
+Update checks are available since 0.6.0. In 0.7.1, open **Settings → Application → Check for updates**; in published 0.7.0, the button is directly on the settings page. Pause organization to use these controls. The check contacts the public GitHub release endpoint only when requested, without an account, credentials, file names, or paths; GitHub still receives ordinary connection information such as your IP address. It offers newer stable releases, excluding drafts and prereleases. Network failures leave local organization available.
 
 For a registered Windows installation, **Download and install update…** asks for confirmation, downloads the official installer to a separate temporary folder, verifies its published size and SHA-256, pauses organization, and exits before opening the interactive installer. Complete the installer using the existing folder. No uninstall is needed. The hash verifies consistency with GitHub's release metadata; it is not a publisher signature. Windows packages remain unsigned. A missing checksum or installer offers the official release page instead. If installer launch fails, reopen Dowlume and retry, or use the release page. Downloaded installers remain in the system temporary directory for normal OS cleanup.
 
@@ -34,9 +34,9 @@ Tabs, buttons, confirmations, tray items, categories, states, dates, and known e
 
 The current packages include both interface languages. Older 0.1.0 packages remain English-only.
 
-## Settings navigation (0.7.1 source)
+## Settings navigation (0.7.1)
 
-The following navigation is included in the 0.7.1 source; published 0.7.0 still uses a single settings page. Opening **Settings** starts with **Folders and rules**. Expand a folder to edit its name, review period and matching rule. **Automation** holds resume-on-startup, periodic file checks and advanced whole-folder collection. **Appearance** holds theme and language. **Application** holds updates, login startup and platform information.
+Version 0.7.1 introduces this navigation; 0.7.0 uses a single settings page. Opening **Settings** starts with **Folders and rules**. Expand a folder to edit its name, review period and matching rule. **Automation** holds resume-on-startup, periodic file checks and advanced whole-folder collection. **Appearance** holds theme and language. **Application** holds updates, login startup and platform information.
 
 The fixed **Save settings** button saves folders, rules and automation together, including edits in other sections. Theme, language and login options save immediately and independently. Switching sections does not discard pending edits. Folder/rule edits require paused monitoring and a fresh preview before activation.
 
@@ -203,7 +203,7 @@ When a file or directory race is detected, Dowlume retains the objects and may r
 
 ## Linux 0.6.0
 
-The [0.6.0 release](https://github.com/mglezz/dowlume/releases/tag/v0.7.0)
+The [0.6.0 release](https://github.com/mglezz/dowlume/releases/tag/v0.7.1)
 supports Ubuntu 24.04 LTS x64 / GNOME with local ext4. Compare the
 [package checksums](../releases/0.6.0.md#download-checksums) and begin with disposable samples.
 

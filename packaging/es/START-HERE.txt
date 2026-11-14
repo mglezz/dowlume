@@ -4,9 +4,9 @@ PRIMEROS PASOS
 
 1. Ejecuta Dowlume.App.exe y conserva juntos todos los archivos del paquete.
    Incluyo .NET; no necesitas instalar el runtime por separado.
-2. En Settings > Language, elige Español. El cambio se guarda inmediatamente.
-   Para volver al inglés, abre Ajustes > Idioma y elige English.
-   Pausa la supervisión antes de cambiar ajustes. El idioma no renombra carpetas.
+2. En Settings > Appearance > Language, elige Español. El cambio se guarda inmediatamente.
+   Para volver al inglés, abre Ajustes > Apariencia > Idioma y elige English.
+   El idioma sigue disponible durante la supervisión y no renombra carpetas.
 3. Elige una carpeta desechable con COPIAS de descargas de ejemplo en Ajustes.
    Guarda, abre Vista previa y pulsa Actualizar vista previa.
 4. Comprueba los destinos. Organizar y supervisar pide confirmación antes de
@@ -48,10 +48,10 @@ Incidencias: https://github.com/mglezz/dowlume/issues
 Incluye versiones de Windows y Dowlume, pasos y resultado esperado y observado.
 No adjuntes descargas personales, bases de datos ni rutas privadas sin ocultar.
 
-Esta guía acompaña la versión 0.7.0 con selector. Los paquetes
+Esta guía acompaña la versión 0.7.1 con selector. Los paquetes
 originales publicados de v0.1.0 son anteriores a la localización y siguen en inglés.
 
-Dowlume 0.7.0
+Dowlume 0.7.1
 
 Ajustes ofrece organizar por intervalos de 1 a 1440 minutos (10 por defecto).
 Requiere vista previa y confirmar; la primera pasada espera el intervalo.
@@ -64,7 +64,7 @@ abren las instrucciones oficiales. Windows/Linux siguen sin firmar; macOS
 utiliza firma ad hoc.
 
 
-NOVEDADES DE 0.7.0
+FUNCIONES DE ORGANIZACIÓN
 
 Elige apariencia Sistema, Claro u Oscuro en Ajustes; se guarda al instante.
 Edita las carpetas de clasificación o añade reglas por extensión o nombre.
@@ -80,3 +80,14 @@ Omite categorías, enlaces, contenidos incompletos, ocultos o inaccesibles y
 Los movimientos aparecen en Actividad, sin Deshacer ni revisión por antigüedad.
 Para restaurar una carpeta, apaga la monitorización y usa el explorador.
 Una interrupción requiere inspección manual; nunca se repite automáticamente.
+
+AJUSTES EN 0.7.1
+
+Ajustes abre Carpetas y reglas. Despliega una carpeta para editarla.
+Automatización reúne reanudación, intervalos y agrupación avanzada de carpetas.
+Apariencia contiene tema e idioma; Aplicación, actualizaciones e inicio de sesión.
+Guarda carpetas, reglas y automatización con Guardar ajustes. Tema, idioma e
+inicio de sesión se guardan al instante. Pausa para cambiar la organización.
+Agrupar carpetas está desactivado por defecto: cambia rutas, puede romper
+proyectos o accesos directos y no tiene deshacer automático. Úsalo solo para
+descargas terminadas, nunca para carpetas de trabajo.

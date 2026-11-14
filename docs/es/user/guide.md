@@ -2,13 +2,13 @@
 
 [English](../../user/guide.md) · [Índice en español](../README.md)
 
-Dowlume organiza descargas completas en Windows x64, macOS Apple Silicon y Ubuntu 24.04 LTS x64 con GNOME. La [versión 0.7.0](https://github.com/mglezz/dowlume/releases/tag/v0.7.0) incluye instaladores Windows/Ubuntu y paquetes portables con .NET incluido. Consulta las [instrucciones macOS](#macos-040), las [instrucciones Linux](#linux-060) y la [matriz de plataformas](platform-support.md). Empieza con copias de archivos de ejemplo en una carpeta desechable.
+Dowlume organiza descargas completas en Windows x64, macOS Apple Silicon y Ubuntu 24.04 LTS x64 con GNOME. La [versión 0.7.1](https://github.com/mglezz/dowlume/releases/tag/v0.7.1) incluye instaladores Windows/Ubuntu y paquetes portables con .NET incluido. Consulta las [instrucciones macOS](#macos-040), las [instrucciones Linux](#linux-060) y la [matriz de plataformas](platform-support.md). Empieza con copias de archivos de ejemplo en una carpeta desechable.
 
 ## Instalar y abrir
 
-Elige el instalador Windows para una instalación habitual, o **Portable** para descargar la aplicación completa en un ZIP desde la publicación de GitHub. Los paquetes Windows de v0.7.0 no tienen firma de editor: utiliza una fuente de confianza y compara el SHA-256 con las [sumas de comprobación](../releases/0.7.0.md#sumas-de-comprobación).
+Elige el instalador Windows para una instalación habitual, o **Portable** para descargar la aplicación completa en un ZIP desde la publicación de GitHub. Los paquetes Windows de v0.7.1 no tienen firma de editor: utiliza una fuente de confianza y compara el SHA-256 con las [sumas de comprobación](../releases/0.7.1.md#sumas-de-comprobación).
 
-Ejecuta `Dowlume-0.7.0-win-x64-setup.exe` sin permisos de administrador. Para la versión portátil, extrae todo el ZIP y ejecuta `Dowlume.App.exe` junto a sus archivos. No necesita una instalación separada de .NET.
+Ejecuta `Dowlume-0.7.1-win-x64-setup.exe` sin permisos de administrador. Para la versión portátil, extrae todo el ZIP y ejecuta `Dowlume.App.exe` junto a sus archivos. No necesita una instalación separada de .NET.
 
 Incluyo `START-HERE.txt` para consulta sin conexión y un acceso **Dowlume quick start** en el menú Inicio. Cierra también cualquier instancia oculta en la bandeja antes de actualizar o desinstalar; el instalador se niega a continuar mientras la aplicación está abierta. Conservo los archivos organizados y el perfil local al desinstalar.
 
@@ -16,7 +16,7 @@ Incluyo `START-HERE.txt` para consulta sin conexión y un acceso **Dowlume quick
 
 El instalador de Windows ya permite instalar una versión nueva sobre la existente, sin desinstalar primero. Cierra Dowlume, ejecuta el nuevo instalador y conserva la carpeta de instalación. Se mantienen el perfil y los archivos organizados.
 
-La búsqueda de actualizaciones está disponible desde 0.6.0. En el código de 0.7.1, abre **Ajustes → Aplicación → Buscar actualizaciones**; en la versión publicada 0.7.0, el botón está directamente en Ajustes. Pausa la organización para usar estos controles. La consulta contacta con el servicio público de publicaciones de GitHub solo cuando lo solicitas, sin cuenta, credenciales, nombres de archivos ni rutas; GitHub recibe los datos normales de conexión, como tu dirección IP. Solo ofrece versiones estables más recientes, excluyendo borradores y versiones preliminares. Un fallo de red no impide organizar archivos localmente.
+La búsqueda de actualizaciones está disponible desde 0.6.0. En 0.7.1, abre **Ajustes → Aplicación → Buscar actualizaciones**; en la versión publicada 0.7.0, el botón está directamente en Ajustes. Pausa la organización para usar estos controles. La consulta contacta con el servicio público de publicaciones de GitHub solo cuando lo solicitas, sin cuenta, credenciales, nombres de archivos ni rutas; GitHub recibe los datos normales de conexión, como tu dirección IP. Solo ofrece versiones estables más recientes, excluyendo borradores y versiones preliminares. Un fallo de red no impide organizar archivos localmente.
 
 En una instalación registrada de Windows, **Descargar e instalar actualización…** pide confirmación, descarga el instalador oficial a una carpeta temporal independiente, verifica el tamaño y SHA-256 publicados, pausa la organización y sale antes de abrir el instalador interactivo. Completa la instalación conservando la carpeta existente. No hace falta desinstalar. La suma verifica la coherencia con los metadatos de GitHub; no es una firma de editor. Los paquetes Windows siguen sin estar firmados. Si falta el instalador o su suma, se ofrece la publicación oficial. Si el instalador no se abre, vuelve a abrir Dowlume y reinténtalo o utiliza la publicación oficial. Los instaladores descargados quedan en la carpeta temporal para la limpieza habitual del sistema.
 
@@ -32,9 +32,9 @@ Cambio pestañas, botones, confirmaciones, bandeja, categorías, estados, fechas
 
 **El instalador y el ZIP portátil publicados de 0.6.0 incluyen el selector.** Los paquetes anteriores de 0.1.0 siguen en inglés.
 
-## Navegación de Ajustes (código de 0.7.1)
+## Navegación de Ajustes (0.7.1)
 
-Esta navegación está incluida en el código de 0.7.1; la versión publicada 0.7.0 conserva la página única. **Ajustes** abre siempre **Carpetas y reglas**. Despliega una carpeta para editar su nombre, plazo de revisión y regla. **Automatización** contiene la reanudación al abrir, los intervalos de archivos y la agrupación avanzada de carpetas. **Apariencia** reúne tema e idioma. **Aplicación** contiene actualizaciones, inicio de sesión e información de la plataforma.
+La versión 0.7.1 introduce esta navegación; 0.7.0 conserva la página única. **Ajustes** abre siempre **Carpetas y reglas**. Despliega una carpeta para editar su nombre, plazo de revisión y regla. **Automatización** contiene la reanudación al abrir, los intervalos de archivos y la agrupación avanzada de carpetas. **Apariencia** reúne tema e idioma. **Aplicación** contiene actualizaciones, inicio de sesión e información de la plataforma.
 
 El botón fijo **Guardar ajustes** guarda las carpetas, reglas y automatización de todos los apartados, incluidos los cambios pendientes en otras pestañas. Tema, idioma e inicio de sesión se guardan al instante y de forma independiente. Cambiar de apartado no descarta las ediciones. Para cambiar la organización hay que pausarla y revisar otra vista previa antes de activarla.
 
@@ -196,7 +196,7 @@ Si detecto una carrera de archivos/carpetas, conservo los objetos y puedo mostra
 
 ## Linux 0.6.0
 
-La [versión 0.6.0](https://github.com/mglezz/dowlume/releases/tag/v0.7.0)
+La [versión 0.6.0](https://github.com/mglezz/dowlume/releases/tag/v0.7.1)
 admite Ubuntu 24.04 LTS x64 / GNOME con ext4 local.
 Comprueba las [sumas de los paquetes](../releases/0.6.0.md#sumas-de-comprobación)
 y empieza con archivos desechables.

@@ -54,3 +54,7 @@ También está implementado el historial con búsqueda, filtros y paginación. L
 - Más idiomas.
 
 La clasificación por contenido, la sincronización en la nube, los scripts arbitrarios y el borrado permanente automático quedan fuera del alcance actual.
+
+### Versión 0.7.1 publicada
+
+[0.7.1](../releases/0.7.1.md): navegación de Ajustes, desplegables traducidos, inicialización de selecciones sin modificar preferencias y advertencias para la agrupación avanzada de carpetas.
