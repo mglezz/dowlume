@@ -14,6 +14,8 @@ The Windows packages are unsigned. The macOS app uses an ad-hoc signature withou
 
 The package includes `START-HERE.txt`, which opens offline in a text editor. The installer adds a **Dowlume quick start** Start menu shortcut. Exit Dowlume, including any instance hidden in the tray, before upgrading or uninstalling; Setup refuses while the app is running. Installation and uninstall retain your files and local profile.
 
+From 0.7.2, opening Dowlume again shows the instance already using the same profile, including a minimized window or one hidden in the tray. It retains the current monitoring session and pending edits. The second launcher exits. Published 0.7.1 still displays a startup error for a second launch.
+
 ## Update without uninstalling (0.6.0)
 
 Windows installers already support installing a newer version over the existing installation; uninstalling first is unnecessary. Close Dowlume, run the new installer, and retain the existing installation folder. The profile and organized files are retained.

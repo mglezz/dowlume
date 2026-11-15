@@ -12,6 +12,8 @@ Ejecuta `Dowlume-0.7.1-win-x64-setup.exe` sin permisos de administrador. Para la
 
 Incluyo `START-HERE.txt` para consulta sin conexión y un acceso **Dowlume quick start** en el menú Inicio. Cierra también cualquier instancia oculta en la bandeja antes de actualizar o desinstalar; el instalador se niega a continuar mientras la aplicación está abierta. Conservo los archivos organizados y el perfil local al desinstalar.
 
+Desde 0.7.2, abrir Dowlume otra vez muestra la instancia que ya usa ese perfil, incluso si está minimizada u oculta en la bandeja. Conserva la monitorización y las ediciones pendientes. El segundo proceso termina. La versión publicada 0.7.1 todavía muestra un error al abrir una segunda instancia.
+
 ## Actualizar sin desinstalar (0.6.0)
 
 El instalador de Windows ya permite instalar una versión nueva sobre la existente, sin desinstalar primero. Cierra Dowlume, ejecuta el nuevo instalador y conserva la carpeta de instalación. Se mantienen el perfil y los archivos organizados.

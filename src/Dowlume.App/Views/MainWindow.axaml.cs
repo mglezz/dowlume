@@ -43,6 +43,18 @@ public partial class MainWindow : Window
 
     internal bool IsShutdownComplete => _canClose;
 
+    internal void RevealExistingInstance()
+    {
+        if (_closing)
+            return;
+        Show();
+        if (WindowState == WindowState.Minimized)
+            WindowState = WindowState.Normal;
+        Activate();
+        // Keep an existing confirmation accessible instead of covering it with its owner.
+        OwnedWindows.LastOrDefault(window => window.IsVisible)?.Activate();
+    }
+
     public void ConfigureTray(bool available)
     {
         this.FindControl<Button>("HideToTrayButton")!.IsVisible = available;

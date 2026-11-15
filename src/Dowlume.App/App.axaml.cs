@@ -14,6 +14,7 @@ namespace Dowlume.App;
 public partial class App : Application
 {
     private FileStream? _instanceLock;
+    private InstanceActivation? _activation;
     private DesktopTray? _tray;
     private MacDesktopIntegration? _macDesktop;
     public override void Initialize()
@@ -33,7 +34,16 @@ public partial class App : Application
                 if (OperatingSystem.IsMacOS() && !Program.IsCustomDataDirectory)
                     MacProfileMigration.ImportPreview(Path.Combine(Path.GetDirectoryName(dataDirectory)!, "Dowlume.Preview"), dataDirectory);
                 Directory.CreateDirectory(dataDirectory);
-                _instanceLock = new FileStream(Path.Combine(dataDirectory, "instance.lock"), FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
+                try
+                {
+                    _instanceLock = new FileStream(Path.Combine(dataDirectory, "instance.lock"), FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
+                }
+                catch (IOException) when (!Program.IsSmokeTest && InstanceActivation.TryActivateAsync(dataDirectory).GetAwaiter().GetResult())
+                {
+                    desktop.Shutdown();
+                    base.OnFrameworkInitializationCompleted();
+                    return;
+                }
                 var store = new SqliteStateStore(Path.Combine(dataDirectory, "dowlume.db"));
                 var organizer = new DownloadOrganizer(store, new SafeFileMover(), OperatingSystem.IsMacOS() ? new MacFileReadiness() : OperatingSystem.IsLinux() ? new LinuxFileReadiness() : new FileReadiness());
                 var window = new MainWindow();
@@ -72,6 +82,9 @@ public partial class App : Application
                     window.Closed += (_, _) => desktop.Shutdown();
                 }
                 log.Write("application_started");
+                _activation = new InstanceActivation(dataDirectory,
+                    () => Avalonia.Threading.Dispatcher.UIThread.Post(window.RevealExistingInstance),
+                    error => log.Write("instance_activation_failed", error));
                 if (!Program.IsSmokeTest)
                     Avalonia.Threading.Dispatcher.UIThread.Post(async () => await model.ResumeOnStartupAsync());
             }
@@ -117,7 +130,7 @@ public partial class App : Application
                     finally { smokeWindow.Close(); }
                 };
             }
-            desktop.Exit += (_, _) => { _macDesktop?.Dispose(); _tray?.Dispose(); _instanceLock?.Dispose(); };
+            desktop.Exit += (_, _) => { _activation?.Dispose(); _macDesktop?.Dispose(); _tray?.Dispose(); _instanceLock?.Dispose(); };
         }
 
         base.OnFrameworkInitializationCompleted();
