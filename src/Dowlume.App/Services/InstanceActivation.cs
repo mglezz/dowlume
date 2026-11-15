@@ -87,8 +87,10 @@ internal sealed class InstanceActivation : IDisposable
         if (OperatingSystem.IsWindows())
             path = path.ToUpperInvariant();
         string key = Environment.UserName + "\0" + path;
-        // Unix domain sockets have a short path limit, especially under macOS temporary directories.
-        return "dwl-" + Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(key)))[..32];
+        string name = "dwl-" + Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(key)))[..32];
+        // .NET accepts absolute Unix pipe paths. Avoid a long or launcher-specific TMPDIR;
+        // CurrentUserOnly still checks the peer credentials on both sides of the connection.
+        return OperatingSystem.IsWindows() ? name : "/tmp/" + name;
     }
 
     [DllImport("user32.dll")]
