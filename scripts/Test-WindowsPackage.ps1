@@ -92,6 +92,42 @@ function Start-Application([string]$ExpectedTitle) {
     return $process
 }
 
+function Test-ExistingInstanceActivation([Diagnostics.Process]$Owner) {
+    Add-Type -AssemblyName UIAutomationClient
+    Add-Type -AssemblyName UIAutomationTypes
+    $originalPid = $Owner.Id
+    foreach ($presentation in @('Visible', 'Minimized', 'Hidden')) {
+        $Owner.Refresh()
+        $root = [Windows.Automation.AutomationElement]::FromHandle($Owner.MainWindowHandle)
+        if ($presentation -eq 'Minimized') {
+            $root.GetCurrentPattern([Windows.Automation.WindowPattern]::Pattern).SetWindowVisualState([Windows.Automation.WindowVisualState]::Minimized)
+        } elseif ($presentation -eq 'Hidden') {
+            $condition = New-Object Windows.Automation.PropertyCondition([Windows.Automation.AutomationElement]::NameProperty, 'Hide to tray')
+            $hide = $root.FindFirst([Windows.Automation.TreeScope]::Descendants, $condition)
+            if ($null -eq $hide) { throw 'Hide to tray is unavailable for activation acceptance.' }
+            $hide.GetCurrentPattern([Windows.Automation.InvokePattern]::Pattern).Invoke()
+            Start-Sleep -Milliseconds 200
+        }
+        $launcher = Start-Process -FilePath $executable -ArgumentList @('--data-directory', """$profile""") -WindowStyle Hidden -PassThru
+        $null = $launcher.Handle
+        if (-not $launcher.WaitForExit(15000) -or $launcher.ExitCode -ne 0) {
+            throw "The secondary launcher did not hand off activation: $presentation"
+        }
+        $deadline = [DateTime]::UtcNow.AddSeconds(10)
+        do {
+            Start-Sleep -Milliseconds 100
+            $Owner.Refresh()
+        } while ($Owner.MainWindowHandle -eq [IntPtr]::Zero -and [DateTime]::UtcNow -lt $deadline)
+        if ($Owner.HasExited -or $Owner.Id -ne $originalPid -or $Owner.MainWindowHandle -eq [IntPtr]::Zero) {
+            throw "The existing instance was not restored: $presentation"
+        }
+        $root = [Windows.Automation.AutomationElement]::FromHandle($Owner.MainWindowHandle)
+        if ($root.GetCurrentPattern([Windows.Automation.WindowPattern]::Pattern).Current.WindowVisualState -eq [Windows.Automation.WindowVisualState]::Minimized) {
+            throw 'The existing window remained minimized.'
+        }
+    }
+}
+
 function Close-Application([Diagnostics.Process]$Process) {
     if (-not $Process.CloseMainWindow() -or -not $Process.WaitForExit(30000)) {
         throw 'The packaged application did not shut down gracefully.'
@@ -139,8 +175,7 @@ try {
 
     if ($RequireLocalization) { Assert-LanguageFiles $installDirectory }
     $application = Start-Application 'Dowlume'
-    $secondInstance = Start-Application 'Dowlume*unable to start'
-    Close-Application $secondInstance
+    Test-ExistingInstanceActivation $application
     Test-WindowsTray $application
     if ($RequireLocalization) {
         Set-TestLanguage $application 'English' 'Español'
@@ -195,7 +230,7 @@ try {
         InstallerUpgrade = if ($PreviousInstaller) { 'Previous package to candidate' } else { 'Candidate reinstall' }
         VerifiedUpdateDownloadAndLaunch = [bool]$UpdateAcceptanceTool
         NativePeriodicDelayOrganizationAndDrain = $true
-        SingleInstanceRefusal = $true
+        SingleInstanceActivation = $true
         NativeTrayRegistrationAndRestore = $true
         LoginBackgroundDefaultAndWindowPreference = $true
         RunningUpgradeRefused = $true
