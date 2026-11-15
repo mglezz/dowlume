@@ -109,6 +109,7 @@ function Test-ExistingInstanceActivation([Diagnostics.Process]$Owner) {
             Start-Sleep -Milliseconds 200
         }
         $launcher = Start-Process -FilePath $executable -ArgumentList @('--data-directory', """$profile""") -WindowStyle Hidden -PassThru
+        $null = $launcher.Handle
         if (-not $launcher.WaitForExit(15000) -or $launcher.ExitCode -ne 0) {
             throw "The secondary launcher did not hand off activation: $presentation"
         }

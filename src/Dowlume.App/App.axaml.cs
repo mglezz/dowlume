@@ -40,7 +40,8 @@ public partial class App : Application
                 }
                 catch (IOException) when (!Program.IsSmokeTest && InstanceActivation.TryActivateAsync(dataDirectory).GetAwaiter().GetResult())
                 {
-                    desktop.Shutdown();
+                    // Startup has not entered the dispatcher loop yet; exit once it has started.
+                    Avalonia.Threading.Dispatcher.UIThread.Post(() => desktop.Shutdown());
                     base.OnFrameworkInitializationCompleted();
                     return;
                 }
